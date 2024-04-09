@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class Attack : State
 {
+    private Deadens _d;
+    
+    public Attack(Deadens d)
+    {
+        _d = d;
+    }
+    
     public override void OnEnter()
     {
-        throw new System.NotImplementedException();
+        _d.Attack();
+        _d.CdForAttack = _d.initialCdForAttack;
+        _d.DecisionTree.Execute(_d);
     }
 
     public override void OnUpdate()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void OnExit()
     {
-        throw new System.NotImplementedException();
     }
 }

@@ -5,13 +5,16 @@ using UnityEngine;
 public class Deadens : SteeringAgent
 {
     private FiniteStateMachine _fsm;
-    public bool CanAttack => _cdForAttack < 0;
-    public bool InRangeForAttack => Vector3.Distance(_characterPos.position, transform.position) < rangeForAttack;
+    public bool CanAttack => _cdForAttack <= 0;
+    public bool InRangeForAttack => Vector3.Distance(_characterPos.position, transform.position) <= rangeForAttack;
     private bool _obstacleWithPlayer, _playerInFov;
     public bool PlayerInFov => _playerInFov;
+    public float initialCdForAttack;
     private float _cdForAttack;
     private Transform _characterPos;
+    [SerializeField] private Transform _attackSpawn;
     public float rangeForAttack;
+    [SerializeField] private MeleeWeapon _weapon;
 
     [SerializeField] private DecisionNode _decisionTree;
     public DecisionNode DecisionTree => _decisionTree;
@@ -25,10 +28,11 @@ public class Deadens : SteeringAgent
     public Transform CharacterPos => _characterPos;
     void Awake()
     {
+        _characterPos = GameObject.Find("Player").GetComponent<Transform>();
         _fsm = new FiniteStateMachine();
         
         _fsm.AddState(States.Idle, new Idle(this));
-        _fsm.AddState(States.Attack, new Attack());
+        _fsm.AddState(States.Attack, new Attack(this));
         _fsm.AddState(States.Chase, new Chase(this));
         _fsm.AddState(States.PfCharacter, new PfCharacter());
         
@@ -92,6 +96,12 @@ public class Deadens : SteeringAgent
 
     public void Arrive()
     {
-        Arrive(_characterPos.position);
+        AddForce(Arrive(_characterPos.position));;
+        Move();
+    }
+
+    public void Attack()
+    {
+        _weapon.SpawnHitBox();
     }
 }

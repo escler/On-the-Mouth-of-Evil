@@ -47,7 +47,8 @@ public class SteeringAgent : MonoBehaviour
         float dist = Vector3.Distance(transform.position, targetPos);
         if (dist > _viewRadiusForArrive) return Seek(targetPos);
 
-        return Seek(targetPos, _maxSpeed * (dist / _viewRadiusForArrive));
+        _velocity = Vector3.zero;
+        return _velocity;
     }
 
     protected Vector3 ObstacleAvoidance(float size)
@@ -89,12 +90,7 @@ public class SteeringAgent : MonoBehaviour
     {
         return -Pursuit(targetAgent);
     }
-
-    public void ResetPosition()
-    {
-        transform.position = Vector3.zero;
-    }
-
+    
     protected Vector3 Alignment(SteeringAgent agent)
     {
         Vector3 desired = Vector3.zero;

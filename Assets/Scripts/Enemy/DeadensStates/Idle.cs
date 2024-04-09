@@ -11,7 +11,6 @@ public class Idle : State
     }
     public override void OnEnter()
     {
-        
     }
 
     public override void OnUpdate()

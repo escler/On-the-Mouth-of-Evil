@@ -11,12 +11,13 @@ public class Chase : State
     }
     public override void OnEnter()
     {
-        
     }
 
     public override void OnUpdate()
     {
         _d.Arrive();
+        
+        if(_d.InRangeForAttack) _d.DecisionTree.Execute(_d);
     }
 
     public override void OnExit()
