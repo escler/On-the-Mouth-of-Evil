@@ -408,7 +408,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 704580281}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CameraPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721712549}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14282721, y: 0.11075705, z: -0.01608616, w: 0.9833995}
+  m_LocalRotation: {x: 0.14282721, y: 0.110757045, z: -0.016086156, w: 0.9833995}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 1056551479}
   - component: {fileID: 1056551478}
   - component: {fileID: 1056551477}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,8 +971,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e9486f568e1d044b698c51952f66f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 100
-  sensY: 100
 --- !u!1 &1268104274
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +983,7 @@ GameObject:
   - component: {fileID: 1268104278}
   - component: {fileID: 1268104277}
   - component: {fileID: 1268104276}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1738,7 +1736,7 @@ PrefabInstance:
     - target: {fileID: 8523076919157448265, guid: 7241174823e1d2341b4362faaf21e7d7,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
