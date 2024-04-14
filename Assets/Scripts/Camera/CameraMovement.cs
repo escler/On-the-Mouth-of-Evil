@@ -19,15 +19,10 @@ public class CameraMovement : MonoBehaviour
     private void Awake()
     {
         _cfl = GetComponent<CinemachineFreeLook>();
-    }
-
-    private void FixedUpdate()
-    {
         SetCameraMode(CameraMode.Normal);
-
     }
 
-    private void SetCameraMode(CameraMode mode)
+    public void SetCameraMode(CameraMode mode)
     {
         switch (mode)
         {
@@ -39,21 +34,25 @@ public class CameraMovement : MonoBehaviour
 
                 _cfl.m_Orbits[2].m_Height = -1f;
 
+                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
 
                 
                 break;
             
             case CameraMode.Aim:
-                _cfl.m_Orbits[0].m_Height = 2.0f;
-                _cfl.m_Orbits[0].m_Radius = 1.0f;
+                _cfl.m_Orbits[0].m_Height = 2.5f;
+                _cfl.m_Orbits[0].m_Radius = 1.2f;
 
-                _cfl.m_Orbits[1].m_Radius = 1.3f;
+                _cfl.m_Orbits[1].m_Height = .2f;
+                _cfl.m_Orbits[1].m_Radius = 2f;
                 
-                _cfl.m_Orbits[2].m_Height = 1.2f;
+                _cfl.m_Orbits[2].m_Height = -1.2f;
 
-                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
-                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
+                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
                 
                 break;
         }
