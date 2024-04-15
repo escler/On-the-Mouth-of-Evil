@@ -19,6 +19,7 @@ public class LifeHandler : MonoBehaviour
 
         if (_actualLife > 0) return;
         
-        //Se Muere
+        GetComponent<Deadens>().Animator.SetBool("Death",true);
+        GetComponent<Deadens>().enabled = false;
     }
 }

@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class RangedWeapon : Weapon
 {
     protected Bullet _myBullet;
     private WeaponType _weaponType = WeaponType.Ranged;
-    protected bool _aiming;
-    protected CinemachineFreeLook _cmf;
+    private bool _aiming;
+    private CinemachineFreeLook _cmf;
+    protected Transform chest, targetAim;
+    [SerializeField] private Crosshair _crosshair;
 
     private void Start()
     {
+        chest = Player.Instance.chest;
+        targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
     }
 
@@ -20,17 +25,20 @@ public abstract class RangedWeapon : Weapon
     {
         _aiming = Input.GetMouseButton(1);
         if (_aiming)
-        { 
+        {
+            _crosshair.TurnOn();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
+            Aim();
+            if(Input.GetMouseButtonDown(0)) Shoot();
         }
         else
         {
+            _crosshair.TurnOff();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
         }
     }
 
-    protected virtual void Shoot()
-    {
-        
-    }
+    protected abstract void Aim();
+
+    protected abstract void Shoot();
 }

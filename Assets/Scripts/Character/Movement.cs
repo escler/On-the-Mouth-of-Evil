@@ -10,22 +10,24 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform _mainCamera;
     private Rigidbody _rb;
     private Animator _animator;
+    public Transform model;
 
     public float walkSpeed, runSpeed, sensRot;
     private float _actualSpeed;
     private bool _aiming;
-    public Transform targetAim, chest;
+    private Transform _targetAim, _chest;
     
     // Start is called before the first frame update
     private void Awake()
     {
+        _targetAim = Player.Instance.targetAim;
+        _chest = Player.Instance.chest;
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
-        targetAim = GetComponentInChildren<CenterPointCamera>().transform;
+        _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
         _animator = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Move();
@@ -46,16 +48,16 @@ public class Movement : MonoBehaviour
                           transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
             _rb.velocity = vel;
         
-            if (_rb.velocity  != Vector3.zero)
+            if (_rb.velocity != Vector3.zero)
             {
                 var newRot = Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0);
-                transform.rotation = Quaternion.Slerp(transform.rotation,newRot,sensRot * Time.fixedDeltaTime);
+                transform.rotation = newRot;
             }
         }
         else
         {
             _rb.velocity = Vector3.zero;
-            Vector3 aimVector = targetAim.position - chest.position;
+            Vector3 aimVector = _targetAim.position - _chest.position;
             Quaternion rotation = Quaternion.LookRotation(aimVector, Vector3.up);
             transform.rotation = rotation;
         }

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    protected int _damage;
-    protected float _cdForAttack;
+    [SerializeField] protected int damage;
+    protected float cdForAttack;
+    [SerializeField] protected LayerMask layerMask;
     protected enum WeaponType
     {
         Ranged,
