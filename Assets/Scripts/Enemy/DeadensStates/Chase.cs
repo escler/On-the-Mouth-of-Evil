@@ -11,6 +11,7 @@ public class Chase : State
     }
     public override void OnEnter()
     {
+        _d.Animator.SetBool("Walk", true);
     }
 
     public override void OnUpdate()

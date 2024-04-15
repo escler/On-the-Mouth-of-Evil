@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : State
 {
     private Deadens _d;
+    private float _cdForAttack;
     
     public Attack(Deadens d)
     {
@@ -13,14 +14,17 @@ public class Attack : State
     
     public override void OnEnter()
     {
-        _d.Attack();
-        _d.CdForAttack = _d.initialCdForAttack;
-        _d.DecisionTree.Execute(_d);
+        _d.Animator.SetBool("Attack", true);
+        _cdForAttack = 1.10f;
     }
 
     public override void OnUpdate()
     {
-        
+        _cdForAttack -= Time.deltaTime;
+        if (_cdForAttack <= 0)
+        {
+            _d.Attack();
+        }
     }
 
     public override void OnExit()

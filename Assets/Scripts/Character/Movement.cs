@@ -9,29 +9,33 @@ public class Movement : MonoBehaviour
     [SerializeField] private Controller _controller;
     [SerializeField] private Transform _mainCamera;
     private Rigidbody _rb;
+    private Animator _animator;
 
     public float walkSpeed, runSpeed, sensRot;
     private float _actualSpeed;
     private bool _aiming;
-    private Transform _targetAim;
+    public Transform targetAim, chest;
     
     // Start is called before the first frame update
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
-        _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
+        targetAim = GetComponentInChildren<CenterPointCamera>().transform;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         Move();
+        _aiming = Input.GetMouseButton(1);
     }
 
     private void Update()
     {
-        _aiming = Input.GetMouseButton(1);
+        _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
+        _animator.SetBool("Aiming",_aiming);
     }
 
     private void Move()
@@ -51,10 +55,10 @@ public class Movement : MonoBehaviour
         else
         {
             _rb.velocity = Vector3.zero;
-            transform.LookAt(_targetAim);
+            Vector3 aimVector = targetAim.position - chest.position;
+            Quaternion rotation = Quaternion.LookRotation(aimVector, Vector3.up);
+            transform.rotation = rotation;
         }
-
-        
     }
 
     private void Rotate()

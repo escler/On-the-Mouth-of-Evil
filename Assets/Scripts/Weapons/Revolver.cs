@@ -1,27 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Revolver : MonoBehaviour
+public class Revolver : RangedWeapon
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButton(1))
-        {
-            GameObject.Find("CM_Camera").GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
-        }
-        
-        if (Input.GetMouseButtonUp(1))
-        {
-            GameObject.Find("CM_Camera").GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
-        }
-        
+        OnUpdate();
     }
 }

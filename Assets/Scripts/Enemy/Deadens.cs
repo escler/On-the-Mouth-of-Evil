@@ -16,6 +16,8 @@ public class Deadens : SteeringAgent
     public float rangeForAttack;
     [SerializeField] private MeleeWeapon _weapon;
 
+    private Animator _animator;
+
     [SerializeField] private DecisionNode _decisionTree;
     public DecisionNode DecisionTree => _decisionTree;
 
@@ -26,8 +28,10 @@ public class Deadens : SteeringAgent
     }
 
     public Transform CharacterPos => _characterPos;
+    public Animator Animator => _animator;
     void Awake()
     {
+        _animator = GetComponentInChildren<Animator>();
         _characterPos = GameObject.Find("Player").GetComponent<Transform>();
         _fsm = new FiniteStateMachine();
         
@@ -41,7 +45,7 @@ public class Deadens : SteeringAgent
 
     void Update()
     {
-        _fsm.OnUpdate();
+        _fsm?.OnUpdate();
     }
 
     public void InFieldOfView()
@@ -103,5 +107,7 @@ public class Deadens : SteeringAgent
     public void Attack()
     {
         _weapon.SpawnHitBox();
+        _cdForAttack = initialCdForAttack;
+        DecisionTree.Execute(this);
     }
 }

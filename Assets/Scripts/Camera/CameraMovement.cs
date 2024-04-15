@@ -27,10 +27,10 @@ public class CameraMovement : MonoBehaviour
         switch (mode)
         {
             case CameraMode.Normal:
-                _cfl.m_Orbits[0].m_Height = 4;
+                _cfl.m_Orbits[0].m_Height = 2;
                 _cfl.m_Orbits[0].m_Radius = 1.75f;
 
-                _cfl.m_Orbits[1].m_Radius = 3.37f;
+                _cfl.m_Orbits[1].m_Radius = 2.3f;
 
                 _cfl.m_Orbits[2].m_Height = -1f;
 
@@ -46,7 +46,7 @@ public class CameraMovement : MonoBehaviour
                 _cfl.m_Orbits[0].m_Radius = 1.2f;
 
                 _cfl.m_Orbits[1].m_Height = .2f;
-                _cfl.m_Orbits[1].m_Radius = 2f;
+                _cfl.m_Orbits[1].m_Radius = 1.5f;
                 
                 _cfl.m_Orbits[2].m_Height = -1.2f;
 

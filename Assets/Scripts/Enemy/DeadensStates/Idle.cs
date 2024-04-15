@@ -11,6 +11,8 @@ public class Idle : State
     }
     public override void OnEnter()
     {
+        _d.Animator.SetBool("Walk", false);
+        _d.Animator.SetBool("Attack", false);
     }
 
     public override void OnUpdate()
