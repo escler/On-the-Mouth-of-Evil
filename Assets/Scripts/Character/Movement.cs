@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
         _targetAim = Player.Instance.targetAim;
         _chest = Player.Instance.chest;
     }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();

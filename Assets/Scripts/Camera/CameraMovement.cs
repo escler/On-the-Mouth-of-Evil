@@ -50,9 +50,9 @@ public class CameraMovement : MonoBehaviour
                 
                 _cfl.m_Orbits[2].m_Height = -1.2f;
 
-                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
+                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
+                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
                 
                 break;
         }
