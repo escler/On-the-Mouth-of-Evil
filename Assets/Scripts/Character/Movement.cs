@@ -16,12 +16,15 @@ public class Movement : MonoBehaviour
     private float _actualSpeed;
     private bool _aiming;
     private Transform _targetAim, _chest;
-    
-    // Start is called before the first frame update
-    private void Awake()
+
+
+    private void Start()
     {
         _targetAim = Player.Instance.targetAim;
         _chest = Player.Instance.chest;
+    }
+    private void Awake()
+    {
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
         _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
