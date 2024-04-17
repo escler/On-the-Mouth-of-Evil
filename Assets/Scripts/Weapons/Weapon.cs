@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [SerializeField] protected int damage;
-    protected float cdForAttack;
+    [SerializeField] protected float fireRate;
     [SerializeField] protected LayerMask layerMask;
     protected enum WeaponType
     {

@@ -22,15 +22,21 @@ public class Revolver : RangedWeapon
     protected override void Shoot()
     {
         Debug.Log("dispare");
-        var dir = targetAim.position - chest.position;
+        var dir = targetAim.position - camera.position;
         RaycastHit hit;
-        var ray = Physics.Raycast(chest.position, dir, out hit, dir.magnitude, layerMask);
-
+        var ray = Physics.Raycast(camera.position, dir, out hit, layerMask);
+        actualCd = fireRate;
+        
         if (ray)
         {
             Debug.Log("Pegue con " + hit.transform.name);
             var target = hit.transform;
             if(target.gameObject.layer == 7) target.GetComponent<LifeHandler>().OnTakeDamage(damage);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawRay(chest.position, targetAim.position - chest.position);
     }
 }

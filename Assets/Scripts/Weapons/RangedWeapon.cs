@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 public abstract class RangedWeapon : Weapon
 {
-    protected Bullet _myBullet;
     private WeaponType _weaponType = WeaponType.Ranged;
     private bool _aiming;
     private CinemachineFreeLook _cmf;
-    protected Transform chest, targetAim;
+    protected Transform camera, targetAim;
     [SerializeField] private Crosshair _crosshair;
+    protected float actualCd;
 
     private void Start()
     {
-        chest = Player.Instance.chest;
+        camera = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
     }
@@ -24,12 +24,16 @@ public abstract class RangedWeapon : Weapon
     protected void OnUpdate()
     {
         _aiming = Input.GetMouseButton(1);
+        if (actualCd > 0) actualCd -= Time.deltaTime;
         if (_aiming)
         {
             _crosshair.TurnOn();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
             Aim();
-            if(Input.GetMouseButtonDown(0)) Shoot();
+            if (Input.GetMouseButtonDown(0) && actualCd <= 0)
+            {
+                Shoot();
+            }
         }
         else
         {
