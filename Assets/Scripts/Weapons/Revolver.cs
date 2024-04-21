@@ -21,7 +21,6 @@ public class Revolver : RangedWeapon
 
     protected override void Shoot()
     {
-        Debug.Log("dispare");
         var dir = targetAim.position - camera.position;
         RaycastHit hit;
         var ray = Physics.Raycast(camera.position, dir, out hit, layerMask);
@@ -29,9 +28,12 @@ public class Revolver : RangedWeapon
         
         if (ray)
         {
-            Debug.Log("Pegue con " + hit.transform.name);
             var target = hit.transform;
-            if(target.gameObject.layer == 7) target.GetComponent<LifeHandler>().OnTakeDamage(damage);
+            _weaponFeedback.WeaponShootFeedback(hit.point, target.gameObject.layer, hit.normal);
+            if (target.gameObject.layer == 7)
+            {
+                target.GetComponent<LifeHandler>().OnTakeDamage(damage);
+            }
         }
     }
 

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public abstract class RangedWeapon : Weapon
 {
     private WeaponType _weaponType = WeaponType.Ranged;
+    protected WeaponFeedback _weaponFeedback;
     private bool _aiming;
     private CinemachineFreeLook _cmf;
     protected Transform camera, targetAim;
@@ -19,6 +20,7 @@ public abstract class RangedWeapon : Weapon
         camera = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
+        _weaponFeedback = GetComponent<WeaponFeedback>();
     }
 
     protected void OnUpdate()
@@ -33,6 +35,7 @@ public abstract class RangedWeapon : Weapon
             if (Input.GetMouseButtonDown(0) && actualCd <= 0)
             {
                 Shoot();
+                _weaponFeedback.FireParticle();
             }
         }
         else
