@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class Revolver : RangedWeapon
 {
-    private void Awake()
-    {
-    }
-
     private void Update()
     {
         OnUpdate();
@@ -36,6 +32,8 @@ public class Revolver : RangedWeapon
             }
         }
     }
+
+    public void Reload() => Reload();
 
     private void OnDrawGizmos()
     {

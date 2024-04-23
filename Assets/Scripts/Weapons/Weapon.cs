@@ -4,14 +4,10 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public WeaponType weaponType;
     [SerializeField] protected int damage;
     [SerializeField] protected float fireRate;
     [SerializeField] protected LayerMask layerMask;
-    protected enum WeaponType
-    {
-        Ranged,
-        Melee
-    }
 
     protected virtual void OnDamage()
     {
