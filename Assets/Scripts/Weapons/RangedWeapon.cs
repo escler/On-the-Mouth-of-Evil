@@ -14,7 +14,7 @@ public abstract class RangedWeapon : Weapon
     protected WeaponFeedback _weaponFeedback;
     private bool _aiming;
     private CinemachineFreeLook _cmf;
-    protected Transform camera, targetAim;
+    protected Transform cameraPos, targetAim;
     [SerializeField] private Crosshair _crosshair;
     protected float actualCd;
     public float reloadTime;
@@ -23,12 +23,12 @@ public abstract class RangedWeapon : Weapon
     public int ActualBullet => _actualBullet;
     private void Start()
     {
-        camera = Camera.main.transform;
+        cameraPos = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
         _weaponFeedback = GetComponent<WeaponFeedback>();
         _actualBullet = maxBullets;
-        OnUpdateBulletUI.Invoke();
+        OnUpdateBulletUI?.Invoke();
     }
 
     protected void OnUpdate()

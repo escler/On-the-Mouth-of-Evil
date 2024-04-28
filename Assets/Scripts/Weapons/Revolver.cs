@@ -17,9 +17,9 @@ public class Revolver : RangedWeapon
 
     protected override void Shoot()
     {
-        var dir = targetAim.position - camera.position;
+        var dir = targetAim.position - cameraPos.position;
         RaycastHit hit;
-        var ray = Physics.Raycast(camera.position, dir, out hit, layerMask);
+        var ray = Physics.Raycast(cameraPos.position, dir, out hit, layerMask);
         actualCd = fireRate;
         
         if (ray)
@@ -32,9 +32,6 @@ public class Revolver : RangedWeapon
             }
         }
     }
-
-    public void Reload() => Reload();
-
     private void OnDrawGizmos()
     {
         //Gizmos.DrawRay(chest.position, targetAim.position - chest.position);
