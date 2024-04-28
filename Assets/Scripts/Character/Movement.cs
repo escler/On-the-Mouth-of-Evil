@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -39,6 +40,8 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
+        _animator.SetFloat("AxisY",_controller.GetMovementInput().z);
         _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
         _animator.SetBool("Aiming",_aiming);
         RunCheck();
@@ -56,6 +59,7 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
+        model.transform.localPosition = new Vector3(0, -1, 0);
         Vector3 vel = transform.forward * (_controller.GetMovementInput().x * _actualSpeed * Time.fixedDeltaTime) +
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
         _rb.velocity = vel;

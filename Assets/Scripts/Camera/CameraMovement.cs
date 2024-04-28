@@ -28,15 +28,18 @@ public class CameraMovement : MonoBehaviour
         {
             case CameraMode.Normal:
                 _cfl.m_Orbits[0].m_Height = 2;
-                _cfl.m_Orbits[0].m_Radius = 1.75f;
+                _cfl.m_Orbits[0].m_Radius = 1f;
 
-                _cfl.m_Orbits[1].m_Radius = 2.3f;
+                _cfl.m_Orbits[1].m_Height = .5f;
+                _cfl.m_Orbits[1].m_Radius = 1.5f;
 
                 _cfl.m_Orbits[2].m_Height = -1f;
+                _cfl.m_Orbits[2].m_Radius = 1f;
 
                 _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
                 _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
                 _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
+                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = .8f;
 
                 
                 break;
@@ -45,14 +48,14 @@ public class CameraMovement : MonoBehaviour
                 _cfl.m_Orbits[0].m_Height = 2.5f;
                 _cfl.m_Orbits[0].m_Radius = 1.2f;
 
-                _cfl.m_Orbits[1].m_Height = .2f;
-                _cfl.m_Orbits[1].m_Radius = 1.5f;
+                _cfl.m_Orbits[1].m_Radius = 1f;
                 
                 _cfl.m_Orbits[2].m_Height = -1.2f;
 
                 _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
                 _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
                 _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
+                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 1f;
                 
                 break;
         }
