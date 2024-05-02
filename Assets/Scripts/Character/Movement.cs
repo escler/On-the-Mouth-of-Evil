@@ -1,5 +1,8 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.PlayerLoop;
 
 public class Movement : MonoBehaviour
 {
@@ -16,7 +19,7 @@ public class Movement : MonoBehaviour
     private Transform _targetAim, _weaponPos;
     public Transform spine;
 
-
+    private RigBuilder _rig;
     private void Start()
     {
         _targetAim = Player.Instance.targetAim;
@@ -25,41 +28,38 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        _rig = GetComponentInChildren<RigBuilder>();
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
         _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
         _animator = GetComponentInChildren<Animator>();
     }
 
+    private void LateUpdate()
+    {        
+        model.transform.localPosition = new Vector3(0, -1, 0);
+    }
+
     void FixedUpdate()
     {
-        Move();
         Rotate();
-        _aiming = Input.GetMouseButton(1);
+        Move();
     }
 
     private void Update()
     {
+        _aiming = Input.GetMouseButton(1);
         _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
         _animator.SetFloat("AxisY",_controller.GetMovementInput().z);
         _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
         _animator.SetBool("Aiming",_aiming);
+        
         RunCheck();
+        EnableRig();
     }
-
-    /*private void LateUpdate()
-    {
-        if (_aiming)
-        {
-            //RotateSpine();
-        }
-
-    }*/
-
 
     private void Move()
     {
-        model.transform.localPosition = new Vector3(0, -1, 0);
         Vector3 vel = transform.forward * (_controller.GetMovementInput().x * _actualSpeed * Time.fixedDeltaTime) +
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
         _rb.velocity = vel;
@@ -97,9 +97,24 @@ public class Movement : MonoBehaviour
         spine.localEulerAngles = new Vector3(rotation.eulerAngles.x, 0, 0);
     }
 
-    public void RunCheck()
+    private void RunCheck()
     {
         if (Input.GetButton("Run")) _actualSpeed = runSpeed;
         else _actualSpeed = walkSpeed;
+    }
+
+    private void EnableRig()
+    {
+        if (_aiming)
+        {
+            _rig.layers[0].active = true;
+            _rig.layers[1].active = false;
+        }
+        else
+        {
+            _rig.layers[1].active = true;
+            _rig.layers[0].active = false;
+
+        }
     }
 }
