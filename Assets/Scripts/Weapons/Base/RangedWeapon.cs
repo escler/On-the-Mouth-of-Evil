@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public abstract class RangedWeapon : Weapon
 {
     public int maxBullets;
-    public delegate void UpdateBulletUI();
-    public event UpdateBulletUI OnUpdateBulletUI;
     private int _actualBullet;
     protected WeaponFeedback _weaponFeedback;
     private bool _aiming;
@@ -28,7 +26,6 @@ public abstract class RangedWeapon : Weapon
         _cmf = FindObjectOfType<CinemachineFreeLook>();
         _weaponFeedback = GetComponent<WeaponFeedback>();
         _actualBullet = maxBullets;
-        OnUpdateBulletUI?.Invoke();
     }
 
     protected void OnUpdate()
@@ -45,7 +42,6 @@ public abstract class RangedWeapon : Weapon
             {
                 Shoot();
                 _actualBullet--;
-                OnUpdateBulletUI?.Invoke();
                 _weaponFeedback.FireParticle();
             }
         }
@@ -54,19 +50,26 @@ public abstract class RangedWeapon : Weapon
             _crosshair.TurnOff();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
         }
-
-        if (Input.GetButtonDown("Reload") && _actualReloadCd <= 0)
-        {
-            Reload();
-        }
     }
 
     public void Reload()
     {
+        if(_actualReloadCd > 0) return;
         _actualBullet = maxBullets;
         _actualReloadCd = reloadTime;
-        OnUpdateBulletUI.Invoke();
     }
+    
+    private void OnDisable()
+    {
+        model.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        model.SetActive(true);
+        
+    }
+    
     protected abstract void Aim();
 
     protected abstract void Shoot();

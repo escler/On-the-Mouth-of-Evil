@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Revolver : RangedWeapon
 {
+    
     private void Update()
     {
         OnUpdate();
@@ -31,9 +32,5 @@ public class Revolver : RangedWeapon
                 target.GetComponent<LifeHandler>().OnTakeDamage(damage);
             }
         }
-    }
-    private void OnDrawGizmos()
-    {
-        //Gizmos.DrawRay(chest.position, targetAim.position - chest.position);
     }
 }

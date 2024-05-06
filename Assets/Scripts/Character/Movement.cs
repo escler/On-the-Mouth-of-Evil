@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
     [SerializeField] private Controller _controller;
     [SerializeField] private Transform _mainCamera;
     private Rigidbody _rb;
-    private Animator _animator;
     public Transform model;
     private bool running;
 
@@ -19,7 +18,6 @@ public class Movement : MonoBehaviour
     private Transform _targetAim, _weaponPos;
     public Transform spine;
 
-    private RigBuilder _rig;
     private void Start()
     {
         _targetAim = Player.Instance.targetAim;
@@ -28,11 +26,9 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        _rig = GetComponentInChildren<RigBuilder>();
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
         _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
-        _animator = GetComponentInChildren<Animator>();
     }
 
     private void LateUpdate()
@@ -49,13 +45,8 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
-        _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
-        _animator.SetFloat("AxisY",_controller.GetMovementInput().z);
-        _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
-        _animator.SetBool("Aiming",_aiming);
         
         RunCheck();
-        EnableRig();
     }
 
     private void Move()
@@ -101,20 +92,5 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetButton("Run")) _actualSpeed = runSpeed;
         else _actualSpeed = walkSpeed;
-    }
-
-    private void EnableRig()
-    {
-        if (_aiming)
-        {
-            _rig.layers[0].active = true;
-            _rig.layers[1].active = false;
-        }
-        else
-        {
-            _rig.layers[1].active = true;
-            _rig.layers[0].active = false;
-
-        }
     }
 }

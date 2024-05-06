@@ -8,12 +8,12 @@ using UnityEngine;
 public class BulletUIHandler : MonoBehaviour
 {
     private TextMeshProUGUI _tmp;
-    [SerializeField] private RangedWeapon _actualWeapon;
+    [SerializeField] private WeaponActive _actualWeapon;
 
     private void Start()
     {
         _tmp = GetComponentInChildren<TextMeshProUGUI>();
-        _actualWeapon = Player.Instance.activeWeapon;
+        _actualWeapon = Player.Instance.GetComponentInChildren<WeaponActive>();
         _actualWeapon.OnUpdateBulletUI += ChangeValue;
     }
 

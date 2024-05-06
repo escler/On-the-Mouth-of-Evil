@@ -8,6 +8,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected int damage;
     [SerializeField] protected float fireRate;
     [SerializeField] protected LayerMask layerMask;
+    [SerializeField] protected GameObject model;
+    public Transform toAim;
 
     protected virtual void OnDamage()
     {

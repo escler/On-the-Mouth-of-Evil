@@ -6,9 +6,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; set; }
-    [SerializeField] public RangedWeapon activeWeapon;
+    [SerializeField] public Weapon activeWeapon;
     public Transform chest, targetAim;
-
+    
     private void Awake()
     {
         if (Instance == null)
