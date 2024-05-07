@@ -17,6 +17,7 @@ public abstract class RangedWeapon : Weapon
     protected float actualCd;
     public float reloadTime;
     private float _actualReloadCd;
+    private WeaponActive _weaponActive;
 
     public int ActualBullet => _actualBullet;
     private void Start()
@@ -25,7 +26,6 @@ public abstract class RangedWeapon : Weapon
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
         _weaponFeedback = GetComponent<WeaponFeedback>();
-        _actualBullet = maxBullets;
     }
 
     protected void OnUpdate()
@@ -42,6 +42,7 @@ public abstract class RangedWeapon : Weapon
             {
                 Shoot();
                 _actualBullet--;
+                _weaponActive.RefreshData();
                 _weaponFeedback.FireParticle();
             }
         }
@@ -67,6 +68,9 @@ public abstract class RangedWeapon : Weapon
     private void OnEnable()
     {
         model.SetActive(true);
+        _actualBullet = maxBullets;
+        _weaponActive = GetComponent<WeaponActive>();
+        _weaponActive.RefreshData();
         
     }
     

@@ -5,26 +5,28 @@ using UnityEngine;
 
 public class WeaponActive : MonoBehaviour
 {
-    public List<Weapon> weapons = new List<Weapon>();
+    public List<RangedWeapon> weapons = new List<RangedWeapon>();
     public delegate void UpdateBulletUI();
     public event UpdateBulletUI OnUpdateBulletUI;
-    private Weapon _activeWeapon;
+    [SerializeField] RangedWeapon _activeWeapon;
     private AnimPlayer _anim;
+
+    private int _actualBullets;
     private void Awake()
     {
-        //Player.Instance.activeWeapon = weapons[0];
         _activeWeapon = weapons[0];
         _anim = GetComponentInParent<AnimPlayer>();
     }
 
-    public int ActualBullet => _activeWeapon.GetComponent<RangedWeapon>().ActualBullet;
+    public int ActualBullet => _actualBullets;
 
     private void Update()
     {
         if(Input.GetButton("Weapon1")) ChangeWeapon(0);
         if(Input.GetButton("Weapon2"))ChangeWeapon(1);
         
-        if(Input.GetButton("Reload")) _activeWeapon.GetComponent<RangedWeapon>().Reload();
+        if(Input.GetButtonDown("Reload")) _activeWeapon.Reload();
+
     }
 
     private void ChangeWeapon(int value)
@@ -39,9 +41,12 @@ public class WeaponActive : MonoBehaviour
         
         _anim.ChangeLayerHeight(value);
         Player.Instance.chest = _activeWeapon.toAim;
-        
-        
-        Player.Instance.activeWeapon = _activeWeapon;
-        
+        RefreshData();
+    }
+
+    public void RefreshData()
+    {
+        _actualBullets = _activeWeapon.ActualBullet;
+        OnUpdateBulletUI?.Invoke();
     }
 }

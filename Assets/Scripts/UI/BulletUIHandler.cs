@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletUIHandler : MonoBehaviour
@@ -14,6 +10,7 @@ public class BulletUIHandler : MonoBehaviour
     {
         _tmp = GetComponentInChildren<TextMeshProUGUI>();
         _actualWeapon = Player.Instance.GetComponentInChildren<WeaponActive>();
+        _tmp.text = _actualWeapon.ActualBullet.ToString();
         _actualWeapon.OnUpdateBulletUI += ChangeValue;
     }
 
