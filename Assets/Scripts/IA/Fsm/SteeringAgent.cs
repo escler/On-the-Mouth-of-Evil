@@ -55,18 +55,18 @@ public class SteeringAgent : MonoBehaviour
     {
         size = size / 2;
 
-        if (Physics.Raycast(transform.position + transform.right * size, transform.forward, _obstacleRay, _obstacles))
-        {
-            return Seek(transform.position - transform.right);
-        }
-        else if (Physics.Raycast(transform.position - transform.right * size, transform.forward, _obstacleRay, _obstacles))
+        if (Physics.Raycast(transform.position - transform.right * size, transform.forward, _obstacleRay, _obstacles))
         {
             return Seek(transform.position + transform.right);
+        }
+        else if (Physics.Raycast(transform.position + transform.right * size, transform.forward, _obstacleRay, _obstacles))
+        {
+            return Seek(transform.position - transform.right);
         }
         return Vector3.zero;
     }
 
-    protected void CheckObstacle(float size)
+    protected bool CheckObstacle(float size)
     {
         _obstacleDetectionRight = Physics.Raycast(transform.position + transform.forward * size, transform.right,
             _obstacleRay, _obstacles);
@@ -74,9 +74,7 @@ public class SteeringAgent : MonoBehaviour
         _obstacleDetectionLeft = Physics.Raycast(transform.position - transform.forward * size, transform.right,
             _obstacleRay, _obstacles);
 
-
-        Debug.Log(_obstacleDetectionLeft);
-        Debug.Log(_obstacleDetectionRight);
+        return _obstacleDetectionRight || _obstacleDetectionLeft;
     }
 
     protected Vector3 Pursuit(SteeringAgent targetAgent)

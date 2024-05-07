@@ -15,6 +15,7 @@ public class Deadens : SteeringAgent
     [SerializeField] private Transform _attackSpawn;
     public float rangeForAttack;
     [SerializeField] private MeleeWeapon _weapon;
+    [SerializeField] private Transform _model;
 
     private Animator _animator;
 
@@ -100,8 +101,12 @@ public class Deadens : SteeringAgent
 
     public void Arrive()
     {
-        AddForce(Arrive(_characterPos.position));;
+        if (!HastToUseObstacleAvoidance(transform.localScale.x))
+        {
+            AddForce(Arrive(_characterPos.position));
+        }
         Move();
+
     }
 
     public void Attack()

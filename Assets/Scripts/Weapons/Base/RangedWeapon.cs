@@ -58,6 +58,7 @@ public abstract class RangedWeapon : Weapon
         if(_actualReloadCd > 0) return;
         _actualBullet = maxBullets;
         _actualReloadCd = reloadTime;
+        _weaponActive.RefreshData();
     }
     
     private void OnDisable()
