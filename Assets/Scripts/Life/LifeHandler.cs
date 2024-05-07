@@ -6,20 +6,19 @@ using UnityEngine;
 public class LifeHandler : MonoBehaviour
 {
     public int initialLife;
-    private int _actualLife;
+    protected int _actualLife;
+
+    public int ActualLife => _actualLife;
 
     private void Awake()
     {
         _actualLife = initialLife;
     }
 
-    public void OnTakeDamage(int damage)
+    public virtual void OnTakeDamage(int damage)
     {
         _actualLife -= damage;
 
         if (_actualLife > 0) return;
-        
-        GetComponent<Deadens>().Animator.SetBool("Death",true);
-        GetComponent<Deadens>().enabled = false;
     }
 }

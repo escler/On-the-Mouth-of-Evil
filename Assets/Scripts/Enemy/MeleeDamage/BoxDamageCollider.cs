@@ -16,7 +16,7 @@ public class BoxDamageCollider : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            other.GetComponent<LifeHandler>().OnTakeDamage(damage);
+            other.GetComponent<PlayerLifeHandler>().OnTakeDamage(damage);
         }
     }
 }

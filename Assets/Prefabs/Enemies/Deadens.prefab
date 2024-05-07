@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 4987549650021103461}
   - component: {fileID: 4042933041119430278}
   - component: {fileID: 873982149766620092}
-  - component: {fileID: 5866949037888162779}
+  - component: {fileID: 1158052419677128470}
   m_Layer: 0
   m_Name: Deadens
   m_TagString: Untagged
@@ -591,8 +591,9 @@ MonoBehaviour:
   _attackSpawn: {fileID: 4857450958223490266}
   rangeForAttack: 1.5
   _weapon: {fileID: 5365924730359815153}
+  _model: {fileID: 0}
   _decisionTree: {fileID: 5577103169157979809}
---- !u!114 &5866949037888162779
+--- !u!114 &1158052419677128470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -601,10 +602,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8523076919157448265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded524b4d93cc034ab256b0c3716c032, type: 3}
+  m_Script: {fileID: 11500000, guid: 93e6dea1bcdc22049b3f45ac69cddcda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLife: 0
+  initialLife: 100
 --- !u!1001 &7571057380152425390
 PrefabInstance:
   m_ObjectHideFlags: 0
