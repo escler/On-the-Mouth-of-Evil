@@ -8,6 +8,7 @@ public class Key : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        KeyHandler.Instance.AddKey(this);
+        KeyHandler.Instance.AddKey(keyRoom);
+        Destroy(gameObject);
     }
 }

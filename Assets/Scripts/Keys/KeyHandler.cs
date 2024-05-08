@@ -8,7 +8,7 @@ public class KeyHandler : MonoBehaviour
 {
     public static KeyHandler Instance { get; set; }
 
-    private List<Key> _keysInInventory;
+    [SerializeField] private List<KeyType> _keysInInventory = new List<KeyType>();
     private void Awake()
     {
         if (Instance == null)
@@ -18,7 +18,7 @@ public class KeyHandler : MonoBehaviour
         }
     }
 
-    public void AddKey(Key keyObtained)
+    public void AddKey(KeyType keyObtained)
     {
         _keysInInventory.Add(keyObtained);
     }
