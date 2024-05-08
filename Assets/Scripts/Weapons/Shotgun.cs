@@ -18,6 +18,11 @@ public class Shotgun : RangedWeapon
         
     }
 
+    public override void ObtainedBullet()
+    {
+        MaxBullets = AmmoHandler.Instance.ShotgunBullets;
+    }
+    
     protected override void Shoot()
     {
         actualCd = fireRate;

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class BulletUIHandler : MonoBehaviour
     {
         _tmp = GetComponentInChildren<TextMeshProUGUI>();
         _actualWeapon = Player.Instance.GetComponentInChildren<WeaponsHandler>();
-        _tmp.text = _actualWeapon.ActualBullet.ToString();
+        _tmp.text = _actualWeapon.ActualBullet + " / " + _actualWeapon.MaxBullets;
         _actualWeapon.OnUpdateBulletUI += ChangeValue;
     }
 
@@ -21,7 +22,7 @@ public class BulletUIHandler : MonoBehaviour
 
     public void ChangeValue()
     {
-        _tmp.text = _actualWeapon.ActualBullet.ToString();
+        _tmp.text = _actualWeapon.ActualBullet + " / " + _actualWeapon.MaxBullets;
     }
 
 }

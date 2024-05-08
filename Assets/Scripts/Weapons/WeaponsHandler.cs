@@ -13,7 +13,7 @@ public class WeaponsHandler : MonoBehaviour
     [SerializeField] RangedWeapon _activeWeapon;
     private AnimPlayer _anim;
 
-    private int _actualBullets;
+    private int _actualBullets, _maxBullets;
     private void Awake()
     {
         if (Instance == null)
@@ -24,8 +24,8 @@ public class WeaponsHandler : MonoBehaviour
         _activeWeapon = weapons[0];
         _anim = GetComponentInParent<AnimPlayer>();
     }
-
     public int ActualBullet => _actualBullets;
+    public int MaxBullets => _maxBullets;
 
     private void Update()
     {
@@ -52,7 +52,8 @@ public class WeaponsHandler : MonoBehaviour
 
     public void RefreshData()
     {
-        _actualBullets = _activeWeapon.ActualBullet;
+        _actualBullets = _activeWeapon.ChargerBullets;
+        _maxBullets = _activeWeapon.MaxBullets;
         OnUpdateBulletUI?.Invoke();
     }
 
@@ -61,5 +62,11 @@ public class WeaponsHandler : MonoBehaviour
         if (weapons.Contains(rangedWeapon)) return;
 
         weapons.Add(rangedWeapon);
+    }
+
+    public void UpdateMaxBullet()
+    {
+        _activeWeapon.ObtainedBullet();
+        RefreshData();
     }
 }
