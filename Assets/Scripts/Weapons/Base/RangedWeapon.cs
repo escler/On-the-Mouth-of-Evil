@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class RangedWeapon : Weapon
 {
     public int bulletsPerCharge;
+    public int initialMaxAmmo;
     private int _chargerBullets, _maxBullets, _actualBullets;
     protected WeaponFeedback _weaponFeedback;
     private bool _aiming;
@@ -30,6 +31,7 @@ public abstract class RangedWeapon : Weapon
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>();
         _weaponFeedback = GetComponent<WeaponFeedback>();
+        AmmoHandler.Instance.AddBullet(_gunType,initialMaxAmmo);
         ObtainedBullet();
         _chargerBullets = bulletsPerCharge;
         _weaponsHandler.RefreshData();
