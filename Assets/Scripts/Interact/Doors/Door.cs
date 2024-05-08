@@ -11,8 +11,18 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (KeyHandler.Instance.KeysInInventory.Contains(_roomType))
         {
-            _animator.SetBool("Open", true);
+            OpenDoor();
             gameObject.layer = 8;
         }
+    }
+
+    public void BlockDoor()
+    {
+        _animator.SetBool("Open", false);
+    }
+
+    public void OpenDoor()
+    {
+        _animator.SetBool("Open", true);
     }
 }

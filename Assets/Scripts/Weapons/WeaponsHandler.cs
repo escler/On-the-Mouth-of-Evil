@@ -33,7 +33,6 @@ public class WeaponsHandler : MonoBehaviour
         if(Input.GetButton("Weapon2"))ChangeWeapon(1);
         
         if(Input.GetButtonDown("Reload")) _activeWeapon.Reload();
-
     }
 
     private void ChangeWeapon(int value)

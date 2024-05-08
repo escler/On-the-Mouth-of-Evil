@@ -48,7 +48,7 @@ public class CameraMovement : MonoBehaviour
         switch (mode)
         {
             case CameraMode.Normal:
-                LerpCamera(2,1,.5f,1.5f,-1,1,.3f,.3f,.8f,.3f, .1f);
+                LerpCamera(2,1,.5f,1.5f,-1,1,.3f,.3f,.8f,.3f, .3f);
                 /*_cfl.m_Orbits[0].m_Height = 2;
                 _cfl.m_Orbits[0].m_Radius = 1f;
 
@@ -67,7 +67,7 @@ public class CameraMovement : MonoBehaviour
                 break;
             
             case CameraMode.Aim:
-                LerpCamera(2.5f,1.2f,.5f,1,-1.2f,1,0.2f,0.2f,1,0.2f,.1f);
+                LerpCamera(2.5f,1.2f,.5f,1,-1.2f,1,0.2f,0.2f,1,0.2f,.3f);
 
                 /*_cfl.m_Orbits[0].m_Height = 2.5f;
                 _cfl.m_Orbits[0].m_Radius = 1.2f;

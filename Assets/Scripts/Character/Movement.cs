@@ -38,13 +38,14 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Rotate();
+
         Move();
     }
 
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
+        Rotate();
         RunCheck();
     }
 
