@@ -45,7 +45,6 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
-        
         RunCheck();
     }
 
@@ -74,18 +73,7 @@ public class Movement : MonoBehaviour
             newRot.y = rotation.y;
             transform.rotation = rotation;
             transform.eulerAngles = new Vector3(0, transform.rotation.eulerAngles.y, 0);
-
         }
-    }
-    private void RotateSpine()
-    {
-        var rotation = spine.rotation;
-        Quaternion rot = Quaternion.LookRotation(_targetAim.position - _weaponPos.position,Vector3.up);
-        Quaternion rot1 = Quaternion.FromToRotation(spine.forward, _targetAim.position - _weaponPos.position);
-        rotation.x = rot.x;
-
-        //spine.rotation = rotation;
-        spine.localEulerAngles = new Vector3(rotation.eulerAngles.x, 0, 0);
     }
 
     private void RunCheck()

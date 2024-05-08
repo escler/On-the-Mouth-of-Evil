@@ -7,19 +7,21 @@ using UnityEngine.UI;
 public class Crosshair : MonoBehaviour
 {
     private Image _crossHair;
+    public Sprite aim, noAim;
 
     private void Awake()
     {
         _crossHair = GetComponent<Image>();
     }
 
-    public void TurnOn()
+    public void OnAim()
     {
-        _crossHair.enabled = true;
+        _crossHair.sprite = aim;
     }
     
-    public void TurnOff()
+    public void OffAim()
     {
-        _crossHair.enabled = false;
+        _crossHair.sprite = noAim;
+
     }
 }

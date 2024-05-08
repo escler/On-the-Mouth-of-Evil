@@ -227,7 +227,8 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 512
-  distance: 5
+  distance: 1
+  UIObject: {fileID: 0}
 --- !u!114 &4784608522688390531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c40234d304ab24e89a60cafcc79118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keysInInventory: 
 --- !u!1 &624809499152264296
 GameObject:
   m_ObjectHideFlags: 0
@@ -8534,7 +8536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons:
   - {fileID: 4368131164658697245}
-  - {fileID: 7616536875829624569}
   _activeWeapon: {fileID: 0}
 --- !u!1 &7975002565084519198
 GameObject:

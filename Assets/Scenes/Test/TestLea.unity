@@ -897,16 +897,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1089460656901879796, guid: fc781dbf627548a4daa34fe7bc068fcc,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5743182942574843522, guid: fc781dbf627548a4daa34fe7bc068fcc,
-        type: 3}
-      propertyPath: _animator
-      value: 
-      objectReference: {fileID: 2058267169}
     - target: {fileID: 6375482826935033205, guid: fc781dbf627548a4daa34fe7bc068fcc,
         type: 3}
       propertyPath: m_Name
@@ -1030,39 +1020,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6437825803310115318, guid: fc781dbf627548a4daa34fe7bc068fcc,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2058267169}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc781dbf627548a4daa34fe7bc068fcc, type: 3}
---- !u!1 &2058267168 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6437825803310115318, guid: fc781dbf627548a4daa34fe7bc068fcc,
+--- !u!95 &2058267169 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1967156409241720706, guid: fc781dbf627548a4daa34fe7bc068fcc,
     type: 3}
   m_PrefabInstance: {fileID: 2058267167}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &2058267169
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058267168}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8601324f96cda19458313b4fb6e03c11, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &56103435892025754
 Transform:
   m_ObjectHideFlags: 0
@@ -3369,7 +3334,7 @@ PrefabInstance:
     - target: {fileID: 4181527969038089289, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0056291507
+      value: 0.0056291525
       objectReference: {fileID: 0}
     - target: {fileID: 4181527969038089289, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
@@ -3379,7 +3344,7 @@ PrefabInstance:
     - target: {fileID: 4181527969038089289, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0016332216
+      value: 0.0016332221
       objectReference: {fileID: 0}
     - target: {fileID: 5481737187350894544, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}

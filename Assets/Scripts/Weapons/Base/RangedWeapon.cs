@@ -17,7 +17,7 @@ public abstract class RangedWeapon : Weapon
     protected float actualCd;
     public float reloadTime;
     private float _actualReloadCd;
-    private WeaponActive _weaponActive;
+    private WeaponsHandler _weaponsHandler;
 
     public int ActualBullet => _actualBullet;
     private void Start()
@@ -35,20 +35,20 @@ public abstract class RangedWeapon : Weapon
         if (_actualReloadCd > 0) _actualReloadCd -= Time.deltaTime;
         if (_aiming)
         {
-            _crosshair.TurnOn();
+            _crosshair.OnAim();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
             Aim();
             if (Input.GetMouseButtonDown(0) && actualCd <= 0 && _actualBullet > 0)
             {
                 Shoot();
                 _actualBullet--;
-                _weaponActive.RefreshData();
+                _weaponsHandler.RefreshData();
                 _weaponFeedback.FireParticle();
             }
         }
         else
         {
-            _crosshair.TurnOff();
+            _crosshair.OffAim();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
         }
     }
@@ -58,7 +58,7 @@ public abstract class RangedWeapon : Weapon
         if(_actualReloadCd > 0) return;
         _actualBullet = maxBullets;
         _actualReloadCd = reloadTime;
-        _weaponActive.RefreshData();
+        _weaponsHandler.RefreshData();
     }
     
     private void OnDisable()
@@ -70,8 +70,8 @@ public abstract class RangedWeapon : Weapon
     {
         model.SetActive(true);
         _actualBullet = maxBullets;
-        _weaponActive = GetComponent<WeaponActive>();
-        _weaponActive.RefreshData();
+        _weaponsHandler = GetComponent<WeaponsHandler>();
+        _weaponsHandler.RefreshData();
         
     }
     

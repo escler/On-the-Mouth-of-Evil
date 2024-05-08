@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponActive : MonoBehaviour
+public class WeaponsHandler : MonoBehaviour
 {
+    public static WeaponsHandler Instance { get; set; }
+    
     public List<RangedWeapon> weapons = new List<RangedWeapon>();
     public delegate void UpdateBulletUI();
     public event UpdateBulletUI OnUpdateBulletUI;
@@ -14,6 +16,11 @@ public class WeaponActive : MonoBehaviour
     private int _actualBullets;
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        
         _activeWeapon = weapons[0];
         _anim = GetComponentInParent<AnimPlayer>();
     }
@@ -48,5 +55,12 @@ public class WeaponActive : MonoBehaviour
     {
         _actualBullets = _activeWeapon.ActualBullet;
         OnUpdateBulletUI?.Invoke();
+    }
+
+    public void AddWeapon(RangedWeapon rangedWeapon)
+    {
+        if (weapons.Contains(rangedWeapon)) return;
+
+        weapons.Add(rangedWeapon);
     }
 }
