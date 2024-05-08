@@ -10,7 +10,7 @@ public class AnimPlayer : MonoBehaviour
     private RigBuilder _rig;
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
-    private bool _aiming, _shotgun;
+    private bool _aiming, _shotgun, _running;
 
     private void Awake()
     {
@@ -23,10 +23,12 @@ public class AnimPlayer : MonoBehaviour
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
+        _running = Input.GetButton("Run") && !_aiming;
         _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
         _animator.SetFloat("AxisY",_controller.GetMovementInput().z);
         _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
         _animator.SetBool("Aiming",_aiming);
+        _animator.SetBool("Running", _running);
 
         EnableRig();
     }
