@@ -53,7 +53,7 @@ public class SteeringAgent : MonoBehaviour
 
     protected Vector3 ObstacleAvoidance(float size)
     {
-        size = size / 2;
+        size = size / 4;
 
         if (Physics.Raycast(transform.position - transform.right * size, transform.forward, _obstacleRay, _obstacles))
         {
@@ -146,8 +146,8 @@ public class SteeringAgent : MonoBehaviour
 
         Gizmos.color = Color.green;
 
-        Vector3 leftRayPos = transform.position + transform.right * transform.localScale.x / 2;
-        Vector3 rightRayPos = transform.position - transform.right * transform.localScale.x / 2;
+        Vector3 leftRayPos = transform.position + transform.right * transform.localScale.x / 4;
+        Vector3 rightRayPos = transform.position - transform.right * transform.localScale.x / 4;
         
         Gizmos.DrawLine(leftRayPos, leftRayPos + transform.forward * _obstacleRay);
         Gizmos.DrawLine(rightRayPos, rightRayPos + transform.forward * _obstacleRay);

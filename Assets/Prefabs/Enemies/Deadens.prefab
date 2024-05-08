@@ -560,7 +560,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -577,13 +577,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 2
-  _maxForce: 200
-  _viewRadius: 10
+  _maxForce: 10
+  _viewRadius: 40
   _viewRadiusForArrive: 1.5
   _flockingRadius: 0
   _separationRadius: 0
-  _obstacleRay: 0
-  _viewAngle: 90
+  _obstacleRay: 0.5
+  _viewAngle: 359
   _obstacles:
     serializedVersion: 2
     m_Bits: 256
@@ -591,7 +591,7 @@ MonoBehaviour:
   _attackSpawn: {fileID: 4857450958223490266}
   rangeForAttack: 1.5
   _weapon: {fileID: 5365924730359815153}
-  _model: {fileID: 0}
+  _model: {fileID: 7970093637212625989}
   _decisionTree: {fileID: 5577103169157979809}
 --- !u!114 &1158052419677128470
 MonoBehaviour:
