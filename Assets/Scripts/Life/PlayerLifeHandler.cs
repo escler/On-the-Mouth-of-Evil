@@ -11,7 +11,6 @@ public class PlayerLifeHandler : LifeHandler
     public override void OnTakeDamage(int damage)
     {
         _actualLife -= damage;
-        print(_actualLife);
 
         OnLifeChange?.Invoke();
         

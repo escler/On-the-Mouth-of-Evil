@@ -409,6 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6523512007132244988}
+  - component: {fileID: 6065903485994982668}
   m_Layer: 0
   m_Name: Door-Living
   m_TagString: Untagged
@@ -432,6 +433,20 @@ Transform:
   - {fileID: 8720942467660346899}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6065903485994982668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375482826935033205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e37dde7f972f649a8b5d71665dd5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roomType: 3
+  _animator: {fileID: 1967156409241720706}
 --- !u!1 &6437825803310115318
 GameObject:
   m_ObjectHideFlags: 0

@@ -110,7 +110,7 @@ public class SteeringAgent : MonoBehaviour
 
             if (dist.sqrMagnitude > _separationRadius * _separationRadius) continue;
 
-            desired += dist;
+            desired += new Vector3(dist.x, 0, dist.z);
         }
 
         if (desired == Vector3.zero) return Vector3.zero;

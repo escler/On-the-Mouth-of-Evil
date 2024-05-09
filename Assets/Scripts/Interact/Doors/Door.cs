@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,11 @@ public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private KeyType _roomType;
     [SerializeField] private Animator _animator;
+
+    private void Awake()
+    {
+        if(_roomType == KeyType.Key_default) OpenDoor();
+    }
 
     public void OnInteract()
     {

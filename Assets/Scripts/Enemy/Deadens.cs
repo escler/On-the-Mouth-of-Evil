@@ -42,6 +42,7 @@ public class Deadens : SteeringAgent
         _fsm.AddState(States.PfCharacter, new PfCharacter());
         
         _fsm.ChangeState(States.Idle);
+        EnemyManager.Instance.AddEnemy(this);
     }
 
     void Update()
@@ -104,6 +105,7 @@ public class Deadens : SteeringAgent
         if (!HastToUseObstacleAvoidance(transform.localScale.x))
         {
             AddForce(Arrive(_characterPos.position));
+            AddForce(Separation(EnemyManager.Instance.Enemies) * 1.3f);
         }
         Move();
 

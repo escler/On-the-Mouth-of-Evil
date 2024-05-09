@@ -9,7 +9,8 @@ public class DeadensLifeHandler : LifeHandler
         _actualLife -= damage;
 
         if (_actualLife > 0) return;
-                
+
+        EnemyManager.Instance.RemoveEnemy(GetComponent<Deadens>());
         GetComponent<Deadens>().Animator.SetBool("Death",true);
         GetComponent<Deadens>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;

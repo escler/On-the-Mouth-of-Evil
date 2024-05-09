@@ -6,5 +6,6 @@ public enum KeyType
 {
     Key_Living,
     Key_Kitchen,
-    Key_Garage
+    Key_Garage,
+    Key_default
 }

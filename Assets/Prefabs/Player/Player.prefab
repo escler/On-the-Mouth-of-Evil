@@ -104,7 +104,7 @@ MonoBehaviour:
   _controller: {fileID: 7011258207113424462}
   _mainCamera: {fileID: 0}
   model: {fileID: 8142227581218274970}
-  walkSpeed: 100
+  walkSpeed: 75
   runSpeed: 150
   sensRot: 1
   spine: {fileID: 4091427641043922333}
@@ -8481,6 +8481,7 @@ MonoBehaviour:
   model: {fileID: 5128641613058810137}
   toAim: {fileID: 576491722217294531}
   bulletsPerCharge: 6
+  initialMaxAmmo: 0
   _crosshair: {fileID: 0}
   reloadTime: 5
   _gunType: 0
@@ -8497,7 +8498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
-  damage: 1
+  damage: 6
   fireRate: 1
   layerMask:
     serializedVersion: 2
@@ -8505,6 +8506,7 @@ MonoBehaviour:
   model: {fileID: 5588946959009368321}
   toAim: {fileID: 143724663980796530}
   bulletsPerCharge: 2
+  initialMaxAmmo: 6
   _crosshair: {fileID: 0}
   reloadTime: 2
   _gunType: 1

@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemy;
+    public GameObject enemy;
 
     public void Spawn()
     {
-        Instantiate(_enemy, transform.position, transform.rotation);
+        var enemySpawned = Instantiate(this.enemy, transform.position, transform.rotation);
+        enemy = enemySpawned;
     }
 }

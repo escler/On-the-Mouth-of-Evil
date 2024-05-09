@@ -1,6 +1,8 @@
 using Cinemachine;
 using UnityEngine;
-
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public abstract class RangedWeapon : Weapon
 {
@@ -66,8 +68,8 @@ public abstract class RangedWeapon : Weapon
     {
         if(_actualReloadCd > 0 || _chargerBullets == bulletsPerCharge || _maxBullets == 0) return;
 
-        var bulletsToCharge = bulletsPerCharge - _chargerBullets;
-        _chargerBullets = bulletsPerCharge;
+        var bulletsToCharge = Mathf.Clamp(bulletsPerCharge - _chargerBullets,0,_maxBullets);
+        _chargerBullets += bulletsToCharge;
         _maxBullets -= bulletsToCharge;
         
         
