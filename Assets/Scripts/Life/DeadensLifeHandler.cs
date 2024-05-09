@@ -13,6 +13,9 @@ public class DeadensLifeHandler : LifeHandler
         EnemyManager.Instance.RemoveEnemy(GetComponent<Deadens>());
         GetComponent<Deadens>().Animator.SetBool("Death",true);
         GetComponent<Deadens>().enabled = false;
-        GetComponent<CapsuleCollider>().enabled = false;
+        foreach (BoxCollider c in GetComponentsInChildren<BoxCollider>())
+        {
+            c.enabled = false;
+        }
     }
 }

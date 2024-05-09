@@ -47,6 +47,7 @@ public class Deadens : SteeringAgent
 
     void Update()
     {
+        _model.localPosition = new Vector3(0, -1, 0);
         _fsm?.OnUpdate();
     }
 

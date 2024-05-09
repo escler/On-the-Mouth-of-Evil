@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
     private void LateUpdate()
     {        
         model.transform.localPosition = new Vector3(0, -1, 0);
+        model.transform.localRotation = Quaternion.identity;
     }
 
     void FixedUpdate()

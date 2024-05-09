@@ -34,7 +34,7 @@ public class Revolver : RangedWeapon
             _weaponFeedback.WeaponShootFeedback(hit.point, target.gameObject.layer, hit.normal);
             if (target.gameObject.layer == 7)
             {
-                target.GetComponent<LifeHandler>().OnTakeDamage(damage);
+                target.GetComponentInParent<LifeHandler>().OnTakeDamage(damage);
             }
         }
     }
