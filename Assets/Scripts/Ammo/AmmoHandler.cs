@@ -13,10 +13,12 @@ public class AmmoHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance)
         {
-            Instance = this;
+            Destroy(this);
         }
+
+        Instance = this;
     }
 
     public void AddBullet(GunType gunType, int amount)

@@ -11,10 +11,12 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance)
         {
-            Instance = this;
+            Destroy(gameObject);
             return;
         }
+
+        Instance = this;
     }
 }
