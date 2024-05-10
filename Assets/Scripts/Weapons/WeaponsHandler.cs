@@ -21,9 +21,11 @@ public class WeaponsHandler : MonoBehaviour
             Instance = this;
         }
         
-        _activeWeapon = weapons[0];
         _anim = GetComponentInParent<AnimPlayer>();
+        _activeWeapon = weapons[0];
+
     }
+
     public int ActualBullet => _actualBullets;
     public int MaxBullets => _maxBullets;
 
@@ -52,6 +54,7 @@ public class WeaponsHandler : MonoBehaviour
 
     public void RefreshData()
     {
+        if (_activeWeapon == null) return;
         _actualBullets = _activeWeapon.ChargerBullets;
         _maxBullets = _activeWeapon.MaxBullets;
         OnUpdateBulletUI?.Invoke();

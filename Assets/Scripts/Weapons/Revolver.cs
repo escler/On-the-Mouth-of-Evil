@@ -13,7 +13,7 @@ public class Revolver : RangedWeapon
 
     public override void ObtainedBullet()
     {
-        MaxBullets = AmmoHandler.Instance.RevolverBullets;
+        MaxBullets = ammoHandler.RevolverBullets;
     }
 
     protected override void Aim()

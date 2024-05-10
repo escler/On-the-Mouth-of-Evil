@@ -30,7 +30,7 @@ public class AmmoHandler : MonoBehaviour
             case GunType.shotgun: _shotgunBullets += amount; break;
         }
         
-        WeaponsHandler.Instance.UpdateMaxBullet();
+        GetComponent<WeaponsHandler>().UpdateMaxBullet();
     }
 
     public void UpdateMaxAmount(GunType gunType, int amount)
@@ -41,7 +41,7 @@ public class AmmoHandler : MonoBehaviour
             case GunType.shotgun: _shotgunBullets = amount; break;
         }
         
-        WeaponsHandler.Instance.UpdateMaxBullet();
+        GetComponent<WeaponsHandler>().UpdateMaxBullet();
     }
 }
 

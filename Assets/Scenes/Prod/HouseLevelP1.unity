@@ -1518,6 +1518,11 @@ PrefabInstance:
       objectReference: {fileID: 300245291}
     - target: {fileID: 4368131164658697245, guid: 53ad49075e4a8994fa69917e9aaa3cc8,
         type: 3}
+      propertyPath: ammoHandler
+      value: 
+      objectReference: {fileID: 2092825069}
+    - target: {fileID: 4368131164658697245, guid: 53ad49075e4a8994fa69917e9aaa3cc8,
+        type: 3}
       propertyPath: initialMaxAmmo
       value: 12
       objectReference: {fileID: 0}
@@ -1652,6 +1657,11 @@ PrefabInstance:
       propertyPath: _crosshair
       value: 
       objectReference: {fileID: 300245291}
+    - target: {fileID: 7616536875829624569, guid: 53ad49075e4a8994fa69917e9aaa3cc8,
+        type: 3}
+      propertyPath: ammoHandler
+      value: 
+      objectReference: {fileID: 2092825069}
     - target: {fileID: 7709309960849946983, guid: 53ad49075e4a8994fa69917e9aaa3cc8,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -2288,7 +2298,7 @@ PrefabInstance:
     - target: {fileID: 8138994011364096395, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.14689846
+      value: -0.14689845
       objectReference: {fileID: 0}
     - target: {fileID: 8138994011364096395, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
@@ -2298,7 +2308,7 @@ PrefabInstance:
     - target: {fileID: 8138994011364096395, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.06386859
+      value: -0.06386858
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -69335,6 +69345,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091047494}
   m_Mesh: {fileID: 9176310897612776759, guid: 41ef47ed62fe368469c9e2c08b33e2da, type: 3}
+--- !u!114 &2092825069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9206278127465321296, guid: 53ad49075e4a8994fa69917e9aaa3cc8,
+    type: 3}
+  m_PrefabInstance: {fileID: 57056114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3689f6a5ea6564199cfc10cdc58301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2093189542
 GameObject:
   m_ObjectHideFlags: 0

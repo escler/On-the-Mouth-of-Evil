@@ -21,6 +21,7 @@ public abstract class RangedWeapon : Weapon
     [SerializeField] private GunType _gunType;
     private bool _shooting;
     [SerializeField] private ParticleSystem psFire;
+    public AmmoHandler ammoHandler;
     public int ChargerBullets => _chargerBullets;
 
     public int MaxBullets
@@ -33,7 +34,7 @@ public abstract class RangedWeapon : Weapon
         cameraPos = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>(); 
-        AmmoHandler.Instance.AddBullet(_gunType,initialMaxAmmo);
+        ammoHandler.AddBullet(_gunType,initialMaxAmmo);
         ObtainedBullet();
         _chargerBullets = bulletsPerCharge;
         _weaponsHandler.RefreshData();
@@ -72,7 +73,7 @@ public abstract class RangedWeapon : Weapon
         _maxBullets -= bulletsToCharge;
         
         
-        AmmoHandler.Instance.UpdateMaxAmount(_gunType,_maxBullets);
+        ammoHandler.UpdateMaxAmount(_gunType,_maxBullets);
         
         _actualReloadCd = reloadTime;
         _weaponsHandler.RefreshData();
