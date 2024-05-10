@@ -10,10 +10,13 @@ public class DeadensLifeHandler : LifeHandler
         var deadensComp = GetComponent<Deadens>();
         if (_actualLife > 0)
         {
-            deadensComp.canHit = true;
-            deadensComp.DecisionTree.Execute(deadensComp);
+            if (deadensComp.canHit)
+            {
+                deadensComp.enemyHit = true;
+                deadensComp.DecisionTree.Execute(deadensComp);
+            }
+            return;
         }
-        if (_actualLife > 0) return;
 
         deadensComp.canHit = false;
         EnemyManager.Instance.RemoveEnemy(GetComponent<Deadens>());
@@ -21,6 +24,5 @@ public class DeadensLifeHandler : LifeHandler
         ListDemonsUI.Instance.AddText(deadensComp.enemyCount, "<s><color=\"red\">Demon " + deadensComp.enemyCount + "</s></color>");
         deadensComp.GetComponent<CapsuleCollider>().enabled = false;
         deadensComp.enabled = false;
-        
     }
 }

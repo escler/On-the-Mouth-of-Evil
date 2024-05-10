@@ -13,6 +13,8 @@ public class Hit : State
     public override void OnEnter()
     {
         _d.mageAnim.hit = true;
+        _d.canHit = false;
+        _d.waitForHitAgain = 5f;
     }
 
     public override void OnUpdate()
@@ -27,7 +29,7 @@ public class Hit : State
 
     public override void OnExit()
     {
+        _d.enemyHit = false;
         _d.mageAnim.hit = false;
-        _d.canHit = false;
     }
 }

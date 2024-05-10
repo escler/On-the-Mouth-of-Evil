@@ -17,7 +17,8 @@ public class Deadens : SteeringAgent
     [SerializeField] private MeleeWeapon _weapon;
     [SerializeField] public Transform _model;
     public int enemyCount;
-    public bool canHit;
+    public bool canHit, enemyHit;
+    public float waitForHitAgain;
     public GameObject fireBall, floorAttack;
     public Vector3[] points = new Vector3[4];
 
@@ -49,10 +50,19 @@ public class Deadens : SteeringAgent
         _fsm.ChangeState(States.Idle);
         EnemyManager.Instance.AddEnemy(this);
         ListDemonsUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
+        canHit = true;
     }
 
     void Update()
     {
+        if (!canHit)
+        {
+            waitForHitAgain -= Time.deltaTime;
+            if (waitForHitAgain <= 0)
+            {
+                canHit = true;
+            }
+        }
         transform.LookAt(new Vector3(_characterPos.position.x, transform.position.y, _characterPos.position.z));
         _fsm?.OnUpdate();
     }
@@ -143,11 +153,23 @@ public class Deadens : SteeringAgent
 
             if (ray)
             {
-                transform.position -= points[i];
                 return true;
             }
         }
 
         return false;
+    }
+    
+    public void MoveChar()
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            bool ray = Physics.Raycast(transform.position + transform.up, points[i], 2, _obstacles);
+
+            if (ray)
+            {
+                transform.position -= points[i];
+            }
+        }
     }
 }

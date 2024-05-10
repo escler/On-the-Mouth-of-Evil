@@ -34,6 +34,7 @@ public class MageAnim : MonoBehaviour
         var modelPos = _deadens._model.transform.position;
         _deadens.transform.position = new Vector3(modelPos.x, _deadens.transform.position.y, modelPos.z);
         _deadens._model.transform.localPosition = Vector3.zero;
+        //_deadens.MoveChar();
     }
 
     public void Attack()

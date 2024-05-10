@@ -16,7 +16,7 @@ public class QuestionNode : DecisionNode
         switch (question)
         {
             case Questions.Hit:
-                if (deadens.canHit)
+                if (deadens.canHit && deadens.enemyHit)
                 {
                     trueNode.Execute(deadens);
                 }

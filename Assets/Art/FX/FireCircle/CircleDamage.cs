@@ -12,7 +12,7 @@ public class CircleDamage : MonoBehaviour
 
     private void Awake()
     {
-        actualTime = 2;
+        actualTime = 1;
         Destroy(gameObject, 5);
     }
 
@@ -25,20 +25,19 @@ public class CircleDamage : MonoBehaviour
 
         if (actualTime <= 0)
         {
-            _player.GetComponent<LifeHandler>()?.OnTakeDamage(damagePerSecond);
-            actualTime = 2;
+            Player.Instance.GetComponent<PlayerLifeHandler>().OnTakeDamage(damagePerSecond);
+            actualTime = 1f;
         }
         
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == 6)
         {
             _player = other.gameObject;
             _inContact = true;
-            actualTime = 2;
         }
     }
     
