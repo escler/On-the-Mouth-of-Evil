@@ -12,5 +12,6 @@ public class SpawnEnemy : MonoBehaviour
     {
         var enemySpawned = Instantiate(this.enemy, transform.position, transform.rotation);
         enemy = enemySpawned;
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 }

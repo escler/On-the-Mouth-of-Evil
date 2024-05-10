@@ -12,13 +12,13 @@ public class ColliderEventLiving : MonoBehaviour, IEvent
     {
         if (other.gameObject.layer == 6)
         {
+            _spawnEnemy.Spawn();
             EventsManager.Instance.SetCurrentEvent(this);
         }
     }
 
     public void StartEvent()
     {
-        _spawnEnemy.Spawn();
         _livingDoor.BlockDoor();
         GetComponent<Collider>().enabled = false;
         target = _spawnEnemy.enemy;

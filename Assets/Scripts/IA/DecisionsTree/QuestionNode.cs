@@ -8,24 +8,34 @@ public class QuestionNode : DecisionNode
 
     public Questions question;
 
+    private float randomRange;
+    
     public override void Execute(Deadens deadens)
     {
+        randomRange = Random.Range(1, 100);
         switch (question)
         {
-            case Questions.CanAttack:
-                if(deadens.CanAttack) trueNode.Execute(deadens);
+            case Questions.Hit:
+                if (deadens.canHit)
+                {
+                    trueNode.Execute(deadens);
+                }
                 else falseNode.Execute(deadens);
                 break;
-            case Questions.PlayerInFOV:
-                if(deadens.PlayerInFov) trueNode.Execute(deadens);
+            case Questions.Idle:
+                if(randomRange < 10) trueNode.Execute(deadens);
                 else falseNode.Execute(deadens);
                 break;
-            case Questions.WallBetweenPlayerAndMe:
-                if(deadens.LineOfSight()) trueNode.Execute(deadens);
+            case Questions.Move:
+                if(randomRange < 30) trueNode.Execute(deadens);
                 else falseNode.Execute(deadens);
                 break;
-            case Questions.PlayerInAttackRange:
-                if (deadens.InRangeForAttack) trueNode.Execute(deadens);
+            case Questions.Attack:
+                if(randomRange < 70) trueNode.Execute(deadens);
+                else falseNode.Execute(deadens);
+                break;
+            case Questions.FloorAttack:
+                if (randomRange < 100) trueNode.Execute(deadens);
                 else falseNode.Execute(deadens);
                 break;
         }
@@ -48,9 +58,10 @@ public class QuestionNode : DecisionNode
 
 public enum Questions
 {
-    CanAttack,
-    PlayerInFOV,
-    WallBetweenPlayerAndMe,
-    PlayerInAttackRange
+    Idle,
+    Move,
+    Attack,
+    FloorAttack,
+    Hit
     
 }

@@ -6,7 +6,7 @@ public class Attack : State
 {
     private Deadens _d;
     private float _cdForAttack;
-    
+    private float _durationAnim;
     public Attack(Deadens d)
     {
         _d = d;
@@ -14,20 +14,21 @@ public class Attack : State
     
     public override void OnEnter()
     {
-        _d.Animator.SetBool("Attack", true);
-        _cdForAttack = 1.10f;
+        _d.mageAnim.normalAttack = true;    
     }
 
     public override void OnUpdate()
     {
-        _cdForAttack -= Time.deltaTime;
-        if (_cdForAttack <= 0)
+        _durationAnim = _d.mageAnim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+        if (_durationAnim >= .8f)
         {
-            _d.Attack();
+            _d.DecisionTree.Execute(_d);
         }
     }
 
     public override void OnExit()
     {
+        _d.mageAnim.normalAttack = false;
     }
 }

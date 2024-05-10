@@ -10,17 +10,20 @@ public class ActionNode : DecisionNode
     {
         switch (action)
         {
+            case Actions.Hit:
+                deadens.HitState();
+                break;
             case Actions.Idle:
                 deadens.IdleState();
                 break;
-            case Actions.Pf:
-                deadens.PfState();
-                break;
-            case Actions.Chase:
-                deadens.ChaseState();
+            case Actions.Move:
+                deadens.MovingSate();
                 break;
             case Actions.Attack:
                 deadens.AttackState();
+                break;
+            case Actions.FloorAttack:
+                deadens.FloorState();
                 break;
         }
     }
@@ -29,7 +32,8 @@ public class ActionNode : DecisionNode
 public enum Actions
 {
     Idle,
-    Pf,
-    Chase,
-    Attack
+    Move,
+    Attack,
+    FloorAttack,
+    Hit
 }

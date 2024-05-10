@@ -7,5 +7,8 @@ public enum States
     Idle,
     Attack,
     PfCharacter,
-    Chase
+    Chase,
+    Hit,
+    FloorAttack,
+    Moving
 }
