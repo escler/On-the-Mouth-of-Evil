@@ -5,10 +5,11 @@ using UnityEngine;
 public class Key : MonoBehaviour, IInteractable
 {
     public KeyType keyRoom;
+    public string roomName;
 
     public void OnInteract()
     {
-        KeyHandler.Instance.AddKey(keyRoom);
+        KeyHandler.Instance.AddKey(keyRoom, roomName);
         Destroy(gameObject);
     }
 }

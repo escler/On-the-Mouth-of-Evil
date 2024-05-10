@@ -10,8 +10,14 @@ public class AnimPlayer : MonoBehaviour
     private RigBuilder _rig;
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
-    private bool _aiming, _shotgun, _running;
+    private bool _aiming, _shotgun, _running, _shooting;
 
+    public bool Shooting
+    {
+        get { return _shooting; }
+        set { _shooting = value; }
+    }
+    
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -29,6 +35,7 @@ public class AnimPlayer : MonoBehaviour
         _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
         _animator.SetBool("Aiming",_aiming);
         _animator.SetBool("Running", _running);
+        _animator.SetBool("Shoot", _shooting);
 
         EnableRig();
     }

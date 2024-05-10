@@ -24,6 +24,11 @@ public class WeaponFeedback : MonoBehaviour
         }
     }
 
+    public void SetFireParticle(ParticleSystem psFire)
+    {
+        _psFireShoot = psFire;
+    }
+    
     public void FireParticle()
     {
         _psFireShoot.gameObject.SetActive(true);

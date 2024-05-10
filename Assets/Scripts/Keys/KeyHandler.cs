@@ -6,23 +6,26 @@ using UnityEngine;
 
 public class KeyHandler : MonoBehaviour
 {
-    public static KeyHandler Instance { get; set; }
+    public static KeyHandler Instance { get; private set; }
 
-    [SerializeField] private List<KeyType> _keysInInventory = new List<KeyType>();
+    private Dictionary<KeyType, string> _keysInInventory = new Dictionary<KeyType, string>();
 
-    public List<KeyType> KeysInInventory => _keysInInventory;
+    public Dictionary<KeyType, string> KeysInInventory => _keysInInventory;
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance)
         {
-            Instance = this;
+            Destroy(this);
             return;
         }
+
+        Instance = this;
     }
 
-    public void AddKey(KeyType keyObtained)
+    public void AddKey(KeyType keyObtained, string name)
     {
-        _keysInInventory.Add(keyObtained);
+        _keysInInventory.Add(keyObtained, name);
+        KeysUIAdquired.Instance.AddText(name);
     }
     
 }

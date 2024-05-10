@@ -10,7 +10,7 @@ public class PickupShotgun : MonoBehaviour,IInteractable
     public void OnInteract()
     {
         WeaponsHandler.Instance.AddWeapon(_shotgun);
-        EventsManager.Instance.SetCurrentEvent(GetComponentInParent<IEvent>());
+        //EventsManager.Instance.SetCurrentEvent(GetComponentInParent<IEvent>());
         gameObject.SetActive(false);
     }
 }

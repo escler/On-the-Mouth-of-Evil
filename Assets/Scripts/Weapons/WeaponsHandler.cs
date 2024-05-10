@@ -69,4 +69,9 @@ public class WeaponsHandler : MonoBehaviour
         _activeWeapon.ObtainedBullet();
         RefreshData();
     }
+
+    public void FeedbackShoot()
+    {
+        _activeWeapon.DoFeedbackShoot();
+    }
 }

@@ -15,10 +15,11 @@ public class Door : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        if (KeyHandler.Instance.KeysInInventory.Contains(_roomType))
+        if (KeyHandler.Instance.KeysInInventory.ContainsKey(_roomType))
         {
             OpenDoor();
             gameObject.layer = 8;
+            KeysUIAdquired.Instance.RemoveText(KeyHandler.Instance.KeysInInventory[_roomType]);
         }
     }
 

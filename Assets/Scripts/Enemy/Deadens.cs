@@ -16,6 +16,7 @@ public class Deadens : SteeringAgent
     public float rangeForAttack;
     [SerializeField] private MeleeWeapon _weapon;
     [SerializeField] private Transform _model;
+    public int enemyCount;
 
     private Animator _animator;
 
@@ -43,6 +44,7 @@ public class Deadens : SteeringAgent
         
         _fsm.ChangeState(States.Idle);
         EnemyManager.Instance.AddEnemy(this);
+        ListDemonsUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
     }
 
     void Update()

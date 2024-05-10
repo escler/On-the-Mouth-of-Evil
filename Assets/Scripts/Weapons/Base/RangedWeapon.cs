@@ -19,7 +19,8 @@ public abstract class RangedWeapon : Weapon
     private float _actualReloadCd;
     private WeaponsHandler _weaponsHandler;
     [SerializeField] private GunType _gunType;
-
+    private bool _shooting;
+    [SerializeField] private ParticleSystem psFire;
     public int ChargerBullets => _chargerBullets;
 
     public int MaxBullets
@@ -31,8 +32,7 @@ public abstract class RangedWeapon : Weapon
     {
         cameraPos = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
-        _cmf = FindObjectOfType<CinemachineFreeLook>();
-        _weaponFeedback = GetComponent<WeaponFeedback>();
+        _cmf = FindObjectOfType<CinemachineFreeLook>(); 
         AmmoHandler.Instance.AddBullet(_gunType,initialMaxAmmo);
         ObtainedBullet();
         _chargerBullets = bulletsPerCharge;
@@ -42,6 +42,7 @@ public abstract class RangedWeapon : Weapon
     protected void OnUpdate()
     {
         _aiming = Input.GetMouseButton(1);
+        _shooting = GetComponentInParent<AnimPlayer>().Shooting;
         if (actualCd > 0) actualCd -= Time.deltaTime;
         if (_actualReloadCd > 0) _actualReloadCd -= Time.deltaTime;
         if (_aiming)
@@ -49,12 +50,10 @@ public abstract class RangedWeapon : Weapon
             _crosshair.OnAim();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
             Aim();
-            if (Input.GetMouseButtonDown(0) && actualCd <= 0 && _chargerBullets > 0)
+            if (Input.GetMouseButtonDown(0) && !_shooting && _chargerBullets > 0)
             {
-                Shoot();
-                _chargerBullets--;
-                _weaponsHandler.RefreshData();
-                _weaponFeedback.FireParticle();
+                _shooting = true;
+                GetComponentInParent<AnimPlayer>().Shooting = true;
             }
         }
         else
@@ -93,6 +92,16 @@ public abstract class RangedWeapon : Weapon
         _weaponsHandler.OnUpdateBulletUI += ObtainedBullet;
         _chargerBullets = _actualBullets;
         _weaponsHandler.RefreshData();
+        _weaponFeedback = GetComponent<WeaponFeedback>();
+        _weaponFeedback.SetFireParticle(psFire);
+    }
+
+    public void DoFeedbackShoot()
+    {
+        Shoot();
+        _chargerBullets--;
+        _weaponsHandler.RefreshData();
+        _weaponFeedback.FireParticle();
     }
 
     public abstract void ObtainedBullet();
