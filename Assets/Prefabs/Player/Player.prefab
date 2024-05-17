@@ -182,7 +182,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.25
   m_Height: 1.99
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -8485,6 +8485,7 @@ MonoBehaviour:
   reloadTime: 5
   _gunType: 0
   psFire: {fileID: 2621838797313333612}
+  ammoHandler: {fileID: 0}
 --- !u!114 &7616536875829624569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8511,6 +8512,7 @@ MonoBehaviour:
   reloadTime: 2
   _gunType: 1
   psFire: {fileID: 4450105954398066570}
+  ammoHandler: {fileID: 0}
 --- !u!114 &2560395120442428369
 MonoBehaviour:
   m_ObjectHideFlags: 0
