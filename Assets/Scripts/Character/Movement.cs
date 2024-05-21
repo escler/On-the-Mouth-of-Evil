@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -10,11 +11,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform _mainCamera;
     private Rigidbody _rb;
     public Transform model;
-    private bool running;
+    public bool running, isDashing;
 
-    public float walkSpeed, runSpeed, sensRot;
-    private float _actualSpeed;
-    private bool _aiming;
+    public float walkSpeed, runSpeed, dashSpeed, sensRot;
+    private float _actualSpeed, _dashSpeed;
+    private bool _aiming, _canDash;
     private Transform _targetAim, _weaponPos;
     public Transform spine;
 
@@ -22,6 +23,7 @@ public class Movement : MonoBehaviour
     {
         _targetAim = Player.Instance.targetAim;
         _weaponPos = Player.Instance.chest;
+        _dashSpeed = dashSpeed;
     }
 
     private void Awake()
@@ -39,19 +41,23 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-    
+
+        if(_canDash) Dash();
+        Rotate();
         Move();
     }
 
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
-        Rotate();
+
+        if (!isDashing) _canDash = Input.GetButton("Dash");
         RunCheck();
     }
 
     private void Move()
     {
+        if (isDashing) return;
         Vector3 vel = transform.forward * (_controller.GetMovementInput().x * _actualSpeed * Time.fixedDeltaTime) +
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
         _rb.velocity = vel;
@@ -59,28 +65,31 @@ public class Movement : MonoBehaviour
 
     private void Rotate()
     {
-        if (!_aiming)
-        {
-            if (_rb.velocity != Vector3.zero)
-            {
-                var newRot = Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0);
-                transform.rotation = newRot;
-            }
-        }
-        else
-        {
-            Vector3 aimVector = _targetAim.position - _weaponPos.position;
-            Quaternion rotation = Quaternion.LookRotation(aimVector,transform.up);
-            var newRot = transform.rotation;
-            newRot.y = rotation.y;
-            transform.rotation = rotation;
-            transform.eulerAngles = new Vector3(0, transform.rotation.eulerAngles.y, 0);
-        }
+        _rb.MoveRotation(Quaternion.Euler(0, _mainCamera.transform.eulerAngles.y, 0));
     }
 
     private void RunCheck()
     {
         if (Input.GetButton("Run")) _actualSpeed = runSpeed;
         else _actualSpeed = walkSpeed;
+    }
+
+    private void Dash()
+    {
+        StartCoroutine(DashAbility());
+    }
+
+    IEnumerator DashAbility()
+    {
+        isDashing = true;
+        var dashDirection = transform.forward * _controller.GetMovementInput().x +
+                            transform.right * _controller.GetMovementInput().z;
+        _rb.velocity = dashDirection * (dashSpeed * Time.fixedDeltaTime);
+        //_rb.AddForce(dashDirection * _dashSpeed * Time.deltaTime, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.3f);
+
+        isDashing = false;
+
     }
 }
