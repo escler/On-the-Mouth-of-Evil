@@ -32,7 +32,7 @@ public class AnimPlayer : MonoBehaviour
         _running = Input.GetButton("Run") && !_aiming && _rb.velocity != Vector3.zero;
         _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
         _animator.SetFloat("AxisY",_controller.GetMovementInput().z);
-        _animator.SetBool("Walking",_rb.velocity != Vector3.zero);
+        _animator.SetBool("Walking",_rb.velocity.magnitude >= 0.1f);
         _animator.SetBool("Aiming",_aiming);
         _animator.SetBool("Running", _running);
         _animator.SetBool("Shoot", _shooting);

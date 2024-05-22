@@ -48,41 +48,21 @@ public class CameraMovement : MonoBehaviour
         switch (mode)
         {
             case CameraMode.Normal:
-                LerpCamera(2,1,.5f,1.5f,-1,1,.3f,.3f,.8f,.3f, .3f);
-                /*_cfl.m_Orbits[0].m_Height = 2;
-                _cfl.m_Orbits[0].m_Radius = 1f;
-
-                _cfl.m_Orbits[1].m_Height = .5f;
-                _cfl.m_Orbits[1].m_Radius = 1.5f;
-
-                _cfl.m_Orbits[2].m_Height = -1f;
-                _cfl.m_Orbits[2].m_Radius = 1f;
-
-                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = .8f;
-                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.3f;*/
-
-                
+                LerpCamera(2,1,
+                    .5f,1.5f,
+                    -1,1,
+                    .3f,.3f,
+                    .8f,.3f,
+                    .2f);
                 break;
             
             case CameraMode.Aim:
-                LerpCamera(2.5f,1.2f,.5f,1,-1.2f,1,0.2f,0.2f,1,0.2f,.3f);
-
-                /*_cfl.m_Orbits[0].m_Height = 2.5f;
-                _cfl.m_Orbits[0].m_Radius = 1.2f;
-
-                _cfl.m_Orbits[1].m_Height = .5f;
-                _cfl.m_Orbits[1].m_Radius = 1f;
-                
-                _cfl.m_Orbits[2].m_Height = -1.2f;
-                _cfl.m_Orbits[2].m_Radius = 1f;
-
-                _cfl.GetRig(0).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;
-                _cfl.GetRig(1).GetCinemachineComponent<CinemachineComposer>().m_ScreenY = 1f;
-                _cfl.GetRig(2).GetCinemachineComponent<CinemachineComposer>().m_ScreenX = 0.2f;*/
-                
+                LerpCamera(2.5f,1.2f,
+                    .5f,1,
+                    -1.2f,1,
+                    0.2f,0.2f,
+                    1,0.2f,
+                    .2f);
                 break;
         }
     }
