@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : State
+public class AttackMage : State
 {
     private Deadens _d;
     private float _cdForAttack;
     private float _durationAnim;
-    public Attack(Deadens d)
+    public AttackMage(EnemySteeringAgent d)
     {
-        _d = d;
+        _d = d.GetComponent<Deadens>();
     }
     
     public override void OnEnter()

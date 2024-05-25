@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deadens : SteeringAgent
+public class Deadens : EnemySteeringAgent
 {
     private FiniteStateMachine _fsm;
     public bool CanAttack => _cdForAttack <= 0;
@@ -42,7 +42,7 @@ public class Deadens : SteeringAgent
         _fsm = new FiniteStateMachine();
         
         _fsm.AddState(States.Idle, new Idle(this));
-        _fsm.AddState(States.Attack, new Attack(this));
+        _fsm.AddState(States.Attack, new AttackMage(this));
         _fsm.AddState(States.FloorAttack, new FloorAttack(this));
         _fsm.AddState(States.Moving, new Moving(this));
         _fsm.AddState(States.Hit, new Hit(this));

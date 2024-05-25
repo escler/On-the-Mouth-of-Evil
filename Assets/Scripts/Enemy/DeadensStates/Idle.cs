@@ -6,9 +6,9 @@ public class Idle : State
 {
     private Deadens _d;
     private float _timeToSwitch;
-    public Idle(Deadens d)
+    public Idle(EnemySteeringAgent d)
     {
-        _d = d;
+        _d = d.GetComponent<Deadens>();
     }
     public override void OnEnter()
     {

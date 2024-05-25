@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class SteeringAgent : MonoBehaviour
+public class EnemySteeringAgent : MonoBehaviour
 {
     [SerializeField] protected float _maxSpeed, _maxForce;
 
@@ -77,19 +77,19 @@ public class SteeringAgent : MonoBehaviour
         return _obstacleDetectionRight || _obstacleDetectionLeft;
     }
 
-    protected Vector3 Pursuit(SteeringAgent targetAgent)
+    protected Vector3 Pursuit(EnemySteeringAgent targetAgent)
     {
         Vector3 futurePos = targetAgent.transform.position + targetAgent._velocity;
         Debug.DrawLine(transform.position, futurePos, Color.cyan);
         return Seek(futurePos);
     }
 
-    protected Vector3 Evade(SteeringAgent targetAgent)
+    protected Vector3 Evade(EnemySteeringAgent targetAgent)
     {
         return -Pursuit(targetAgent);
     }
     
-    protected Vector3 Alignment(SteeringAgent agent)
+    protected Vector3 Alignment(EnemySteeringAgent agent)
     {
         Vector3 desired = Vector3.zero;
         
@@ -98,7 +98,7 @@ public class SteeringAgent : MonoBehaviour
         return CalculateSteering(desired.normalized * _maxSpeed);
     }
 
-    protected Vector3 Separation(List<SteeringAgent> agents)
+    protected Vector3 Separation(List<EnemySteeringAgent> agents)
     {
         Vector3 desired = Vector3.zero;
 

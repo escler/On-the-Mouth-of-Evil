@@ -8,10 +8,10 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
     
-    private List<SteeringAgent> _enemies = new List<SteeringAgent>();
+    private List<EnemySteeringAgent> _enemies = new List<EnemySteeringAgent>();
     private int enemyCount = 1;
     
-    public List<SteeringAgent> Enemies => _enemies;
+    public List<EnemySteeringAgent> Enemies => _enemies;
 
     private void Awake()
     {
@@ -24,22 +24,22 @@ public class EnemyManager : MonoBehaviour
         Instance = this;
     }
 
-    public void AddEnemy(SteeringAgent enemy)
+    public void AddEnemy(EnemySteeringAgent enemy)
     {
         if (_enemies.Contains(enemy)) return;
         _enemies.Add(enemy);
         AssignNumber(enemy);
     }
     
-    public void RemoveEnemy(SteeringAgent enemy)
+    public void RemoveEnemy(EnemySteeringAgent enemy)
     {
         if (!_enemies.Contains(enemy)) return;
         _enemies.Add(enemy);
     }
 
-    public void AssignNumber(SteeringAgent enemy)
+    public void AssignNumber(EnemySteeringAgent enemy)
     {
-        enemy.GetComponent<Deadens>().enemyCount = enemyCount;
+        //enemy.GetComponent<Deadens>().enemyCount = enemyCount;
         enemyCount++;
     }
 }
