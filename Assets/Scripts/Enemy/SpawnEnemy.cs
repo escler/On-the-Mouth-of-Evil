@@ -10,8 +10,21 @@ public class SpawnEnemy : MonoBehaviour
 
     public void Spawn()
     {
-        var enemySpawned = Instantiate(this.enemy, transform.position, transform.rotation);
+        var enemySpawned = Instantiate(enemy, transform.position, transform.rotation);
         enemy = enemySpawned;
-        transform.GetChild(0).gameObject.SetActive(true);
     }
+    
+    public void SpawnWithDelay()
+    {
+        StartCoroutine("DelaySpawn");
+    }
+
+    IEnumerator DelaySpawn()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        
+        Spawn();
+    }
+    
 }

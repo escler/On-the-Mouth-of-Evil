@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class IllusionDemon : EnemySteeringAgent
 {
@@ -14,7 +15,7 @@ public class IllusionDemon : EnemySteeringAgent
     private float _cdForAttack;
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
-    public float rangeForAttack;
+    public float rangeForAttack, rangeForSpecialAttack;
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public int enemyCount;
@@ -22,6 +23,8 @@ public class IllusionDemon : EnemySteeringAgent
     public float waitForHitAgain;
     public GameObject fireBall, floorAttack;
     public Vector3[] points = new Vector3[4];
+
+    public GameObject lowRangeDemons;
 
     public float speedWalk, speedRun;
     
@@ -49,10 +52,12 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.AddState(States.Moving, new IllusionDemon_Moving(this));
         _fsm.AddState(States.Hit, new IllusionDemon_Hit(this));
         _fsm.AddState(States.Attack, new IllusionDemon_ComboHit(this));
+        _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
+        _fsm.AddState(States.CastAttack, new IllusionDemon_Cast(this));
         
         _fsm.ChangeState(States.Moving);
         EnemyManager.Instance.AddEnemy(this);
-        ListDemonsUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
+        ListDemonsUI.Instance.AddText(enemyCount, "Illusion Demon");
         canHit = true;
     }
 
@@ -70,9 +75,32 @@ public class IllusionDemon : EnemySteeringAgent
     {
         _fsm.ChangeState(States.Attack);
     }
+
+    public void ChangeToSpecialAttack()
+    {
+        _fsm.ChangeState(States.SpecialAttack);
+    }
+
+    public void ChangeCastAttack()
+    {
+        _fsm.ChangeState(States.CastAttack);
+    }
     private void Update()
     {
         _fsm.OnUpdate();
         if(enemyHit) ChangeToHit();
+    }
+
+    public void InvokeDemon()
+    {
+        var offsetX = Random.Range(-6, 6);
+        var offsetZ = Random.Range(-6, 6);
+
+        Vector3 posToDemon = new Vector3(transform.position.x + offsetX, transform.position.y,
+            transform.position.z + offsetZ);
+
+        var demonSpawned = Instantiate(lowRangeDemons, posToDemon, transform.rotation);
+
+        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay();
     }
 }

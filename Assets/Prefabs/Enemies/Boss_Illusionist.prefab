@@ -775,8 +775,9 @@ MonoBehaviour:
   initialCdForAttack: 0
   _attackSpawn: {fileID: 0}
   rangeForAttack: 2
+  rangeForSpecialAttack: 0
   spawnHitbox: {fileID: 2286667699463997346}
-  _model: {fileID: 4315476552394673562}
+  _model: {fileID: 9090160218639039143}
   enemyCount: 0
   canHit: 0
   enemyHit: 0
@@ -788,6 +789,8 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  lowRangeDemons: {fileID: 1758207425444287294, guid: 6f136260b578a1146a814c4aa181d7a2,
+    type: 3}
   speedWalk: 1
   speedRun: 3
   _decisionTree: {fileID: 0}
@@ -1372,7 +1375,6 @@ GameObject:
   - component: {fileID: 4315476552394673562}
   - component: {fileID: 610964148203476788}
   - component: {fileID: 3398498165186523559}
-  - component: {fileID: 821617682294799562}
   m_Layer: 7
   m_Name: Standing 1H Magic Attack 01 (1)
   m_TagString: Untagged
@@ -1389,7 +1391,7 @@ Transform:
   m_GameObject: {fileID: 3672381608482694224}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1436,29 +1438,8 @@ MonoBehaviour:
   hit: 0
   run: 0
   comboHit: 0
---- !u!136 &821617682294799562
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3672381608482694224}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.37
-  m_Height: 1.72
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.81, z: 0}
+  jumpAttack: 0
+  cast: 0
 --- !u!1 &3708106638630816590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,7 +2680,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9090160218639039143}
-  m_Layer: 0
+  - component: {fileID: 2516722911562513865}
+  m_Layer: 7
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2724,6 +2706,29 @@ Transform:
   - {fileID: 2078144688278591371}
   m_Father: {fileID: 4315476552394673562}
   m_LocalEulerAnglesHint: {x: 1.3226719, y: 4.3490524, z: 0.09647155}
+--- !u!136 &2516722911562513865
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480936151780317006}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.37
+  m_Height: 1.72
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7544264405330111817
 GameObject:
   m_ObjectHideFlags: 0

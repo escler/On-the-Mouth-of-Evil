@@ -10,5 +10,7 @@ public enum States
     Chase,
     Hit,
     FloorAttack,
-    Moving
+    Moving,
+    SpecialAttack,
+    CastAttack
 }

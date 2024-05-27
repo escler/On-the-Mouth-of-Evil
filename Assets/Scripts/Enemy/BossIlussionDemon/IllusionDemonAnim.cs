@@ -11,7 +11,7 @@ public class IllusionDemonAnim : MonoBehaviour
 
     public Animator Animator => _animator;
 
-    public bool moving, death, hit, run, comboHit;
+    public bool moving, death, hit, run, comboHit, jumpAttack, cast;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -26,6 +26,8 @@ public class IllusionDemonAnim : MonoBehaviour
         _animator.SetBool("Hit",hit);
         _animator.SetBool("Run", run);
         _animator.SetBool("ComboHit", comboHit);
+        _animator.SetBool("JumpAttack", jumpAttack);
+        _animator.SetBool("Cast", cast);
     }
     
     public void AdjustPosition()
@@ -44,6 +46,11 @@ public class IllusionDemonAnim : MonoBehaviour
     public void DisableHitBox()
     {
         _demon.spawnHitbox.SetActive(false);
+    }
+
+    public void SpawnDemon()
+    {
+        _demon.InvokeDemon();
     }
 
     public void FinishComb()

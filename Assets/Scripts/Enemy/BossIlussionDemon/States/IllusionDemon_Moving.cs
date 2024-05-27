@@ -18,7 +18,6 @@ public class IllusionDemon_Moving : State
         d.Anim.moving = true;
         _speed = d.speedWalk;
         _actualTimer = 5;
-
     }
 
 
@@ -31,7 +30,7 @@ public class IllusionDemon_Moving : State
 
         if (_actualTimer <= 0)
         {
-            d.ChangeToCombo();
+            d.ChangeCastAttack();
             CalculateDirection();
             _actualTimer = 5;
         }

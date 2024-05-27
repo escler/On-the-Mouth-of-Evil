@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IllusionDemon_ComboHit : State
+public class IllusionDemon_JumpAttack : State
 {
     private IllusionDemon d;
-    public IllusionDemon_ComboHit(EnemySteeringAgent e)
+
+    
+    public IllusionDemon_JumpAttack(EnemySteeringAgent e)
     {
         d = e.GetComponent<IllusionDemon>();
     }
@@ -18,16 +20,16 @@ public class IllusionDemon_ComboHit : State
     {
         if(d.Anim.run) d.transform.position += d.transform.forward * (d.speedRun * Time.deltaTime);
 
-        if (Vector3.Distance(d.CharacterPos.position, d.transform.position) < d.rangeForAttack)
+        if (Vector3.Distance(d.CharacterPos.position, d.transform.position) < d.rangeForSpecialAttack)
         {
             d.transform.LookAt(new Vector3(d.CharacterPos.position.x, d.transform.position.y, d.CharacterPos.position.z));
             d.Anim.run = false;
-            d.Anim.comboHit = true;
+            d.Anim.jumpAttack = true;
         }
     }
 
     public override void OnExit()
     {
-        d.Anim.comboHit = false;
+        d.Anim.jumpAttack = false;
     }
 }
