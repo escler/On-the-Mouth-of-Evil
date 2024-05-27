@@ -15,7 +15,7 @@ public class IllusionDemon : EnemySteeringAgent
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
     public float rangeForAttack;
-    [SerializeField] private MeleeWeapon _weapon;
+    public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public int enemyCount;
     public bool canHit, enemyHit;

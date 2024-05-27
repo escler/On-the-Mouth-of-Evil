@@ -16,7 +16,7 @@ public class IllusionDemon_ComboHit : State
 
     public override void OnUpdate()
     {
-        if(d.Anim.run) d.transform.position += d.transform.forward * d.speedRun * Time.deltaTime;
+        if(d.Anim.run) d.transform.position += d.transform.forward * (d.speedRun * Time.deltaTime);
 
         if (Vector3.Distance(d.CharacterPos.position, d.transform.position) < d.rangeForAttack)
         {

@@ -7,6 +7,7 @@ public class IllusionDemonAnim : MonoBehaviour
 {
     private Animator _animator;
     public float yAxis;
+    private IllusionDemon _demon;
 
     public Animator Animator => _animator;
 
@@ -14,6 +15,7 @@ public class IllusionDemonAnim : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _demon = GetComponentInParent<IllusionDemon>();
     }
 
     void Update()
@@ -24,5 +26,28 @@ public class IllusionDemonAnim : MonoBehaviour
         _animator.SetBool("Hit",hit);
         _animator.SetBool("Run", run);
         _animator.SetBool("ComboHit", comboHit);
+    }
+    
+    public void AdjustPosition()
+    {
+        var modelPos = _demon._model.transform.position;
+        _demon.transform.position = new Vector3(modelPos.x, _demon.transform.position.y, modelPos.z);
+        _demon._model.transform.localPosition = Vector3.zero;
+        //_deadens.MoveChar();
+    }
+
+    public void EnableHitBox()
+    {
+        _demon.spawnHitbox.SetActive(true);
+    }
+
+    public void DisableHitBox()
+    {
+        _demon.spawnHitbox.SetActive(false);
+    }
+
+    public void FinishComb()
+    {
+        comboHit = false;
     }
 }
