@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class IllusionDemon_Idle : State
 {
-    private IllusionDemon d;
+    private IllusionDemon _d;
     public IllusionDemon_Idle(EnemySteeringAgent e)
     {
-        d = e.GetComponent<IllusionDemon>();
+        _d = e.GetComponent<IllusionDemon>();
     }
     
     public override void OnEnter()
     {
-        d.Anim.moving = false;
+        _d.Anim.moving = false;
     }
 
     public override void OnUpdate()
     {
-        
+        _d.ChangeToMove();
     }
 
     public override void OnExit()

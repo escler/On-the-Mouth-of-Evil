@@ -7,38 +7,25 @@ using Random = UnityEngine.Random;
 public class IllusionDemon : EnemySteeringAgent
 {
     private FiniteStateMachine _fsm;
-    public bool CanAttack => _cdForAttack <= 0;
-    public bool InRangeForAttack => Vector3.Distance(_characterPos.position, transform.position) <= rangeForAttack;
     private bool _obstacleWithPlayer, _playerInFov;
-    public bool PlayerInFov => _playerInFov;
-    public float initialCdForAttack;
     private float _cdForAttack;
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
     public float rangeForAttack, rangeForSpecialAttack;
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
-    public int enemyCount;
-    public bool canHit, enemyHit;
+    public bool canHit, enemyHit, finishCast;
     public float waitForHitAgain;
-    public GameObject fireBall, floorAttack;
-    public Vector3[] points = new Vector3[4];
 
-    public GameObject lowRangeDemons;
+    public GameObject lowRangeDemons, copiesGO;
+    public GameObject copy1, copy2;
 
     public float speedWalk, speedRun;
-    
-    
     private IllusionDemonAnim _anim;
-
+    public actionsEnemy lastAction;
+    public Actions lastActionAttack;
     [SerializeField] private DecisionNode _decisionTree;
     public DecisionNode DecisionTree => _decisionTree;
-
-    public float CdForAttack
-    {
-        get { return _cdForAttack; }
-        set { _cdForAttack = value; }
-    }
 
     public Transform CharacterPos => _characterPos;
     public IllusionDemonAnim Anim => _anim;
@@ -55,10 +42,12 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
         _fsm.AddState(States.CastAttack, new IllusionDemon_Cast(this));
         
-        _fsm.ChangeState(States.Moving);
+        _fsm.ChangeState(States.Idle);
         EnemyManager.Instance.AddEnemy(this);
-        ListDemonsUI.Instance.AddText(enemyCount, "Illusion Demon");
+        ListDemonsUI.Instance.AddText(0, "Illusion Demon");
         canHit = true;
+        
+        CreateCopies();
     }
 
     public void ChangeToMove()
@@ -85,6 +74,7 @@ public class IllusionDemon : EnemySteeringAgent
     {
         _fsm.ChangeState(States.CastAttack);
     }
+    
     private void Update()
     {
         _fsm.OnUpdate();
@@ -103,4 +93,30 @@ public class IllusionDemon : EnemySteeringAgent
 
         demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay();
     }
+
+    private void CreateCopies()
+    {
+        var c1 = Instantiate(copiesGO);
+        copy1 = c1;
+        copy1.SetActive(false);
+        var c2 = Instantiate(copiesGO, transform.position - transform.right, transform.rotation);
+        copy2 = c2;
+        copy2.SetActive(false);
+    }
+    public void InvokeCopies()
+    {
+        copy1.SetActive(true);
+        copy1.transform.position = transform.position - transform.right * 2;
+        copy1.transform.rotation = transform.rotation;
+            
+        copy2.SetActive(true);
+        copy2.transform.position = transform.position + transform.right * 2;
+        copy2.transform.rotation = transform.rotation;
+    }
+}
+
+public enum actionsEnemy
+{
+    NotAttack,
+    Attack
 }

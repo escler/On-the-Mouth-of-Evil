@@ -40,7 +40,38 @@ public class QuestionNode : DecisionNode
                 break;
         }
     }
-    
+
+    public override void Execute(IllusionDemon i)
+    {
+        if (i.lastAction == actionsEnemy.NotAttack)
+        {
+            randomRange = Random.Range(1, 10);
+        }
+        switch (question)
+        {
+            case Questions.Hit:
+                if(i.enemyHit) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+            case Questions.Move:
+                if(i.lastAction == actionsEnemy.Attack) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+            case Questions.Attack:
+                if(randomRange < 3) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+            case Questions.SpecialAttack:
+                if(randomRange < 6) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+            case Questions.Cast:
+                if(randomRange < 10) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if(falseNode != null)
@@ -62,6 +93,8 @@ public enum Questions
     Move,
     Attack,
     FloorAttack,
-    Hit
+    Hit,
+    SpecialAttack,
+    Cast
     
 }

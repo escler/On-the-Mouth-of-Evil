@@ -27,6 +27,56 @@ public class ActionNode : DecisionNode
                 break;
         }
     }
+
+    public override void Execute(IllusionDemon i)
+    {
+        switch (action)
+        {
+            case Actions.Hit:
+                i.ChangeToHit();
+                break;
+            case Actions.Move:
+                i.lastAction = actionsEnemy.NotAttack;
+                i.ChangeToMove();
+                break;
+            case Actions.Attack:
+                if (i.lastActionAttack == Actions.Attack)
+                {
+                    i.DecisionTree.Execute(i);
+                }
+                else
+                {
+                    i.lastActionAttack = Actions.Attack;
+                    i.lastAction = actionsEnemy.Attack;
+                    i.ChangeToCombo();
+                }
+                break;
+            case Actions.SpecialAttack:
+                if (i.lastActionAttack == Actions.SpecialAttack)
+                {
+                    i.DecisionTree.Execute(i);
+                }
+                else
+                {
+                    i.lastActionAttack = Actions.SpecialAttack;
+                    i.lastAction = actionsEnemy.Attack;
+                    i.ChangeToSpecialAttack();
+                }
+                break;
+            case Actions.Cast:
+                if (i.lastActionAttack == Actions.Cast)
+                {
+                    i.DecisionTree.Execute(i);
+                }
+                else
+                {
+                    i.lastActionAttack = Actions.Cast;
+                    i.lastAction = actionsEnemy.Attack;
+                    i.ChangeCastAttack();
+                }
+                break;
+        }
+    }
 }
 
 public enum Actions
@@ -35,5 +85,7 @@ public enum Actions
     Move,
     Attack,
     FloorAttack,
-    Hit
+    Hit,
+    SpecialAttack,
+    Cast
 }

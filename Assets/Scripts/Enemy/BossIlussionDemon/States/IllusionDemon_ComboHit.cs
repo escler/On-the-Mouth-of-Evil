@@ -4,30 +4,37 @@ using UnityEngine;
 
 public class IllusionDemon_ComboHit : State
 {
-    private IllusionDemon d;
+    private IllusionDemon _d;
     public IllusionDemon_ComboHit(EnemySteeringAgent e)
     {
-        d = e.GetComponent<IllusionDemon>();
+        _d = e.GetComponent<IllusionDemon>();
     }
     public override void OnEnter()
     {
-        d.Anim.run = true;
+        _d.Anim.run = true;
     }
 
     public override void OnUpdate()
     {
-        if(d.Anim.run) d.transform.position += d.transform.forward * (d.speedRun * Time.deltaTime);
+        if(_d.Anim.run) _d.transform.position += _d.transform.forward * (_d.speedRun * Time.deltaTime);
 
-        if (Vector3.Distance(d.CharacterPos.position, d.transform.position) < d.rangeForAttack)
+        if (Vector3.Distance(_d.CharacterPos.position, _d.transform.position) < _d.rangeForAttack)
         {
-            d.transform.LookAt(new Vector3(d.CharacterPos.position.x, d.transform.position.y, d.CharacterPos.position.z));
-            d.Anim.run = false;
-            d.Anim.comboHit = true;
+            _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+            _d.Anim.run = false;
+            _d.Anim.comboHit = true;
+        }
+        
+        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("ComboHitAttack") && 
+           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        {
+            _d.DecisionTree.Execute(_d);
         }
     }
 
     public override void OnExit()
     {
-        d.Anim.comboHit = false;
+        _d.Anim.comboHit = false;
+        _d.Anim.run = false;
     }
 }

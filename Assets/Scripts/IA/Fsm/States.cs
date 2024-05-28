@@ -12,5 +12,5 @@ public enum States
     FloorAttack,
     Moving,
     SpecialAttack,
-    CastAttack
+    CastAttack,
 }

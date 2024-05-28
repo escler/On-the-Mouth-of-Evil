@@ -20,7 +20,7 @@ public class IllusionDemonLifeHandler : LifeHandler
 
         illusionDemon.canHit = false;
         illusionDemon.Anim.death = true;
-        illusionDemon.GetComponent<CapsuleCollider>().enabled = false;
+        illusionDemon.GetComponentInChildren<CapsuleCollider>().enabled = false;
         illusionDemon.enabled = false;
     }
 }

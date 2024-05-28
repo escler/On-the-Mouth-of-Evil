@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class IllusionDemon_Hit : State
 {
-    private IllusionDemon d;
-    private float _durationAnim;
+    private IllusionDemon _d;
     public IllusionDemon_Hit(EnemySteeringAgent e)
     {
-        d = e.GetComponent<IllusionDemon>();
+        _d = e.GetComponent<IllusionDemon>();
     }
 
 
     public override void OnEnter()
     {
-        d.Anim.hit = true;
+        _d.Anim.hit = true;
     }
 
     public override void OnUpdate()
     {
-        _durationAnim = d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
-        if (_durationAnim >= .8f)
+        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && 
+           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            d.ChangeToMove();
+            _d.DecisionTree.Execute(_d);
         }
     }
 
     public override void OnExit()
     {
-        d.Anim.hit = false;
-        d.enemyHit = false;
+        _d.Anim.hit = false;
+        _d.enemyHit = false;
     }
 }

@@ -1,0 +1,34 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Animations;
+using UnityEngine;
+
+public class BossDuplicationAnim : MonoBehaviour
+{
+    private Animator _animator;
+    private BossDuplicationMovement _mov;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _mov = GetComponentInParent<BossDuplicationMovement>();
+    }
+
+    private void OnEnable()
+    {
+    }
+
+    private void Update()
+    {
+        _animator.SetBool("Run", _mov.run);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+}
