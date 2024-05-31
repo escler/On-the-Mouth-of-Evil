@@ -70,7 +70,7 @@ public class Movement : MonoBehaviour
 
     private void RunCheck()
     {
-        if (Input.GetButton("Run")) _actualSpeed = runSpeed;
+        if (Input.GetButton("Run") && !_aiming) _actualSpeed = runSpeed;
         else _actualSpeed = walkSpeed;
     }
 

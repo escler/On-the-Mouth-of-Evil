@@ -15,10 +15,6 @@ public class BossDuplicationAnim : MonoBehaviour
         _mov = GetComponentInParent<BossDuplicationMovement>();
     }
 
-    private void OnEnable()
-    {
-    }
-
     private void Update()
     {
         _animator.SetBool("Run", _mov.run);

@@ -15,12 +15,12 @@ public class IllusionDemon : EnemySteeringAgent
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public bool canHit, enemyHit, finishCast;
-    public float waitForHitAgain;
 
     public GameObject lowRangeDemons, copiesGO;
     public GameObject copy1, copy2;
 
     public float speedWalk, speedRun;
+    public int enemiesCount;
     private IllusionDemonAnim _anim;
     public actionsEnemy lastAction;
     public Actions lastActionAttack;
@@ -91,7 +91,8 @@ public class IllusionDemon : EnemySteeringAgent
 
         var demonSpawned = Instantiate(lowRangeDemons, posToDemon, transform.rotation);
 
-        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay();
+        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay(true);
+        enemiesCount++;
     }
 
     private void CreateCopies()

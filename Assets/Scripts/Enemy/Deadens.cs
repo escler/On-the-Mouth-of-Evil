@@ -21,6 +21,7 @@ public class Deadens : EnemySteeringAgent
     public float waitForHitAgain;
     public GameObject fireBall, floorAttack;
     public Vector3[] points = new Vector3[4];
+    public bool summonedByBoss;
 
     private MageAnim _mageAnim;
 

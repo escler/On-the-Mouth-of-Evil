@@ -13,6 +13,10 @@ public class DeadensLifeHandler : LifeHandler
             if (deadensComp.canHit)
             {
                 deadensComp.enemyHit = true;
+                if (deadensComp.summonedByBoss)
+                {
+                    FindObjectOfType<IllusionDemon>().enemiesCount--;
+                }
                 deadensComp.DecisionTree.Execute(deadensComp);
             }
             return;

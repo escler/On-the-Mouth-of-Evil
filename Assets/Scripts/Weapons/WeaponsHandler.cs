@@ -34,12 +34,11 @@ public class WeaponsHandler : MonoBehaviour
         if(Input.GetButton("Weapon1")) ChangeWeapon(0);
         if(Input.GetButton("Weapon2"))ChangeWeapon(1);
         
-        if(Input.GetButtonDown("Reload")) _activeWeapon.Reload();
     }
 
     private void ChangeWeapon(int value)
     {
-        if (weapons.Count == 1 || value > weapons.Count|| weapons[value] == _activeWeapon) return;
+        if (weapons.Count == 1 || value > weapons.Count|| weapons[value] == _activeWeapon || _activeWeapon.Shooting) return;
 
         _activeWeapon.enabled = false;
 
@@ -65,12 +64,6 @@ public class WeaponsHandler : MonoBehaviour
         if (weapons.Contains(rangedWeapon)) return;
 
         weapons.Add(rangedWeapon);
-    }
-
-    public void UpdateMaxBullet()
-    {
-        _activeWeapon.ObtainedBullet();
-        RefreshData();
     }
 
     public void FeedbackShoot()

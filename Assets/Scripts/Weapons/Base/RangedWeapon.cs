@@ -18,12 +18,11 @@ public abstract class RangedWeapon : Weapon
     public float reloadTime;
     private float _actualReloadCd;
     private WeaponsHandler _weaponsHandler;
-    [SerializeField] private GunType _gunType;
     private bool _shooting;
     [SerializeField] private ParticleSystem psFire;
-    public AmmoHandler ammoHandler;
     public int ChargerBullets => _chargerBullets;
 
+    public bool Shooting => _shooting;
     public int MaxBullets
     {
         get { return _maxBullets; }
@@ -34,8 +33,6 @@ public abstract class RangedWeapon : Weapon
         cameraPos = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
         _cmf = FindObjectOfType<CinemachineFreeLook>(); 
-        ammoHandler.AddBullet(_gunType,initialMaxAmmo);
-        ObtainedBullet();
         _chargerBullets = bulletsPerCharge;
         _weaponsHandler.RefreshData();
     }
@@ -51,7 +48,7 @@ public abstract class RangedWeapon : Weapon
             _crosshair.OnAim();
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
             Aim();
-            if (Input.GetMouseButtonDown(0) && !_shooting && _chargerBullets > 0)
+            if (Input.GetMouseButtonDown(0) && !_shooting)
             {
                 _shooting = true;
                 GetComponentInParent<AnimPlayer>().Shooting = true;
@@ -63,34 +60,17 @@ public abstract class RangedWeapon : Weapon
             _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
         }
     }
-
-    public void Reload()
-    {
-        if(_actualReloadCd > 0 || _chargerBullets == bulletsPerCharge || _maxBullets == 0) return;
-
-        var bulletsToCharge = Mathf.Clamp(bulletsPerCharge - _chargerBullets,0,_maxBullets);
-        _chargerBullets += bulletsToCharge;
-        _maxBullets -= bulletsToCharge;
-        
-        
-        ammoHandler.UpdateMaxAmount(_gunType,_maxBullets);
-        
-        _actualReloadCd = reloadTime;
-        _weaponsHandler.RefreshData();
-    }
     
     private void OnDisable()
     {
         model.SetActive(false);
         _actualBullets = _chargerBullets;
-        _weaponsHandler.OnUpdateBulletUI -= ObtainedBullet;
     }
 
     private void OnEnable()
     {
         model.SetActive(true);
         _weaponsHandler = GetComponent<WeaponsHandler>();
-        _weaponsHandler.OnUpdateBulletUI += ObtainedBullet;
         _chargerBullets = _actualBullets;
         _weaponsHandler.RefreshData();
         _weaponFeedback = GetComponent<WeaponFeedback>();
@@ -105,7 +85,6 @@ public abstract class RangedWeapon : Weapon
         _weaponFeedback.FireParticle();
     }
 
-    public abstract void ObtainedBullet();
     
     protected abstract void Aim();
 

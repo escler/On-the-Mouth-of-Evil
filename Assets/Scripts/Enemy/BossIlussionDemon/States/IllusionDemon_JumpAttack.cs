@@ -4,49 +4,49 @@ using UnityEngine;
 
 public class IllusionDemon_JumpAttack : State
 {
-    private IllusionDemon d;
+    private IllusionDemon _d;
     private float _durationAnim;
     
     public IllusionDemon_JumpAttack(EnemySteeringAgent e)
     {
-        d = e.GetComponent<IllusionDemon>();
+        _d = e.GetComponent<IllusionDemon>();
     }
     public override void OnEnter()
     {
-        d.Anim.castCopies = true;
+        _d.Anim.castCopies = true;
     }
 
     public override void OnUpdate()
     {
-        d.transform.LookAt(new Vector3(d.CharacterPos.position.x, d.transform.position.y, d.CharacterPos.position.z));
-        if(d.finishCast)
+        _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+        if(_d.finishCast)
         {
-            d.Anim.run = true;
-            d.copy1.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
-            d.copy2.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
-            d.finishCast = false;
+            _d.Anim.run = true;
+            _d.copy1.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
+            _d.copy2.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
+            _d.finishCast = false;
         }
 
-        if (d.Anim.run) d.transform.position += d.transform.forward * (d.speedRun * Time.deltaTime);
-        if (Vector3.Distance(d.CharacterPos.position, d.transform.position) < d.rangeForSpecialAttack)
+        if (_d.Anim.run) _d.transform.position += _d.transform.forward * (_d.speedRun * Time.deltaTime);
+        if (Vector3.Distance(_d.CharacterPos.position, _d.transform.position) < _d.rangeForSpecialAttack)
         {
             
-            d.Anim.run = false;
-            d.Anim.jumpAttack = true;
+            _d.Anim.run = false;
+            _d.Anim.jumpAttack = true;
         }
         
-        if(d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
-           d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
+           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            d.DecisionTree.Execute(d);
+            _d.DecisionTree.Execute(_d);
         }
     }
 
     public override void OnExit()
     {
-        d.Anim.jumpAttack = false;
-        d.Anim.castCopies = false;
-        d.Anim.run = false;
-        d.finishCast = false;
+        _d.Anim.jumpAttack = false;
+        _d.Anim.castCopies = false;
+        _d.Anim.run = false;
+        _d.finishCast = false;
     }
 }

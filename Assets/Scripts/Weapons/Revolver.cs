@@ -11,11 +11,6 @@ public class Revolver : RangedWeapon
         OnUpdate();
     }
 
-    public override void ObtainedBullet()
-    {
-        MaxBullets = ammoHandler.RevolverBullets;
-    }
-
     protected override void Aim()
     {
 

@@ -64,7 +64,7 @@ public class ActionNode : DecisionNode
                 }
                 break;
             case Actions.Cast:
-                if (i.lastActionAttack == Actions.Cast)
+                if (i.lastActionAttack == Actions.Cast || i.enemiesCount > 0)
                 {
                     i.DecisionTree.Execute(i);
                 }

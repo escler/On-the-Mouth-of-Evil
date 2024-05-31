@@ -17,11 +17,6 @@ public class Shotgun : RangedWeapon
     {
         
     }
-
-    public override void ObtainedBullet()
-    {
-        MaxBullets = ammoHandler.ShotgunBullets;
-    }
     
     protected override void Shoot()
     {

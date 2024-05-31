@@ -8431,7 +8431,6 @@ GameObject:
   - component: {fileID: 7616536875829624569}
   - component: {fileID: 2560395120442428369}
   - component: {fileID: 7156473452457282371}
-  - component: {fileID: 9206278127465321296}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -8486,9 +8485,7 @@ MonoBehaviour:
   initialMaxAmmo: 0
   _crosshair: {fileID: 0}
   reloadTime: 5
-  _gunType: 0
   psFire: {fileID: 2621838797313333612}
-  ammoHandler: {fileID: 0}
 --- !u!114 &7616536875829624569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8513,9 +8510,7 @@ MonoBehaviour:
   initialMaxAmmo: 6
   _crosshair: {fileID: 0}
   reloadTime: 2
-  _gunType: 1
   psFire: {fileID: 4450105954398066570}
-  ammoHandler: {fileID: 0}
 --- !u!114 &2560395120442428369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8548,18 +8543,6 @@ MonoBehaviour:
   weapons:
   - {fileID: 4368131164658697245}
   _activeWeapon: {fileID: 0}
---- !u!114 &9206278127465321296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7735695121078935199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3689f6a5ea6564199cfc10cdc58301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7975002565084519198
 GameObject:
   m_ObjectHideFlags: 0
