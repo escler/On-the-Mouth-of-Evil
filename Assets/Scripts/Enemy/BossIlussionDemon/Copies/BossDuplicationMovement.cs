@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,12 @@ public class BossDuplicationMovement : MonoBehaviour
             transform.LookAt(new Vector3(_characterPos.position.x, transform.position.y, _characterPos.position.z));
         }
     }
-    
+
+    private void OnDisable()
+    {
+        run = false;
+    }
+
     public void ChangeRun(bool value)
     {
         run = value;

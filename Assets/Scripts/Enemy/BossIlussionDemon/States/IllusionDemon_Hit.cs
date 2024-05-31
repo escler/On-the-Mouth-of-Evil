@@ -14,6 +14,8 @@ public class IllusionDemon_Hit : State
     public override void OnEnter()
     {
         _d.Anim.hit = true;
+        if (_d.copy1.activeInHierarchy) _d.copy1.SetActive(false);
+        if (_d.copy2.activeInHierarchy) _d.copy2.SetActive(false);
     }
 
     public override void OnUpdate()
