@@ -7,19 +7,16 @@ using UnityEngine;
 public class BossDuplicationAnim : MonoBehaviour
 {
     private Animator _animator;
-    private BossDuplicationMovement _mov;
-    public bool moving;
+    public bool moving, run;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _mov = GetComponentInParent<BossDuplicationMovement>();
     }
 
     private void Update()
     {
-        _animator.SetBool("Run", _mov.run);
-        _animator.SetBool("Moving", moving);
+        _animator.SetBool("Run", run);
     }
 
     private void OnTriggerEnter(Collider other)

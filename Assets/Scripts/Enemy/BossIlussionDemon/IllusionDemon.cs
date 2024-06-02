@@ -15,12 +15,13 @@ public class IllusionDemon : EnemySteeringAgent
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public bool canHit, enemyHit, finishCast;
+    public Transform[] spawns;
 
-    public GameObject lowRangeDemons, copiesGO;
+    public GameObject lowRangeDemons, copiesGO, copiesFightGO;
     public GameObject copy1, copy2;
 
     public float speedWalk, speedRun;
-    public int enemiesCount;
+    public int enemiesCount, fightingCopies;
     private IllusionDemonAnim _anim;
     public actionsEnemy lastAction;
     public Actions lastActionAttack;
@@ -113,6 +114,15 @@ public class IllusionDemon : EnemySteeringAgent
         copy2.SetActive(true);
         copy2.transform.position = transform.position + transform.right * 2;
         copy2.transform.rotation = transform.rotation;
+    }
+
+    public void InvokeFightCopies()
+    {
+        for (int i = 0; i < spawns.Length - 1; i++)
+        {
+            Instantiate(copiesFightGO, spawns[i].position, spawns[i].rotation);
+            fightingCopies++;
+        }
     }
 }
 

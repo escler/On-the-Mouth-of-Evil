@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossDuplication_Explode : MonoBehaviour
+public class BossDuplication_Explode : State
 {
-    // Start is called before the first frame update
-    void Start()
+    private IllusionDuplication _i;
+    
+    public BossDuplication_Explode(EnemySteeringAgent e)
     {
-        
+        _i = e.GetComponent<IllusionDuplication>();
+    }
+    public override void OnEnter()
+    {
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnUpdate()
     {
-        
+    }
+
+    public override void OnExit()
+    {
     }
 }

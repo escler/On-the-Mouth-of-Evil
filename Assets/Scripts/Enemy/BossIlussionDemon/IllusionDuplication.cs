@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class IllusionDuplications : EnemySteeringAgent
+public class IllusionDuplication : EnemySteeringAgent
 {
     private FiniteStateMachine _fsm;
     private Transform _characterPos;
-    private BossDuplicationAnim _anim;
+    private IllusionBossDuplicationsAnim _anim;
     [SerializeField] private DecisionNode _decisionTree;
 
 
@@ -19,16 +15,18 @@ public class IllusionDuplications : EnemySteeringAgent
 
 
     public DecisionNode DecisionTree => _decisionTree;
-    public BossDuplicationAnim Anim => _anim;
+    public IllusionBossDuplicationsAnim Anim => _anim;
+    public Transform CharacterPos => _characterPos;
     
     private void Awake()
     {
         _fsm = new FiniteStateMachine();
         _characterPos = Player.Instance.transform;
-        _anim = GetComponentInChildren<BossDuplicationAnim>();
-        _fsm.AddState(States.Idle, new IllusionDemon_Idle(this));
-        _fsm.AddState(States.Moving, new IllusionDemon_Moving(this));
-        _fsm.AddState(States.Attack, new IllusionDemon_ComboHit(this));
+        _anim = GetComponentInChildren<IllusionBossDuplicationsAnim>();
+        _fsm.AddState(States.Idle, new BossDuplication_Idle(this));
+        _fsm.AddState(States.Moving, new BossDuplication_Move(this));
+        _fsm.AddState(States.Attack, new BossDuplication_Attack(this));
+        _fsm.AddState(States.SpecialAttack, new BossDuplication_Explode(this));
         
         _fsm.ChangeState(States.Idle);
     }
@@ -41,5 +39,10 @@ public class IllusionDuplications : EnemySteeringAgent
     public void ChangeToAttack()
     {
         _fsm.ChangeState(States.Attack);
+    }
+
+    public void ChangeToExplode()
+    {
+        _fsm.ChangeState(States.SpecialAttack);
     }
 }

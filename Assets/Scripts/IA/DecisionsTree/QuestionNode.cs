@@ -72,7 +72,7 @@ public class QuestionNode : DecisionNode
         }
     }
 
-    public override void Execute(IllusionDuplications d)
+    public override void Execute(IllusionDuplication d)
     {
         switch (question)
         {
