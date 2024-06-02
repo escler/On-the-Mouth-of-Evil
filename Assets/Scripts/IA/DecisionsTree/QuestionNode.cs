@@ -72,6 +72,21 @@ public class QuestionNode : DecisionNode
         }
     }
 
+    public override void Execute(IllusionDuplications d)
+    {
+        switch (question)
+        {
+            case Questions.Move:
+                if(d.lastAction == actionsEnemy.Attack) trueNode.Execute(d);
+                else falseNode.Execute(d);
+                break;
+            case Questions.Attack:
+                if(d.lastAction == actionsEnemy.NotAttack) trueNode.Execute(d);
+                else falseNode.Execute(d);
+                break;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if(falseNode != null)

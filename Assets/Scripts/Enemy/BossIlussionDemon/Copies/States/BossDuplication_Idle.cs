@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IllusionDemon_Idle : State
+public class BossDuplication_Idle : State
 {
-    private IllusionDemon _d;
+    private IllusionDuplications _i;
     private float _actualTimer;
-    private readonly float _timer = 3f;
-    public IllusionDemon_Idle(EnemySteeringAgent e)
+    private float _timer = 3f;
+
+    public BossDuplication_Idle(EnemySteeringAgent e)
     {
-        _d = e.GetComponent<IllusionDemon>();
+        _i = e.GetComponent<IllusionDuplications>();
     }
-    
+
     public override void OnEnter()
     {
-        _d.Anim.moving = false;
+        _i.Anim.moving = false;
         _actualTimer = _timer;
     }
 
@@ -23,7 +24,7 @@ public class IllusionDemon_Idle : State
         _actualTimer -= Time.deltaTime;
         if (_actualTimer > 0) return;
         
-        _d.ChangeToMove();
+        _i.ChangeToMove();
     }
 
     public override void OnExit()

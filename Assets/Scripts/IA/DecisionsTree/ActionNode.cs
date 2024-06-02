@@ -6,6 +6,7 @@ using UnityEngine;
 public class ActionNode : DecisionNode
 {
     public Actions action;
+
     public override void Execute(Deadens deadens)
     {
         switch (action)
@@ -50,6 +51,7 @@ public class ActionNode : DecisionNode
                     i.lastAction = actionsEnemy.Attack;
                     i.ChangeToCombo();
                 }
+
                 break;
             case Actions.SpecialAttack:
                 if (i.lastActionAttack == Actions.SpecialAttack)
@@ -62,6 +64,7 @@ public class ActionNode : DecisionNode
                     i.lastAction = actionsEnemy.Attack;
                     i.ChangeToSpecialAttack();
                 }
+
                 break;
             case Actions.Cast:
                 if (i.lastActionAttack == Actions.Cast || i.enemiesCount > 0)
@@ -74,11 +77,26 @@ public class ActionNode : DecisionNode
                     i.lastAction = actionsEnemy.Attack;
                     i.ChangeCastAttack();
                 }
+
+                break;
+        }
+    }
+
+    public override void Execute(IllusionDuplications d)
+    {
+        switch (action)
+        {
+            case Actions.Move:
+                d.lastAction = actionsEnemy.NotAttack;
+                d.ChangeToMove();
+                break;
+            case Actions.Attack:
+                d.lastAction = actionsEnemy.Attack;
+                d.ChangeToAttack();
                 break;
         }
     }
 }
-
 public enum Actions
 {
     Idle,
