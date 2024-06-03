@@ -58,14 +58,18 @@ public class QuestionNode : DecisionNode
                 else falseNode.Execute(i);
                 break;
             case Questions.Attack:
-                if(randomRange < 3) trueNode.Execute(i);
+                if(randomRange < 2) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
             case Questions.SpecialAttack:
-                if(randomRange < 6) trueNode.Execute(i);
+                if(randomRange < 4) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
             case Questions.Cast:
+                if(randomRange < 6) trueNode.Execute(i);
+                else falseNode.Execute(i);
+                break;
+            case Questions.BossDuplicationCopy:
                 if(randomRange < 10) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
@@ -110,6 +114,7 @@ public enum Questions
     FloorAttack,
     Hit,
     SpecialAttack,
-    Cast
+    Cast,
+    BossDuplicationCopy
     
 }

@@ -77,7 +77,18 @@ public class ActionNode : DecisionNode
                     i.lastAction = actionsEnemy.Attack;
                     i.ChangeCastAttack();
                 }
-
+                break;
+            case Actions.BossDupicationCopy:
+                if (i.fightingCopies > 0)
+                {
+                    i.DecisionTree.Execute(i);
+                }
+                else
+                {
+                    i.lastActionAttack = Actions.BossDupicationCopy;
+                    i.lastAction = actionsEnemy.Attack;
+                    i.ChangeToDuplicationFight();
+                }
                 break;
         }
     }
@@ -105,5 +116,6 @@ public enum Actions
     FloorAttack,
     Hit,
     SpecialAttack,
-    Cast
+    Cast,
+    BossDupicationCopy
 }

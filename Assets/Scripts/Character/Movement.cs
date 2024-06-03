@@ -60,6 +60,7 @@ public class Movement : MonoBehaviour
         if (isDashing) return;
         Vector3 vel = transform.forward * (_controller.GetMovementInput().x * _actualSpeed * Time.fixedDeltaTime) +
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
+
         _rb.velocity = vel;
     }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class IllusionDuplication : EnemySteeringAgent
@@ -6,8 +7,9 @@ public class IllusionDuplication : EnemySteeringAgent
     private Transform _characterPos;
     private IllusionBossDuplicationsAnim _anim;
     [SerializeField] private DecisionNode _decisionTree;
+    [SerializeField] public Transform _model;
 
-
+    public GameObject spawnHitbox;
     public float speedWalk, speedRun;
     public bool canHit;
     public float rangeForAttack;
@@ -28,9 +30,18 @@ public class IllusionDuplication : EnemySteeringAgent
         _fsm.AddState(States.Attack, new BossDuplication_Attack(this));
         _fsm.AddState(States.SpecialAttack, new BossDuplication_Explode(this));
         
-        _fsm.ChangeState(States.Idle);
     }
-    
+
+    private void Update()
+    {
+        _fsm.OnUpdate();
+    }
+
+    private void OnEnable()
+    {
+        _fsm.ChangeState(States.Moving);
+    }
+
     public void ChangeToMove()
     {
         _fsm.ChangeState(States.Moving);

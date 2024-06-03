@@ -10,7 +10,7 @@ public class LifeHandler : MonoBehaviour
 
     public int ActualLife => _actualLife;
 
-    private void Awake()
+    private void OnEnable()
     {
         _actualLife = initialLife;
     }

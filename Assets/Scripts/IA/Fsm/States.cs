@@ -13,4 +13,5 @@ public enum States
     Moving,
     SpecialAttack,
     CastAttack,
+    BossDuplicationCopy
 }

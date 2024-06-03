@@ -15,7 +15,7 @@ public class BossDuplication_Move : State
         CalculateDirection();
         _i.Anim.moving = true;
         _speed = _i.speedWalk;
-        _actualTimer = 5;
+        _actualTimer = Random.Range(3,6);
     }
 
 

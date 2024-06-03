@@ -42,8 +42,9 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.AddState(States.Attack, new IllusionDemon_ComboHit(this));
         _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
         _fsm.AddState(States.CastAttack, new IllusionDemon_Cast(this));
+        _fsm.AddState(States.BossDuplicationCopy, new IllusionDemon_CastFight(this));
         
-        _fsm.ChangeState(States.Idle);
+        _fsm.ChangeState(States.BossDuplicationCopy);
         EnemyManager.Instance.AddEnemy(this);
         ListDemonsUI.Instance.AddText(0, "Illusion Demon");
         canHit = true;
@@ -74,6 +75,11 @@ public class IllusionDemon : EnemySteeringAgent
     public void ChangeCastAttack()
     {
         _fsm.ChangeState(States.CastAttack);
+    }
+
+    public void ChangeToDuplicationFight()
+    {
+        _fsm.ChangeState(States.BossDuplicationCopy);
     }
     
     private void Update()
@@ -118,7 +124,7 @@ public class IllusionDemon : EnemySteeringAgent
 
     public void InvokeFightCopies()
     {
-        for (int i = 0; i < spawns.Length - 1; i++)
+        for (int i = 0; i < spawns.Length; i++)
         {
             Instantiate(copiesFightGO, spawns[i].position, spawns[i].rotation);
             fightingCopies++;

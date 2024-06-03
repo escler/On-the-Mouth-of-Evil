@@ -6,7 +6,6 @@ public class IllusionFightDuplicationLifeHandler : LifeHandler
 {
     public override void OnTakeDamage(int damage)
     {
-
         if (_actualLife > 0) return;
 
         FindObjectOfType<IllusionDemon>().fightingCopies--;

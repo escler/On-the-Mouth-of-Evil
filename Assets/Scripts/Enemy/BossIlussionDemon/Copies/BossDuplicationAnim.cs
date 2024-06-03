@@ -7,7 +7,7 @@ using UnityEngine;
 public class BossDuplicationAnim : MonoBehaviour
 {
     private Animator _animator;
-    public bool moving, run;
+    public bool run;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class BossDuplicationAnim : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            gameObject.SetActive(false);
+            GetComponentInParent<LifeHandler>().OnTakeDamage(1);
         }
     }
 }
