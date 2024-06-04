@@ -8,15 +8,17 @@ public class BossDuplicationAnim : MonoBehaviour
 {
     private Animator _animator;
     public bool run;
+    private BossDuplicationMovement _mov;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _mov = GetComponentInParent<BossDuplicationMovement>();
     }
 
     private void Update()
     {
-        _animator.SetBool("Run", run);
+        _animator.SetBool("Run", _mov.run);
     }
 
     private void OnTriggerEnter(Collider other)

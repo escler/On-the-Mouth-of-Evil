@@ -9,7 +9,7 @@ public class BossDuplicationMovement : MonoBehaviour
     public bool run;
     private Transform _characterPos;
 
-    void Awake()
+    void OnEnable()
     {
         run = false;
         _characterPos = Player.Instance.transform;

@@ -44,7 +44,7 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.AddState(States.CastAttack, new IllusionDemon_Cast(this));
         _fsm.AddState(States.BossDuplicationCopy, new IllusionDemon_CastFight(this));
         
-        _fsm.ChangeState(States.BossDuplicationCopy);
+        _fsm.ChangeState(States.Idle);
         EnemyManager.Instance.AddEnemy(this);
         ListDemonsUI.Instance.AddText(0, "Illusion Demon");
         canHit = true;

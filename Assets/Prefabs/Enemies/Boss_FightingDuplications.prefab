@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 6813594047773631365}
   - component: {fileID: 3700036411580440327}
   m_Layer: 7
-  m_Name: Boss_IllusionistDuplication
+  m_Name: Boss_FightingDuplications
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1343,7 +1343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d0c59c3b70432846884a1a8f6aa198b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trailSword: {fileID: 3132237191430349321}
+  slashVFX: {fileID: 5640665762906003874, guid: cc90201634bc4434a8829c64d9fbabcc,
+    type: 3}
+  weaponTransform: {fileID: 7138775320980563086}
 --- !u!114 &667334334837745060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,7 +1865,6 @@ Transform:
   - {fileID: 5288703995430646130}
   - {fileID: 4878164483873190810}
   - {fileID: 7138775320980563086}
-  - {fileID: 4353827015723403051}
   m_Father: {fileID: 7325051800748767784}
   m_LocalEulerAnglesHint: {x: -18.8259, y: -6.122167, z: 27.831106}
 --- !u!1 &4430599945064917167
@@ -2227,6 +2228,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8855954985087905377}
+  - {fileID: 4353827015723403051}
   m_Father: {fileID: 2752935136995978031}
   m_LocalEulerAnglesHint: {x: 54.2587, y: 19.197151, z: 10.20169}
 --- !u!1 &5767118553664806892
@@ -2792,15 +2794,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8001191520318234832}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000052154054, y: 0.000000026077027, z: -0.083132625, w: 0.9965385}
-  m_LocalPosition: {x: -0.0275, y: 0.1271, z: 0.0348}
-  m_LocalScale: {x: 0.1684577, y: 0.04140032, z: 0.032772157}
+  m_LocalRotation: {x: -0.122760944, y: -0.12099708, z: -0.3474448, w: 0.92172205}
+  m_LocalPosition: {x: 0.049237177, y: 0.08224083, z: 0.0028947927}
+  m_LocalScale: {x: 0.16845773, y: 0.041400317, z: 0.032772154}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2348088848739648218}
   - {fileID: 4241286829924017313}
   - {fileID: 301232847653364870}
-  m_Father: {fileID: 2752935136995978031}
+  m_Father: {fileID: 7138775320980563086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.537}
 --- !u!33 &5589636186569846845
 MeshFilter:

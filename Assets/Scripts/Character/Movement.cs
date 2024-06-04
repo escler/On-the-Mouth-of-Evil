@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     private Rigidbody _rb;
     public Transform model;
     public bool running, isDashing;
+    private PlayerView _view;
 
     public float walkSpeed, runSpeed, dashSpeed, sensRot;
     private float _actualSpeed, _dashSpeed;
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
         _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
+        _view = GetComponent<PlayerView>();
     }
 
     private void LateUpdate()
@@ -41,8 +43,6 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        if(_canDash) Dash();
         Rotate();
         Move();
     }
@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour
     {
         _aiming = Input.GetMouseButton(1);
 
-        if (!isDashing) _canDash = Input.GetButton("Dash");
+        if (!isDashing && Input.GetButtonDown("Dash")) Dash();
         RunCheck();
     }
 
@@ -86,11 +86,14 @@ public class Movement : MonoBehaviour
         var dashDirection = transform.forward * _controller.GetMovementInput().x +
                             transform.right * _controller.GetMovementInput().z;
         _rb.velocity = dashDirection * (dashSpeed * Time.fixedDeltaTime);
+        _view.ActivateTrail();
         //_rb.AddForce(dashDirection * _dashSpeed * Time.deltaTime, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.3f);
 
+        _view.DeactivateTrail();
         isDashing = false;
+        _canDash = false;
 
     }
 }

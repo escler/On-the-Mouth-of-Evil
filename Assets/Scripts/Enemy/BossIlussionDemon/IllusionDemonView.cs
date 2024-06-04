@@ -1,18 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IllusionDemonView : MonoBehaviour
 {
-    public TrailRenderer _trailSword;
+    public GameObject slashVFX;
+    public Transform weaponTransform;
 
-    public void StartTrail()
+    private void Start()
     {
-        _trailSword.emitting = true;
+        
+    }
+
+    public void SlashVFX()
+    {
+        var newSlash = Instantiate(slashVFX);
+        newSlash.transform.position = weaponTransform.position;
+        newSlash.transform.rotation = weaponTransform.rotation;
+        
     }
 
     public void StopTrail()
     {
-        _trailSword.emitting = false;
+        //slashVFX.SetActive(false);
     }
 }
