@@ -50,7 +50,7 @@ public class PlayerView : MonoBehaviour
                 mf.mesh = mesh;
                 mr.material = mat;
 
-                StartCoroutine(AnimateMaterialFloat(mr.material, 0,shaderVarRate, meshRefreshRate));
+                StartCoroutine(AnimateMaterialFloat(mr.material, 0,shaderVarRate, shaderVarRefreshRate));
                 
                 Destroy(gObj, meshDestroyDelay);
             }
