@@ -18,7 +18,5 @@ public class LifeHandler : MonoBehaviour
     public virtual void OnTakeDamage(int damage)
     {
         _actualLife -= damage;
-
-        if (_actualLife > 0) return;
     }
 }

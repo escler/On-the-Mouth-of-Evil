@@ -17,7 +17,8 @@ public class IllusionDemon_Moving : State
         CalculateDirection();
         _d.Anim.moving = true;
         _speed = _d.speedWalk;
-        _actualTimer = 5;
+        var randomNum = Random.Range(1, 3);
+        _actualTimer = 3 + randomNum;
     }
 
 

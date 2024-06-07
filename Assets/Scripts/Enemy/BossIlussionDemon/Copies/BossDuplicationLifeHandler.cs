@@ -8,7 +8,8 @@ public class BossDuplicationLifeHandler : LifeHandler
     public override void OnTakeDamage(int damage)
     {
         base.OnTakeDamage(damage);
-        
-        if(_actualLife < 0) gameObject.SetActive(false);
+
+        if (_actualLife > 0) return;
+        gameObject.SetActive(false);
     }
 }

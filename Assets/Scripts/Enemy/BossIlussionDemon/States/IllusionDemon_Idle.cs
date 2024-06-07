@@ -6,7 +6,7 @@ public class IllusionDemon_Idle : State
 {
     private IllusionDemon _d;
     private float _actualTimer;
-    private readonly float _timer = 3f;
+    private readonly float _timer = 2f;
     public IllusionDemon_Idle(EnemySteeringAgent e)
     {
         _d = e.GetComponent<IllusionDemon>();
