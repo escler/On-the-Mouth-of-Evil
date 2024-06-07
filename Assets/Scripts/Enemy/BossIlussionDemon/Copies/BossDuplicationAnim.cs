@@ -25,7 +25,6 @@ public class BossDuplicationAnim : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            print("Entre");
             GetComponentInParent<LifeHandler>().OnTakeDamage(1);
         }
     }
