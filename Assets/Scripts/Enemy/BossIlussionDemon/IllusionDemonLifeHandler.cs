@@ -12,7 +12,7 @@ public class IllusionDemonLifeHandler : LifeHandler
         {
             if (illusionDemon.canHit)
             {
-                illusionDemon.enemyHit = true;
+                illusionDemon.hitCount++;
                 //illusionDemon.DecisionTree.Execute(illusionDemon);
             }
             return;

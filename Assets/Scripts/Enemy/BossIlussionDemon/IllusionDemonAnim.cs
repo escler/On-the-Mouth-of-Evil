@@ -25,10 +25,8 @@ public class IllusionDemonAnim : MonoBehaviour
         _animator.SetBool("Death",death);
         _animator.SetBool("Hit",hit);
         _animator.SetBool("Run", run);
-        _animator.SetBool("ComboHit", comboHit);
         _animator.SetBool("JumpAttack", jumpAttack);
         _animator.SetBool("Cast", cast);
-        _animator.SetBool("CastCopy", castCopies);
         _animator.SetBool("CastFight", castFight);
     }
     
@@ -54,10 +52,6 @@ public class IllusionDemonAnim : MonoBehaviour
         _demon.InvokeDemon();
     }
 
-    public void SpawnCopies()
-    {
-        _demon.InvokeCopies();
-    }
 
     public void FinishCast()
     {
@@ -67,10 +61,5 @@ public class IllusionDemonAnim : MonoBehaviour
     public void FinishComb()
     {
         comboHit = false;
-    }
-
-    public void CastFightDuplications()
-    {
-        _demon.InvokeFightCopies();
     }
 }

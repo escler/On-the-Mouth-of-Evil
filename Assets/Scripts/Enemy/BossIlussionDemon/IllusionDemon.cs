@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 public class IllusionDemon : EnemySteeringAgent
 {
@@ -11,13 +13,13 @@ public class IllusionDemon : EnemySteeringAgent
     private float _cdForAttack;
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
-    public float rangeForAttack, rangeForSpecialAttack;
+    public float timeForChannelAttack, rangeForSpecialAttack;
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public bool canHit, enemyHit, finishCast;
-    public Transform[] spawns;
+    public int hitCount;
 
-    public GameObject lowRangeDemons, copiesGO, copiesFightGO;
+    public GameObject lowRangeDemons, copiesGO, copiesFightGO, explosionCopies;
     public GameObject copy1, copy2;
 
     public float speedWalk, speedRun;
@@ -25,7 +27,15 @@ public class IllusionDemon : EnemySteeringAgent
     private IllusionDemonAnim _anim;
     public actionsEnemy lastAction;
     public Actions lastActionAttack;
+
+    public BossZoneManager _zoneManager;
     [SerializeField] private DecisionNode _decisionTree;
+
+    [Header("Cast Spell")] 
+    public GameObject startCast;
+    public GameObject spell;
+    public Transform pivot;
+    
     public DecisionNode DecisionTree => _decisionTree;
 
     public Transform CharacterPos => _characterPos;
@@ -34,22 +44,24 @@ public class IllusionDemon : EnemySteeringAgent
     {
         _anim = GetComponentInChildren<IllusionDemonAnim>();
         _characterPos = Player.Instance.transform;
+        _zoneManager = BossZoneManager.Instance;
         _fsm = new FiniteStateMachine();
         
         _fsm.AddState(States.Idle, new IllusionDemon_Idle(this));
         _fsm.AddState(States.Moving, new IllusionDemon_Moving(this));
         _fsm.AddState(States.Hit, new IllusionDemon_Hit(this));
-        _fsm.AddState(States.Attack, new IllusionDemon_ComboHit(this));
+        _fsm.AddState(States.Attack, new IllusionDemon_ChannelAttack(this));
         _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
-        _fsm.AddState(States.CastAttack, new IllusionDemon_Cast(this));
-        _fsm.AddState(States.BossDuplicationCopy, new IllusionDemon_CastFight(this));
+        _fsm.AddState(States.CastAttack, new IllusionDemon_FogAttack(this));
         
         _fsm.ChangeState(States.Idle);
-        EnemyManager.Instance.AddEnemy(this);
-        ListDemonsUI.Instance.AddText(0, "Illusion Demon");
-        canHit = true;
         
         CreateCopies();
+    }
+
+    public void ChangeToIdle()
+    {
+        _fsm.ChangeState(States.Idle);
     }
 
     public void ChangeToMove()
@@ -62,7 +74,7 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.ChangeState(States.Hit);
     }
     
-    public void ChangeToCombo()
+    public void ChangeToCastAttack()
     {
         _fsm.ChangeState(States.Attack);
     }
@@ -85,6 +97,7 @@ public class IllusionDemon : EnemySteeringAgent
     private void Update()
     {
         _fsm.OnUpdate();
+        enemyHit = hitCount >= 3;
         if(enemyHit) ChangeToHit();
     }
 
@@ -111,25 +124,33 @@ public class IllusionDemon : EnemySteeringAgent
         copy2 = c2;
         copy2.SetActive(false);
     }
-    public void InvokeCopies()
+
+    public Vector3 NewLocation()
     {
-        copy1.SetActive(true);
-        copy1.transform.position = transform.position - transform.right * 2;
-        copy1.transform.rotation = transform.rotation;
-            
-        copy2.SetActive(true);
-        copy2.transform.position = transform.position + transform.right * 2;
-        copy2.transform.rotation = transform.rotation;
+        var furthestLocation =_zoneManager.points.
+            OrderBy(x => Vector3.Distance(_characterPos.position, x.position))
+            .Last().position;
+
+        return new Vector3(furthestLocation.x, transform.position.y, furthestLocation.z);
     }
 
-    public void InvokeFightCopies()
+    public void SpawnExplosionCopies(float xMin, float xMax)
     {
-        for (int i = 0; i < spawns.Length; i++)
-        {
-            Instantiate(copiesFightGO, spawns[i].position, spawns[i].rotation);
-            fightingCopies++;
-        }
+        var bounds = _zoneManager.GetComponent<BoxCollider>().bounds;
+        var validPosCenter = _zoneManager.transform.position;
+        var explosionCopy = Instantiate(explosionCopies);
+        var posX = Random.Range(_characterPos.position.x + xMin, _characterPos.position.x + xMax);
+        posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
+        var posZ = Random.Range(_characterPos.position.z - 6, _characterPos.position.z - 10);
+        posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
+        explosionCopy.transform.position = new Vector3(posX, transform.position.y, posZ);
     }
+
+    public void FireSpell()
+    {
+        Instantiate(spell, pivot.position, transform.rotation);
+    }
+
 }
 
 public enum actionsEnemy

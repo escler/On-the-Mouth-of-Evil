@@ -23,7 +23,7 @@ public class IllusionDemon_Idle : State
         _actualTimer -= Time.deltaTime;
         if (_actualTimer > 0) return;
         
-        _d.ChangeToMove();
+        _d.ChangeToCastAttack();
     }
 
     public override void OnExit()

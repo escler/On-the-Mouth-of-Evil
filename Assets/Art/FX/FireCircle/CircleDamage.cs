@@ -8,7 +8,6 @@ public class CircleDamage : MonoBehaviour
     public int damagePerSecond;
     private bool _inContact;
     private float actualTime;
-    [SerializeField] GameObject _player;
 
     private void Awake()
     {
@@ -36,7 +35,6 @@ public class CircleDamage : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            _player = other.gameObject;
             _inContact = true;
         }
     }

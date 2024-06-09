@@ -49,7 +49,7 @@ public class ActionNode : DecisionNode
                 {
                     i.lastActionAttack = Actions.Attack;
                     i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToCombo();
+                    i.ChangeToCastAttack();
                 }
 
                 break;

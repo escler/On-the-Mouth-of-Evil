@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.PlayerLoop;
 
-public class Movement : MonoBehaviour
+public class Movement : MonoBehaviour, IGridEntity
 {
     [SerializeField] private Controller _controller;
     [SerializeField] private Transform _mainCamera;
@@ -19,7 +19,9 @@ public class Movement : MonoBehaviour
     private bool _aiming, _canDash;
     private Transform _targetAim, _weaponPos;
     public Transform spine;
-
+    
+    public event Action<IGridEntity> OnMove;
+    public Vector3 Position { get; set; }
     private void Start()
     {
         _targetAim = Player.Instance.targetAim;
@@ -62,6 +64,7 @@ public class Movement : MonoBehaviour
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);
 
         _rb.velocity = vel;
+        OnMove?.Invoke(this);
     }
 
     private void Rotate()
@@ -87,7 +90,7 @@ public class Movement : MonoBehaviour
                             transform.right * _controller.GetMovementInput().z;
         _rb.velocity = dashDirection * (dashSpeed * Time.fixedDeltaTime);
         _view.ActivateTrail();
-        //_rb.AddForce(dashDirection * _dashSpeed * Time.deltaTime, ForceMode.Impulse);
+        OnMove?.Invoke(this);
 
         yield return new WaitForSeconds(0.3f);
 

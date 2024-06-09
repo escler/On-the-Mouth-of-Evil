@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletCollider : MonoBehaviour
+public class ExplosionDamage : MonoBehaviour
 {
-    public int speed, damage;
-
+    public int damage;
     private void OnEnable()
     {
-        transform.LookAt(Player.Instance.transform);
+        StartCoroutine(DisableObject());
     }
 
-    private void Update()
+    IEnumerator DisableObject()
     {
-        transform.position += transform.forward * (speed * Time.deltaTime);
+        yield return new WaitForSeconds(0.2f);
+
+        transform.parent.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +24,5 @@ public class BulletCollider : MonoBehaviour
         {
             other.GetComponent<PlayerLifeHandler>().OnTakeDamage(damage);
         }
-        
-        Destroy(gameObject);
     }
 }

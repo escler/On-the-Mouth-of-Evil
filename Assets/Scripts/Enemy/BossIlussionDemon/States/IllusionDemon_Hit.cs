@@ -31,5 +31,6 @@ public class IllusionDemon_Hit : State
     {
         _d.Anim.hit = false;
         _d.enemyHit = false;
+        _d.hitCount = 0;
     }
 }

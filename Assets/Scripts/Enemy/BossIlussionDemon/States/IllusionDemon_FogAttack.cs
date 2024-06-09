@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IllusionDemon_Cast : State
+public class IllusionDemon_FogAttack : State
 {
     private IllusionDemon _d;
-    public IllusionDemon_Cast(EnemySteeringAgent e)
+    public IllusionDemon_FogAttack(EnemySteeringAgent e)
     {
         _d = e.GetComponent<IllusionDemon>();
     }
