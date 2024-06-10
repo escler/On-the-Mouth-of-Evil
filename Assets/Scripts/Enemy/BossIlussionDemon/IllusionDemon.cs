@@ -37,6 +37,13 @@ public class IllusionDemon : EnemySteeringAgent
     public GameObject spell;
     public Transform pivot;
 
+    [Header("Fog Attack")] 
+    public int copiesPerAttack;
+    public int actualCopies;
+    public bool copyAlive;
+
+    public GameObject[] fogEnemies;
+
     public DecisionNode DecisionTree => _decisionTree;
 
     public Transform CharacterPos => _characterPos;
@@ -197,6 +204,34 @@ public class IllusionDemon : EnemySteeringAgent
                 transform.position = copyPos2;
                 transform.rotation = copyRot2;
                 break;
+        }
+    }
+
+    public void StartFogAttack()
+    {
+        StartCoroutine(SpawnCopyFog(fogEnemies, -5, 5));
+    }
+
+    public void EndFogAttack()
+    {
+        StopCoroutine(SpawnCopyFog(fogEnemies,-5,5));
+    }
+
+    IEnumerator SpawnCopyFog(GameObject[] copies, float xMin, float xMax)
+    {
+        while (actualCopies > 0)
+        {
+            var copy = Random.Range(0, copies.Length);
+            copyAlive = true;
+            var bounds = _zoneManager.GetComponent<BoxCollider>().bounds;
+            var validPosCenter = _zoneManager.transform.position;
+            var posX = Random.Range(_characterPos.position.x + xMin, _characterPos.position.x + xMax);
+            posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
+            var posZ = Random.Range(_characterPos.position.z - 6, _characterPos.position.z - 10);
+            posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
+
+            Instantiate(copies[copy], new Vector3(posX, transform.position.y, posZ), transform.rotation);
+            yield return new WaitUntil(() => copyAlive == false);
         }
     }
 }

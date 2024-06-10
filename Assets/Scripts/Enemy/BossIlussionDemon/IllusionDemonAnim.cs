@@ -11,7 +11,7 @@ public class IllusionDemonAnim : MonoBehaviour
 
     public Animator Animator => _animator;
 
-    public bool moving, death, hit, run, comboHit, jumpAttack, cast, castCopies, castFight;
+    public bool moving, death, hit, run, jumpAttack, cast, castCopies, castFight;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -67,11 +67,6 @@ public class IllusionDemonAnim : MonoBehaviour
     public void FinishCast()
     {
         _demon.finishCast = true;
-    }
-
-    public void FinishComb()
-    {
-        comboHit = false;
     }
 
     public void SwitchPositions()

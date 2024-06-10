@@ -1071,7 +1071,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5401687755765108358}
   - component: {fileID: 2023957573090743548}
-  - component: {fileID: 2338126319633025227}
   m_Layer: 7
   m_Name: Standing 1H Magic Attack 01 (1)
   m_TagString: Untagged
@@ -1117,29 +1116,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &2338126319633025227
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4737072986161714236}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.23
-  m_Height: 1.75
-  m_Direction: 1
-  m_Center: {x: 0.03, y: 0.83, z: 0}
 --- !u!1 &4789894335768655719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,10 +1446,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 528601686937534642}
-  - component: {fileID: 6497520904830202357}
-  - component: {fileID: 1164391809862057719}
+  - component: {fileID: -2327061425813694206}
+  - component: {fileID: 2321079790530972755}
+  - component: {fileID: 491363325251579916}
   m_Layer: 7
-  m_Name: ExplosionEnemy
+  m_Name: EnemyFogAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,7 +1474,7 @@ Transform:
   - {fileID: 88400955189888364}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6497520904830202357
+--- !u!114 &-2327061425813694206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1506,14 +1483,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6663439080989992509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70281bf4ad522e54f81fec0cd2403d81, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e48f4750d950aa40b132f2f96d2265b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToExplode: 2
-  lifeTime: 7
-  speed: 1.5
-  startExplode: {fileID: 8340080923058126081}
---- !u!114 &1164391809862057719
+  isExplosionEnemy: 0
+  speed: 3
+--- !u!114 &2321079790530972755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1522,10 +1497,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 6663439080989992509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a8ab4ee4b6c10a448e33a2bb35760d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 98e7331105f42b14ba7c30ea9a5d9af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLife: 40
+  initialLife: 10
+--- !u!136 &491363325251579916
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663439080989992509}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 1.75
+  m_Direction: 1
+  m_Center: {x: 0.03, y: 0.83, z: 0}
 --- !u!1 &6744403849068741721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +1939,7 @@ Transform:
   m_GameObject: {fileID: 7767595712196428282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

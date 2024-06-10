@@ -968,10 +968,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _attackSpawn: {fileID: 0}
-  timeForChannelAttack: 0
-  rangeForSpecialAttack: 4
+  timeForChannelAttack: 3
+  rangeForSpecialAttack: 5
   spawnHitbox: {fileID: 2286667699463997346}
-  _model: {fileID: 9090160218639039143}
+  _model: {fileID: 4315476552394673562}
   canHit: 0
   enemyHit: 0
   finishCast: 0
@@ -982,7 +982,8 @@ MonoBehaviour:
     type: 3}
   copiesFightGO: {fileID: 2514190737089483963, guid: b168dc792a41bab4f8140d684c7dca14,
     type: 3}
-  explosionCopies: {fileID: 0}
+  explosionCopies: {fileID: 6663439080989992509, guid: 5990937a26e5f5a48852320d1419c90e,
+    type: 3}
   copy1: {fileID: 5835866721972559680, guid: f49e766ae6e13044184a4d55187109e5, type: 3}
   copy2: {fileID: 5835866721972559680, guid: f49e766ae6e13044184a4d55187109e5, type: 3}
   speedWalk: 1
@@ -996,6 +997,11 @@ MonoBehaviour:
   startCast: {fileID: 4356922398230256288}
   spell: {fileID: 2689492950218367507, guid: 5e44f06046011cf429fb1e7cba0cf21c, type: 3}
   pivot: {fileID: 8827459283897652079}
+  copiesPerAttack: 5
+  copyAlive: 0
+  fogEnemies:
+  - {fileID: 6696869463115196656, guid: 6409bbc9fc8e475438a5a3e1daf87c17, type: 3}
+  - {fileID: 95150719233590893, guid: 299f2be0cc0d788438989e88cea13d01, type: 3}
 --- !u!1 &2530537078970943616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1649,6 @@ MonoBehaviour:
   death: 0
   hit: 0
   run: 0
-  comboHit: 0
   jumpAttack: 0
   cast: 0
   castCopies: 0
