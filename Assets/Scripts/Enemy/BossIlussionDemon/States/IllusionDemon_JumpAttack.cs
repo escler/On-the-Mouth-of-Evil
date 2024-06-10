@@ -14,11 +14,12 @@ public class IllusionDemon_JumpAttack : State
     public override void OnEnter()
     {
         _d.Anim.castCopies = true;
+        _d.transform.position = _d.LocationForJumpAttack();
     }
 
     public override void OnUpdate()
     {
-        _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+        if(!_d.Anim.jumpAttack)_d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
         if(_d.finishCast)
         {
             _d.Anim.run = true;
@@ -38,7 +39,7 @@ public class IllusionDemon_JumpAttack : State
         if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
            _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            _d.DecisionTree.Execute(_d);
+            _d.ChangeToIdle();
         }
     }
 

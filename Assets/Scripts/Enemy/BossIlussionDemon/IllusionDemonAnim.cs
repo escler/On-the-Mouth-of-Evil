@@ -28,6 +28,7 @@ public class IllusionDemonAnim : MonoBehaviour
         _animator.SetBool("JumpAttack", jumpAttack);
         _animator.SetBool("Cast", cast);
         _animator.SetBool("CastFight", castFight);
+        _animator.SetBool("CastDuplications", castCopies);
     }
     
     public void AdjustPosition()
@@ -35,6 +36,12 @@ public class IllusionDemonAnim : MonoBehaviour
         var modelPos = _demon._model.transform.position;
         _demon.transform.position = new Vector3(modelPos.x, _demon.transform.position.y, modelPos.z);
         _demon._model.transform.localPosition = Vector3.zero;
+    }
+
+    public void AdjustToPivot()
+    {
+        _demon._model.transform.position = _demon.transform.position;
+        _animator.applyRootMotion = true;
     }
 
     public void EnableHitBox()
@@ -52,6 +59,10 @@ public class IllusionDemonAnim : MonoBehaviour
         _demon.InvokeDemon();
     }
 
+    public void SpawnCopies()
+    {
+        _demon.InvokeCopies();
+    }
 
     public void FinishCast()
     {
@@ -61,5 +72,10 @@ public class IllusionDemonAnim : MonoBehaviour
     public void FinishComb()
     {
         comboHit = false;
+    }
+
+    public void SwitchPositions()
+    {
+        _demon.SwitchPosition();
     }
 }
