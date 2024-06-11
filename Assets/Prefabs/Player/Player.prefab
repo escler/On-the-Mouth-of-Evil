@@ -165,6 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeWeapon: {fileID: 7616536875829624569}
+  movement: {fileID: 637124000237001304}
+  interactChecker: {fileID: 1049368622030481013}
   chest: {fileID: 5505449279274646435}
   targetAim: {fileID: 1975883369997697625}
 --- !u!136 &523616169048049752
@@ -231,7 +233,11 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 512
+  _banishLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   distance: 3
+  banishRadius: 4
   UIObject: {fileID: 0}
 --- !u!114 &4784608522688390531
 MonoBehaviour:

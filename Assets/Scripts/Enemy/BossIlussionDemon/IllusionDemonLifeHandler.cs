@@ -17,8 +17,20 @@ public class IllusionDemonLifeHandler : LifeHandler
             }
             return;
         }
-
         illusionDemon.canHit = false;
+        illusionDemon.canBanish = true;
+        illusionDemon.ChangeToBanish();
+    }
+
+    public void RechargeLife()
+    {
+        _actualLife = initialLife / 2;
+        print(_actualLife);
+    }
+
+    public void Death()
+    {
+        var illusionDemon = GetComponent<IllusionDemon>();
         illusionDemon.Anim.death = true;
         illusionDemon.GetComponentInChildren<CapsuleCollider>().enabled = false;
         illusionDemon.enabled = false;

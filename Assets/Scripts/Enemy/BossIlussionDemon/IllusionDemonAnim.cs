@@ -73,4 +73,9 @@ public class IllusionDemonAnim : MonoBehaviour
     {
         _demon.SwitchPosition();
     }
+
+    public void Death()
+    {
+        _demon.GetComponent<IllusionDemonLifeHandler>().Death();
+    }
 }

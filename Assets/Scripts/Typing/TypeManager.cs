@@ -10,7 +10,7 @@ public class TypeManager : MonoBehaviour
 {
     private Queue<string> _typeSequence = new Queue<string>();
 
-    public bool keyPressed, sequenceGenerated, success;
+    public bool keyPressed, sequenceGenerated, success, canType;
     public string lastKeyPressed;
     public int count;
     public Action onResult;
@@ -33,25 +33,20 @@ public class TypeManager : MonoBehaviour
 
     private void Update()
     {
-        if (!sequenceGenerated && Input.GetKeyDown(KeyCode.G))
+        if (Input.anyKeyDown)
         {
-            GenerateNewSequence(8);
-        }
-        else if(Input.anyKeyDown && sequenceGenerated)
-        {
+            if (!canType) return;
             SetLastKey(Input.inputString);
         }
-
+        
         if (sequenceGenerated)
         {
             _actualTime -= Time.deltaTime;
             if(_actualTime <= 0) SetLastKey("error");
         }
-
     }
-    public void SetLastKey(string key)
+    private void SetLastKey(string key)
     {
-        print("SAD");
         lastKeyPressed = key;
         keyPressed = true;
     }
@@ -64,26 +59,31 @@ public class TypeManager : MonoBehaviour
             var randomKey = Random.Range(0, _avaiblesKeys.Length);
             _typeSequence.Enqueue(_avaiblesKeys[randomKey]);
         }
-
+        sequenceGenerated = true;
         DebugQueue();
     }
 
 
-    public void DebugQueue()
+    private void DebugQueue()
     {
         var cloneQueue = _typeSequence.ToArray();
         if (cloneQueue.Length <= 0) return;
+        var panel = KeyUIGenerator.Instance;
+        panel.ShowPanel();
         for (int i = 0; i < cloneQueue.Length; i++)
         {
-            print(cloneQueue[i]);
+            panel.AddKey(cloneQueue[i]);
         }
         StartCoroutine(ResolveSequence());
         _actualTime = timeToResolve;
-        sequenceGenerated = true;
+        StartCoroutine(WaitForType());
     }
 
     public bool ResultOfType()
     {
+        Player.Instance.PossesControls();
+        KeyUIGenerator.Instance.DeleteKeys();
+        canType = false;
         return success;
     }
 
@@ -95,6 +95,7 @@ public class TypeManager : MonoBehaviour
         {
             var key = _typeSequence.Dequeue();
             keyPressed = false;
+            KeyUIGenerator.Instance.ChangeColor(count);
             yield return new WaitUntil(() => keyPressed);
             if (lastKeyPressed != key) break;
             count++;
@@ -104,5 +105,11 @@ public class TypeManager : MonoBehaviour
         else success = false;
         sequenceGenerated = false;
         onResult?.Invoke();
+    }
+
+    IEnumerator WaitForType()
+    {
+        yield return new WaitForNextFrameUnit();
+        canType = true;
     }
 }

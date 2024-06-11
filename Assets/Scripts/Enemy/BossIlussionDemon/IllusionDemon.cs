@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Schema;
 
-public class IllusionDemon : EnemySteeringAgent
+public class IllusionDemon : EnemySteeringAgent, IBanishable
 {
     private FiniteStateMachine _fsm;
     private bool _obstacleWithPlayer, _playerInFov;
@@ -49,6 +49,9 @@ public class IllusionDemon : EnemySteeringAgent
     public Transform CharacterPos => _characterPos;
     public IllusionDemonAnim Anim => _anim;
 
+    public bool canBanish { get; set; }
+    public bool onBanishing { get; set; }
+    public float timeToBanish;
     void Awake()
     {
         _anim = GetComponentInChildren<IllusionDemonAnim>();
@@ -62,6 +65,7 @@ public class IllusionDemon : EnemySteeringAgent
         _fsm.AddState(States.Attack, new IllusionDemon_ChannelAttack(this));
         _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
         _fsm.AddState(States.CastAttack, new IllusionDemon_FogAttack(this));
+        _fsm.AddState(States.Banish, new IllusionDemon_Banish(this));
 
         _fsm.ChangeState(States.Idle);
 
@@ -101,6 +105,11 @@ public class IllusionDemon : EnemySteeringAgent
     public void ChangeToDuplicationFight()
     {
         _fsm.ChangeState(States.BossDuplicationCopy);
+    }
+
+    public void ChangeToBanish()
+    {
+        _fsm.ChangeState(States.Banish);
     }
 
     private void Update()
@@ -233,6 +242,37 @@ public class IllusionDemon : EnemySteeringAgent
             Instantiate(copies[copy], new Vector3(posX, transform.position.y, posZ), transform.rotation);
             yield return new WaitUntil(() => copyAlive == false);
         }
+    }
+
+    public void RestoreLife()
+    {
+        GetComponent<IllusionDemonLifeHandler>().RechargeLife();
+    }
+
+    private void ResultOfBanish()
+    {
+        if (TypeManager.Instance.ResultOfType())
+        {
+            Anim.death = true;
+        }
+        else
+        {
+            RestoreLife();
+        }
+        FinishBanish();
+    }
+    
+
+    public void StartBanish()
+    {
+        TypeManager.Instance.onResult += ResultOfBanish;
+        onBanishing = true;
+    }
+
+    public void FinishBanish()
+    {
+        TypeManager.Instance.onResult -= ResultOfBanish;
+        onBanishing = false;
     }
 }
 

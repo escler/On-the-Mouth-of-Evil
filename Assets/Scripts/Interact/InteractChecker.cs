@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class InteractChecker : MonoBehaviour
 {
-    [SerializeField] private LayerMask _layerMask;
-    public int distance;
+    [SerializeField] private LayerMask _layerMask, _banishLayerMask;
+    public int distance, banishRadius;
     private Transform _targetAim, _cameraPos;
     public GameObject UIObject;
+    private TypeManager _typeManager;
 
     private void Start()
     {
         _targetAim = Player.Instance.targetAim;
+        _typeManager = TypeManager.Instance;
         _cameraPos = Camera.main.transform;
     }
 
@@ -33,5 +35,26 @@ public class InteractChecker : MonoBehaviour
         {
             UIObject.SetActive(false);
         }
+        
+        if (Input.GetButtonDown("Interact")) CheckBanish();
+    }
+
+    private void CheckBanish()
+    {
+        var checker = Physics.OverlapSphere(transform.position, banishRadius, _banishLayerMask);
+
+        if (checker.Length <= 0) return;
+        if (_typeManager.sequenceGenerated) return;
+        _typeManager.GenerateNewSequence(8);
+        Player.Instance.DipposeControls();
+        foreach (var item in checker)
+        {
+            item.GetComponentInParent<IBanishable>().StartBanish();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, banishRadius);
     }
 }
