@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml.Schema;
+
 
 public class IllusionDemon : EnemySteeringAgent, IBanishable
 {
@@ -42,6 +39,9 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public int actualCopies;
     public bool copyAlive;
 
+    [Header("Throw Objects")] 
+    public Transform throwObjectPos;
+
     public GameObject[] fogEnemies;
 
     public DecisionNode DecisionTree => _decisionTree;
@@ -64,6 +64,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _fsm.AddState(States.Hit, new IllusionDemon_Hit(this));
         _fsm.AddState(States.Attack, new IllusionDemon_ChannelAttack(this));
         _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
+        _fsm.AddState(States.SpecialAttack2, new IllusionDemon_ThrowObjects(this));
         _fsm.AddState(States.CastAttack, new IllusionDemon_FogAttack(this));
         _fsm.AddState(States.Banish, new IllusionDemon_Banish(this));
 
@@ -87,7 +88,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _fsm.ChangeState(States.Hit);
     }
 
-    public void ChangeToCastAttack()
+    public void ChangeToAttack()
     {
         _fsm.ChangeState(States.Attack);
     }
@@ -96,8 +97,13 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     {
         _fsm.ChangeState(States.SpecialAttack);
     }
+    
+    public void ChangeToSpecialAttack2()
+    {
+        _fsm.ChangeState(States.SpecialAttack2);
+    }
 
-    public void ChangeCastAttack()
+    public void ChangeToCastAttack()
     {
         _fsm.ChangeState(States.CastAttack);
     }

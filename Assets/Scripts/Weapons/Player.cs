@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +7,7 @@ public class Player : MonoBehaviour
     public Movement movement;
     public InteractChecker interactChecker;
     public Transform chest, targetAim;
+    public GameObject sphere;
     
     private void Awake()
     {

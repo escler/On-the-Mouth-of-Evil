@@ -20,10 +20,10 @@ public class IllusionDemon_Idle : State
 
     public override void OnUpdate()
     {
-        //_actualTimer -= Time.deltaTime;
-        //if (_actualTimer > 0) return;
+        _actualTimer -= Time.deltaTime;
+        if (_actualTimer > 0) return;
         
-        //_d.ChangeCastAttack();
+        _d.ChangeToSpecialAttack2();
     }
 
     public override void OnExit()

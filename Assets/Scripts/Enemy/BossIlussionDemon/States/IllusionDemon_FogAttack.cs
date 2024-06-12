@@ -17,6 +17,7 @@ public class IllusionDemon_FogAttack : State
         _rotation = _d.transform.rotation;
         _d.transform.position = new Vector3(1000, _d.transform.position.y, 1000);
         _d.actualCopies = _d.copiesPerAttack;
+        Player.Instance.sphere.SetActive(true);
         _d.StartFogAttack();
     }
 
@@ -33,6 +34,7 @@ public class IllusionDemon_FogAttack : State
         _d.transform.rotation = _rotation;
         _d.EndFogAttack();
         _d.Anim.cast = false;
+        Player.Instance.sphere.SetActive(false);
         
     }
 }

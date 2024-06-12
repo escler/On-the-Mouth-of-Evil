@@ -49,7 +49,7 @@ public class ActionNode : DecisionNode
                 {
                     i.lastActionAttack = Actions.Attack;
                     i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToCastAttack();
+                    i.ChangeToAttack();
                 }
 
                 break;
@@ -75,7 +75,7 @@ public class ActionNode : DecisionNode
                 {
                     i.lastActionAttack = Actions.Cast;
                     i.lastAction = actionsEnemy.Attack;
-                    i.ChangeCastAttack();
+                    i.ChangeToCastAttack();
                 }
                 break;
             case Actions.BossDupicationCopy:

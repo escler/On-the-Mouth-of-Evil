@@ -12,6 +12,7 @@ public enum States
     FloorAttack,
     Moving,
     SpecialAttack,
+    SpecialAttack2,
     CastAttack,
     BossDuplicationCopy,
     Banish
