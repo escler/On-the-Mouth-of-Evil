@@ -13,6 +13,7 @@ public class IllusionDemon_Banish : State
     }
     public override void OnEnter()
     {
+        _d.banishPS.SetActive(true);
         _d.canBanish = true;
         _actualTimer = _d.timeToBanish;
     }
@@ -30,6 +31,7 @@ public class IllusionDemon_Banish : State
 
     public override void OnExit()
     {
+        _d.banishPS.SetActive(false);
         _d.canBanish = false;
     }
 }

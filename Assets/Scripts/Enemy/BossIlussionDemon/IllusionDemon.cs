@@ -53,6 +53,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public bool canBanish { get; set; }
     public bool onBanishing { get; set; }
     public float timeToBanish;
+    public GameObject banishPS;
     void Awake()
     {
         _anim = GetComponentInChildren<IllusionDemonAnim>();
