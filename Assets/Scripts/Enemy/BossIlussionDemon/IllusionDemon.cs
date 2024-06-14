@@ -234,6 +234,9 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
 
     IEnumerator SpawnCopyFog(GameObject[] copies, float xMin, float xMax)
     {
+        Player.Instance.sphere.GetComponent<FogPlayer>().start = true;
+        yield return new WaitForSeconds(2f);
+        
         while (actualCopies > 0)
         {
             var copy = Random.Range(0, copies.Length);

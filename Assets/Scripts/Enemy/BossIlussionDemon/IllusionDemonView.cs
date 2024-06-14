@@ -7,10 +7,11 @@ public class IllusionDemonView : MonoBehaviour
 {
     public GameObject slashVFX;
     public Transform weaponTransform;
+    public GameObject lifeUI;
 
-    private void Start()
+    private void OnEnable()
     {
-        
+        lifeUI.SetActive(true);
     }
 
     public void SlashVFX()

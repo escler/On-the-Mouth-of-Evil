@@ -54,8 +54,12 @@ public class ThrowManager : MonoBehaviour
         _throwItems.Remove(item);
     }
 
-    public void MoveToLocation(Vector3 location)
+    public ThrowItem MoveToLocation(Vector3 location)
     {
-        _throwItems.First().SetLocation(location);
+        if (_throwItems.Count <= 0) return null;
+        var actualItem = _throwItems.First();
+        _throwItems.Remove(actualItem);
+        actualItem.SetLocation(location);
+        return actualItem;
     }
 }

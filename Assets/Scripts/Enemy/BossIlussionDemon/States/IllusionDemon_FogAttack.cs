@@ -7,12 +7,14 @@ public class IllusionDemon_FogAttack : State
     private IllusionDemon _d;
     private Vector3 _position;
     private Quaternion _rotation;
+    private float _actualTime;
     public IllusionDemon_FogAttack(EnemySteeringAgent e)
     {
         _d = e.GetComponent<IllusionDemon>();
     }
     public override void OnEnter()
     {
+        _actualTime = 2f;
         _position = _d.transform.position;
         _rotation = _d.transform.rotation;
         _d.transform.position = new Vector3(1000, _d.transform.position.y, 1000);
@@ -25,7 +27,10 @@ public class IllusionDemon_FogAttack : State
     {
         if (_d.actualCopies > 0) return;
         
-        _d.ChangeToIdle();
+        Player.Instance.sphere.GetComponent<FogPlayer>().start = false;
+        
+        _actualTime -= Time.deltaTime;
+        if(_actualTime < 0) _d.ChangeToIdle();
     }
 
     public override void OnExit()
