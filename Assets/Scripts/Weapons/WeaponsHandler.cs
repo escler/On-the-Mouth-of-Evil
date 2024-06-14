@@ -32,7 +32,7 @@ public class WeaponsHandler : MonoBehaviour
     private void Update()
     {
         if(Input.GetButton("Weapon1")) ChangeWeapon(0);
-        if(Input.GetButton("Weapon2"))ChangeWeapon(1);
+        if(Input.GetButton("Weapon2")) ChangeWeapon(1);
         
     }
 

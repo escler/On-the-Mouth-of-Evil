@@ -30,7 +30,6 @@ public class IllusionDemon_Banish : State
 
     public override void OnExit()
     {
-        Debug.Log("Sali de Banish");
         _d.canBanish = false;
     }
 }

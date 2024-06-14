@@ -16,7 +16,6 @@ public class IllusionDemonLifeHandler : LifeHandler
             if (illusionDemon.canHit)
             {
                 illusionDemon.hitCount++;
-                //illusionDemon.DecisionTree.Execute(illusionDemon);
             }
             return;
         }
@@ -28,7 +27,8 @@ public class IllusionDemonLifeHandler : LifeHandler
     public void RechargeLife()
     {
         _actualLife = initialLife / 2;
-        print(_actualLife);
+        GetComponent<IllusionDemon>().ChangeToIdle();
+        OnLifeChange?.Invoke();
     }
 
     public void Death()

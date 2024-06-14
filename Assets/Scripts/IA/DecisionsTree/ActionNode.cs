@@ -33,12 +33,13 @@ public class ActionNode : DecisionNode
     {
         switch (action)
         {
-            case Actions.Hit:
-                i.ChangeToHit();
-                break;
-            case Actions.Move:
-                i.lastAction = actionsEnemy.NotAttack;
-                i.ChangeToMove();
+            case Actions.FogAttack:
+                if(i.lastActionAttack == Actions.FogAttack) i.DecisionTree.Execute(i);
+                else
+                {
+                    i.lastActionAttack = Actions.FogAttack;
+                    i.ChangeToFogAttack();
+                }
                 break;
             case Actions.Attack:
                 if (i.lastActionAttack == Actions.Attack)
@@ -49,7 +50,7 @@ public class ActionNode : DecisionNode
                 {
                     i.lastActionAttack = Actions.Attack;
                     i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToAttack();
+                    i.ChangeToChannelAttack();
                 }
 
                 break;
@@ -62,33 +63,21 @@ public class ActionNode : DecisionNode
                 {
                     i.lastActionAttack = Actions.SpecialAttack;
                     i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToSpecialAttack();
+                    i.ChangeToJumpAttack();
                 }
 
                 break;
-            case Actions.Cast:
-                if (i.lastActionAttack == Actions.Cast || i.enemiesCount > 0)
+            case Actions.SpecialAttack2:
+                if (i.lastActionAttack == Actions.SpecialAttack2)
                 {
                     i.DecisionTree.Execute(i);
                 }
                 else
                 {
-                    i.lastActionAttack = Actions.Cast;
-                    i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToCastAttack();
+                    i.lastActionAttack = Actions.SpecialAttack2;
+                    i.ChangeToThrowAttack();
                 }
-                break;
-            case Actions.BossDupicationCopy:
-                if (i.fightingCopies > 0)
-                {
-                    i.DecisionTree.Execute(i);
-                }
-                else
-                {
-                    i.lastActionAttack = Actions.BossDupicationCopy;
-                    i.lastAction = actionsEnemy.Attack;
-                    i.ChangeToDuplicationFight();
-                }
+
                 break;
         }
     }
@@ -116,6 +105,8 @@ public enum Actions
     FloorAttack,
     Hit,
     SpecialAttack,
+    SpecialAttack2,
     Cast,
-    BossDupicationCopy
+    BossDupicationCopy,
+    FogAttack
 }

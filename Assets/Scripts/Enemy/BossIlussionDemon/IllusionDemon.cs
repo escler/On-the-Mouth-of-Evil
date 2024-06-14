@@ -38,6 +38,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public int copiesPerAttack;
     public int actualCopies;
     public bool copyAlive;
+    public bool firstPhase, secondPhase;
 
     [Header("Throw Objects")] 
     public Transform throwObjectPos;
@@ -88,22 +89,22 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _fsm.ChangeState(States.Hit);
     }
 
-    public void ChangeToAttack()
+    public void ChangeToChannelAttack()
     {
         _fsm.ChangeState(States.Attack);
     }
 
-    public void ChangeToSpecialAttack()
+    public void ChangeToJumpAttack()
     {
         _fsm.ChangeState(States.SpecialAttack);
     }
     
-    public void ChangeToSpecialAttack2()
+    public void ChangeToThrowAttack()
     {
         _fsm.ChangeState(States.SpecialAttack2);
     }
 
-    public void ChangeToCastAttack()
+    public void ChangeToFogAttack()
     {
         _fsm.ChangeState(States.CastAttack);
     }

@@ -20,6 +20,7 @@ public abstract class RangedWeapon : Weapon
     private WeaponsHandler _weaponsHandler;
     private bool _shooting;
     [SerializeField] private ParticleSystem psFire;
+    private CinemachineImpulseSource _recoil;
     public int ChargerBullets => _chargerBullets;
 
     public bool Shooting => _shooting;
@@ -28,13 +29,15 @@ public abstract class RangedWeapon : Weapon
         get { return _maxBullets; }
         set { _maxBullets = value; }
     }
+
     private void Start()
     {
         cameraPos = Camera.main.transform;
         targetAim = Player.Instance.targetAim;
-        _cmf = FindObjectOfType<CinemachineFreeLook>(); 
+        _cmf = FindObjectOfType<CinemachineFreeLook>();
         _chargerBullets = bulletsPerCharge;
         _weaponsHandler.RefreshData();
+        _recoil = GetComponentInChildren<CinemachineImpulseSource>();
     }
 
     protected void OnUpdate()
@@ -80,6 +83,7 @@ public abstract class RangedWeapon : Weapon
     public void DoFeedbackShoot()
     {
         Shoot();
+        _recoil.GenerateImpulse(Camera.main.transform.forward);
         _chargerBullets--;
         _weaponsHandler.RefreshData();
         _weaponFeedback.FireParticle();

@@ -24,7 +24,6 @@ public class ThrowItem : MonoBehaviour
 
     public void Update()
     {
-        modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
     }
 
     public void SetLocation(Vector3 location)
@@ -36,6 +35,7 @@ public class ThrowItem : MonoBehaviour
 
     IEnumerator MoveObject()
     {
+        modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
         while (_moving)
         {
             transform.position = Vector3.SmoothDamp(transform.position, _location, ref zero, _time);

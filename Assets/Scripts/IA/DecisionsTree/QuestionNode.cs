@@ -43,34 +43,23 @@ public class QuestionNode : DecisionNode
 
     public override void Execute(IllusionDemon i)
     {
-        if (i.lastAction == actionsEnemy.NotAttack)
-        {
-            randomRange = Random.Range(1, 10);
-        }
+        randomRange = Random.Range(1, 10);
         switch (question)
         {
-            case Questions.Hit:
-                if(i.enemyHit) trueNode.Execute(i);
-                else falseNode.Execute(i);
-                break;
-            case Questions.Move:
-                if(i.lastAction == actionsEnemy.Attack) trueNode.Execute(i);
+            case Questions.FogAttack:
+                if (i.firstPhase || i.secondPhase) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
             case Questions.Attack:
-                if(randomRange < 2) trueNode.Execute(i);
+                if(randomRange < 3) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
             case Questions.SpecialAttack:
-                if(randomRange < 4) trueNode.Execute(i);
-                else falseNode.Execute(i);
-                break;
-            case Questions.Cast:
                 if(randomRange < 6) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
-            case Questions.BossDuplicationCopy:
-                if(randomRange < 10) trueNode.Execute(i);
+            case Questions.SpecialAttack2:
+                if (randomRange < 10) trueNode.Execute(i);
                 else falseNode.Execute(i);
                 break;
         }
@@ -114,7 +103,9 @@ public enum Questions
     FloorAttack,
     Hit,
     SpecialAttack,
-    Cast,
-    BossDuplicationCopy
+    SpecialAttack2,
+    CastAttack,
+    FogAttack,
+    Banish
     
 }

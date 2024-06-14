@@ -54,6 +54,7 @@ public class TypeManager : MonoBehaviour
     public void GenerateNewSequence(int lenght)
     {
         _typeSequence.Clear();
+        count = 0;
         for (int i = 0; i < lenght; i++)
         {
             var randomKey = Random.Range(0, _avaiblesKeys.Length);

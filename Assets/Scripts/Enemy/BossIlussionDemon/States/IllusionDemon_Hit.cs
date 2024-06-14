@@ -23,7 +23,7 @@ public class IllusionDemon_Hit : State
         if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && 
            _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            _d.DecisionTree.Execute(_d);
+            _d.ChangeToIdle();
         }
     }
 

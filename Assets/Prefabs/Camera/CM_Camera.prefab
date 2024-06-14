@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 5481737187350894544}
   - component: {fileID: 6948782741290117624}
   - component: {fileID: 623272345273925932}
+  - component: {fileID: 3770387753009575630}
   m_Layer: 0
   m_Name: CM_Camera
   m_TagString: Untagged
@@ -335,13 +336,36 @@ MonoBehaviour:
   m_AvoidObstacles: 1
   m_DistanceLimit: 1.5
   m_MinimumOcclusionTime: 1
-  m_CameraRadius: 0.1
-  m_Strategy: 0
+  m_CameraRadius: 0.5
+  m_Strategy: 1
   m_MaximumEffort: 4
-  m_SmoothingTime: 0
-  m_Damping: 0
+  m_SmoothingTime: 0.2
+  m_Damping: 1
   m_DampingWhenOccluded: 6.28
   m_OptimalTargetDistance: 0
+--- !u!114 &3770387753009575630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987970596702686453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 11400000, guid: 964fb8715c269aa4da1fc91a6b5caca6, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &7035168849431585734
 GameObject:
   m_ObjectHideFlags: 0
