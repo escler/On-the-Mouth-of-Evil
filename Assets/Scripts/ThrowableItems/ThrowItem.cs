@@ -12,7 +12,7 @@ public class ThrowItem : MonoBehaviour
     private float _time = 1f;
     public float speedRot;
     public float shootSpeed;
-    private BoxCollider _collider;
+    public BoxCollider _collider;
     public int damage;
     private bool _locationCalculated, _moving;
 

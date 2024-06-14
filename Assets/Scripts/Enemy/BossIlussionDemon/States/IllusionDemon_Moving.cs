@@ -18,7 +18,7 @@ public class IllusionDemon_Moving : State
         _d.Anim.moving = true;
         _speed = _d.speedWalk;
         var randomNum = Random.Range(1, 3);
-        _actualTimer = 3 + randomNum;
+        _actualTimer = 1 + randomNum;
     }
 
 

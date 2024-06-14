@@ -246,12 +246,24 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
             var validPosCenter = _zoneManager.transform.position;
             var posX = Random.Range(_characterPos.position.x + xMin, _characterPos.position.x + xMax);
             posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
-            var posZ = Random.Range(_characterPos.position.z - 6, _characterPos.position.z - 10);
+            var posZ = Random.Range(_characterPos.position.z + 6, _characterPos.position.z + 10);
             posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
 
             Instantiate(copies[copy], new Vector3(posX, transform.position.y, posZ), transform.rotation);
             yield return new WaitUntil(() => copyAlive == false);
         }
+    }
+
+    public Vector3 MoveBoss()
+    {
+        var bounds = _zoneManager.GetComponent<BoxCollider>().bounds;
+        var validPosCenter = _zoneManager.transform.position;
+        var posX = Random.Range(_characterPos.position.x + -5, _characterPos.position.x + 5);
+        posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
+        var posZ = Random.Range(_characterPos.position.z - 6, _characterPos.position.z - 10);
+        posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
+
+        return new Vector3(posX, transform.position.y, posZ);
     }
 
     public void RestoreLife()

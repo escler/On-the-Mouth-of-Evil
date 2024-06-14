@@ -22,7 +22,6 @@ public class Door : MonoBehaviour, IInteractable
             KeysUIAdquired.Instance.RemoveText(KeyHandler.Instance.KeysInInventory[_roomType]);
         }
     }
-
     public void BlockDoor()
     {
         _animator.SetBool("Open", false);

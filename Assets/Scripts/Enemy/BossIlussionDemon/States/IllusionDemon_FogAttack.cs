@@ -35,8 +35,10 @@ public class IllusionDemon_FogAttack : State
 
     public override void OnExit()
     {
-        _d.transform.position = _position;
+        _d.transform.position = _d.MoveBoss();
         _d.transform.rotation = _rotation;
+        _d.firstPhase = false;
+        _d.secondPhase = false;
         _d.EndFogAttack();
         _d.Anim.cast = false;
         Player.Instance.sphere.SetActive(false);

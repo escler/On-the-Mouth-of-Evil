@@ -34,12 +34,8 @@ public class ActionNode : DecisionNode
         switch (action)
         {
             case Actions.FogAttack:
-                if(i.lastActionAttack == Actions.FogAttack) i.DecisionTree.Execute(i);
-                else
-                {
-                    i.lastActionAttack = Actions.FogAttack;
-                    i.ChangeToFogAttack();
-                }
+                i.lastActionAttack = Actions.FogAttack;
+                i.ChangeToFogAttack();
                 break;
             case Actions.Attack:
                 if (i.lastActionAttack == Actions.Attack)
