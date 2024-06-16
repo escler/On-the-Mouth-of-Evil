@@ -54,6 +54,7 @@ public abstract class RangedWeapon : Weapon
             if (Input.GetMouseButtonDown(0) && !_shooting)
             {
                 _shooting = true;
+
                 GetComponentInParent<AnimPlayer>().Shooting = true;
             }
         }

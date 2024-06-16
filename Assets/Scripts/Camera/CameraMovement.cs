@@ -48,20 +48,20 @@ public class CameraMovement : MonoBehaviour
         switch (mode)
         {
             case CameraMode.Normal:
-                LerpCamera(2,1,
-                    .5f,1.5f,
+                LerpCamera(1,1,
+                    .3f,1.5f,
                     -1,1,
                     .3f,.3f,
-                    .8f,.3f,
+                    1f,.3f,
                     .2f);
                 break;
             
             case CameraMode.Aim:
-                LerpCamera(2.5f,1.2f,
-                    .5f,1,
+                LerpCamera(1.5f,1.2f,
+                    .3f,1,
                     -1.2f,1,
                     0.2f,0.2f,
-                    1,0.2f,
+                    1f,0.2f,
                     .2f);
                 break;
         }
