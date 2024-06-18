@@ -347,14 +347,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 7011258207113424462}
   _mainCamera: {fileID: 0}
-  model: {fileID: 0}
+  model: {fileID: 1627669133382941649}
   running: 0
   isDashing: 0
   walkSpeed: 85
   runSpeed: 200
   dashSpeed: 300
   sensRot: 1
-  spine: {fileID: 0}
+  spine: {fileID: 6822407426364172502}
 --- !u!114 &2644981399324500782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   activeTime: 1
   meshRefreshRate: 0.1
   meshDestroyDelay: 0.3
-  positionToSpawn: {fileID: 0}
+  positionToSpawn: {fileID: 1627669133382941649}
   mat: {fileID: 2100000, guid: e7e6abefe52c0e4459e6fcbe471970bd, type: 2}
   shaderVarRef: _Alpha
   shaderVarRate: 0.2
@@ -6434,8 +6434,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.12, y: 1.12, z: 1.12}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4869386353149327471}
   - {fileID: 6541186810090232645}

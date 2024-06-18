@@ -22,7 +22,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
 
     public float speedWalk, speedRun;
     public int enemiesCount, fightingCopies;
-    private IllusionDemonAnim _anim;
+    public IllusionDemonAnim _anim;
     public actionsEnemy lastAction;
     public Actions lastActionAttack;
 
