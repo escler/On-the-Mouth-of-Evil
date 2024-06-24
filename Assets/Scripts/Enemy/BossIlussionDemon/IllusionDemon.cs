@@ -6,7 +6,7 @@ using System.Linq;
 
 public class IllusionDemon : EnemySteeringAgent, IBanishable
 {
-    private FiniteStateMachine _fsm;
+    private FiniteStateMachineWithoutInputs _fsm;
     private bool _obstacleWithPlayer, _playerInFov;
     private float _cdForAttack;
     private Transform _characterPos;
@@ -59,7 +59,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _anim = GetComponentInChildren<IllusionDemonAnim>();
         _characterPos = Player.Instance.transform;
         _zoneManager = BossZoneManager.Instance;
-        _fsm = new FiniteStateMachine();
+        _fsm = new FiniteStateMachineWithoutInputs();
 
         _fsm.AddState(States.Idle, new IllusionDemon_Idle(this));
         _fsm.AddState(States.Moving, new IllusionDemon_Moving(this));

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Deadens : EnemySteeringAgent
 {
-    private FiniteStateMachine _fsm;
+    private FiniteStateMachineWithoutInputs _fsm;
     public bool CanAttack => _cdForAttack <= 0;
     public bool InRangeForAttack => Vector3.Distance(_characterPos.position, transform.position) <= rangeForAttack;
     private bool _obstacleWithPlayer, _playerInFov;
@@ -40,7 +40,7 @@ public class Deadens : EnemySteeringAgent
     {
         _mageAnim = GetComponentInChildren<MageAnim>();
         _characterPos = GameObject.Find("Player").GetComponent<Transform>();
-        _fsm = new FiniteStateMachine();
+        _fsm = new FiniteStateMachineWithoutInputs();
         
         _fsm.AddState(States.Idle, new Idle(this));
         _fsm.AddState(States.Attack, new AttackMage(this));

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FiniteStateMachine 
+public class FiniteStateMachineWithoutInputs 
 {
     State _currentState;
     Dictionary<States, State> _allStates = new Dictionary<States, State>();

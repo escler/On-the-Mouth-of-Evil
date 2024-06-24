@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class IllusionDuplication : EnemySteeringAgent
 {
-    private FiniteStateMachine _fsm;
+    private FiniteStateMachineWithoutInputs _fsm;
     private Transform _characterPos;
     private IllusionBossDuplicationsAnim _anim;
     [SerializeField] private DecisionNode _decisionTree;
@@ -22,7 +22,7 @@ public class IllusionDuplication : EnemySteeringAgent
     
     private void Awake()
     {
-        _fsm = new FiniteStateMachine();
+        _fsm = new FiniteStateMachineWithoutInputs();
         _characterPos = Player.Instance.transform;
         _anim = GetComponentInChildren<IllusionBossDuplicationsAnim>();
         _fsm.AddState(States.Idle, new BossDuplication_Idle(this));

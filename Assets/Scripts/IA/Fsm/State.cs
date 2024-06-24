@@ -8,5 +8,5 @@ public abstract class State
     public abstract void OnUpdate();
     public abstract void OnExit();
 
-    public FiniteStateMachine fsm;
+    public FiniteStateMachineWithoutInputs fsm;
 }
