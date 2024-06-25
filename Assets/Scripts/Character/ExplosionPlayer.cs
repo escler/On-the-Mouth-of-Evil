@@ -15,7 +15,7 @@ public class ExplosionPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        /*if (Input.GetKeyDown(KeyCode.H))
         {
             var entities = query.Query().
                 Select(x => (DemonLowRange)x).Where(x => x != null).ToList();
@@ -31,6 +31,7 @@ public class ExplosionPlayer : MonoBehaviour
 
             damage = 0;
         }
+        */
     }
 
     int DamageDone(IEnumerable<DemonLowRange> entities)
