@@ -19,10 +19,26 @@ public class ExplosionPlayer : MonoBehaviour
         {
             var entities = query.Query().
                 Select(x => (DemonLowRange)x).Where(x => x != null).ToList();
+
+            print(entities.Count);
+            var damage = DamageDone(entities);
+            print(damage);
             foreach (var entity in entities)
             {
-                entity.GetComponent<DeadensLifeHandler>().OnTakeDamage(20);
+                entity.GetComponent<DeadensLifeHandler>().OnTakeDamage(35);
             }
+            entities.Clear();
+
+            damage = 0;
         }
+    }
+
+    int DamageDone(IEnumerable<DemonLowRange> entities)
+    {
+        return entities.Aggregate(0, (acum, current) =>
+        {
+            var actualLife = current.GetComponent<DeadensLifeHandler>().ActualLife;
+            return acum += actualLife > 35 ? 35 : 35 - actualLife;
+        });
     }
 }
