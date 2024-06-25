@@ -65,7 +65,7 @@ public class PlayerView : MonoBehaviour
 
         while (valueToAnimate > goal)
         {
-            valueToAnimate -= rate * Time.deltaTime;
+            valueToAnimate -= rate;
             mat.SetFloat(shaderVarRef,valueToAnimate);
 
             yield return new WaitForSeconds(refreshRate);

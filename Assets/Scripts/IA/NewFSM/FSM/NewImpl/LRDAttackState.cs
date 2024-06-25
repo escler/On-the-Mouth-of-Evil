@@ -7,15 +7,16 @@ public class LRDAttackState : MonoBaseState
 {
     [SerializeField] float cd;
     [SerializeField] DemonLowRange owner;
+    private bool attackFinish;
 
     float timer;
 
     public override IState ProcessInput()
     {
-        if (owner.EnemyBanished() && Transitions.ContainsKey(StateTransitions.ToBanish))
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
         
-        if(timer >= cd && Transitions.ContainsKey(StateTransitions.ToIdle))
+        if(attackFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
 
         return this;
@@ -24,19 +25,23 @@ public class LRDAttackState : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
+        owner.animator.SetParameter("Attack", true);
+        owner.transform.LookAt(owner.target);
         Debug.Log("Ataco");
     }
 
     public override Dictionary<string, object> Exit(IState to)
     {
-        timer = 0;
-        owner.CdForAttack = cd * 2;
+        attackFinish = false;
+        owner.cdForAttack = 5;
+        owner.animator.SetParameter("Attack", false);
         return base.Exit(to);
     }
 
     public override void UpdateLoop()
     {
-        timer += Time.deltaTime;
-
+        if (owner.animator.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            owner.animator.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+            attackFinish = true;
     }
 }

@@ -11,7 +11,7 @@ public class LRDemonChaseState : MonoBaseState
 
     public override IState ProcessInput()
     {
-        if (owner.EnemyBanished() && Transitions.ContainsKey(StateTransitions.ToBanish))
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
         
         if (owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
@@ -21,6 +21,19 @@ public class LRDemonChaseState : MonoBaseState
             return Transitions[StateTransitions.ToMoveAround];
 
         return this;
+    }
+
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
+    {
+        base.Enter(from, transitionParameters);
+        owner.animator.SetParameter("Run", true);
+        print("Entre a Chase");
+    }
+
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        owner.animator.SetParameter("Run", false);
+        return base.Exit(to);
     }
 
     public override void UpdateLoop()

@@ -8,9 +8,10 @@ public class LRDDemonMoveAroundState : MonoBaseState
     [SerializeField] DemonLowRange owner;
     private float _timeToTransition;
     [SerializeField] private float speed;
+    private int _direction;
     public override IState ProcessInput()
     {
-        if (owner.EnemyBanished() && Transitions.ContainsKey(StateTransitions.ToBanish))
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
 
         if (_timeToTransition < 0 && owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
@@ -27,14 +28,30 @@ public class LRDDemonMoveAroundState : MonoBaseState
         base.Enter(from, transitionParameters);
         print("Entre a MoveAround");
         _timeToTransition = Random.Range(1, 3);
+        _direction = RandomDir();
+        owner.animator.SetParameter("MoveAround", true);
+        owner.animator.Animator.SetFloat("xAxis", _direction);
+    }
+
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        owner.animator.SetParameter("MoveAround", false);
+        return base.Exit(to);
     }
 
     public override void UpdateLoop()
     {
         owner.transform.LookAt(owner.target);
-        owner.transform.position += transform.right * Time.deltaTime * speed;
+        owner.transform.position += transform.right * Time.deltaTime * speed * _direction;
         _timeToTransition -= Time.deltaTime;
+    }
 
+    private int RandomDir()
+    {
+        var dir = Random.Range(-1, 2);
+        if (dir == 0) dir = 1;
+
+        return dir;
     }
 
 }
