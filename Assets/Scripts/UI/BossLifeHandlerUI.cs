@@ -28,11 +28,9 @@ public class BossLifeHandlerUI : MonoBehaviour
     {
         _slider.maxValue = _lifeHandler.initialLife;
 
-        if (!_lerpingHealth)
-        {
-            _timeScale = 0;
-            StartCoroutine(LerpHealth());
-        }
+        if (_lerpingHealth) return;
+        _timeScale = 0;
+        StartCoroutine(LerpHealth());
     }
     
     private IEnumerator LerpHealth( )

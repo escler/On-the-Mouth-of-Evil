@@ -12,10 +12,18 @@ public static class Util {
     }
 
     //Generator genérico, lo vamos a ver más adelante.
-    public static IEnumerable<Src> Generate<Src>(Src seed, Func<Src, Src> generator) {
+    public static IEnumerable<Src> GenerateGrid<Src>(Src seed, Func<Src, Src> generator) {
         while (true) {
             yield return seed;
             seed = generator(seed);
+        }
+    }
+    
+    public static IEnumerable<T> Generate<T>(T seed, Func<T, T> generator) {
+        var acum = seed;
+        while (true) {
+            yield return acum;
+            acum = generator(acum);
         }
     }
 }

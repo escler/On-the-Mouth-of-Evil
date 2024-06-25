@@ -44,6 +44,15 @@ public class LRDDemonMoveAroundState : MonoBaseState
         owner.transform.LookAt(owner.target);
         owner.transform.position += transform.right * Time.deltaTime * speed * _direction;
         _timeToTransition -= Time.deltaTime;
+        
+        var ray1 = Physics.Raycast(owner.transform.position, -transform.right,
+            1f, owner.layer);
+        var ray2 = Physics.Raycast(owner.transform.position, transform.right,
+            1f, owner.layer);
+
+        if (ray1) _direction = 1;
+        else if (ray2) _direction = -1;
+        owner.EntityMove();
     }
 
     private int RandomDir()

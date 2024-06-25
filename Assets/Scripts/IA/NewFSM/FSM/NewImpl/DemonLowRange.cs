@@ -5,20 +5,23 @@ using UnityEngine;
 using FSM;
 using Unity.VisualScripting;
 
-public class DemonLowRange : MonoBehaviour, IBanishable
+public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
 {
     public Transform target;
 
     [SerializeField] float distanceToAttack = 3;
     [SerializeField] float distanceToPersuit = 15;
     private float _cdForAttack;
-    [SerializeField] private LayerMask _layer;
+    public LayerMask layer;
     private bool _ray;
     [SerializeField] private GameObject hitboxAttack;
+
 
     public float cdForAttack;
     private LRDemonAnim _animator;
     public LRDemonAnim animator => _animator;
+
+    private SpatialGrid _spatial;
 
     #region FSMVariables
     FiniteStateMachine fsm;
@@ -68,6 +71,18 @@ public class DemonLowRange : MonoBehaviour, IBanishable
     {
         target = Player.Instance.transform;
         _animator = GetComponentInChildren<LRDemonAnim>();
+        _spatial = FindObjectOfType<SpatialGrid>();
+    }
+
+    private void OnEnable()
+    {
+        _spatial.Add(this);
+        OnMove.Invoke(this);
+    }
+
+    private void OnDisable()
+    {
+        _spatial.Remove(this);
     }
 
     private void Update()
@@ -80,7 +95,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable
         _ray = Physics.Raycast(transform.position,
             target.transform.position - transform.position,
             Vector3.Distance(target.transform.position,transform.position), 
-            _layer);
+            layer);
     }
 
     public bool IsPersuitDistance()
@@ -119,5 +134,23 @@ public class DemonLowRange : MonoBehaviour, IBanishable
     public void FinishAttack()
     {
         hitboxAttack.SetActive(false);
+    }
+
+    public void EntityMove()
+    {
+        OnMove?.Invoke(this);
+    }
+
+    public void RefreshPos()
+    {
+
+    }
+
+    public event Action<IGridEntity> OnMove;
+
+    public Vector3 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
     }
 }

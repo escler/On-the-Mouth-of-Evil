@@ -39,7 +39,16 @@ public class LRDemonChaseState : MonoBaseState
     public override void UpdateLoop()
     {
         var dir = (owner.target.position - owner.transform.position).normalized;
+        var ray1 = Physics.Raycast(owner.transform.position + transform.right * .5f, transform.forward,
+            Vector3.Distance(owner.target.position, owner.transform.position), owner.layer);
+        var ray2 = Physics.Raycast(owner.transform.position - transform.right * .5f, transform.forward,
+            Vector3.Distance(owner.target.position, owner.transform.position), owner.layer);
+
+        if (ray1) dir -= transform.right;
+        else if (ray2) dir += transform.right;
 
         owner.transform.position += dir * Time.deltaTime * speed;
+        owner.EntityMove();
+
     }
 }

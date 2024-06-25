@@ -116,10 +116,10 @@ public class SpatialGrid : MonoBehaviour {
             return Empty;
 
         // Creamos tuplas de cada celda
-        var cols = Util.Generate(fromCoord.Item1, x => x + 1)
+        var cols = Util.GenerateGrid(fromCoord.Item1, x => x + 1)
                        .TakeWhile(n => n < width && n <= toCoord.Item1);
 
-        var rows = Util.Generate(fromCoord.Item2, y => y + 1)
+        var rows = Util.GenerateGrid(fromCoord.Item2, y => y + 1)
                        .TakeWhile(y => y < height && y <= toCoord.Item2);
 
         var cells = cols.SelectMany(
@@ -178,7 +178,7 @@ public class SpatialGrid : MonoBehaviour {
     public bool showLogs = true;
 
     private void OnDrawGizmos() {
-        var rows = Util.Generate(z, curr => curr + cellHeight)
+        var rows = Util.GenerateGrid(z, curr => curr + cellHeight)
                        .Select(row => Tuple.Create(new Vector3(x,                     0, row),
                                                    new Vector3(x + cellWidth * width, 0, row)));
 
@@ -188,7 +188,7 @@ public class SpatialGrid : MonoBehaviour {
             Gizmos.DrawLine(new Vector3(x, 0, z + cellHeight * i), new Vector3(x + cellWidth * width,0, z + cellHeight * i));
         }*/
 
-        var cols = Util.Generate(x, curr => curr + cellWidth)
+        var cols = Util.GenerateGrid(x, curr => curr + cellWidth)
                        .Select(col => Tuple.Create(new Vector3(col, 0, z),
                                                    new Vector3(col, 0, z + cellHeight * height)));
 
