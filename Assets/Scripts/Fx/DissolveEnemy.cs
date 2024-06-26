@@ -19,12 +19,7 @@ public class DissolveEnemy : MonoBehaviour
         property = new MaterialPropertyBlock();
         property.SetFloat("_DissolveAmount", counter);
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H)) ActivateDissolve();
-    }
-
+    
     public void ActivateDissolve()
     {
         StartCoroutine(Dissolve());

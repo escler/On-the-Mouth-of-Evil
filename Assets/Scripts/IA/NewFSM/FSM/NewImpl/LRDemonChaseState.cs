@@ -8,6 +8,7 @@ public class LRDemonChaseState : MonoBaseState
     [SerializeField] DemonLowRange owner;
 
     [SerializeField] float speed = 5;
+    [SerializeField] private float intensity;
 
     public override IState ProcessInput()
     {
@@ -44,8 +45,8 @@ public class LRDemonChaseState : MonoBaseState
         var ray2 = Physics.Raycast(owner.transform.position - transform.right * .5f, transform.forward,
             Vector3.Distance(owner.target.position, owner.transform.position), owner.layer);
 
-        if (ray1) dir -= transform.right;
-        else if (ray2) dir += transform.right;
+        if (ray1) dir -= transform.right * intensity;
+        else if (ray2) dir += transform.right * intensity;
 
         owner.transform.position += dir * Time.deltaTime * speed;
         owner.EntityMove();
