@@ -32,12 +32,10 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     [SerializeField] LRDDemonMoveAroundState moveAroundState;
     [SerializeField] LRDemonBanishState banishState;
     [SerializeField] LRDemonDeath deathState;
-
     
-
     #endregion
         
-    private void Start()
+    private void Start()//IA2-P3
     {
         fsm = new FiniteStateMachine(idleState, StartCoroutine);
 

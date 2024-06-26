@@ -39,7 +39,7 @@ public class EnemyManager : MonoBehaviour
 
     public void AssignNumber(DemonLowRange enemy)
     {
-        enemy.GetComponent<Deadens>().enemyCount = enemyCount;
+        //enemy.GetComponent<Deadens>().enemyCount = enemyCount;
         enemyCount++;
     }
 }

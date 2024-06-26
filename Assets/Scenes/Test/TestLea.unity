@@ -1002,12 +1002,12 @@ PrefabInstance:
     - target: {fileID: 8033579762613143076, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9162921
+      value: -0.916292
       objectReference: {fileID: 0}
     - target: {fileID: 8033579762613143076, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.037788473
+      value: -0.037788477
       objectReference: {fileID: 0}
     - target: {fileID: 8033579762613143076, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
@@ -1017,7 +1017,7 @@ PrefabInstance:
     - target: {fileID: 8033579762613143076, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01642968
+      value: -0.016429681
       objectReference: {fileID: 0}
     - target: {fileID: 8138994011364096395, guid: 578b42b888493ea439c98fef1d593cd7,
         type: 3}
@@ -14674,12 +14674,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231145837}
   m_Mesh: {fileID: 9176310897612776759, guid: 41ef47ed62fe368469c9e2c08b33e2da, type: 3}
---- !u!1 &1235166563 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6276583727158280593, guid: ae28499dfd8d8c94282da28c29a9a74e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2125412628}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1242736741
 GameObject:
   m_ObjectHideFlags: 0
@@ -24181,8 +24175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e880e1d18ce294993d92d0981a360d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
   query: {fileID: 0}
+  dmg: 0
 --- !u!1 &2065909137
 GameObject:
   m_ObjectHideFlags: 0
@@ -25783,11 +25777,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6462494747218173091, guid: ae28499dfd8d8c94282da28c29a9a74e,
         type: 3}
-      propertyPath: hitboxAttack
-      value: 
-      objectReference: {fileID: 1235166563}
-    - target: {fileID: 6462494747218173091, guid: ae28499dfd8d8c94282da28c29a9a74e,
-        type: 3}
       propertyPath: _layer.m_Bits
       value: 128
       objectReference: {fileID: 0}
@@ -25796,16 +25785,6 @@ PrefabInstance:
       propertyPath: posHitboxAttack
       value: 
       objectReference: {fileID: 2125412629}
-    - target: {fileID: 6462494747218173091, guid: ae28499dfd8d8c94282da28c29a9a74e,
-        type: 3}
-      propertyPath: distanceToAttack
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6462494747218173091, guid: ae28499dfd8d8c94282da28c29a9a74e,
-        type: 3}
-      propertyPath: distanceToPersuit
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 6476836912372172385, guid: ae28499dfd8d8c94282da28c29a9a74e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

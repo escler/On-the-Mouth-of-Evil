@@ -6,40 +6,30 @@ using UnityEngine;
 
 public class ExplosionPlayer : MonoBehaviour
 {
-    public float radius;
     [SerializeField] private CircleQuery query;
-
-    private void Awake()
-    {
-    }
-
+    public int dmg;
+    
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))//IA2-P2
         {
             var entities = query.Query().
                 Select(x => (DemonLowRange)x).Where(x => x != null).ToList();
 
-            print(entities.Count);
             var damage = DamageDone(entities);
-            print(damage);
             foreach (var entity in entities)
             {
                 entity.GetComponent<DeadensLifeHandler>().OnTakeDamage(35);
             }
-            entities.Clear();
-
-            damage = 0;
         }
-        */
     }
 
-    int DamageDone(IEnumerable<DemonLowRange> entities)
+    int DamageDone(IEnumerable<DemonLowRange> entities)//IA2-P1
     {
         return entities.Aggregate(0, (acum, current) =>
         {
             var actualLife = current.GetComponent<DeadensLifeHandler>().ActualLife;
-            return acum += actualLife > 35 ? 35 : 35 - actualLife;
+            return acum += actualLife > dmg ? dmg : dmg - actualLife;
         });
     }
 }

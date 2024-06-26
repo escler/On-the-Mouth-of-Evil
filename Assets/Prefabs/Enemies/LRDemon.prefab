@@ -571,12 +571,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  distanceToAttack: 3
-  distanceToPersuit: 15
+  distanceToAttack: 1
+  distanceToPersuit: 200
   layer:
     serializedVersion: 2
     m_Bits: 128
-  hitboxAttack: {fileID: 0}
+  hitboxAttack: {fileID: 6276583727158280593}
   cdForAttack: 0
   idleState: {fileID: 1576324835571566364}
   chaseState: {fileID: 3575330745324159599}
@@ -3124,6 +3124,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f2d013891340c441be53519bea39080, type: 3}
+--- !u!1 &6276583727158280593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4717378949215163854, guid: 0f2d013891340c441be53519bea39080,
+    type: 3}
+  m_PrefabInstance: {fileID: 1616115569409676383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6879983972260055320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5266683188319968583, guid: 0f2d013891340c441be53519bea39080,

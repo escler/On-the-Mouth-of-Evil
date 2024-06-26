@@ -9,5 +9,5 @@ public class StateTransitions
     public const string ToChase = "ToChase";
     public const string ToAttack = "ToAttack";
     public const string ToBanish = "ToBanish";
-    public const string ToDeath = "ToHitDeath";
+    public const string ToDeath = "ToDeath";
 }
