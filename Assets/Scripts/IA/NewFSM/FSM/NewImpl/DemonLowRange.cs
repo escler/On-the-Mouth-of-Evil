@@ -71,17 +71,19 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     {
         target = Player.Instance.transform;
         _animator = GetComponentInChildren<LRDemonAnim>();
-        _spatial = FindObjectOfType<SpatialGrid>();
+        _spatial = GameManager.Instance.activeSpatialGrid;
     }
 
     private void OnEnable()
     {
+        EnemyManager.Instance.AddEnemy(this);
         _spatial.Add(this);
         OnMove.Invoke(this);
     }
 
     private void OnDisable()
     {
+        EnemyManager.Instance.AddEnemy(this);
         _spatial.Remove(this);
     }
 

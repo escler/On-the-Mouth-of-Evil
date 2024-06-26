@@ -49,7 +49,6 @@ public class Deadens : EnemySteeringAgent
         _fsm.AddState(States.Hit, new Hit(this));
         
         _fsm.ChangeState(States.Idle);
-        EnemyManager.Instance.AddEnemy(this);
         ListDemonsUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
         canHit = true;
     }
@@ -128,7 +127,6 @@ public class Deadens : EnemySteeringAgent
         if (!HastToUseObstacleAvoidance(transform.localScale.x))
         {
             AddForce(Arrive(_characterPos.position));
-            AddForce(Separation(EnemyManager.Instance.Enemies) * 1.3f);
         }
         Move();
 

@@ -3,28 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class SpawnEnemy : MonoBehaviour
 {
     public GameObject enemy;
     private bool _isSummonByBoss;
+    public Transform pivotToSpawn;
     public void Spawn()
     {
-        var enemySpawned = Instantiate(enemy, transform.position, transform.rotation);
+        var enemySpawned = Instantiate(enemy, pivotToSpawn.transform.position, pivotToSpawn.transform.rotation);
         enemy = enemySpawned;
-        enemy.GetComponent<Deadens>().summonedByBoss = _isSummonByBoss;
     }
     
-    public void SpawnWithDelay(bool summonByBoss)
+    public void SpawnWithDelay()
     {
         StartCoroutine("DelaySpawn");
-        _isSummonByBoss = summonByBoss;
     }
 
     IEnumerator DelaySpawn()
     {
         transform.GetChild(0).gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(Random.Range(1,4));
         
         Spawn();
     }

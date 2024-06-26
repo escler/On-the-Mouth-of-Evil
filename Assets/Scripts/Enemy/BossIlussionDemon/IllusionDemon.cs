@@ -137,7 +137,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
 
         var demonSpawned = Instantiate(lowRangeDemons, posToDemon, transform.rotation);
 
-        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay(true);
+        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay();
         enemiesCount++;
     }
 
