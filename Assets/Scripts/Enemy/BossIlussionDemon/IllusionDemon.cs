@@ -17,13 +17,11 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public bool canHit, enemyHit, finishCast;
     public int hitCount;
 
-    public GameObject lowRangeDemons, copiesGO, copiesFightGO, explosionCopies;
+    public GameObject copiesGO, explosionCopies;
     public GameObject copy1, copy2;
 
     public float speedWalk, speedRun;
-    public int enemiesCount, fightingCopies;
     public IllusionDemonAnim _anim;
-    public actionsEnemy lastAction;
     public Actions lastActionAttack;
 
     public BossZoneManager _zoneManager;
@@ -109,12 +107,6 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     {
         _fsm.ChangeState(States.CastAttack);
     }
-
-    public void ChangeToDuplicationFight()
-    {
-        _fsm.ChangeState(States.BossDuplicationCopy);
-    }
-
     public void ChangeToBanish()
     {
         _fsm.ChangeState(States.Banish);
@@ -125,20 +117,6 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _fsm.OnUpdate();
         enemyHit = hitCount >= 3;
         if (enemyHit) ChangeToHit();
-    }
-
-    public void InvokeDemon()
-    {
-        var offsetX = Random.Range(-6, 6);
-        var offsetZ = Random.Range(-6, 6);
-
-        Vector3 posToDemon = new Vector3(transform.position.x + offsetX, transform.position.y,
-            transform.position.z + offsetZ);
-
-        var demonSpawned = Instantiate(lowRangeDemons, posToDemon, transform.rotation);
-
-        demonSpawned.GetComponent<SpawnEnemy>().SpawnWithDelay();
-        enemiesCount++;
     }
 
     private void CreateCopies()
@@ -182,6 +160,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public void FireSpell()
     {
         Instantiate(spell, pivot.position, transform.rotation);
+        startCast.SetActive(false);
     }
 
     public void InvokeCopies()

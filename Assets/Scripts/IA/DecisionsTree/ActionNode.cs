@@ -45,7 +45,6 @@ public class ActionNode : DecisionNode
                 else
                 {
                     i.lastActionAttack = Actions.Attack;
-                    i.lastAction = actionsEnemy.Attack;
                     i.ChangeToChannelAttack();
                 }
 
@@ -58,7 +57,6 @@ public class ActionNode : DecisionNode
                 else
                 {
                     i.lastActionAttack = Actions.SpecialAttack;
-                    i.lastAction = actionsEnemy.Attack;
                     i.ChangeToJumpAttack();
                 }
 

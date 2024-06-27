@@ -19,7 +19,17 @@ public class DissolveEnemy : MonoBehaviour
         property = new MaterialPropertyBlock();
         property.SetFloat("_DissolveAmount", counter);
     }
-    
+
+    private void OnDisable()
+    {
+        if (property == null) return;
+        for (int i = 0; i < _skinnedMaterials.Length; i++)
+        {
+            property.SetFloat("_DissolveAmount", 0);
+            _skinnedMaterials[i].SetPropertyBlock(property);
+        }
+    }
+
     public void ActivateDissolve()
     {
         StartCoroutine(Dissolve());
@@ -42,6 +52,7 @@ public class DissolveEnemy : MonoBehaviour
             yield return new WaitForSeconds(refreshRate);
         }
 
+        counter = 0;
         transform.parent.gameObject.SetActive(false);
 
     }

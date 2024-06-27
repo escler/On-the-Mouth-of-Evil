@@ -10,6 +10,7 @@ public class BossDuplicationLifeHandler : LifeHandler
         base.OnTakeDamage(damage);
 
         if (_actualLife > 0) return;
-        gameObject.SetActive(false);
+
+        GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
     }
 }
