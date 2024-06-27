@@ -1,21 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerView : MonoBehaviour
 {
+    [Header("Dash")]
     public float activeTime = 2f;
     public float meshRefreshRate = .1f;
     public float meshDestroyDelay = 3f;
     private bool _isTrailActivate;
     public Transform positionToSpawn;
     private SkinnedMeshRenderer[] skinnedMeshRendereres;
-
     public Material mat;
     public string shaderVarRef;
     public float shaderVarRate = 0.1f;
     public float shaderVarRefreshRate = 0.05f;
     
+    private Vignette vignette;
+    [Header("DamagePostProcess")]
+    public VolumeProfile postProcess;
+    public float hurthRate;
+    public float hurthRefreshRate;
+    private PlayerLifeHandler _life;
+    private bool _isActive;
+
+
+
+    private void Awake()
+    {
+        if (!postProcess.TryGet<Vignette>(out vignette)) return;
+        vignette.smoothness.value = 0;
+        _life = GetComponent<PlayerLifeHandler>();
+        _life.OnLifeChange += DamageReceive;
+
+    }
+
+    private void OnDestroy()
+    {
+        _life.OnLifeChange -= DamageReceive;
+    }
+
     public void ActivateTrail()
     {
         _isTrailActivate = true;
@@ -27,7 +55,29 @@ public class PlayerView : MonoBehaviour
         _isTrailActivate = false;
 
     }
-    
+
+    void DamageReceive()
+    {
+        if (_isActive) return;
+        StartCoroutine(DamagePostProcess());
+    }
+
+    IEnumerator DamagePostProcess()
+    {
+        _isActive = true;
+        if (!postProcess.TryGet<Vignette>(out vignette)) yield break;
+
+        var smooth = vignette.smoothness.value = 1;
+
+        while (smooth > 0)
+        {
+            smooth -= hurthRate;
+            vignette.smoothness.value = smooth;
+            yield return new WaitForSeconds(hurthRefreshRate);
+        }
+        _isActive = false;
+    }
+
     IEnumerator ActivateTrail(float timeActive)
     {
         while (timeActive > 0 && _isTrailActivate)
@@ -56,8 +106,8 @@ public class PlayerView : MonoBehaviour
             }
             yield return new WaitForSeconds(meshRefreshRate);
         }
-
     }
+    
 
     IEnumerator AnimateMaterialFloat(Material mat, float goal, float rate, float refreshRate)
     {
