@@ -9,7 +9,7 @@ public class LRDemonBanishState : MonoBaseState
     [SerializeField] private float timeToBanish;
     public override IState ProcessInput()
     {
-        if (timeToBanish < 0 && Transitions.ContainsKey(StateTransitions.ToDeath))
+        if (timeToBanish < 0 && Transitions.ContainsKey(StateTransitions.ToDeath) || owner.banished)
             return Transitions[StateTransitions.ToDeath];
         return this;
     }

@@ -312,8 +312,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.47188926, z: -0, w: -0.8816579}
   m_LocalPosition: {x: -5.886202, y: 1.5, z: 0.25283542}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4856604708026209053}
   - {fileID: 1975883369997697625}
@@ -356,7 +356,7 @@ MonoBehaviour:
   runSpeed: 200
   dashSpeed: 300
   sensRot: 1
-  spine: {fileID: 6822407426364172502}
+  cantMove: 0
 --- !u!114 &2644981399324500782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &8016993552450931654
 MonoBehaviour:
@@ -483,7 +483,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   distance: 3
-  banishRadius: 4
+  banishRadius: 6
   UIObject: {fileID: 0}
 --- !u!114 &4784608522688390531
 MonoBehaviour:
@@ -529,7 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e880e1d18ce294993d92d0981a360d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
   query: {fileID: 4123165687645903461}
   dmg: 35
 --- !u!1 &494377697789406385

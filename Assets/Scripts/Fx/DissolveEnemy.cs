@@ -41,6 +41,8 @@ public class DissolveEnemy : MonoBehaviour
             }
             yield return new WaitForSeconds(refreshRate);
         }
-        
+
+        transform.parent.gameObject.SetActive(false);
+
     }
 }

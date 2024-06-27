@@ -14,6 +14,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     private float _cdForAttack;
     public LayerMask layer;
     private bool _ray;
+    public bool banished;
     [SerializeField] private GameObject hitboxAttack;
 
 
@@ -69,12 +70,12 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     {
         target = Player.Instance.transform;
         _animator = GetComponentInChildren<LRDemonAnim>();
-        _spatial = GameManager.Instance.activeSpatialGrid;
     }
 
     private void OnEnable()
     {
         EnemyManager.Instance.AddEnemy(this);
+        _spatial = GameManager.Instance.activeSpatialGrid;
         _spatial.Add(this);
         OnMove.Invoke(this);
     }
@@ -82,6 +83,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     private void OnDisable()
     {
         EnemyManager.Instance.AddEnemy(this);
+        GameManager.Instance.activeZoneManager.EnemyDead();
         _spatial.Remove(this);
     }
 
@@ -116,14 +118,22 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     public bool canBanish { get; set; }
     public bool onBanishing { get; set; }
 
+    private void ResultOfBanish()
+    {
+        banished = TypeManager.Instance.ResultOfType();
+        FinishBanish();
+    }
+    
     public void StartBanish()
     {
+        TypeManager.Instance.onResult += ResultOfBanish;
         onBanishing = true;
     }
 
     public void FinishBanish()
     {
-        
+        TypeManager.Instance.onResult -= ResultOfBanish;
+        onBanishing = false;
     }
 
     public void StartAttack()

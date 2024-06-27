@@ -45,8 +45,8 @@ public class LRDemonChaseState : MonoBaseState
         var ray2 = Physics.Raycast(owner.transform.position - transform.right * .5f, transform.forward,
             Vector3.Distance(owner.target.position, owner.transform.position), owner.layer);
 
-        if (ray1) dir -= transform.right * intensity;
-        else if (ray2) dir += transform.right * intensity;
+        if (ray1) dir -= transform.right * intensity * Time.deltaTime;
+        else if (ray2) dir += transform.right * intensity * Time.deltaTime;
 
         owner.transform.position += dir * Time.deltaTime * speed;
         owner.EntityMove();

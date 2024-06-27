@@ -7,16 +7,26 @@ using Random = UnityEngine.Random;
 public class ZoneManager : MonoBehaviour
 {
     private BoxCollider _collider;
+    public Door doorRoom, nextRoomDoor;
     [SerializeField] private GameObject spawnPrefab;
-    public int count;
+    public int count, deadCount;
+    public GameObject nextZone, previousZone;
+    public SpatialGrid thisGrid;
 
     private void OnEnable()
     {
+        GameManager.Instance.activeZoneManager = this;
+        GameManager.Instance.activeSpatialGrid = thisGrid;
+        doorRoom.SetDoor(false);
         _collider = GetComponent<BoxCollider>();
         for (int i = 0; i < count; i++)
         {
             SpawnEnemy();
         }
+
+        if (nextZone == null) return;
+        nextZone.SetActive(true);
+        previousZone.SetActive(false);
     }
 
     public void SpawnEnemy()
@@ -24,6 +34,16 @@ public class ZoneManager : MonoBehaviour
         var randomPos = RandomPointInBounds(_collider.bounds);
         var spawn = Instantiate(spawnPrefab, new Vector3(randomPos.x, transform.position.y, randomPos.z), transform.rotation);
         spawn.GetComponent<SpawnEnemy>().SpawnWithDelay();
+    }
+
+    public void EnemyDead()
+    {
+        deadCount++;
+        if (deadCount < count) return;
+        if (doorRoom == null) return;
+        doorRoom.SetDoor(true);
+        nextRoomDoor.SetDoor(true);
+
     }
     
     public static Vector3 RandomPointInBounds(Bounds bounds) {

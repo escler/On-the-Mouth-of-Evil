@@ -17,14 +17,10 @@ public class Movement : MonoBehaviour
     public float walkSpeed, runSpeed, dashSpeed, sensRot;
     private float _actualSpeed, _dashSpeed;
     private bool _aiming, _canDash;
-    private Transform _targetAim, _weaponPos;
-    public Transform spine;
+    public bool cantMove;
     
-    public Vector3 Position { get; set; }
     private void Start()
     {
-        _targetAim = Player.Instance.targetAim;
-        _weaponPos = Player.Instance.chest;
         _dashSpeed = dashSpeed;
     }
 
@@ -32,12 +28,10 @@ public class Movement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _actualSpeed = walkSpeed;
-        _targetAim = GetComponentInChildren<CenterPointCamera>().transform;
         _view = GetComponent<PlayerView>();
     }
-
     private void LateUpdate()
-    {        
+    {
         model.transform.localPosition = new Vector3(0, -1, 0);
         model.transform.localRotation = Quaternion.identity;
     }
@@ -58,6 +52,12 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
+        if (cantMove)
+        {
+            _rb.velocity = Vector3.zero;
+            return;
+        }
+
         if (isDashing) return;
         Vector3 vel = transform.forward * (_controller.GetMovementInput().x * _actualSpeed * Time.fixedDeltaTime) +
                       transform.right * (_controller.GetMovementInput().z * _actualSpeed * Time.fixedDeltaTime);

@@ -7,28 +7,19 @@ public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private KeyType _roomType;
     [SerializeField] private Animator _animator;
+    public bool open;
 
     private void Awake()
     {
-        if(_roomType == KeyType.Key_default) OpenDoor();
+        SetDoor(open);
     }
 
     public void OnInteract()
     {
-        if (KeyHandler.Instance.KeysInInventory.ContainsKey(_roomType))
-        {
-            OpenDoor();
-            gameObject.layer = 8;
-            KeysUIAdquired.Instance.RemoveText(KeyHandler.Instance.KeysInInventory[_roomType]);
-        }
-    }
-    public void BlockDoor()
-    {
-        _animator.SetBool("Open", false);
-    }
 
-    public void OpenDoor()
+    }
+    public void SetDoor(bool state)
     {
-        _animator.SetBool("Open", true);
+        _animator.SetBool("Open", state);
     }
 }

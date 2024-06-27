@@ -14,7 +14,9 @@ public class LRDemonDeath : MonoBaseState
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
+        base.Enter(this);
         owner.GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
+        print("Death");
     }
 
     public override void UpdateLoop()

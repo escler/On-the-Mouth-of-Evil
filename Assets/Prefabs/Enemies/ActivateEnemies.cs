@@ -9,7 +9,6 @@ public class ActivateEnemies : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("ASD");
         if(other.gameObject.layer == 6) zone.SetActive(true);
     }
 }

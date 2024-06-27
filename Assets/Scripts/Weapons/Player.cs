@@ -21,13 +21,13 @@ public class Player : MonoBehaviour
 
     public void DipposeControls()
     {
-        movement.enabled = false;
+        movement.cantMove = true;
         interactChecker.enabled = false;
     }
 
     public void PossesControls()
     {
-        movement.enabled = true;
+        movement.cantMove = false;
         interactChecker.enabled = true;
     }
 

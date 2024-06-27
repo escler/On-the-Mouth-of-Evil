@@ -19,7 +19,6 @@ public class ColliderEventLiving : MonoBehaviour, IEvent
 
     public void StartEvent()
     {
-        _livingDoor.BlockDoor();
         GetComponent<Collider>().enabled = false;
         target = _spawnEnemy.enemy;
     }
@@ -32,7 +31,6 @@ public class ColliderEventLiving : MonoBehaviour, IEvent
 
     public void EndEvent()
     {
-        _livingDoor.OpenDoor();
         ListDemonsUI.Instance.ClearText();
     }
 }

@@ -15,7 +15,6 @@ public class ColliderEventGarage : MonoBehaviour, IEvent
             _spawnEnemy[i].Spawn();
             target[i] = _spawnEnemy[i].enemy;
         }
-        _garageDoor.BlockDoor();
     }
 
     public bool CheckEventState()
@@ -32,7 +31,6 @@ public class ColliderEventGarage : MonoBehaviour, IEvent
 
     public void EndEvent()
     {
-        _garageDoor.OpenDoor();
         ListDemonsUI.Instance.ClearText();
     }
     
