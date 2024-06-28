@@ -22,8 +22,9 @@ public class ThrowItem : MonoBehaviour
         _collider = GetComponent<BoxCollider>();
     }
 
-    public void Update()
+    private void Update()
     {
+        modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
     }
 
     public void SetLocation(Vector3 location)
@@ -35,16 +36,22 @@ public class ThrowItem : MonoBehaviour
 
     IEnumerator MoveObject()
     {
-        modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
         while (_moving)
-        {
+        { 
             transform.position = Vector3.SmoothDamp(transform.position, _location, ref zero, _time);
             if (Vector3.Distance(transform.position, _location) <= .5) _moving = false;
             yield return new WaitForEndOfFrame();
         }
+        IllusionDemon.Instance.Anim.throwObject = true;
+    }
 
-        yield return new WaitForSeconds(1f);
-        
+    public void ThrowObject()
+    {
+        StartCoroutine(ThrowObjectCo());
+    }
+
+    IEnumerator ThrowObjectCo()
+    {
         if (!_locationCalculated)
         {
             _playerPos = Player.Instance.transform.position;
@@ -58,7 +65,6 @@ public class ThrowItem : MonoBehaviour
             _collider.enabled = true;
             yield return new WaitForEndOfFrame();
         }
-
     }
 
     private void OnDisable()

@@ -6,6 +6,8 @@ using System.Linq;
 
 public class IllusionDemon : EnemySteeringAgent, IBanishable
 {
+    public static IllusionDemon Instance { get; set; }
+    
     private FiniteStateMachineWithoutInputs _fsm;
     private bool _obstacleWithPlayer, _playerInFov;
     private float _cdForAttack;
@@ -40,6 +42,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
 
     [Header("Throw Objects")] 
     public Transform throwObjectPos;
+    public ThrowItem actualItem;
 
     public GameObject[] fogEnemies;
 
@@ -54,6 +57,8 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public GameObject banishPS;
     void Awake()
     {
+        if (!Instance) Instance = this;
+        
         _anim = GetComponentInChildren<IllusionDemonAnim>();
         _characterPos = Player.Instance.transform;
         _zoneManager = BossZoneManager.Instance;
@@ -226,10 +231,10 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
             var validPosCenter = _zoneManager.transform.position;
             var posX = Random.Range(_characterPos.position.x + xMin, _characterPos.position.x + xMax);
             posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
-            var posZ = Random.Range(_characterPos.position.z + 6, _characterPos.position.z + 10);
+            var posZ = 5f;
             posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
-
-            Instantiate(copies[copy], new Vector3(posX, transform.position.y, posZ), transform.rotation);
+            var characterFront = _characterPos.position - _characterPos.forward * posZ;
+            Instantiate(copies[copy], new Vector3(characterFront.x + posX, transform.position.y, characterFront.z), transform.rotation);
             yield return new WaitUntil(() => copyAlive == false);
         }
     }
@@ -240,15 +245,25 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         var validPosCenter = _zoneManager.transform.position;
         var posX = Random.Range(_characterPos.position.x + -5, _characterPos.position.x + 5);
         posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
-        var posZ = Random.Range(_characterPos.position.z - 6, _characterPos.position.z - 10);
+        var posZ = 10f;
         posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
 
-        return new Vector3(posX, transform.position.y, posZ);
+        return new Vector3(_characterPos.position.x + posX, transform.position.y, _characterPos.position.z + posZ);
     }
 
     public void RestoreLife()
     {
         GetComponent<IllusionDemonLifeHandler>().RechargeLife();
+    }
+
+    public void MoveObject()
+    {
+        actualItem.SetLocation(throwObjectPos.position);
+    }
+
+    public void ThrowObject()
+    {
+        actualItem.ThrowObject();
     }
 
     private void ResultOfBanish()

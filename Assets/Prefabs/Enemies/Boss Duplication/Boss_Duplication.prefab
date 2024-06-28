@@ -258,7 +258,7 @@ MonoBehaviour:
   - {fileID: 2309275318509854305}
   - {fileID: 6668520386644612058}
   VFXDissolve: {fileID: 5314163011621265315}
-  dissolveRate: 0.0125
+  dissolveRate: 0.025
   refreshRate: 0.005
 --- !u!1 &732541687683984272
 GameObject:
@@ -301,6 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5737031225052923290}
   - component: {fileID: 8822252885501680978}
+  - component: {fileID: 7263089182252267466}
   m_Layer: 7
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -349,6 +350,19 @@ CapsuleCollider:
   m_Height: 2.2
   m_Direction: 1
   m_Center: {x: 0, y: -0.27, z: 0}
+--- !u!114 &7263089182252267466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811189638755867887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfba8c57d4ec8a45afb5bb6471e23c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialLife: 1
 --- !u!1 &1190260724825328379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,7 +1849,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6713631275385743641}
-  - component: {fileID: -7246886611752385930}
   - component: {fileID: 9215507282682811099}
   m_Layer: 7
   m_Name: Boss_Duplication
@@ -1861,19 +1874,6 @@ Transform:
   - {fileID: 256618196658889039}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7246886611752385930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5835866721972559680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfba8c57d4ec8a45afb5bb6471e23c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialLife: 1
 --- !u!114 &9215507282682811099
 MonoBehaviour:
   m_ObjectHideFlags: 0

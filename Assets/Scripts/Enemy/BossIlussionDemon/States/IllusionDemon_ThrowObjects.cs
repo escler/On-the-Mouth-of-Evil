@@ -14,15 +14,16 @@ public class IllusionDemon_ThrowObjects : State
     public override void OnEnter()
     {
         _actualTime = 3;
-        _item = ThrowManager.Instance.MoveToLocation(_d.throwObjectPos.position);
+        _item = ThrowManager.Instance.GetItem();
+        _d.actualItem = _item;
+        _d.Anim.moveObject = true;
     }
 
     public override void OnUpdate()
     {
         if (_item == null)
-        {
-            _d.ChangeToIdle();
-            return;
+        { 
+            _d.ChangeToIdle(); return;
         }
 
         if(_item._callBackHit) _d.ChangeToIdle();
@@ -30,6 +31,8 @@ public class IllusionDemon_ThrowObjects : State
 
     public override void OnExit()
     {
+        _d.Anim.moveObject = false;
+        _d.Anim.throwObject = false;
         _item = null;
     }
 }

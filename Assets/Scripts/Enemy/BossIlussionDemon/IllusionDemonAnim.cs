@@ -11,7 +11,7 @@ public class IllusionDemonAnim : MonoBehaviour
 
     public Animator Animator => _animator;
 
-    public bool moving, death, hit, run, jumpAttack, cast, castCopies, castFight, castFireball;
+    public bool moving, death, hit, run, jumpAttack, cast, castCopies, castFight, castFireball, moveObject, throwObject;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -30,6 +30,8 @@ public class IllusionDemonAnim : MonoBehaviour
         _animator.SetBool("CastFight", castFight);
         _animator.SetBool("CastDuplications", castCopies);
         _animator.SetBool("CastFireball", castFireball);
+        _animator.SetBool("MoveObject", moveObject);
+        _animator.SetBool("ThrowObject", throwObject);
     }
     
     public void AdjustPosition()
@@ -73,5 +75,15 @@ public class IllusionDemonAnim : MonoBehaviour
     public void CastFireBall()
     {
         _demon.FireSpell();
+    }
+
+    public void MoveObject()
+    {
+        _demon.MoveObject();
+    }
+
+    public void ThrowObject()
+    {
+        _demon.ThrowObject();
     }
 }

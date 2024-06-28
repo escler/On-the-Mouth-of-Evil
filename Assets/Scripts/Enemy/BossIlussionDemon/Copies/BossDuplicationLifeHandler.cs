@@ -11,6 +11,12 @@ public class BossDuplicationLifeHandler : LifeHandler
 
         if (_actualLife > 0) return;
 
-        GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
+        GetComponentInParent<DissolveEnemy>().ActivateDissolve();
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 6) GetComponentInParent<DissolveEnemy>().ActivateDissolve();
     }
 }

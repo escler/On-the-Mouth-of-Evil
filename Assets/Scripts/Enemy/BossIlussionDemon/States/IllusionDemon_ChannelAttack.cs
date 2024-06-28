@@ -14,9 +14,9 @@ public class IllusionDemon_ChannelAttack : State
     public override void OnEnter()
     {
         _timeForAttack = _d.timeForChannelAttack;
+        _d.transform.position = _d.NewLocation();
         _d.canHit = true;
         _d.Anim.castFireball = true;
-        _d.transform.position = _d.NewLocation();
         _d.SpawnExplosionCopies(-10, -1);
         _d.SpawnExplosionCopies(0, 10);
         _d.startCast.SetActive(true);
