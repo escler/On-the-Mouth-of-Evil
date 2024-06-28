@@ -9,7 +9,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     public SpatialGrid activeSpatialGrid;
     public ZoneManager activeZoneManager;
-    
+
+    private void Start()
+    {
+        ListDemonsUI.Instance.AddText(0,"Living Room");
+        ListDemonsUI.Instance.AddText(1,"Garage Room");
+    }
 
     private void Awake()
     {

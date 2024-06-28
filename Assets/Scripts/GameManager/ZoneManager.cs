@@ -12,6 +12,8 @@ public class ZoneManager : MonoBehaviour
     public int count, deadCount;
     public GameObject nextZone, previousZone;
     public SpatialGrid thisGrid;
+    public int zone;
+    public string roomName;
 
     private void OnEnable()
     {
@@ -43,7 +45,7 @@ public class ZoneManager : MonoBehaviour
         if (doorRoom == null) return;
         doorRoom.SetDoor(true);
         nextRoomDoor.SetDoor(true);
-
+        ListDemonsUI.Instance.AddText(zone, "<s><color=\"red\">" + roomName + "</s></color>");
     }
     
     public static Vector3 RandomPointInBounds(Bounds bounds) {

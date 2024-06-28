@@ -28,7 +28,7 @@ public class ListDemonsUI : MonoBehaviour
         var add = _enemiesName.TryAdd(index, demonsName);
         if (!add) _enemiesName[index] = demonsName;
         
-        var textDemon = "Defeats Demons\n";
+        var textDemon = "Clear Rooms:\n";
 
         foreach (var pair in _enemiesName)
         {

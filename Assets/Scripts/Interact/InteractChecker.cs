@@ -30,10 +30,11 @@ public class InteractChecker : MonoBehaviour
         
         var ray = Physics.Raycast(_cameraPos.position, dir, out hit, distance, _layerMask);
 
-        if (ray)
+        var ray2 = Physics.OverlapSphere(transform.position, banishRadius, _layerMask)
+            .Select(x => (IBanishable)x).Where(x => x != null && x.canBanish);
+        if (ray2.Any())
         {
             UIObject.SetActive(true);
-            if (Input.GetButtonDown("Interact")) hit.transform.GetComponent<IInteractable>().OnInteract();
         }
         else
         {
