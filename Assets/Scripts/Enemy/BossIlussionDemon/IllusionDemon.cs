@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Linq;
 
 
-public class IllusionDemon : EnemySteeringAgent, IBanishable
+public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
 {
     public static IllusionDemon Instance { get; set; }
     
@@ -58,6 +59,8 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     void Awake()
     {
         if (!Instance) Instance = this;
+        GameManager.Instance.activeSpatialGrid.Add(this);
+        OnMove.Invoke(this);
         
         _anim = GetComponentInChildren<IllusionDemonAnim>();
         _characterPos = Player.Instance.transform;
@@ -76,6 +79,11 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         _fsm.ChangeState(States.Idle);
 
         CreateCopies();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.activeSpatialGrid.Remove(this);
     }
 
     public void ChangeToIdle()
@@ -229,12 +237,10 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
             copyAlive = true;
             var bounds = _zoneManager.GetComponent<BoxCollider>().bounds;
             var validPosCenter = _zoneManager.transform.position;
-            var posX = Random.Range(_characterPos.position.x + xMin, _characterPos.position.x + xMax);
-            posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
-            var posZ = 5f;
+            var posZ = 1f;
             posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
             var characterFront = _characterPos.position - _characterPos.forward * posZ;
-            Instantiate(copies[copy], new Vector3(characterFront.x + posX, transform.position.y, characterFront.z), transform.rotation);
+            Instantiate(copies[copy], new Vector3(characterFront.x, transform.position.y, characterFront.z), transform.rotation);
             yield return new WaitUntil(() => copyAlive == false);
         }
     }
@@ -243,12 +249,11 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     {
         var bounds = _zoneManager.GetComponent<BoxCollider>().bounds;
         var validPosCenter = _zoneManager.transform.position;
-        var posX = Random.Range(_characterPos.position.x + -5, _characterPos.position.x + 5);
-        posX = Mathf.Clamp(posX, validPosCenter.x - bounds.extents.x, validPosCenter.x + bounds.extents.x);
-        var posZ = 10f;
+        var posZ = 1f;
         posZ = Mathf.Clamp(posZ, validPosCenter.z - bounds.extents.z, validPosCenter.z + bounds.extents.z);
 
-        return new Vector3(_characterPos.position.x + posX, transform.position.y, _characterPos.position.z + posZ);
+        var characterFront = _characterPos.position - _characterPos.forward * posZ;
+        return new Vector3(characterFront.x, transform.position.y, characterFront.z);
     }
 
     public void RestoreLife()
@@ -271,6 +276,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
         if (TypeManager.Instance.ResultOfType())
         {
             Anim.death = true;
+            GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
         }
         else
         {
@@ -283,6 +289,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     public void StartBanish()
     {
         TypeManager.Instance.onResult += ResultOfBanish;
+        BanishManager.Instance.CreateNewBanishLine(transform.position);
         onBanishing = true;
     }
 
@@ -290,6 +297,19 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable
     {
         TypeManager.Instance.onResult -= ResultOfBanish;
         onBanishing = false;
+    }
+
+    public event Action<IGridEntity> OnMove;
+
+    public Vector3 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
+
+    public void EnemyIsMoving()
+    {
+        OnMove?.Invoke(this);
     }
 }
 

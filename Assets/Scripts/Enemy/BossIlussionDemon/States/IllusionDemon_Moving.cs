@@ -24,6 +24,7 @@ public class IllusionDemon_Moving : State
 
     public override void OnUpdate()
     {
+        _d.EnemyIsMoving();
         _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
         _d.transform.position += _d.transform.right * (_yDirection * _speed * Time.deltaTime);
 

@@ -12,6 +12,7 @@ public class InteractChecker : MonoBehaviour
     public GameObject UIObject;
     private TypeManager _typeManager;
     private CircleQuery _query;
+    public GameObject banishRenderer;
 
     private void Start()
     {

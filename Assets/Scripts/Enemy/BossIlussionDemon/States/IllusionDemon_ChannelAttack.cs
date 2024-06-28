@@ -20,6 +20,7 @@ public class IllusionDemon_ChannelAttack : State
         _d.SpawnExplosionCopies(-10, -1);
         _d.SpawnExplosionCopies(0, 10);
         _d.startCast.SetActive(true);
+        _d.EnemyIsMoving();
     }
 
     public override void OnUpdate()
@@ -33,6 +34,7 @@ public class IllusionDemon_ChannelAttack : State
 
     public override void OnExit()
     {
+        _d.startCast.SetActive(false);
         _d.Anim.castFireball = false;
         _d.canHit = false;
     }

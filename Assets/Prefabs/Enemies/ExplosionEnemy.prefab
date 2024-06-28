@@ -2341,7 +2341,7 @@ Transform:
   m_GameObject: {fileID: 7496816691669480680}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7332,6 +7332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3391643106575355590}
+  - component: {fileID: 6669417634801431223}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -7357,6 +7358,29 @@ Transform:
   - {fileID: 3132658953903275349}
   m_Father: {fileID: 7152239177300307538}
   m_LocalEulerAnglesHint: {x: 22.84405, y: -2.7742233, z: 0.51100934}
+--- !u!136 &6669417634801431223
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7768254446916360115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.18
+  m_Height: 1.82
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8174610776312538370
 GameObject:
   m_ObjectHideFlags: 0
@@ -7448,7 +7472,7 @@ Transform:
   m_GameObject: {fileID: 8340080923058126081}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.8, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

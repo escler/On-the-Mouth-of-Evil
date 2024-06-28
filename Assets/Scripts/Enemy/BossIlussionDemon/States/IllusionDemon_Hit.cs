@@ -20,6 +20,7 @@ public class IllusionDemon_Hit : State
 
     public override void OnUpdate()
     {
+        _d.EnemyIsMoving();
         if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && 
            _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {

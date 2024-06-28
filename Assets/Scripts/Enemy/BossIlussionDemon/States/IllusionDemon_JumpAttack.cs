@@ -19,7 +19,10 @@ public class IllusionDemon_JumpAttack : State
 
     public override void OnUpdate()
     {
-        if(!_d.Anim.jumpAttack)_d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+        _d.EnemyIsMoving();
+        if(!_d.Anim.jumpAttack)
+            _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+        
         if(_d.finishCast)
         {
             _d.Anim.run = true;

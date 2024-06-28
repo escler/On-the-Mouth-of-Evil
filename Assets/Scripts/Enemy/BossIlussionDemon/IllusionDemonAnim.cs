@@ -38,12 +38,12 @@ public class IllusionDemonAnim : MonoBehaviour
     {
         var modelPos = _demon._model.transform.position;
         _demon.transform.position = new Vector3(modelPos.x, _demon.transform.position.y, modelPos.z);
-        _demon._model.transform.localPosition = Vector3.zero;
+        _demon._model.transform.localPosition = new Vector3(0, -1, 0);
     }
 
     public void AdjustToPivot()
     {
-        _demon._model.transform.position = _demon.transform.position;
+        _demon._model.transform.position = new Vector3(_demon.transform.position.x, _demon._model.transform.position.y, _demon.transform.position.z);
         _animator.applyRootMotion = true;
     }
 

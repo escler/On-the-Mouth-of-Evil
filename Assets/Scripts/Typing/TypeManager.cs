@@ -84,6 +84,7 @@ public class TypeManager : MonoBehaviour
     {
         Player.Instance.PossesControls();
         KeyUIGenerator.Instance.DeleteKeys();
+        BanishManager.Instance.DeleteLines();
         canType = false;
         return success;
     }

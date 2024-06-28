@@ -21,6 +21,8 @@ public class ExplosionPlayer : MonoBehaviour
             {
                 entity.GetComponent<DeadensLifeHandler>().OnTakeDamage(35);
             }
+            
+            print(damage);
         }
     }
 
@@ -29,7 +31,8 @@ public class ExplosionPlayer : MonoBehaviour
         return entities.Aggregate(0, (acum, current) =>
         {
             var actualLife = current.GetComponent<DeadensLifeHandler>().ActualLife;
-            return acum += actualLife > dmg ? dmg : dmg - actualLife;
+            acum += actualLife > dmg ? dmg : dmg - actualLife;
+            return acum;
         });
     }
 }

@@ -5110,7 +5110,7 @@ Transform:
   m_GameObject: {fileID: 676812209343856407}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 1}
+  m_LocalPosition: {x: -1, y: -1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5504,7 +5504,7 @@ Transform:
   m_GameObject: {fileID: 1320219510639967329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.198, z: 0}
+  m_LocalPosition: {x: 0, y: 1.275, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5859,6 +5859,7 @@ MonoBehaviour:
   firstPhase: 0
   secondPhase: 0
   throwObjectPos: {fileID: 6439961173763643473}
+  actualItem: {fileID: 0}
   fogEnemies:
   - {fileID: 6696869463115196656, guid: 6409bbc9fc8e475438a5a3e1daf87c17, type: 3}
   - {fileID: 95150719233590893, guid: 299f2be0cc0d788438989e88cea13d01, type: 3}
@@ -6704,7 +6705,7 @@ Transform:
   m_GameObject: {fileID: 4356922398230256288}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.075, y: 1.514, z: 0.306}
+  m_LocalPosition: {x: 0, y: 0.212, z: 0}
   m_LocalScale: {x: 0.26638, y: 0.26638, z: 0.26638}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12078,7 +12079,7 @@ Transform:
   m_GameObject: {fileID: 5785465456684856041}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 1}
+  m_LocalPosition: {x: 1, y: -1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12530,7 +12531,7 @@ Transform:
   m_GameObject: {fileID: 6970651896338312058}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12582,6 +12583,8 @@ MonoBehaviour:
   castCopies: 0
   castFight: 0
   castFireball: 0
+  moveObject: 0
+  throwObject: 0
 --- !u!114 &5022277331126942340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12677,7 +12680,7 @@ Transform:
   m_GameObject: {fileID: 7076100109761549157}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.138, y: 1.722, z: 0.118}
+  m_LocalPosition: {x: -0.021, y: 0.847, z: 0.118}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -7,7 +7,6 @@ public class IllusionDemon_FogAttack : State
     private IllusionDemon _d;
     private Vector3 _position;
     private Quaternion _rotation;
-    private float _actualTime;
     private bool _bossMoved;
     public IllusionDemon_FogAttack(EnemySteeringAgent e)
     {
@@ -15,7 +14,6 @@ public class IllusionDemon_FogAttack : State
     }
     public override void OnEnter()
     {
-        _actualTime = 2f;
         _position = _d.transform.position;
         _rotation = _d.transform.rotation;
         _d.transform.position = new Vector3(1000, _d.transform.position.y, 1000);
@@ -26,6 +24,7 @@ public class IllusionDemon_FogAttack : State
 
     public override void OnUpdate()
     {
+        _d.EnemyIsMoving();
         if (_d.actualCopies > 0) return;
         if(!_bossMoved)
         {
@@ -46,7 +45,7 @@ public class IllusionDemon_FogAttack : State
         }
         else
         {
-            _d.transform.LookAt(_d.CharacterPos);
+            _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
             _d.Anim.run = true;
         }
         
@@ -59,13 +58,12 @@ public class IllusionDemon_FogAttack : State
 
     public override void OnExit()
     {
-        _d.transform.position = _d.MoveBoss();
-        _d.transform.rotation = _rotation;
         _d.firstPhase = false;
         _d.secondPhase = false;
         _d.EndFogAttack();
         _d.Anim.cast = false;
         _bossMoved = false;
+        _d.Anim.jumpAttack = false;
         Player.Instance.sphere.SetActive(false);
         
     }

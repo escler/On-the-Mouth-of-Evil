@@ -127,6 +127,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     public void StartBanish()
     {
         TypeManager.Instance.onResult += ResultOfBanish;
+        BanishManager.Instance.CreateNewBanishLine(transform.position);
         onBanishing = true;
     }
 
