@@ -43,13 +43,11 @@ public class IllusionDemonLifeHandler : LifeHandler
         }
         illusionDemon.canHit = false;
         illusionDemon.canBanish = true;
-        illusionDemon.ChangeToBanish();
     }
 
     public void RechargeLife()
     {
         _actualLife = initialLife / 2;
-        GetComponent<IllusionDemon>().ChangeToIdle();
         OnLifeChange?.Invoke();
     }
 

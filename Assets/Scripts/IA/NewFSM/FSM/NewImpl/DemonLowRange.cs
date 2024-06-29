@@ -5,7 +5,7 @@ using UnityEngine;
 using FSM;
 using Unity.VisualScripting;
 
-public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
+public class DemonLowRange : Enemy
 {
     public Transform target;
 
@@ -16,7 +16,6 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     private bool _ray;
     public bool banished;
     [SerializeField] private GameObject hitboxAttack;
-
 
     public float cdForAttack;
     private LRDemonAnim _animator;
@@ -68,6 +67,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
 
     private void Awake()
     {
+        OnAwake();
         target = Player.Instance.transform;
         _animator = GetComponentInChildren<LRDemonAnim>();
     }
@@ -77,7 +77,7 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
         EnemyManager.Instance.AddEnemy(this);
         _spatial = GameManager.Instance.activeSpatialGrid;
         _spatial.Add(this);
-        OnMove.Invoke(this);
+        EnemyMove();
     }
 
     private void OnDisable()
@@ -114,24 +114,20 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
     {
         return _cdForAttack <= 0 && !_ray;
     }
-
-    public bool canBanish { get; set; }
-    public bool onBanishing { get; set; }
-
     private void ResultOfBanish()
     {
         banished = TypeManager.Instance.ResultOfType();
         FinishBanish();
     }
     
-    public void StartBanish()
+    public override void StartBanish()
     {
         TypeManager.Instance.onResult += ResultOfBanish;
         BanishManager.Instance.CreateNewBanishLine(transform.position);
         onBanishing = true;
     }
 
-    public void FinishBanish()
+    public override void FinishBanish()
     {
         TypeManager.Instance.onResult -= ResultOfBanish;
         onBanishing = false;
@@ -149,19 +145,11 @@ public class DemonLowRange : MonoBehaviour, IBanishable, IGridEntity
 
     public void EntityMove()
     {
-        OnMove?.Invoke(this);
+        EnemyMove();
     }
 
     public void RefreshPos()
     {
 
-    }
-
-    public event Action<IGridEntity> OnMove;
-
-    public Vector3 Position
-    {
-        get => transform.position;
-        set => transform.position = value;
     }
 }

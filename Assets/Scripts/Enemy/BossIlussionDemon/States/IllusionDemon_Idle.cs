@@ -1,32 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
-public class IllusionDemon_Idle : State
+public class IllusionDemon_Idle : MonoBaseState
 {
-    private IllusionDemon _d;
+    [SerializeField] private IllusionDemon owner;
     private float _actualTimer;
     private readonly float _timer = 1f;
-    public IllusionDemon_Idle(EnemySteeringAgent e)
+
+    public override IState ProcessInput()
     {
-        _d = e.GetComponent<IllusionDemon>();
+        if (_actualTimer <= 0 && Transitions.ContainsKey(StateTransitions.ToMoveAround))
+            return Transitions[StateTransitions.ToMoveAround];
+
+        return this;
     }
-    
-    public override void OnEnter()
+
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
-        _d.Anim.moving = false;
+        base.Enter(from, transitionParameters);
         _actualTimer = _timer;
+
     }
 
-    public override void OnUpdate()
+    public override void UpdateLoop()
     {
-        _actualTimer -= Time.deltaTime;
-        if (_actualTimer > 0) return;
-        
-        _d.ChangeToMove();
-    }
-
-    public override void OnExit()
-    {
+        if (_actualTimer > 0) _actualTimer -= Time.deltaTime;
     }
 }

@@ -1,56 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
-public class IllusionDemon_JumpAttack : State
+public class IllusionDemon_JumpAttack : MonoBaseState
 {
-    private IllusionDemon _d;
     private float _durationAnim;
-    
-    public IllusionDemon_JumpAttack(EnemySteeringAgent e)
-    {
-        _d = e.GetComponent<IllusionDemon>();
-    }
-    public override void OnEnter()
-    {
-        _d.Anim.castCopies = true;
-        _d.transform.position = _d.LocationForJumpAttack();
-    }
+    [SerializeField] private IllusionDemon owner;
+    private bool _stateFinish;
 
-    public override void OnUpdate()
+    public override IState ProcessInput()
     {
-        _d.EnemyIsMoving();
-        if(!_d.Anim.jumpAttack)
-            _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
+            return Transitions[StateTransitions.ToBanish];
         
-        if(_d.finishCast)
-        {
-            _d.Anim.run = true;
-            _d.copy1.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
-            _d.copy2.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
-            _d.finishCast = false;
-        }
+        if (_stateFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
 
-        if (_d.Anim.run) _d.transform.position += _d.transform.forward * (_d.speedRun * Time.deltaTime);
-        if (Vector3.Distance(_d.CharacterPos.position, _d.transform.position) < _d.rangeForSpecialAttack)
-        {
-            
-            _d.Anim.run = false;
-            _d.Anim.jumpAttack = true;
-        }
-        
-        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
-           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
-        {
-            _d.ChangeToIdle();
-        }
+        return this;
     }
 
-    public override void OnExit()
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
-        _d.Anim.jumpAttack = false;
-        _d.Anim.castCopies = false;
-        _d.Anim.run = false;
-        _d.finishCast = false;
+        base.Enter(from, transitionParameters);
+        owner.Anim.castCopies = true;
+        owner.transform.position = owner.LocationForJumpAttack();
+    }
+
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        owner.Anim.jumpAttack = false;
+        owner.Anim.castCopies = false;
+        owner.Anim.run = false;
+        owner.finishCast = false;
+        _stateFinish = false;
+        return base.Exit(to);
+    }
+
+    public override void UpdateLoop()
+    {
+        owner.EnemyIsMoving();
+        
+        if(owner.finishCast)
+        {
+            owner.Anim.run = true;
+            owner.copy1.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
+            owner.copy2.GetComponentInChildren<BossDuplicationMovement>().ChangeRun(true);
+            owner.finishCast = false;
+        }
+        
+        if(!owner.Anim.jumpAttack)
+            owner.transform.LookAt(new Vector3(owner.CharacterPos.position.x, owner.transform.position.y, owner.CharacterPos.position.z));
+
+        if (owner.Anim.run) owner.transform.position += owner.transform.forward * (owner.speedRun * Time.deltaTime);
+        if (Vector3.Distance(owner.CharacterPos.position, owner.transform.position) < owner.rangeForJumpAttack)
+        {
+            owner.Anim.run = false;
+            owner.Anim.jumpAttack = true;
+        }
+        
+        if(owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
+           owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        {
+            _stateFinish = true;
+        }
     }
 }

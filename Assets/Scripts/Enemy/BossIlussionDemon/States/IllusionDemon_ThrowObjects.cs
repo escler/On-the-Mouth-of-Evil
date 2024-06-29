@@ -1,38 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
-public class IllusionDemon_ThrowObjects : State
+public class IllusionDemon_ThrowObjects : MonoBaseState
 {
-    private IllusionDemon _d;
+    [SerializeField] private IllusionDemon owner;
     private float _actualTime;
     private ThrowItem _item;
-    public IllusionDemon_ThrowObjects(EnemySteeringAgent e)
+    private bool _stateFinish;
+
+    public override IState ProcessInput()
     {
-        _d = e.GetComponent<IllusionDemon>();
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
+            return Transitions[StateTransitions.ToBanish];
+        
+        if (_stateFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+
+        return this;
     }
-    public override void OnEnter()
+
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
+        base.Enter(from, transitionParameters);
         _actualTime = 3;
         _item = ThrowManager.Instance.GetItem();
-        _d.actualItem = _item;
-        _d.Anim.moveObject = true;
+        owner.actualItem = _item;
+        owner.Anim.moveObject = true;
     }
 
-    public override void OnUpdate()
+    public override Dictionary<string, object> Exit(IState to)
     {
-        if (_item == null)
-        { 
-            _d.ChangeToIdle(); return;
-        }
-
-        if(_item._callBackHit) _d.ChangeToIdle();
-    }
-
-    public override void OnExit()
-    {
-        _d.Anim.moveObject = false;
-        _d.Anim.throwObject = false;
+        owner.Anim.moveObject = false;
+        owner.Anim.throwObject = false;
         _item = null;
+        _stateFinish = false;
+        return base.Exit(to);
     }
+
+    public override void UpdateLoop()
+    {
+        if (_item == null || _item._callBackHit) _stateFinish = true;
+    }
+
 }

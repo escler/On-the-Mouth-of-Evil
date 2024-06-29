@@ -6,6 +6,8 @@ public interface IBanishable
 {
     public bool canBanish { get; set; }
     public bool onBanishing { get; set; }
+    public bool banished { get; set; }
     public void StartBanish();
     public void FinishBanish();
+    public int amount { get; set; }
 }

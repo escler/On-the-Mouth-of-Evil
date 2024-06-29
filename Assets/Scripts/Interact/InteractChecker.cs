@@ -25,14 +25,12 @@ public class InteractChecker : MonoBehaviour
     private void Update()
     {
         var dir = _targetAim.position - _cameraPos.position;
-        
-        RaycastHit hit;
-        
-        var ray = Physics.Raycast(_cameraPos.position, dir, out hit, distance, _layerMask);
 
-        var ray2 = Physics.OverlapSphere(transform.position, banishRadius, _banishLayerMask)
-            .Select(x => x.GetComponentInParent<IBanishable>()).Where(x => x != null && x.canBanish);
-        if (ray2.Any())
+        var ray = _query.Query().
+            Select(x => (IBanishable)x).
+            Where(x => x != null && x.canBanish).ToList();//IA2-P2
+        
+        if (ray.Any())
         {
             UIObject.SetActive(true);
         }
@@ -41,23 +39,15 @@ public class InteractChecker : MonoBehaviour
             UIObject.SetActive(false);
         }
         
-        if (Input.GetButtonDown("Interact")) CheckBanish();
+        if (Input.GetButtonDown("Interact")) MakeBanish(ray);
     }
 
-    private void CheckBanish()
+    private void MakeBanish(List<IBanishable> entities)
     {
-        var checker = _query.Query().
-            Select(x => (IBanishable)x).
-            Where(x => x != null && x.canBanish).ToList();
-
-        if (!checker.Any() || _typeManager.sequenceGenerated) return;
+        if (!entities.Any() || _typeManager.sequenceGenerated) return;
         _typeManager.GenerateNewSequence(8);
         Player.Instance.DipposeControls();
-        foreach (var entity in checker)
-        {
-             entity.StartBanish();
-        }
-
+        BanishManager.Instance.AmountOfEnergy(entities);
     }
 
     private void OnDrawGizmos()

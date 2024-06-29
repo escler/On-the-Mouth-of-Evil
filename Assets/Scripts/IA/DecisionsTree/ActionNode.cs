@@ -31,49 +31,7 @@ public class ActionNode : DecisionNode
 
     public override void Execute(IllusionDemon i)
     {
-        switch (action)
-        {
-            case Actions.FogAttack:
-                i.lastActionAttack = Actions.FogAttack;
-                i.ChangeToFogAttack();
-                break;
-            case Actions.Attack:
-                if (i.lastActionAttack == Actions.Attack)
-                {
-                    i.DecisionTree.Execute(i);
-                }
-                else
-                {
-                    i.lastActionAttack = Actions.Attack;
-                    i.ChangeToChannelAttack();
-                }
-
-                break;
-            case Actions.SpecialAttack:
-                if (i.lastActionAttack == Actions.SpecialAttack)
-                {
-                    i.DecisionTree.Execute(i);
-                }
-                else
-                {
-                    i.lastActionAttack = Actions.SpecialAttack;
-                    i.ChangeToJumpAttack();
-                }
-
-                break;
-            case Actions.SpecialAttack2:
-                if (i.lastActionAttack == Actions.SpecialAttack2)
-                {
-                    i.DecisionTree.Execute(i);
-                }
-                else
-                {
-                    i.lastActionAttack = Actions.SpecialAttack2;
-                    i.ChangeToThrowAttack();
-                }
-
-                break;
-        }
+        
     }
 
     public override void Execute(IllusionDuplication d)

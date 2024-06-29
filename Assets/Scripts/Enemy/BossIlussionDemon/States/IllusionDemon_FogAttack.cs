@@ -1,70 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
-public class IllusionDemon_FogAttack : State
+public class IllusionDemon_FogAttack : MonoBaseState
 {
-    private IllusionDemon _d;
+    [SerializeField] private IllusionDemon owner;
     private Vector3 _position;
     private Quaternion _rotation;
-    private bool _bossMoved;
-    public IllusionDemon_FogAttack(EnemySteeringAgent e)
+    private bool _bossMoved, _stateFinish;
+    
+    public override IState ProcessInput()
     {
-        _d = e.GetComponent<IllusionDemon>();
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
+            return Transitions[StateTransitions.ToBanish];
+        
+        if (_stateFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+
+        return this;
     }
-    public override void OnEnter()
+    
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
-        _position = _d.transform.position;
-        _rotation = _d.transform.rotation;
-        _d.transform.position = new Vector3(1000, _d.transform.position.y, 1000);
-        _d.actualCopies = _d.copiesPerAttack;
+        base.Enter(from, transitionParameters);
+        _position = owner.transform.position;
+        _rotation = owner.transform.rotation;
+        owner.transform.position = new Vector3(1000, owner.transform.position.y, 1000);
+        owner.actualCopies = owner.copiesPerAttack;
         Player.Instance.sphere.SetActive(true);
-        _d.StartFogAttack();
+        owner.StartFogAttack();
     }
 
-    public override void OnUpdate()
+    public override Dictionary<string, object> Exit(IState to)
     {
-        _d.EnemyIsMoving();
-        if (_d.actualCopies > 0) return;
+        owner.firstPhase = false;
+        owner.secondPhase = false;
+        owner.EndFogAttack();
+        owner.Anim.cast = false;
+        _bossMoved = false;
+        owner.Anim.jumpAttack = false;
+        Player.Instance.sphere.SetActive(false);
+        _stateFinish = false;
+        return base.Exit(to);
+    }
+
+    public override void UpdateLoop()
+    {
+        owner.EnemyIsMoving();
+        if (owner.actualCopies > 0) return;
         if(!_bossMoved)
         {
-            _d.transform.position = _d.MoveBoss();
-            _d.transform.rotation = _rotation;
+            owner.transform.position = owner.MoveBoss();
+            owner.transform.rotation = _rotation;
             _bossMoved = true;
         }
-        
-        Player.Instance.sphere.GetComponent<FogPlayer>().start = false;
 
-        
-        if (_d.Anim.run) _d.transform.position += _d.transform.forward * (_d.speedRun * Time.deltaTime);
-        if (Vector3.Distance(_d.CharacterPos.position, _d.transform.position) < _d.rangeForSpecialAttack)
+        if (Vector3.Distance(owner.CharacterPos.position, owner.transform.position) < owner.rangeForJumpAttack)
         {
             
-            _d.Anim.run = false;
-            _d.Anim.jumpAttack = true;
+            owner.Anim.run = false;
+            owner.Anim.jumpAttack = true;
         }
         else
         {
-            _d.transform.LookAt(new Vector3(_d.CharacterPos.position.x, _d.transform.position.y, _d.CharacterPos.position.z));
-            _d.Anim.run = true;
+            if(owner.Anim.run) transform.position += owner.transform.forward * (owner.speedRun * Time.deltaTime);
+            owner.transform.LookAt(new Vector3(owner.CharacterPos.position.x, owner.transform.position.y, owner.CharacterPos.position.z));
+            owner.Anim.run = true;
         }
         
-        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
-           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        if(owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("BossJumpAttack") && 
+           owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            _d.ChangeToIdle();
+            _stateFinish = true;
+            Player.Instance.sphere.GetComponent<FogPlayer>().start = false;
         }
-    }
-
-    public override void OnExit()
-    {
-        _d.firstPhase = false;
-        _d.secondPhase = false;
-        _d.EndFogAttack();
-        _d.Anim.cast = false;
-        _bossMoved = false;
-        _d.Anim.jumpAttack = false;
-        Player.Instance.sphere.SetActive(false);
-        
     }
 }

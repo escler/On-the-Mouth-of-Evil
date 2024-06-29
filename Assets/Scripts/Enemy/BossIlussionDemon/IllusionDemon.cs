@@ -3,18 +3,16 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Linq;
+using FSM;
 
 
-public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
+public class IllusionDemon : Enemy
 {
     public static IllusionDemon Instance { get; set; }
     
-    private FiniteStateMachineWithoutInputs _fsm;
-    private bool _obstacleWithPlayer, _playerInFov;
-    private float _cdForAttack;
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
-    public float timeForChannelAttack, rangeForSpecialAttack;
+    public float timeForChannelAttack, rangeForJumpAttack;
     public GameObject spawnHitbox;
     [SerializeField] public Transform _model;
     public bool canHit, enemyHit, finishCast;
@@ -25,10 +23,9 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
 
     public float speedWalk, speedRun;
     public IllusionDemonAnim _anim;
-    public Actions lastActionAttack;
+    public string lastsStateTransitionAttack;
 
     public BossZoneManager _zoneManager;
-    [SerializeField] private DecisionNode _decisionTree;
 
     [Header("Cast Spell")] 
     public GameObject startCast;
@@ -46,38 +43,81 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
     public ThrowItem actualItem;
 
     public GameObject[] fogEnemies;
-
-    public DecisionNode DecisionTree => _decisionTree;
-
+    
     public Transform CharacterPos => _characterPos;
     public IllusionDemonAnim Anim => _anim;
-
-    public bool canBanish { get; set; }
-    public bool onBanishing { get; set; }
+    
     public float timeToBanish;
     public GameObject banishPS;
+
+    #region FSM
+    FiniteStateMachine fsm;
+
+    [SerializeField] IllusionDemon_Idle idleState;
+    [SerializeField] IllusionDemon_Moving moveAroundState;
+    [SerializeField] IllusionDemon_Hit hitState;
+    [SerializeField] IllusionDemon_FogAttack fogAttackState;
+    [SerializeField] IllusionDemon_ChannelAttack channelAttackState;
+    [SerializeField] IllusionDemon_JumpAttack jumpAttackState;
+    [SerializeField] IllusionDemon_ThrowObjects throwAttackState;
+    [SerializeField] IllusionDemon_Banish banishState;
+    [SerializeField] IllusionDemon_Death deathState;
+    
+    #endregion
+
+    private void Start() //IA2-P3
+    {
+        fsm = new FiniteStateMachine(idleState, StartCoroutine);
+        
+        //Idle
+        fsm.AddTransition(StateTransitions.ToMoveAround, idleState, moveAroundState);
+        fsm.AddTransition(StateTransitions.ToBanish, idleState, banishState);
+
+        //Moving
+        fsm.AddTransition(StateTransitions.ToFogAttack, moveAroundState, fogAttackState);
+        fsm.AddTransition(StateTransitions.ToChannelAttack, moveAroundState, channelAttackState);
+        fsm.AddTransition(StateTransitions.ToJumpAttack, moveAroundState, jumpAttackState);
+        fsm.AddTransition(StateTransitions.ToThrowAttack, moveAroundState, throwAttackState);
+        fsm.AddTransition(StateTransitions.ToBanish, moveAroundState, banishState);
+        
+        //Hit
+        fsm.AddTransition(StateTransitions.ToIdle, hitState, idleState);
+        fsm.AddTransition(StateTransitions.ToBanish, hitState, banishState);
+        
+        //FogAttack
+        fsm.AddTransition(StateTransitions.ToIdle, fogAttackState, idleState);
+        fsm.AddTransition(StateTransitions.ToBanish, fogAttackState, banishState);
+        
+        //ChannelAttack
+        fsm.AddTransition(StateTransitions.ToIdle, channelAttackState, idleState);
+        fsm.AddTransition(StateTransitions.ToHit, channelAttackState, hitState);
+        fsm.AddTransition(StateTransitions.ToBanish, channelAttackState, banishState);
+        
+        //JumpAttack
+        fsm.AddTransition(StateTransitions.ToIdle, jumpAttackState, idleState);
+        fsm.AddTransition(StateTransitions.ToBanish, jumpAttackState, banishState);
+        
+        //ThrowAttack
+        fsm.AddTransition(StateTransitions.ToIdle, throwAttackState, idleState);
+        fsm.AddTransition(StateTransitions.ToBanish, throwAttackState, banishState);
+        
+        //Banish
+        fsm.AddTransition(StateTransitions.ToIdle, banishState, idleState);
+        fsm.AddTransition(StateTransitions.ToDeath, banishState, deathState);
+        fsm.Active = true;
+    }
+
     void Awake()
     {
+        OnAwake();
         if (!Instance) Instance = this;
         GameManager.Instance.activeSpatialGrid.Add(this);
-        OnMove.Invoke(this);
+        EnemyIsMoving();
         
         _anim = GetComponentInChildren<IllusionDemonAnim>();
         _characterPos = Player.Instance.transform;
         _zoneManager = BossZoneManager.Instance;
-        _fsm = new FiniteStateMachineWithoutInputs();
-
-        _fsm.AddState(States.Idle, new IllusionDemon_Idle(this));
-        _fsm.AddState(States.Moving, new IllusionDemon_Moving(this));
-        _fsm.AddState(States.Hit, new IllusionDemon_Hit(this));
-        _fsm.AddState(States.Attack, new IllusionDemon_ChannelAttack(this));
-        _fsm.AddState(States.SpecialAttack, new IllusionDemon_JumpAttack(this));
-        _fsm.AddState(States.SpecialAttack2, new IllusionDemon_ThrowObjects(this));
-        _fsm.AddState(States.CastAttack, new IllusionDemon_FogAttack(this));
-        _fsm.AddState(States.Banish, new IllusionDemon_Banish(this));
-
-        _fsm.ChangeState(States.Idle);
-
+        
         CreateCopies();
     }
 
@@ -85,51 +125,10 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
     {
         GameManager.Instance.activeSpatialGrid.Remove(this);
     }
-
-    public void ChangeToIdle()
-    {
-        _fsm.ChangeState(States.Idle);
-    }
-
-    public void ChangeToMove()
-    {
-        _fsm.ChangeState(States.Moving);
-    }
-
-    public void ChangeToHit()
-    {
-        _fsm.ChangeState(States.Hit);
-    }
-
-    public void ChangeToChannelAttack()
-    {
-        _fsm.ChangeState(States.Attack);
-    }
-
-    public void ChangeToJumpAttack()
-    {
-        _fsm.ChangeState(States.SpecialAttack);
-    }
     
-    public void ChangeToThrowAttack()
-    {
-        _fsm.ChangeState(States.SpecialAttack2);
-    }
-
-    public void ChangeToFogAttack()
-    {
-        _fsm.ChangeState(States.CastAttack);
-    }
-    public void ChangeToBanish()
-    {
-        _fsm.ChangeState(States.Banish);
-    }
-
     private void Update()
     {
-        _fsm.OnUpdate();
-        enemyHit = hitCount >= 3;
-        if (enemyHit) ChangeToHit();
+        if(canHit) enemyHit = hitCount >= 3;
     }
 
     private void CreateCopies()
@@ -142,19 +141,29 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
         copy2.SetActive(false);
     }
 
-    public Vector3 NewLocation()
+    public Vector3 NewLocation() //IA2-P1
     {
-        var furthestLocation = _zoneManager.points.OrderBy(x => Vector3.Distance(_characterPos.position, x.position))
-            .Last().position;
-
+        var furthestLocation = _zoneManager.points.Aggregate(_zoneManager.points.First().position, (acum, current) =>
+        {
+            if (Vector3.Distance(current.position, CharacterPos.position) 
+                > Vector3.Distance(acum, CharacterPos.position)) return current.position;
+                
+            return acum;
+        });
         return new Vector3(furthestLocation.x, transform.position.y, furthestLocation.z);
     }
 
-    public Vector3 LocationForJumpAttack()
+    public Vector3 LocationForJumpAttack() //IA2-P1
     {
-        var nearestLocation = _zoneManager.points.OrderBy(x => Vector3.Distance(_characterPos.position, x.position))
-            .SkipWhile(x => Vector3.Distance(_characterPos.position, x.position) < rangeForSpecialAttack).First()
-            .position;
+        var nearestLocation = _zoneManager.points
+            .Aggregate(_zoneManager.points.OrderBy(x => Vector3.Distance(_characterPos.position,x.position))
+            .Last().position, (acum, current) =>
+        {
+            var currentDistance = Vector3.Distance(current.position, CharacterPos.position);
+            if (currentDistance <
+                Vector3.Distance(acum, CharacterPos.position) && currentDistance > rangeForJumpAttack + .2f) acum = current.position;
+            return acum;
+        });
         return new Vector3(nearestLocation.x, transform.position.y, nearestLocation.z);
     }
 
@@ -275,8 +284,7 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
     {
         if (TypeManager.Instance.ResultOfType())
         {
-            Anim.death = true;
-            GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
+            banished = true;
         }
         else
         {
@@ -286,30 +294,27 @@ public class IllusionDemon : EnemySteeringAgent, IBanishable, IGridEntity
     }
     
 
-    public void StartBanish()
+    public override void StartBanish()
     {
         TypeManager.Instance.onResult += ResultOfBanish;
         BanishManager.Instance.CreateNewBanishLine(transform.position);
         onBanishing = true;
     }
 
-    public void FinishBanish()
+    public override void FinishBanish()
     {
-        TypeManager.Instance.onResult -= ResultOfBanish;
         onBanishing = false;
+        TypeManager.Instance.onResult -= ResultOfBanish;
     }
-
-    public event Action<IGridEntity> OnMove;
-
-    public Vector3 Position
-    {
-        get => transform.position;
-        set => transform.position = value;
-    }
-
+    
     public void EnemyIsMoving()
     {
-        OnMove?.Invoke(this);
+        EnemyMove();
+    }
+
+    public void DisableFSM()
+    {
+        fsm.Active = false;
     }
 }
 

@@ -1,37 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using FSM;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class IllusionDemon_Hit : State
+public class IllusionDemon_Hit : MonoBaseState
 {
-    private IllusionDemon _d;
-    public IllusionDemon_Hit(EnemySteeringAgent e)
+
+    [SerializeField] private IllusionDemon owner;
+
+    private bool _stateFinish;
+    public override IState ProcessInput()
     {
-        _d = e.GetComponent<IllusionDemon>();
+        if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
+            return Transitions[StateTransitions.ToBanish];
+
+        if (_stateFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+
+        return this;
+    }
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
+    {
+        base.Enter(from, transitionParameters);
+        owner.Anim.hit = true;
+        if (owner.copy1.activeInHierarchy) owner.copy1.SetActive(false);
+        if (owner.copy2.activeInHierarchy) owner.copy2.SetActive(false);
     }
 
-
-    public override void OnEnter()
+    public override Dictionary<string, object> Exit(IState to)
     {
-        _d.Anim.hit = true;
-        if (_d.copy1.activeInHierarchy) _d.copy1.SetActive(false);
-        if (_d.copy2.activeInHierarchy) _d.copy2.SetActive(false);
+        owner.Anim.hit = false;
+        owner.enemyHit = false;
+        _stateFinish = false;
+        owner.hitCount = 0;
+        owner._model.transform.localRotation = quaternion.identity;
+        return base.Exit(to);
     }
 
-    public override void OnUpdate()
+    public override void UpdateLoop()
     {
-        _d.EnemyIsMoving();
-        if(_d.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && 
-           _d.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+        owner.EnemyIsMoving();
+        if(owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && 
+           owner.Anim.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
         {
-            _d.ChangeToIdle();
+            _stateFinish = true;
         }
     }
 
-    public override void OnExit()
-    {
-        _d.Anim.hit = false;
-        _d.enemyHit = false;
-        _d.hitCount = 0;
-    }
 }

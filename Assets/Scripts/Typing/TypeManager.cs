@@ -86,6 +86,7 @@ public class TypeManager : MonoBehaviour
         KeyUIGenerator.Instance.DeleteKeys();
         BanishManager.Instance.DeleteLines();
         canType = false;
+        print("ASd");
         return success;
     }
 
@@ -106,7 +107,8 @@ public class TypeManager : MonoBehaviour
         if (count == lenghtOfQueue) success = true;
         else success = false;
         sequenceGenerated = false;
-        onResult?.Invoke();
+        print("Termine secuencia");
+        onResult.Invoke();
     }
 
     IEnumerator WaitForType()

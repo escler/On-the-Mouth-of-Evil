@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BanishManager : MonoBehaviour
@@ -37,5 +38,15 @@ public class BanishManager : MonoBehaviour
         {
             Destroy(line);
         }
+    }
+
+    public int AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
+    {
+        return entities.Aggregate(0, (acum, current) =>
+        {
+            current.StartBanish();
+            acum += current.amount;
+            return acum;
+        });
     }
 }
