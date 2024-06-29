@@ -22,8 +22,6 @@ public class ExplosionPlayer : MonoBehaviour
             {
                 entity.Life.OnTakeDamage(dmg);
             }
-            
-            print(damage);
         }
     }
 

@@ -8,7 +8,6 @@ public class DeadensLifeHandler : LifeHandler
     {
         base.OnTakeDamage(damage);
         var enemy = GetComponent<DemonLowRange>();
-        print("ASd");
         if (_actualLife > 0) return;
 
         enemy.canBanish = true;

@@ -8,14 +8,15 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
     private LifeHandler _life;
     public LifeHandler Life => _life;
     public int banishAmount;
+    private int _amount;
 
     protected void OnAwake()
     {
         _life = GetComponent<LifeHandler>();
-        amount = banishAmount;
+        print(Amount);
     }
 
-    public void EnemyMove()
+    protected void EnemyMove()
     {
         OnMove?.Invoke(this);
     }
@@ -38,5 +39,9 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
     {
     }
 
-    public int amount { get; set; }
+    public int Amount
+    {
+        get => banishAmount;
+        set => banishAmount = value;
+    }
 }

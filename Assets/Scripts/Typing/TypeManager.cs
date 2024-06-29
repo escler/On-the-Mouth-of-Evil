@@ -86,7 +86,6 @@ public class TypeManager : MonoBehaviour
         KeyUIGenerator.Instance.DeleteKeys();
         BanishManager.Instance.DeleteLines();
         canType = false;
-        print("ASd");
         return success;
     }
 

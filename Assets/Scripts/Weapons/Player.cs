@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public Weapon activeWeapon;
     public Movement movement;
     public InteractChecker interactChecker;
+    public PlayerEnergyHandler playerEnergyHandler;
     public Transform chest, targetAim;
     public GameObject sphere;
     
@@ -30,5 +31,4 @@ public class Player : MonoBehaviour
         movement.cantMove = false;
         interactChecker.enabled = true;
     }
-
 }

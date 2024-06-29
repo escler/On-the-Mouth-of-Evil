@@ -47,7 +47,7 @@ public class InteractChecker : MonoBehaviour
         if (!entities.Any() || _typeManager.sequenceGenerated) return;
         _typeManager.GenerateNewSequence(8);
         Player.Instance.DipposeControls();
-        BanishManager.Instance.AmountOfEnergy(entities);
+        BanishManager.Instance.BanishStart(entities);
     }
 
     private void OnDrawGizmos()
