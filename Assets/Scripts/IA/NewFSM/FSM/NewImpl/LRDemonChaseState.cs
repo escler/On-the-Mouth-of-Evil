@@ -28,7 +28,6 @@ public class LRDemonChaseState : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         owner.animator.SetParameter("Run", true);
-        print("Entre a Chase");
     }
 
     public override Dictionary<string, object> Exit(IState to)
@@ -47,6 +46,7 @@ public class LRDemonChaseState : MonoBaseState
 
         if (ray1) dir -= transform.right * intensity * Time.deltaTime;
         else if (ray2) dir += transform.right * intensity * Time.deltaTime;
+        owner.transform.LookAt(owner.target.position + dir);
 
         owner.transform.position += dir * Time.deltaTime * speed;
         owner.EntityMove();

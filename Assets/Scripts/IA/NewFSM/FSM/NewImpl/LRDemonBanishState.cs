@@ -18,8 +18,14 @@ public class LRDemonBanishState : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from,transitionParameters);
-        print("entre a Banish");
         owner.animator.SetParameter("Death", true);
+    }
+
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        owner.banished = true;
+        owner.canBanish = false;
+        return base.Exit(to);
     }
 
     public override void UpdateLoop()

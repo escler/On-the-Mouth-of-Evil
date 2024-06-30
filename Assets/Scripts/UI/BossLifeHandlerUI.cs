@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BossLifeHandlerUI : MonoBehaviour
 {
     private Slider _slider;
-    private int _actualLife, _maxLife;
     private bool _lerpingHealth;
     private float _timeScale;
     [SerializeField] private IllusionDemonLifeHandler _lifeHandler;

@@ -44,7 +44,7 @@ public class BanishManager : MonoBehaviour
         TypeManager.Instance.onResult -= OnResultOfBanish;
         if (!TypeManager.Instance.ResultOfType()) return;
         
-        Player.Instance.playerEnergyHandler.AddEnergy(_amounTotal);
+        Player.Instance.playerEnergyHandler.ModifiedEnergy(_amounTotal);
         
     }
 
@@ -58,10 +58,12 @@ public class BanishManager : MonoBehaviour
 
     int AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
     {
-        return entities.Aggregate(0, (acum, current) =>
+        return entities.Select(x => (Enemy)x).Where(x => x != null).Aggregate(0, (acum, current) =>
         {
             current.StartBanish();
-            acum += current.Amount;
+            print(current.banishAmount);
+            acum += current.banishAmount;
+            print("Aggregate" + acum);
             return acum;
         });
     }

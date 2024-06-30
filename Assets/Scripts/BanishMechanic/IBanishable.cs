@@ -9,5 +9,4 @@ public interface IBanishable
     public bool banished { get; set; }
     public void StartBanish();
     public void FinishBanish();
-    public int Amount { get; set; }
 }

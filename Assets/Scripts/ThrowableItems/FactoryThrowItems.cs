@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class FactoryThrowItems : MonoBehaviour
@@ -14,54 +16,62 @@ public class FactoryThrowItems : MonoBehaviour
         StartCoroutine(SpawnThrowItems());
     }
 
-    IEnumerator ThrowItemsPoolCreation(int count, Func<GameObject> spawn,
-        Action<List<GameObject>> OnEndCallBack)
+    IEnumerator ThrowItemsPoolCreation(int count, Func<GameObject> spawn, //IA2-P4
+        Action<List<GameObject>> onEndCallBack)
     {
         List<GameObject> tempList = new List<GameObject>();
         var stopWatch = new Stopwatch();
         stopWatch.Start();
         int frameCount = 0;
 
-        if (tempList.Count == 50)
+        while (prefabVariants != null)
         {
-            OnEndCallBack?.Invoke(tempList);
-        }
-        
-        for (int i = 0; i < count; i++)
-        {
+            if (tempList.Count > count - poolObjects.Count)
+            {
+                onEndCallBack?.Invoke(tempList);
+                break;
+            }
+            
             GameObject newItem = spawn();
             if (tempList.Count > 0)
             {
-                //if(newItem == tempList[i-1]) Destroy(newItem);
-              
+                if(newItem == tempList.Last())Destroy(newItem);
+                else
+                {
                     newItem.transform.SetParent(gameObject.transform);
                     newItem.SetActive(false);
                     poolObjects.Add(newItem);
+                }
+              
             }
             else
             {
-                newItem.transform.SetParent(gameObject.transform);
-                newItem.SetActive(false);
-                tempList.Add(newItem);
+                if (poolObjects.Count > 0)
+                {
+                    if(newItem == poolObjects.Last()) Destroy(newItem);
+                }
+                else
+                {
+                    newItem.transform.SetParent(gameObject.transform);
+                    newItem.SetActive(false);
+                    tempList.Add(newItem);
+                }
             }
-            
-
             
             if (stopWatch.ElapsedMilliseconds > 1 / 60)
             {
                 yield return new WaitForEndOfFrame();
                 frameCount += 1;
                 stopWatch.Restart();
-                print("stopWatch Restart");
             }
         }
     }
 
-    void GetList(List<GameObject> asd)
+    void GetList(List<GameObject> tempList)
     {
-        foreach (var VARIABLE in asd)
+        foreach (var item in tempList)
         {
-            poolObjects.Add(VARIABLE);
+            poolObjects.Add(item);
         }
     }
     
@@ -71,6 +81,6 @@ public class FactoryThrowItems : MonoBehaviour
     {
         yield return ThrowItemsPoolCreation(50,
             () => Instantiate(prefabVariants[Random.Range(0, prefabVariants.Length - 1)]),
-            GetList => print("Listo"));
+            GetList);
     }
 }

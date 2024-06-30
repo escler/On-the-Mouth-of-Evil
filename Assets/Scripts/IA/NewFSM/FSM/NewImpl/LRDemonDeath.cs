@@ -16,7 +16,6 @@ public class LRDemonDeath : MonoBaseState
     {
         base.Enter(this);
         owner.GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
-        print("Death");
     }
 
     public override void UpdateLoop()

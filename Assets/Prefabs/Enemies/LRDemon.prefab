@@ -489,7 +489,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2756005168490869395}
   - component: {fileID: 1274603172206315837}
-  - component: {fileID: 857036671847259089}
   - component: {fileID: 6462494747218173091}
   - component: {fileID: 1576324835571566364}
   - component: {fileID: 3575330745324159599}
@@ -536,29 +535,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLife: 100
---- !u!136 &857036671847259089
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962191095873013444}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.37
-  m_Height: 1.72
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6462494747218173091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fea180fbaa12f4d9599065bf64c690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  banishAmount: 0
+  banishAmount: 50
   target: {fileID: 0}
   distanceToAttack: 1
   distanceToPersuit: 200
@@ -2126,7 +2102,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1119245740956471976}
-  m_Layer: 0
+  - component: {fileID: 8237353329725463821}
+  m_Layer: 7
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2151,6 +2128,29 @@ Transform:
   - {fileID: 8396850188070502189}
   m_Father: {fileID: 1748590946007917677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8237353329725463821
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5797355784600694867}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.37
+  m_Height: 1.72
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5841721605392933318
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,11 +3129,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5783524456081982305, guid: 0f2d013891340c441be53519bea39080,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

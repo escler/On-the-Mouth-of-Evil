@@ -7,13 +7,11 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
 {
     private LifeHandler _life;
     public LifeHandler Life => _life;
-    public int banishAmount;
+    public int banishAmount = 20;
     private int _amount;
-
     protected void OnAwake()
     {
         _life = GetComponent<LifeHandler>();
-        print(Amount);
     }
 
     protected void EnemyMove()
@@ -37,11 +35,5 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
 
     public virtual void FinishBanish()
     {
-    }
-
-    public int Amount
-    {
-        get => banishAmount;
-        set => banishAmount = value;
     }
 }

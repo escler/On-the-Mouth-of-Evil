@@ -26,7 +26,6 @@ public class LRDDemonMoveAroundState : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        print("Entre a MoveAround");
         _timeToTransition = Random.Range(1, 3);
         _direction = RandomDir();
         owner.animator.SetParameter("MoveAround", true);

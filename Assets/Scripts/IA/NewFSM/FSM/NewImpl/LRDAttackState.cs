@@ -27,7 +27,6 @@ public class LRDAttackState : MonoBaseState
         base.Enter(from, transitionParameters);
         owner.animator.SetParameter("Attack", true);
         owner.transform.LookAt(owner.target);
-        Debug.Log("Ataco");
     }
 
     public override Dictionary<string, object> Exit(IState to)

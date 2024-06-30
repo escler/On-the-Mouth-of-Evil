@@ -28,7 +28,6 @@ public class LRDemonIdleState : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        print("Entre a Idle");
         owner.animator.SetParameter("MoveAround", false);
         _timeToTransition = Random.Range(1, 4);
     }
