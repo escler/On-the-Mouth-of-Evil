@@ -56,7 +56,7 @@ public class BanishManager : MonoBehaviour
         }
     }
 
-    public int AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
+    int AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
     {
         return entities.Aggregate(0, (acum, current) =>
         {
