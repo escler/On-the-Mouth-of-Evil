@@ -19,29 +19,10 @@ public class ThrowManager : MonoBehaviour
         }
 
         Instance = this;
-        
-        SearchThrowItemsAndAdd();
     }
 
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H)) SearchThrowItemsAndAdd();
-        if(Input.GetKeyDown(KeyCode.J)) RemoveAll();
-    }
 
-    public void SearchThrowItemsAndAdd()
-    {
-        var activeItemsInScene = FindObjectsOfType<ThrowItem>();
-
-        if (activeItemsInScene.Length <= 0) return;
-        for (int i = 0; i < activeItemsInScene.Length; i++)
-        {
-            if (_throwItems.Contains(activeItemsInScene[i])) continue;
-            _throwItems.Add(activeItemsInScene[i]);
-        }
-    }
-
-    public void RemoveAll()
+    private void RemoveAll()
     {
         if (_throwItems.Count <= 0) return;
         _throwItems.Clear();
@@ -60,5 +41,18 @@ public class ThrowManager : MonoBehaviour
         var actualItem = _throwItems.First();
         _throwItems.Remove(actualItem);
         return actualItem;
+    }
+
+    public ThrowItem GetNearestItem(Transform target) //IA2-P1
+    {
+        if (_throwItems.Count <= 0) return null;
+
+        return _throwItems.Aggregate(_throwItems.First(), (acum, current) =>
+        {
+            var actualNearest = Vector3.Distance(acum.transform.position, target.position);
+            if (Vector3.Distance(current.transform.position, target.position) < actualNearest)
+                acum = current;
+            return acum;
+        });
     }
 }

@@ -14,8 +14,9 @@ public class ThrowItem : MonoBehaviour
     public float shootSpeed;
     public BoxCollider _collider;
     public int damage;
-    private bool _locationCalculated, _moving;
+    private bool _locationCalculated, _moving, _locationReached;
 
+    public bool LocationReached => _locationReached;
 
     private void Awake()
     {
@@ -36,27 +37,28 @@ public class ThrowItem : MonoBehaviour
 
     IEnumerator MoveObject()
     {
+        _locationReached = false;
         while (_moving)
         { 
             transform.position = Vector3.SmoothDamp(transform.position, _location, ref zero, _time);
             if (Vector3.Distance(transform.position, _location) <= .5) _moving = false;
             yield return new WaitForEndOfFrame();
         }
-        IllusionDemon.Instance.Anim.throwObject = true;
+
+        _locationReached = true;
     }
 
-    public void ThrowObject()
+    public void ThrowObject(Vector3 location)
     {
-        StartCoroutine(ThrowObjectCo());
+        StartCoroutine(ThrowObjectCo(location));
     }
 
-    IEnumerator ThrowObjectCo()
+    IEnumerator ThrowObjectCo(Vector3 location)
     {
         if (!_locationCalculated)
         {
-            _playerPos = Player.Instance.transform.position;
             _locationCalculated = true;
-            transform.LookAt(_playerPos);
+            transform.LookAt(location);
         }
 
         while (!_callBackHit)
@@ -81,6 +83,6 @@ public class ThrowItem : MonoBehaviour
         
         _callBackHit = true;
         ThrowManager.Instance.RemoveFormList(this);
-        Destroy(gameObject);
+        FactoryThrowItems.Instance.BackToPool(this.gameObject);
     }
 }

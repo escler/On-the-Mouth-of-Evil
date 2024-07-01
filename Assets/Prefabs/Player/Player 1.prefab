@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 3794709617372652962}
   - component: {fileID: 150804234299160520}
   - component: {fileID: 5797852999391789868}
+  - component: {fileID: 118147663413301110}
   m_Layer: 6
   m_Name: Player 1
   m_TagString: Untagged
@@ -322,6 +323,7 @@ Transform:
   - {fileID: 5435263232756476057}
   - {fileID: 1627669133382941649}
   - {fileID: 7021422944924431995}
+  - {fileID: 2860766197058400231}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -303.686, z: 0}
 --- !u!114 &7011258207113424462
@@ -538,6 +540,7 @@ MonoBehaviour:
   query: {fileID: 4123165687645903461}
   entities: []
   dmg: 35
+  damageDone: 0
 --- !u!114 &5797852999391789868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +554,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmount: 100
+--- !u!114 &118147663413301110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480230240587796246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a1b72658aaf1a428bc22a3bc5c1ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyAssign: 102
+  pivotToObject: {fileID: 2860766197058400231}
 --- !u!1 &494377697789406385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7257,6 +7274,37 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &2982665419666739430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2860766197058400231}
+  m_Layer: 6
+  m_Name: PivotToThrowItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2860766197058400231
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982665419666739430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1.287, z: 1.211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1468636418525026627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3135550747792012912
 GameObject:
   m_ObjectHideFlags: 0

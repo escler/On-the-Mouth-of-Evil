@@ -6,7 +6,6 @@ using UnityEngine;
 public class IllusionDemon_ThrowObjects : MonoBaseState
 {
     [SerializeField] private IllusionDemon owner;
-    private float _actualTime;
     private ThrowItem _item;
     private bool _stateFinish;
 
@@ -24,7 +23,6 @@ public class IllusionDemon_ThrowObjects : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        _actualTime = 3;
         _item = ThrowManager.Instance.GetItem();
         owner.actualItem = _item;
         owner.Anim.moveObject = true;
@@ -42,6 +40,7 @@ public class IllusionDemon_ThrowObjects : MonoBaseState
     public override void UpdateLoop()
     {
         if (_item == null || _item._callBackHit) _stateFinish = true;
+        if (_item.LocationReached) owner.Anim.throwObject = true;
     }
 
 }

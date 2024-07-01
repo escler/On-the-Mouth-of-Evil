@@ -277,7 +277,7 @@ public class IllusionDemon : Enemy
 
     public void ThrowObject()
     {
-        actualItem.ThrowObject();
+        actualItem.ThrowObject(_characterPos.position);
     }
 
     private void ResultOfBanish()

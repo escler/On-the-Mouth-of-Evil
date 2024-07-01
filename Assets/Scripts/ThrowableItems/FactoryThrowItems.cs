@@ -4,16 +4,30 @@ using UnityEngine;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Unity.VisualScripting;
 using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class FactoryThrowItems : MonoBehaviour
 {
+    public static FactoryThrowItems Instance { get; private set; }
+    
     public GameObject[] prefabVariants;
     public List<GameObject> poolObjects = new List<GameObject>();
     void Start()
     {
         StartCoroutine(SpawnThrowItems());
+    }
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
     IEnumerator ThrowItemsPoolCreation(int count, Func<GameObject> spawn, //IA2-P4
@@ -73,6 +87,20 @@ public class FactoryThrowItems : MonoBehaviour
         {
             poolObjects.Add(item);
         }
+    }
+
+    public void BackToPool(GameObject item)
+    {
+        item.SetActive(false);
+        if (poolObjects.Contains(item)) return;
+        poolObjects.Add(item);
+    }
+    
+    public GameObject GetObject()
+    {
+        var objectFromPool = poolObjects.First();
+        poolObjects.Remove(poolObjects.First());
+        return objectFromPool;
     }
     
     
