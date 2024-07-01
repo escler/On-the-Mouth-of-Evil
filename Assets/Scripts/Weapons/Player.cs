@@ -10,6 +10,13 @@ public class Player : MonoBehaviour
     public PlayerEnergyHandler playerEnergyHandler;
     public Transform chest, targetAim;
     public GameObject sphere;
+    private bool _skillAdquired;
+
+    public bool SkillAdquired
+    {
+        get => _skillAdquired;
+        set => _skillAdquired = value;
+    }
     
     private void Awake()
     {

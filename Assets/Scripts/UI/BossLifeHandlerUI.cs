@@ -15,12 +15,19 @@ public class BossLifeHandlerUI : MonoBehaviour
     {
         _slider = GetComponent<Slider>();
         _lifeHandler.OnLifeChange += ChangeValue;
+        _lifeHandler.GetComponent<IllusionDemon>().OnBossDefeated += HideUI;
         ChangeValue();
     }
 
     private void OnDestroy()
     {
         _lifeHandler.OnLifeChange -= ChangeValue;
+        _lifeHandler.GetComponent<IllusionDemon>().OnBossDefeated -= HideUI;
+    }
+
+    private void HideUI()
+    {
+        gameObject.SetActive(false);
     }
 
     private void ChangeValue()

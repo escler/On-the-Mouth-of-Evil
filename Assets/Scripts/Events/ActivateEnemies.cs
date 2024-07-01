@@ -10,5 +10,6 @@ public class ActivateEnemies : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == 6) zone.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

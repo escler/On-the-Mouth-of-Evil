@@ -7,8 +7,8 @@ using FSM;
 
 
 public class IllusionDemon : Enemy
-{
-    public static IllusionDemon Instance { get; set; }
+{ 
+    public Action OnBossDefeated;
     
     private Transform _characterPos;
     [SerializeField] private Transform _attackSpawn;
@@ -110,7 +110,6 @@ public class IllusionDemon : Enemy
     void Awake()
     {
         OnAwake();
-        if (!Instance) Instance = this;
         GameManager.Instance.activeSpatialGrid.Add(this);
         EnemyIsMoving();
         

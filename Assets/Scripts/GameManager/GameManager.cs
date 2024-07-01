@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     public SpatialGrid activeSpatialGrid;
     public ZoneManager activeZoneManager;
+    public bool bossKilled;
 
     private void Start()
     {
@@ -30,5 +31,12 @@ public class GameManager : MonoBehaviour
     public void GameLose()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void CheckWin()
+    {
+        if (!bossKilled) return;
+        
+        print("Win");
     }
 }
