@@ -78,7 +78,7 @@ public class ThrowItem : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            other.GetComponent<PlayerLifeHandler>().OnTakeDamage(damage);
+            other.GetComponent<PlayerLifeHandler>().TakeDamage(damage);
         }
         
         _callBackHit = true;

@@ -7,13 +7,15 @@ public class PlayerLifeHandler : LifeHandler
 {
     public delegate void UpdateLifeBar();
     public event UpdateLifeBar OnLifeChange;
+    public event UpdateLifeBar OnTakeDamage;
     public int amountPerEnemyBanished;
 
-    public override void OnTakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
-        base.OnTakeDamage(damage);
+        base.TakeDamage(damage);
 
         OnLifeChange?.Invoke();
+        OnTakeDamage?.Invoke();
         
         if (_actualLife > 0) return;
         

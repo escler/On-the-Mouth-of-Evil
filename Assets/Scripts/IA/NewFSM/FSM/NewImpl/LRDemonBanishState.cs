@@ -24,6 +24,7 @@ public class LRDemonBanishState : MonoBaseState
     {
         owner.banished = true;
         owner.canBanish = false;
+        owner.GetComponentInChildren<CapsuleCollider>().enabled = false;
         return base.Exit(to);
     }
 

@@ -37,7 +37,7 @@ public class BookSkillTrigger : MonoBehaviour
         damageDone = DamageDone(enemies);
         foreach (var entity in enemies)
         {
-            entity.Life.OnTakeDamage(dmg);
+            entity.Life.TakeDamage(dmg);
         }
         OnSkillActivate?.Invoke();
     }

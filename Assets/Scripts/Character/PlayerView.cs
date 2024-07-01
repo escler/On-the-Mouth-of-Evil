@@ -28,20 +28,18 @@ public class PlayerView : MonoBehaviour
     private PlayerLifeHandler _life;
     private bool _isActive;
 
-
-
     private void Awake()
     {
         if (!postProcess.TryGet<Vignette>(out vignette)) return;
         vignette.smoothness.value = 0;
         _life = GetComponent<PlayerLifeHandler>();
-        _life.OnLifeChange += DamageReceive;
+        _life.OnTakeDamage += DamageReceive;
 
     }
 
     private void OnDestroy()
     {
-        _life.OnLifeChange -= DamageReceive;
+        _life.OnTakeDamage -= DamageReceive;
     }
 
     public void ActivateTrail()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExplosionEnemyLifeHandler : LifeHandler
 {
-    public override void OnTakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         _actualLife -= damage;
 

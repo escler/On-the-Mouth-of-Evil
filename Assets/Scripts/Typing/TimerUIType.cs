@@ -17,7 +17,7 @@ public class TimerUIType : MonoBehaviour
     private void OnEnable()
     {
         _startTime = TypeManager.Instance.timeToResolve;
-        _tmp.text = _startTime.ToString();
+        SetText();
         StartCoroutine(StartTimer());
     }
 
@@ -26,12 +26,17 @@ public class TimerUIType : MonoBehaviour
         StopCoroutine(StartTimer());
     }
 
+    void SetText()
+    {
+        _tmp.text = _startTime.ToString("F2");
+    }
+
     IEnumerator StartTimer()
     {
         while (_startTime > 0)
         {
             _startTime -= _refreshRate;
-            _tmp.text = _startTime.ToString();
+            SetText();
             yield return new WaitForSeconds(_refreshRate);
         }
     }

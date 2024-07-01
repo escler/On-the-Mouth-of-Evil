@@ -22,7 +22,7 @@ public class ExplosionDamage : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            other.GetComponent<PlayerLifeHandler>().OnTakeDamage(damage);
+            other.GetComponent<PlayerLifeHandler>().TakeDamage(damage);
         }
     }
 }

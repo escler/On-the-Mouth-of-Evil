@@ -24,7 +24,7 @@ public class CircleDamage : MonoBehaviour
 
         if (actualTime <= 0)
         {
-            Player.Instance.GetComponent<PlayerLifeHandler>().OnTakeDamage(damagePerSecond);
+            Player.Instance.GetComponent<PlayerLifeHandler>().TakeDamage(damagePerSecond);
             actualTime = 1f;
         }
         
