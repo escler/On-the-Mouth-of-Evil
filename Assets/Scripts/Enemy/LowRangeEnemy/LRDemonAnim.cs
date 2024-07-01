@@ -23,9 +23,4 @@ public class LRDemonAnim : MonoBehaviour
     {
         _ownerEnemy.StartAttack();
     }
-    
-    public void FinishAttack()
-    {
-        _ownerEnemy.FinishAttack();
-    }
 }

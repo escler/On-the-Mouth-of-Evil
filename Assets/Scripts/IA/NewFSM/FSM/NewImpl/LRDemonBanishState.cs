@@ -19,6 +19,7 @@ public class LRDemonBanishState : MonoBaseState
     {
         base.Enter(from,transitionParameters);
         owner.animator.SetParameter("Death", true);
+        owner.GetComponent<CapsuleCollider>().enabled = false;
     }
 
     public override Dictionary<string, object> Exit(IState to)
