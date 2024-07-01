@@ -16,6 +16,7 @@ public class LRDemonDeath : MonoBaseState
     {
         base.Enter(this);
         owner.GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
+        owner.GetComponent<CapsuleCollider>().enabled = false;
     }
 
     public override void UpdateLoop()

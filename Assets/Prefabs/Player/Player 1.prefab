@@ -285,7 +285,6 @@ GameObject:
   - component: {fileID: 1468636418525026627}
   - component: {fileID: 7011258207113424462}
   - component: {fileID: 637124000237001304}
-  - component: {fileID: 2644981399324500782}
   - component: {fileID: 4182699483987903359}
   - component: {fileID: 8016993552450931654}
   - component: {fileID: 523616169048049752}
@@ -360,19 +359,6 @@ MonoBehaviour:
   dashSpeed: 300
   sensRot: 1
   cantMove: 0
---- !u!114 &2644981399324500782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480230240587796246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded524b4d93cc034ab256b0c3716c032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialLife: 100000
 --- !u!54 &4182699483987903359
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -415,6 +401,7 @@ MonoBehaviour:
   activeWeapon: {fileID: 7616536875829624569}
   movement: {fileID: 637124000237001304}
   interactChecker: {fileID: 1049368622030481013}
+  playerLifeHandler: {fileID: 7410502616623232365}
   playerEnergyHandler: {fileID: 5797852999391789868}
   chest: {fileID: 5505449279274646435}
   targetAim: {fileID: 1975883369997697625}
@@ -468,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLife: 100
+  amountPerEnemyBanished: 10
 --- !u!114 &1049368622030481013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,11 +474,10 @@ MonoBehaviour:
   _banishLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  distance: 3
   banishRadius: 6
   UIObject: {fileID: 0}
-  banishRenderer: {fileID: 7521794063322697427, guid: 7433e298a198c554d827a22ef2d24226,
-    type: 3}
+  lenghtWithouthBoss: 4
+  lenghtWithBoss: 8
 --- !u!114 &4784608522688390531
 MonoBehaviour:
   m_ObjectHideFlags: 0

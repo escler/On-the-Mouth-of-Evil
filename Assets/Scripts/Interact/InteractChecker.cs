@@ -7,12 +7,12 @@ using UnityEngine;
 public class InteractChecker : MonoBehaviour
 {
     [SerializeField] private LayerMask _layerMask, _banishLayerMask;
-    public int distance, banishRadius;
+    public int banishRadius;
     private Transform _targetAim, _cameraPos;
     public GameObject UIObject;
     private TypeManager _typeManager;
     private CircleQuery _query;
-    public GameObject banishRenderer;
+    public int lenghtWithouthBoss, lenghtWithBoss;
 
     private void Start()
     {
@@ -45,9 +45,21 @@ public class InteractChecker : MonoBehaviour
     private void MakeBanish(List<IBanishable> entities)
     {
         if (!entities.Any() || _typeManager.sequenceGenerated) return;
-        _typeManager.GenerateNewSequence(8);
+        var number = CheckEnemyType(entities);
+        _typeManager.GenerateNewSequence(number);
         Player.Instance.DipposeControls();
         BanishManager.Instance.BanishStart(entities);
+    }
+    
+    int CheckEnemyType(IEnumerable<IBanishable> entities) //IA2-P1
+    {
+        return entities.Select(x => (Enemy)x).Where(x => x != null)
+            .Aggregate(lenghtWithouthBoss, (acum, current) =>
+            {
+                if (current.enemyType == EnemyType.Boss) acum = lenghtWithBoss;
+
+                return acum;
+            });
     }
 
     private void OnDrawGizmos()

@@ -10,6 +10,7 @@ public class KeyUIGenerator : MonoBehaviour
     public GameObject keyGo;
     private GameObject _panelKeyUI;
     public Color normalColor, pressColor;
+    public GameObject timerUI;
     
     public static KeyUIGenerator Instance { get; private set; }
 
@@ -49,11 +50,13 @@ public class KeyUIGenerator : MonoBehaviour
     public void ShowPanel()
     {
         _panelKeyUI.SetActive(true);
+        timerUI.SetActive(true);
     }
     
     public void HidePanel()
     {
         _panelKeyUI.SetActive(false);
+        timerUI.SetActive(false);
     }
 
     public void ChangeColor(int count)

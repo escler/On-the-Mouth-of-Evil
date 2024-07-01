@@ -10,7 +10,7 @@ public class BanishManager : MonoBehaviour
 
     private List<GameObject> linesActives = new List<GameObject>();
     public GameObject lineRendererGO;
-    private int _amounTotal;
+    private int _amounTotal, _healthAmount;
 
     private void Awake()
     {
@@ -35,7 +35,8 @@ public class BanishManager : MonoBehaviour
 
     public void BanishStart(IEnumerable<IBanishable> entities)
     {
-        _amounTotal = AmountOfEnergy(entities);
+        _amounTotal = AmountOfEnergy(entities).Item1;
+        _healthAmount = AmountOfEnergy(entities).Item2;
         TypeManager.Instance.onResult += OnResultOfBanish;
     }
 
@@ -45,6 +46,7 @@ public class BanishManager : MonoBehaviour
         if (!TypeManager.Instance.ResultOfType()) return;
         
         Player.Instance.playerEnergyHandler.ModifiedEnergy(_amounTotal);
+        Player.Instance.playerLifeHandler.AddHealth(_healthAmount);
         
     }
 
@@ -56,15 +58,12 @@ public class BanishManager : MonoBehaviour
         }
     }
 
-    int AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
+    Tuple<int,int> AmountOfEnergy(IEnumerable<IBanishable> entities) //IA2-P1
     {
-        return entities.Select(x => (Enemy)x).Where(x => x != null).Aggregate(0, (acum, current) =>
+        return entities.Select(x => (Enemy)x).Where(x => x != null).Aggregate(Tuple.Create(0,0), (acum, current) =>
         {
             current.StartBanish();
-            print(current.banishAmount);
-            acum += current.banishAmount;
-            print("Aggregate" + acum);
-            return acum;
+            return Tuple.Create(acum.Item1 + current.banishAmount, acum.Item2 + 1);
         });
     }
 }

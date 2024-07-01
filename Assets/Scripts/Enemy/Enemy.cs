@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
     public LifeHandler Life => _life;
     public int banishAmount = 20;
     private int _amount;
+    public EnemyType enemyType;
     protected void OnAwake()
     {
         _life = GetComponent<LifeHandler>();
@@ -36,4 +37,10 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
     public virtual void FinishBanish()
     {
     }
+}
+
+public enum EnemyType
+{
+    Normal,
+    Boss
 }

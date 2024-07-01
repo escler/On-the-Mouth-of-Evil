@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public Weapon activeWeapon;
     public Movement movement;
     public InteractChecker interactChecker;
+    public PlayerLifeHandler playerLifeHandler;
     public PlayerEnergyHandler playerEnergyHandler;
     public Transform chest, targetAim;
     public GameObject sphere;

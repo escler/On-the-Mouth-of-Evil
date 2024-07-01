@@ -18,7 +18,7 @@ public class TypeManager : MonoBehaviour
     public float timeToResolve;
 
     private string[] _avaiblesKeys = 
-        { "q", "w", "e", "r", "a", "s", "d", "f" };
+        { "q", "w", "e", "a", "s", "d" };
     public static TypeManager Instance { get; private set; }
 
     private void Awake()
@@ -106,7 +106,6 @@ public class TypeManager : MonoBehaviour
         if (count == lenghtOfQueue) success = true;
         else success = false;
         sequenceGenerated = false;
-        print("Termine secuencia");
         onResult.Invoke();
     }
 
