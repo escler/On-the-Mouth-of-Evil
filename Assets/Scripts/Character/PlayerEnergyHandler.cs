@@ -13,7 +13,7 @@ public class PlayerEnergyHandler : MonoBehaviour
 
     private void Awake()
     {
-        _actualAmount = 100;
+        _actualAmount = 0;
     }
 
     public void ModifiedEnergy(int amount)
