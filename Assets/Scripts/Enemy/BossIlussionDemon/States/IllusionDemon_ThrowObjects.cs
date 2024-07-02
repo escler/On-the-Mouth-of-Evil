@@ -33,6 +33,7 @@ public class IllusionDemon_ThrowObjects : MonoBaseState
         owner.Anim.moveObject = false;
         owner.Anim.throwObject = false;
         _item = null;
+        owner.actualItem = null;
         _stateFinish = false;
         return base.Exit(to);
     }

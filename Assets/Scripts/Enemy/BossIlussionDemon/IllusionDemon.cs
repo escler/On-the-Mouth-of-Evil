@@ -279,15 +279,11 @@ public class IllusionDemon : Enemy
         actualItem.ThrowObject(_characterPos.position);
     }
 
-    private void ResultOfBanish()
+    public void ResultOfBanish()
     {
         if (TypeManager.Instance.ResultOfType())
         {
             banished = true;
-        }
-        else
-        {
-            RestoreLife();
         }
         FinishBanish();
     }

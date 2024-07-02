@@ -11,6 +11,11 @@ public class GetThrowItem : MonoBehaviour
         StartCoroutine(TryGetItem());
     }
 
+    private void OnDisable()
+    {
+        ThrowManager.Instance.RemoveFormList(_item.GetComponent<ThrowItem>());
+    }
+
     private void GetObjectFromPool()
     {
         if (_item != null) return;

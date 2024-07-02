@@ -83,6 +83,6 @@ public class ThrowItem : MonoBehaviour
         
         _callBackHit = true;
         ThrowManager.Instance.RemoveFormList(this);
-        FactoryThrowItems.Instance.BackToPool(this.gameObject);
+        FactoryThrowItems.Instance.BackToPool(gameObject);
     }
 }
