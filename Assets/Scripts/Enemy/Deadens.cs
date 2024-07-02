@@ -49,7 +49,7 @@ public class Deadens : EnemySteeringAgent
         _fsm.AddState(States.Hit, new Hit(this));
         
         _fsm.ChangeState(States.Idle);
-        ListDemonsUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
+        ObjetivesUI.Instance.AddText(enemyCount, "Demon " + enemyCount);
         canHit = true;
     }
 

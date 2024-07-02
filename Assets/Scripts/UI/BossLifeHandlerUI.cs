@@ -21,8 +21,8 @@ public class BossLifeHandlerUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        _lifeHandler.OnLifeChange -= ChangeValue;
         _lifeHandler.GetComponent<IllusionDemon>().OnBossDefeated -= HideUI;
+        _lifeHandler.OnLifeChange -= ChangeValue;
     }
 
     private void HideUI()

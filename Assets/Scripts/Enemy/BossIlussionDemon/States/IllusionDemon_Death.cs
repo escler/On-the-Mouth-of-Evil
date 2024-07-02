@@ -17,6 +17,7 @@ public class IllusionDemon_Death : MonoBaseState
         owner.Anim.death = true;
         GetComponentInChildren<DissolveEnemy>().ActivateDissolve();
         Player.Instance.SkillAdquired = true;
+        ObjetivesUI.Instance.BossWin();
         owner.OnBossDefeated?.Invoke();
         owner.DisableFSM();
 

@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 public class ZoneManager : MonoBehaviour
 {
     private BoxCollider _collider;
-    public Door doorRoom, nextRoomDoor;
+    public Door doorRoom;
+    public Door[] nextDoors;
     [SerializeField] private GameObject spawnPrefab;
     public int count, deadCount;
     public GameObject nextZone, previousZone;
@@ -44,8 +45,13 @@ public class ZoneManager : MonoBehaviour
         if (deadCount < count) return;
         if (doorRoom == null) return;
         doorRoom.SetDoor(true);
-        nextRoomDoor.SetDoor(true);
-        ListDemonsUI.Instance.AddText(zone, "<s><color=\"red\">" + roomName + "</s></color>");
+        foreach (var door in nextDoors)
+        {
+            door.SetDoor(true);
+        }
+        
+        ObjetivesUI.Instance.AddText(zone, "<s><color=\"red\">" + roomName + "</s></color>");
+        if(zone == 2) ObjetivesUI.Instance.BossText();
     }
     
     public static Vector3 RandomPointInBounds(Bounds bounds) {

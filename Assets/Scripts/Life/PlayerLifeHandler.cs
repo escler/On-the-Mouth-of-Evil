@@ -24,7 +24,7 @@ public class PlayerLifeHandler : LifeHandler
 
     public void AddHealth(int amount)
     {
-        _actualLife += Mathf.Clamp(_actualLife += amount * amountPerEnemyBanished, 0, initialLife);
+        _actualLife = Mathf.Clamp(_actualLife += amount * amountPerEnemyBanished, 0, initialLife);
         OnLifeChange?.Invoke();
     }
 }

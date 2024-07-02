@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ListDemonsUI.Instance.AddText(0,"Living Room");
-        ListDemonsUI.Instance.AddText(1,"Garage Room");
+        ObjetivesUI.Instance.AddText(0,"Living Room");
+        ObjetivesUI.Instance.AddText(1,"Garage Room");
     }
 
     private void Awake()

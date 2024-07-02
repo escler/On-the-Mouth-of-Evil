@@ -12,7 +12,7 @@ public class BookSkillTrigger : MonoBehaviour
     private PlayerEnergyHandler _playerEnergyHandler;
     public int dmg;
     public int damageDone;
-    private bool _canUseSkill;
+    private bool _skillActivate;
 
     private void Awake()
     {
@@ -23,8 +23,12 @@ public class BookSkillTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))//IA2-P2
         {
-            entities = query.Query().
-                Select(x => (Enemy)x).Where(x => x != null).ToList();
+            if (!_skillActivate)
+            {
+                entities = query.Query().
+                    Select(x => (Enemy)x).Where(x => x != null && !x.canBanish).ToList();
+                _skillActivate = true;
+            }
             
             Explosion(entities);
         }
@@ -40,6 +44,7 @@ public class BookSkillTrigger : MonoBehaviour
             entity.Life.TakeDamage(dmg);
         }
         OnSkillActivate?.Invoke();
+        _skillActivate = false;
     }
     
     int DamageDone(IEnumerable<Enemy> entities)//IA2-P1

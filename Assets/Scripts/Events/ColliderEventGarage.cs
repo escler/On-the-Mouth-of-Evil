@@ -31,7 +31,7 @@ public class ColliderEventGarage : MonoBehaviour, IEvent
 
     public void EndEvent()
     {
-        ListDemonsUI.Instance.ClearText();
+        ObjetivesUI.Instance.ClearText();
     }
     
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class ListDemonsUI : MonoBehaviour
+public class ObjetivesUI : MonoBehaviour
 {
-    public static ListDemonsUI Instance { get; private set; }
+    public static ObjetivesUI Instance { get; private set; }
     
     private TextMeshProUGUI _list;
     private Dictionary<int, string> _enemiesName = new Dictionary<int, string>();
@@ -37,6 +37,17 @@ public class ListDemonsUI : MonoBehaviour
         }
 
         _list.text = textDemon;
+    }
+
+    public void BossText()
+    {
+        if (GameManager.Instance.bossKilled) return;
+        _list.text = "Defeat Boss";
+    }
+
+    public void BossWin()
+    {
+        _list.text = "Leave House";
     }
     
     public void ClearText()
