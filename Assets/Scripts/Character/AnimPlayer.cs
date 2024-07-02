@@ -10,7 +10,7 @@ public class AnimPlayer : MonoBehaviour
     private RigBuilder _rig;
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
-    private bool _aiming, _shotgun, _running, _shooting;
+    private bool _aiming, _shotgun, _running, _shooting, banish;
 
     public bool Shooting
     {
@@ -26,6 +26,12 @@ public class AnimPlayer : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        TypeManager.Instance.OnStartBanish += BanishStart;
+        TypeManager.Instance.OnFinishBanish += BanishEnd;
+    }
+
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
@@ -36,10 +42,20 @@ public class AnimPlayer : MonoBehaviour
         _animator.SetBool("Aiming",_aiming);
         _animator.SetBool("Running", _running);
         _animator.SetBool("Shoot", _shooting);
+        _animator.SetBool("Banish", banish);
 
         EnableRig();
     }
 
+    private void BanishStart()
+    {
+        banish = true;
+    }
+
+    private void BanishEnd()
+    {
+        banish = false;
+    }
     private void EnableRig()
     {
         if (_aiming)

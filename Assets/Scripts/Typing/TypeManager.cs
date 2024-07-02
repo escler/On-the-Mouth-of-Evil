@@ -16,6 +16,7 @@ public class TypeManager : MonoBehaviour
     public Action onResult;
     public float _actualTime;
     public float timeToResolve;
+    public Action OnStartBanish, OnFinishBanish;
 
     private string[] _avaiblesKeys = 
         { "q", "w", "e", "a", "s", "d" };
@@ -53,6 +54,7 @@ public class TypeManager : MonoBehaviour
 
     public void GenerateNewSequence(int lenght)
     {
+        OnStartBanish?.Invoke();
         _typeSequence.Clear();
         count = 0;
         for (int i = 0; i < lenght; i++)
@@ -86,6 +88,7 @@ public class TypeManager : MonoBehaviour
         KeyUIGenerator.Instance.DeleteKeys();
         BanishManager.Instance.DeleteLines();
         canType = false;
+        OnFinishBanish?.Invoke();
         return success;
     }
 
