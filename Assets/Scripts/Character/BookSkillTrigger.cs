@@ -25,12 +25,10 @@ public class BookSkillTrigger : MonoBehaviour
         {
             if (!_skillActivate)
             {
-                entities = query.Query().
-                    Select(x => (Enemy)x).Where(x => x != null && !x.canBanish).ToList();
+                entities = query.Query().Select(x => (Enemy)x).Where(x => x != null && !x.canBanish).ToList();
                 _skillActivate = true;
+                Explosion(entities);
             }
-            
-            Explosion(entities);
         }
     }
     
