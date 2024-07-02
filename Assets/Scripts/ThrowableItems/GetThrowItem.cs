@@ -13,7 +13,7 @@ public class GetThrowItem : MonoBehaviour
 
     private void GetObjectFromPool()
     {
-        if (_item) return;
+        if (_item != null) return;
         _item = FactoryThrowItems.Instance.GetObject();
         _item.transform.position = transform.position;
         _item.transform.SetParent(transform);
@@ -24,7 +24,7 @@ public class GetThrowItem : MonoBehaviour
     IEnumerator TryGetItem()
     {
         yield return new WaitForSeconds(0.5f);
-        while (ThrowManager.Instance.ThrowItems.Count == 0)
+        while (FactoryThrowItems.Instance.poolObjects.Count == 0)
         {
             yield return new WaitForSeconds(1f);
         }
