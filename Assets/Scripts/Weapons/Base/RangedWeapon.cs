@@ -22,6 +22,7 @@ public abstract class RangedWeapon : Weapon
     [SerializeField] private GameObject[] psFire;
     private CinemachineImpulseSource _recoil;
     private AnimPlayer _anim;
+    public float recoil;
     public int ChargerBullets => _chargerBullets;
 
     public bool Shooting => _shooting;
@@ -76,6 +77,8 @@ public abstract class RangedWeapon : Weapon
     private void OnEnable()
     {
         model.SetActive(true);
+        var recoilDef = GetComponentInChildren<CinemachineImpulseSource>().m_ImpulseDefinition;
+        recoilDef.m_AmplitudeGain = recoil;
         _weaponsHandler = GetComponent<WeaponsHandler>();
         _chargerBullets = _actualBullets;
         _weaponsHandler.RefreshData();

@@ -14,6 +14,12 @@ public class WeaponsHandler : MonoBehaviour
     private AnimPlayer _anim;
 
     private int _actualBullets, _maxBullets;
+
+    private void Start()
+    {
+        _anim = Player.Instance.GetComponentInChildren<AnimPlayer>();
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -21,7 +27,6 @@ public class WeaponsHandler : MonoBehaviour
             Instance = this;
         }
         
-        _anim = GetComponentInParent<AnimPlayer>();
         _activeWeapon = weapons[0];
 
     }

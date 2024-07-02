@@ -32,7 +32,7 @@ public class Shotgun : RangedWeapon
             var dir = targetPos - cameraPos.position;
             RaycastHit hit;
             
-            var ray = Physics.Raycast(cameraPos.position, dir, out hit, layerMask);
+            var ray = Physics.Raycast(cameraPos.position + transform.forward * .5f, dir, out hit, layerMask);
             if (ray)
             {
                 var target = hit.transform;

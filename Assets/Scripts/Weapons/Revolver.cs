@@ -20,7 +20,7 @@ public class Revolver : RangedWeapon
     {
         var dir = targetAim.position - cameraPos.position;
         RaycastHit hit;
-        var ray = Physics.Raycast(cameraPos.position, dir, out hit, layerMask);
+        var ray = Physics.Raycast(cameraPos.position + transform.forward * .5f, dir, out hit, layerMask);
         actualCd = fireRate;
         
         if (ray)
