@@ -19,7 +19,7 @@ public abstract class RangedWeapon : Weapon
     private float _actualReloadCd;
     private WeaponsHandler _weaponsHandler;
     private bool _shooting;
-    [SerializeField] private ParticleSystem psFire;
+    [SerializeField] private GameObject[] psFire;
     private CinemachineImpulseSource _recoil;
     public int ChargerBullets => _chargerBullets;
 

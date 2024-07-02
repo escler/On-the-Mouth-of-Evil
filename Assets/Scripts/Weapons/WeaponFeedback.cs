@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class WeaponFeedback : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _psBlood, _psFireShoot;
+    [SerializeField] private ParticleSystem _psBlood;
+    private GameObject[] _psFireShoot = new GameObject [3];
     [SerializeField] private GameObject _bulletHole;
 
     public void WeaponShootFeedback(Vector3 hitPos, int targetLayer, Vector3 normal)
@@ -24,14 +25,17 @@ public class WeaponFeedback : MonoBehaviour
         }
     }
 
-    public void SetFireParticle(ParticleSystem psFire)
+    public void SetFireParticle(GameObject[] psFire)
     {
         _psFireShoot = psFire;
     }
     
     public void FireParticle()
     {
-        _psFireShoot.gameObject.SetActive(true);
+        foreach (var particle in _psFireShoot)
+        {
+            particle.SetActive(true);
+        }
     }
 
     public void CreateHole(GameObject bulletHole, Vector3 hitPos, Vector3 normal)

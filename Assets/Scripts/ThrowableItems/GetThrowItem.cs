@@ -23,7 +23,8 @@ public class GetThrowItem : MonoBehaviour
 
     IEnumerator TryGetItem()
     {
-        while (ThrowManager.Instance == null)
+        yield return new WaitForSeconds(0.5f);
+        while (ThrowManager.Instance.ThrowItems.Count == 0)
         {
             yield return new WaitForSeconds(1f);
         }

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class ActiveShoot : MonoBehaviour
 {
-    public void ShootStart()
-    {
-        GetComponentInParent<AnimPlayer>().Shooting = true;
-    }
-
     public void ShootEnd()
     {
         GetComponentInParent<AnimPlayer>().Shooting = false;
