@@ -11,6 +11,7 @@ public class AnimPlayer : MonoBehaviour
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
     private bool _aiming, _shotgun, _running, _shooting, banish;
+    public GameObject bookHips, bookHand;
 
     public bool Shooting
     {
@@ -20,10 +21,10 @@ public class AnimPlayer : MonoBehaviour
     
     private void Awake()
     {
-        _animator = GetComponentInChildren<Animator>();
-        _rig = GetComponentInChildren<RigBuilder>();
+        _animator = GetComponent<Animator>();
+        _rig = GetComponent<RigBuilder>();
 
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
     }
 
     private void Start()
@@ -56,6 +57,29 @@ public class AnimPlayer : MonoBehaviour
     {
         banish = false;
     }
+
+    public void TakeBook()
+    {
+        bookHips.SetActive(false);
+        bookHand.SetActive(true);
+    }
+
+    public void PlaceBook()
+    {
+        bookHips.SetActive(true);
+        bookHand.SetActive(false);
+    }
+
+    public void OpenBook()
+    {
+        bookHand.GetComponent<Animator>().SetBool("Open", true);
+    }
+
+    public void CloseBook()
+    {
+        bookHand.GetComponent<Animator>().SetBool("Open", false);
+    }
+    
     private void EnableRig()
     {
         if (_aiming)

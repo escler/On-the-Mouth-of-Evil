@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Transform chest, targetAim;
     public GameObject sphere;
     private bool _skillAdquired;
+    public Transform bookPos;
 
     public bool SkillAdquired
     {

@@ -21,6 +21,7 @@ public abstract class RangedWeapon : Weapon
     private bool _shooting;
     [SerializeField] private GameObject[] psFire;
     private CinemachineImpulseSource _recoil;
+    private AnimPlayer _anim;
     public int ChargerBullets => _chargerBullets;
 
     public bool Shooting => _shooting;
@@ -38,12 +39,13 @@ public abstract class RangedWeapon : Weapon
         _chargerBullets = bulletsPerCharge;
         _weaponsHandler.RefreshData();
         _recoil = GetComponentInChildren<CinemachineImpulseSource>();
+        _anim = Player.Instance.GetComponentInChildren<AnimPlayer>();
     }
 
     protected void OnUpdate()
     {
         _aiming = Input.GetMouseButton(1);
-        _shooting = GetComponentInParent<AnimPlayer>().Shooting;
+        _shooting = _anim.Shooting;
         if (actualCd > 0) actualCd -= Time.deltaTime;
         if (_actualReloadCd > 0) _actualReloadCd -= Time.deltaTime;
         if (_aiming)
@@ -55,7 +57,7 @@ public abstract class RangedWeapon : Weapon
             {
                 _shooting = true;
 
-                GetComponentInParent<AnimPlayer>().Shooting = true;
+                _anim.Shooting = true;
             }
         }
         else

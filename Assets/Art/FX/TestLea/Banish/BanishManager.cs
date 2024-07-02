@@ -29,7 +29,7 @@ public class BanishManager : MonoBehaviour
         var lineRenderer = newLine.GetComponent<LineRenderer>();
         
         lineRenderer.SetPosition(0,enemyPos);
-        lineRenderer.SetPosition(1,Player.Instance.transform.position);
+        lineRenderer.SetPosition(1,Player.Instance.bookPos.position);
         linesActives.Add(newLine);
     }
 
