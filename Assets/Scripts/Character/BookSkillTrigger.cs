@@ -39,7 +39,6 @@ public class BookSkillTrigger : MonoBehaviour
             entity.Life.TakeDamage(dmg);
         }
         _skillActivate = false;
-        print(_skillActivate);
         OnSkillActivate?.Invoke();
     }
     

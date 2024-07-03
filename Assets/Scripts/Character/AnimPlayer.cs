@@ -10,7 +10,8 @@ public class AnimPlayer : MonoBehaviour
     private RigBuilder _rig;
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
-    private bool _aiming, _shotgun, _running, _shooting, banish;
+    private bool _aiming, _shotgun, _running, _shooting, _banish;
+    public bool throwObject;
     public GameObject bookHips, bookHand;
 
     public bool Shooting
@@ -43,19 +44,20 @@ public class AnimPlayer : MonoBehaviour
         _animator.SetBool("Aiming",_aiming);
         _animator.SetBool("Running", _running);
         _animator.SetBool("Shoot", _shooting);
-        _animator.SetBool("Banish", banish);
+        _animator.SetBool("Banish", _banish);
+        _animator.SetBool("ThrowObject", throwObject);
 
         EnableRig();
     }
 
     private void BanishStart()
     {
-        banish = true;
+        _banish = true;
     }
 
     private void BanishEnd()
     {
-        banish = false;
+        _banish = false;
     }
 
     public void TakeBook()
@@ -78,6 +80,12 @@ public class AnimPlayer : MonoBehaviour
     public void CloseBook()
     {
         bookHand.GetComponent<Animator>().SetBool("Open", false);
+    }
+
+    public void ThrowItem()
+    {
+        GetComponentInParent<BossSkill>().ThrowItem();
+        throwObject = false;
     }
     
     private void EnableRig()

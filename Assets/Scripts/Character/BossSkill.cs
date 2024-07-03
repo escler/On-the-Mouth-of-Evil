@@ -7,7 +7,8 @@ using UnityEngine;
 public class BossSkill : MonoBehaviour
 {
     public KeyCode keyAssign = KeyCode.F;
-    private ThrowItem _item;
+    public ThrowItem _item;
+    public ThrowItem Item => _item;
     public Transform pivotToObject;
     private bool _itemPicked;
 
@@ -15,20 +16,24 @@ public class BossSkill : MonoBehaviour
     {
         if (Input.GetKeyDown(keyAssign))
         {
-            if(_item != null) print(_item.LocationReached);
             switch (_itemPicked)
             {
                 case false:
                     PickItem();
                     break;
                 case true when _item.LocationReached && _item != null:
-                    _item.ThrowObject(Player.Instance.targetAim.position);
-                    _itemPicked = false;
+                    Player.Instance.playerAnim.throwObject = true;
                     break;
             }
         }
     }
 
+    public void ThrowItem()
+    {
+        _item.ThrowObject(Player.Instance.targetAim.position);
+        _itemPicked = false;
+        _item = null;
+    }
     private void PickItem()
     {
         if (_itemPicked) return;

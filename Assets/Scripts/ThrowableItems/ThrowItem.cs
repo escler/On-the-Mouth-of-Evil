@@ -76,9 +76,9 @@ public class ThrowItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6)
+        if (other.gameObject.layer == 6 || other.gameObject.layer == 7)
         {
-            other.GetComponent<PlayerLifeHandler>().TakeDamage(damage);
+            other.GetComponent<LifeHandler>().TakeDamage(damage);
         }
         
         _callBackHit = true;
