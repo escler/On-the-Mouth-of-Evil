@@ -15,6 +15,14 @@ public class DemonLowRange : Enemy
     public LayerMask layer;
     private bool _ray;
     public bool banished;
+    public int hitNeeded;
+    private int _actualHit;
+
+    public int ActualHit
+    {
+        set => _actualHit = value;
+    }
+    public bool cantHit;
     [SerializeField] private GameObject hitboxAttack;
 
     public float cdForAttack;
@@ -22,6 +30,10 @@ public class DemonLowRange : Enemy
     public LRDemonAnim animator => _animator;
 
     private SpatialGrid _spatial;
+    private bool _cantChangeDirection;
+    public bool CantChangeDirection { set => _cantChangeDirection = value; }
+    private float _dot;
+    public float Dot => _dot;
 
     #region FSMVariables
     FiniteStateMachine fsm;
@@ -32,6 +44,7 @@ public class DemonLowRange : Enemy
     [SerializeField] LRDDemonMoveAroundState moveAroundState;
     [SerializeField] LRDemonBanishState banishState;
     [SerializeField] LRDemonDeath deathState;
+    [SerializeField] LRDemonReactHit hitState;
     
     #endregion
         
@@ -44,23 +57,32 @@ public class DemonLowRange : Enemy
         fsm.AddTransition(StateTransitions.ToAttack, idleState, attackState);
         fsm.AddTransition(StateTransitions.ToMoveAround, idleState, moveAroundState);
         fsm.AddTransition(StateTransitions.ToBanish, idleState, banishState);
+        fsm.AddTransition(StateTransitions.ToHit, idleState, hitState);
         
         //Chase
         fsm.AddTransition(StateTransitions.ToAttack, chaseState, attackState);
         fsm.AddTransition(StateTransitions.ToMoveAround, chaseState, moveAroundState);
         fsm.AddTransition(StateTransitions.ToBanish, chaseState, banishState);
+        fsm.AddTransition(StateTransitions.ToHit, chaseState, hitState);
         
         //Attack
         fsm.AddTransition(StateTransitions.ToIdle, attackState, idleState);
         fsm.AddTransition(StateTransitions.ToBanish, attackState, banishState);
+        fsm.AddTransition(StateTransitions.ToHit, attackState, hitState);
+
 
         //Move Around
         fsm.AddTransition(StateTransitions.ToChase, moveAroundState, chaseState);
         fsm.AddTransition(StateTransitions.ToAttack, moveAroundState, attackState);
         fsm.AddTransition(StateTransitions.ToBanish, moveAroundState, banishState);
+        fsm.AddTransition(StateTransitions.ToHit, moveAroundState, hitState);
+
         
         //Banish
         fsm.AddTransition(StateTransitions.ToDeath, banishState, deathState);
+        
+        //Hit
+        fsm.AddTransition(StateTransitions.ToIdle, hitState, idleState);
 
         fsm.Active = true;
     }
@@ -127,6 +149,11 @@ public class DemonLowRange : Enemy
         onBanishing = true;
     }
 
+    public bool ReactHit()
+    {
+        return _actualHit >= hitNeeded;
+    }
+
     public override void FinishBanish()
     {
         TypeManager.Instance.onResult -= ResultOfBanish;
@@ -148,8 +175,12 @@ public class DemonLowRange : Enemy
         EnemyMove();
     }
 
-    public void RefreshPos()
+    public void AddHitCount()
     {
-
+        if (cantHit) return;
+        _actualHit++;
+        if (_actualHit < hitNeeded || _cantChangeDirection) return;
+        _dot = Vector3.Dot(target.position,transform.position);
+        _cantChangeDirection = true;
     }
 }

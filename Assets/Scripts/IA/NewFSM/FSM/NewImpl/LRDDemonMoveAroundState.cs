@@ -14,6 +14,9 @@ public class LRDDemonMoveAroundState : MonoBaseState
         if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
 
+        if (owner.ReactHit() && Transitions.ContainsKey(StateTransitions.ToHit))
+            return Transitions[StateTransitions.ToHit];
+        
         if (_timeToTransition < 0 && owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
             return Transitions[StateTransitions.ToAttack];
         

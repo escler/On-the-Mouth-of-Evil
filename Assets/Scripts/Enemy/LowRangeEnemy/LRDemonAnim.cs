@@ -19,6 +19,11 @@ public class LRDemonAnim : MonoBehaviour
         _animator.SetBool(animName,state);
     }
 
+    public void SetParameter(string animName, float value)
+    {
+        _animator.SetFloat(animName, value);
+    }
+
     public void StartAttack()
     {
         _ownerEnemy.StartAttack();

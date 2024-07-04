@@ -16,6 +16,9 @@ public class LRDAttackState : MonoBaseState
         if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
         
+        if (owner.ReactHit() && Transitions.ContainsKey(StateTransitions.ToHit))
+            return Transitions[StateTransitions.ToHit];
+        
         if(attackFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
 

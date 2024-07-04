@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 913520363895350623}
   - component: {fileID: 3435110942477525950}
   - component: {fileID: -6717411303119622578}
+  - component: {fileID: 1603768489697718296}
   - component: {fileID: 7385420560721049750}
   m_Layer: 7
   m_Name: LRDemon
@@ -534,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e6dea1bcdc22049b3f45ac69cddcda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLife: 100
+  initialLife: 10000
 --- !u!114 &6462494747218173091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   banishAmount: 50
+  enemyType: 0
   target: {fileID: 0}
   distanceToAttack: 1
   distanceToPersuit: 200
@@ -555,14 +557,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   banished: 0
+  hitNeeded: 3
+  _actualHit: 0
+  cantHit: 0
   hitboxAttack: {fileID: 6276583727158280593}
   cdForAttack: 0
+  _cantChangeDirection: 0
+  dot: 0
   idleState: {fileID: 1576324835571566364}
   chaseState: {fileID: 3575330745324159599}
   attackState: {fileID: 3774039002818438603}
   moveAroundState: {fileID: 913520363895350623}
   banishState: {fileID: 3435110942477525950}
   deathState: {fileID: -6717411303119622578}
+  hitState: {fileID: 1603768489697718296}
 --- !u!114 &1576324835571566364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +654,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 6462494747218173091}
+--- !u!114 &1603768489697718296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962191095873013444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056b03b945dafd74dafc76874b8fae8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 6462494747218173091}
+  force: 1
 --- !u!114 &7385420560721049750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,6 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   banishAmount: 20
+  enemyType: 0
 --- !u!1 &2053689687299714571
 GameObject:
   m_ObjectHideFlags: 0

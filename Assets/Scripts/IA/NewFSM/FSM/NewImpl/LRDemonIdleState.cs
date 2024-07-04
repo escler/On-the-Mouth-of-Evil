@@ -12,6 +12,9 @@ public class LRDemonIdleState : MonoBaseState
     {
         if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
+
+        if (owner.ReactHit() && Transitions.ContainsKey(StateTransitions.ToHit))
+            return Transitions[StateTransitions.ToHit];
         
         if(_timeToTransition < 0 && owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
             return Transitions[StateTransitions.ToAttack];
@@ -29,7 +32,7 @@ public class LRDemonIdleState : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         owner.animator.SetParameter("MoveAround", false);
-        _timeToTransition = Random.Range(1, 4);
+        _timeToTransition = Random.Range(1, 2.5f);
     }
 
     public override void UpdateLoop()

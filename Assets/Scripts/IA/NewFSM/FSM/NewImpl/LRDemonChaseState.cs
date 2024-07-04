@@ -15,6 +15,9 @@ public class LRDemonChaseState : MonoBaseState
         if (owner.canBanish && Transitions.ContainsKey(StateTransitions.ToBanish))
             return Transitions[StateTransitions.ToBanish];
         
+        if (owner.ReactHit() && Transitions.ContainsKey(StateTransitions.ToHit))
+            return Transitions[StateTransitions.ToHit];
+        
         if (owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
             return Transitions[StateTransitions.ToAttack];
 
