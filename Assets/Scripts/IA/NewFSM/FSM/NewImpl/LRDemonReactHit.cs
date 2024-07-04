@@ -14,8 +14,10 @@ public class LRDemonReactHit : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         owner.cantHit = true;
-        owner.animator.SetParameter("Dir", owner.Dot);
+        owner.animator.SetParameter("DirX", owner.DotX);
+        owner.animator.SetParameter("DirY", owner.DotY);
         owner.animator.SetParameter("HitReact", true);
+        force = owner.force;
         _direction = (owner.target.position - owner.transform.position).normalized * -1;
 
     }

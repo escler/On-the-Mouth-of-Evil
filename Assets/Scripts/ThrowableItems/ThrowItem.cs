@@ -15,6 +15,7 @@ public class ThrowItem : MonoBehaviour
     public BoxCollider _collider;
     public int damage;
     private bool _locationCalculated, _moving, _locationReached;
+    public int force = 1;
 
     public bool LocationReached => _locationReached;
 
@@ -78,7 +79,7 @@ public class ThrowItem : MonoBehaviour
     {
         if (other.gameObject.layer == 6 || other.gameObject.layer == 7)
         {
-            other.GetComponent<LifeHandler>().TakeDamage(damage);
+            other.GetComponent<LifeHandler>().TakeDamage(damage,force);
         }
         
         _callBackHit = true;

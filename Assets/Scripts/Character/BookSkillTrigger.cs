@@ -13,6 +13,7 @@ public class BookSkillTrigger : MonoBehaviour
     public int dmg;
     public int damageDone;
     private bool _skillActivate;
+    public int force;
 
     private void Awake()
     {
@@ -36,7 +37,7 @@ public class BookSkillTrigger : MonoBehaviour
         damageDone = DamageDone(enemies);
         foreach (var entity in enemies)
         {
-            entity.Life.TakeDamage(dmg);
+            entity.Life.TakeDamage(dmg, force);
         }
         _skillActivate = false;
         OnSkillActivate?.Invoke();

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class BossDuplicationLifeHandler : LifeHandler
 {
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, int force)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, force);
 
         if (_actualLife > 0) return;
 

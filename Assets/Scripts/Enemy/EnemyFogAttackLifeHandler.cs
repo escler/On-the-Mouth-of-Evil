@@ -12,7 +12,7 @@ public class EnemyFogAttackLifeHandler : LifeHandler
         _fogAttackEnemy = GetComponent<FogAttackEnemy>();
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, int force)
     {
         _actualLife -= damage;
         if (_actualLife > 0) return;

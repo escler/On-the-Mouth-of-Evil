@@ -32,8 +32,12 @@ public class DemonLowRange : Enemy
     private SpatialGrid _spatial;
     private bool _cantChangeDirection;
     public bool CantChangeDirection { set => _cantChangeDirection = value; }
-    private float _dot;
-    public float Dot => _dot;
+    private float _dotX;
+    private float _dotY;
+    public float DotX => _dotX;
+    public float DotY => _dotY;
+
+    public int force;
 
     #region FSMVariables
     FiniteStateMachine fsm;
@@ -180,7 +184,11 @@ public class DemonLowRange : Enemy
         if (cantHit) return;
         _actualHit++;
         if (_actualHit < hitNeeded || _cantChangeDirection) return;
-        _dot = Vector3.Dot(target.position,transform.position);
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 toOther = Vector3.Normalize(transform.position - target.position);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+        _dotX = Mathf.Round(Vector3.Dot(forward,toOther));
+        _dotY = MathF.Round(Vector3.Dot(right,toOther));
         _cantChangeDirection = true;
     }
 }

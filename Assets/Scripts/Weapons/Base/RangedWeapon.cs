@@ -25,6 +25,7 @@ public abstract class RangedWeapon : Weapon
     public float recoil;
     public int ChargerBullets => _chargerBullets;
 
+    public int force;
     public bool Shooting => _shooting;
     public int MaxBullets
     {

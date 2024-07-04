@@ -16,7 +16,7 @@ public class IllusionDemonLifeHandler : LifeHandler
         percent30 = initialLife * 0.3f;
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, int force)
     {
         _actualLife -= damage;
         OnLifeChange?.Invoke();

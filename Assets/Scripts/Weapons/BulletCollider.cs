@@ -21,7 +21,7 @@ public class BulletCollider : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            other.GetComponent<PlayerLifeHandler>().TakeDamage(damage);
+            other.GetComponent<PlayerLifeHandler>().TakeDamage(damage, 0);
         }
         
         Destroy(gameObject);

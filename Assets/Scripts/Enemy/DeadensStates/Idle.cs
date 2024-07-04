@@ -12,7 +12,7 @@ public class Idle : State
     }
     public override void OnEnter()
     {
-        _timeToSwitch = Random.Range(1, 2);
+        _timeToSwitch = Random.Range(.5f, 1.5f);
     }
 
     public override void OnUpdate()
