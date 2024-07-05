@@ -41,6 +41,11 @@ public class BossSkill : MonoBehaviour
 
     public void ThrowItem()
     {
+        if (_item == null)
+        {
+            _itemPicked = false;
+            return;
+        }
         _item.ThrowObject(Player.Instance.targetAim.position);
         audioSource.PlayOneShot(throwItemSound);
         _item._callBackHit = true;
