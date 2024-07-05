@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void GameLose()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Lose");
     }
 
     public void CheckWin()

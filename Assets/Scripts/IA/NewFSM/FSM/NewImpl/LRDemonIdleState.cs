@@ -32,7 +32,7 @@ public class LRDemonIdleState : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         owner.animator.SetParameter("MoveAround", false);
-        _timeToTransition = Random.Range(1, 2.5f);
+        _timeToTransition = Random.Range(.3f, 1f);
     }
 
     public override void UpdateLoop()
