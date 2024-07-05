@@ -33,6 +33,7 @@ public class KeyUIGenerator : MonoBehaviour
         var newKey = Instantiate(keyGo);
         newKey.GetComponentInChildren<TextMeshProUGUI>().text = key.ToUpper();
         newKey.transform.SetParent(_panelKeyUI.transform);
+        newKey.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void DeleteKeys()
