@@ -14,6 +14,8 @@ public class BossSkill : MonoBehaviour
     public float cdForSkill;
     public float actualTime;
     public Action OnSkillActivate;
+    public AudioClip throwItemSound;
+    public AudioSource audioSource;
 
     private void Update()
     {
@@ -40,6 +42,7 @@ public class BossSkill : MonoBehaviour
     public void ThrowItem()
     {
         _item.ThrowObject(Player.Instance.targetAim.position);
+        audioSource.PlayOneShot(throwItemSound);
         _item._callBackHit = true;
         _itemPicked = false;
         _item = null;

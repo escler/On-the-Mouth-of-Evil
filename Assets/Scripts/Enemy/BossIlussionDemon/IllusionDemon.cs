@@ -52,6 +52,7 @@ public class IllusionDemon : Enemy
 
     public AudioSource bossAudioSource;
     public AudioClip tpSound;
+    public AudioClip throwItemSound;
     
     #region FSM
     FiniteStateMachine fsm;
@@ -281,6 +282,7 @@ public class IllusionDemon : Enemy
     public void ThrowObject()
     {
         actualItem.ThrowObject(_characterPos.position);
+        bossAudioSource.PlayOneShot(throwItemSound);
         actualItem._callBackHit = true;
     }
 
