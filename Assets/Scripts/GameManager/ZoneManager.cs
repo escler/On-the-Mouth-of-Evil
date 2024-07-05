@@ -49,7 +49,8 @@ public class ZoneManager : MonoBehaviour
         {
             door.SetDoor(true);
         }
-        
+
+        if (GameManager.Instance.bossKilled) return;
         ObjetivesUI.Instance.AddText(zone, "<s><color=\"red\">" + roomName + "</s></color>");
         if(zone == 2) ObjetivesUI.Instance.BossText();
     }
