@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public void CheckWin()
     {
         if (!bossKilled) return;
-        
-        print("Win");
+
+        SceneManager.LoadScene("Win");
     }
 }

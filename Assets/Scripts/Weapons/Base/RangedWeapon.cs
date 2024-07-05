@@ -23,6 +23,7 @@ public abstract class RangedWeapon : Weapon
     private CinemachineImpulseSource _recoil;
     private AnimPlayer _anim;
     public float recoil;
+    public int hitCount;
     public int ChargerBullets => _chargerBullets;
 
     public int force;

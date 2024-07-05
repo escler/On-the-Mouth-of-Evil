@@ -11,8 +11,9 @@ public class AnimPlayer : MonoBehaviour
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
     private bool _aiming, _shotgun, _running, _shooting, _banish;
-    public bool throwObject;
+    public bool throwObject, skillBook;
     public GameObject bookHips, bookHand;
+    float speed;
 
     public bool Shooting
     {
@@ -32,6 +33,7 @@ public class AnimPlayer : MonoBehaviour
     {
         TypeManager.Instance.OnStartBanish += BanishStart;
         TypeManager.Instance.OnFinishBanish += BanishEnd;
+        _animator.SetFloat("Speed",1);
     }
 
     private void Update()
@@ -46,6 +48,7 @@ public class AnimPlayer : MonoBehaviour
         _animator.SetBool("Shoot", _shooting);
         _animator.SetBool("Banish", _banish);
         _animator.SetBool("ThrowObject", throwObject);
+        _animator.SetBool("BookSkill", skillBook);
 
         EnableRig();
     }
@@ -129,6 +132,19 @@ public class AnimPlayer : MonoBehaviour
                 _shotgun = true;
                 break;
         }
+        _rig.SyncLayers();
+    }
 
+    public void SetSpeedValue(float value)
+    {
+        _animator.SetFloat("Speed",value);
+    }
+
+    public void SKillBookActivate()
+    {
+        Player.Instance.bookSkill.StartExplosion();
+        Player.Instance.bookSkill.ps.Play();
+        
+        skillBook = false;
     }
 }

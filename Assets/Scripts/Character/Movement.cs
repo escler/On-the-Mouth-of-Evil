@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     public bool running, isDashing;
     private PlayerView _view;
 
-    public float walkSpeed, runSpeed, dashSpeed, sensRot;
+    public float walkSpeed, runSpeed, dashSpeed, dashTime;
     private float _actualSpeed, _dashSpeed;
     private bool _aiming, _canDash;
     public bool cantMove;
@@ -89,7 +89,7 @@ public class Movement : MonoBehaviour
         _rb.velocity = dashDirection * (dashSpeed * Time.fixedDeltaTime);
         _view.ActivateTrail();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(dashTime);
 
         _view.DeactivateTrail();
         isDashing = false;

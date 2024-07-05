@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class LRDemonLifeHandler : LifeHandler
 {
-    public override void TakeDamage(int damage, int force)
+    public override void TakeDamage(int damage, int force, int hitCount)
     {
-        base.TakeDamage(damage, force);
+        base.TakeDamage(damage, force, hitCount);
         var enemy = GetComponentInParent<DemonLowRange>();
         if (_actualLife > 0)
         {
-            enemy.AddHitCount();
+            enemy.AddHitCount(hitCount);
             enemy.force = force;
             return;
         }

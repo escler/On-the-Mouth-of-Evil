@@ -24,6 +24,9 @@ public class IllusionDemon_FogAttack : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
+        var pos = BossZoneManager.Instance.transform.position;
+        Player.Instance.transform.position = new Vector3(pos.x, Player.Instance.transform.position.y, pos.z);
+        Player.Instance.DipposeControls();
         _position = owner.transform.position;
         _rotation = owner.transform.rotation;
         owner.transform.position = new Vector3(1000, owner.transform.position.y, 1000);

@@ -15,7 +15,7 @@ public class LifeHandler : MonoBehaviour
         _actualLife = initialLife;
     }
 
-    public virtual void TakeDamage(int damage, int force)
+    public virtual void TakeDamage(int damage, int force, int hitCount)
     {
         _actualLife -= damage;
     }

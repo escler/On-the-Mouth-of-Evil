@@ -16,6 +16,8 @@ public class ThrowItem : MonoBehaviour
     public int damage;
     private bool _locationCalculated, _moving, _locationReached;
     public int force = 1;
+    public GameObject reference;
+    public int hitCount = 3;
 
     public bool LocationReached => _locationReached;
 
@@ -29,10 +31,11 @@ public class ThrowItem : MonoBehaviour
         modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
     }
 
-    public void SetLocation(Vector3 location)
+    public void SetLocation(Vector3 location, GameObject refe)
     {
         _location = location;
         _moving = true;
+        reference = refe;
         StartCoroutine(MoveObject());
     }
 
@@ -73,13 +76,15 @@ public class ThrowItem : MonoBehaviour
     private void OnDisable()
     {
         _collider.enabled = false;
+        reference = null;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject == reference) return;
         if (other.gameObject.layer == 6 || other.gameObject.layer == 7)
-        {
-            other.GetComponent<LifeHandler>().TakeDamage(damage,force);
+        { 
+            other.GetComponent<LifeHandler>().TakeDamage(damage,force, hitCount);
         }
         
         _callBackHit = true;

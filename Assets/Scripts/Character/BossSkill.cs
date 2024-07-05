@@ -11,10 +11,19 @@ public class BossSkill : MonoBehaviour
     public ThrowItem Item => _item;
     public Transform pivotToObject;
     private bool _itemPicked;
+    public float cdForSkill;
+    public float actualTime;
+    public Action OnSkillActivate;
 
     private void Update()
     {
-        if (Input.GetKeyDown(keyAssign))
+        if (actualTime <= cdForSkill)
+        {
+            actualTime += Time.deltaTime;
+            OnSkillActivate?.Invoke();
+        }
+        
+        if (Input.GetKeyDown(keyAssign) && actualTime >= cdForSkill)
         {
             switch (_itemPicked)
             {
@@ -33,12 +42,14 @@ public class BossSkill : MonoBehaviour
         _item.ThrowObject(Player.Instance.targetAim.position);
         _itemPicked = false;
         _item = null;
+        actualTime = 0;
+        OnSkillActivate?.Invoke();
     }
     private void PickItem()
     {
         if (_itemPicked) return;
         _itemPicked = true;
         _item = ThrowManager.Instance.GetNearestItem(transform);
-        _item.SetLocation(pivotToObject.position);
+        _item.SetLocation(pivotToObject.position, gameObject);
     }
 }

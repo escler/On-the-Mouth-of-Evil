@@ -179,10 +179,10 @@ public class DemonLowRange : Enemy
         EnemyMove();
     }
 
-    public void AddHitCount()
+    public void AddHitCount(int count)
     {
         if (cantHit) return;
-        _actualHit++;
+        _actualHit += count;
         if (_actualHit < hitNeeded || _cantChangeDirection) return;
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 toOther = Vector3.Normalize(transform.position - target.position);

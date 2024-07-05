@@ -251,6 +251,7 @@ public class IllusionDemon : Enemy
             Instantiate(copies[copy], new Vector3(characterFront.x, transform.position.y, characterFront.z), transform.rotation);
             yield return new WaitUntil(() => copyAlive == false);
         }
+        Player.Instance.PossesControls();
     }
 
     public Vector3 MoveBoss()
@@ -271,7 +272,7 @@ public class IllusionDemon : Enemy
 
     public void MoveObject()
     {
-        actualItem.SetLocation(throwObjectPos.position);
+        actualItem.SetLocation(throwObjectPos.position, gameObject);
     }
 
     public void ThrowObject()

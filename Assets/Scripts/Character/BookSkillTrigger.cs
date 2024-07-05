@@ -14,6 +14,8 @@ public class BookSkillTrigger : MonoBehaviour
     public int damageDone;
     private bool _skillActivate;
     public int force;
+    public ParticleSystem ps;
+    public int hitCount = 3;
 
     private void Awake()
     {
@@ -22,13 +24,20 @@ public class BookSkillTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))//IA2-P2
+        if (Player.Instance.cantUse) return;
+        
+        if (Input.GetKeyDown(KeyCode.Q) && _playerEnergyHandler.HaveEnoughEnergy())//IA2-P2
         {
-            entities = query.Query().Select(x => (Enemy)x).Where(x => x != null && !x.canBanish).ToList();
-            Explosion(entities);
+            Player.Instance.playerAnim.skillBook = true;
         }
     }
-    
+
+
+    public void StartExplosion()
+    {
+        entities = query.Query().Select(x => (Enemy)x).Where(x => x != null && !x.canBanish).ToList();
+        Explosion(entities);
+    }
     private void Explosion(List<Enemy> enemies)
     {
         if (!_playerEnergyHandler.HaveEnoughEnergy() || _skillActivate) return;
@@ -37,7 +46,7 @@ public class BookSkillTrigger : MonoBehaviour
         damageDone = DamageDone(enemies);
         foreach (var entity in enemies)
         {
-            entity.Life.TakeDamage(dmg, force);
+            entity.Life.TakeDamage(dmg, force, hitCount);
         }
         _skillActivate = false;
         OnSkillActivate?.Invoke();

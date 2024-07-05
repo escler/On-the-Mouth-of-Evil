@@ -8,6 +8,7 @@ public class ObjetivesUI : MonoBehaviour
     
     private TextMeshProUGUI _list;
     private Dictionary<int, string> _enemiesName = new Dictionary<int, string>();
+    public GameObject bossKilledNotify, skillUI;
 
     private void Awake()
     {
@@ -61,5 +62,11 @@ public class ObjetivesUI : MonoBehaviour
         _list.text = "";
         _enemiesName.Clear();
         yield return null;
+    }
+
+    public void BossKilled()
+    {
+        bossKilledNotify.SetActive(true);
+        skillUI.SetActive(true);
     }
 }

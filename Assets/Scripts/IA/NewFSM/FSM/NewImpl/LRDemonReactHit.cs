@@ -19,6 +19,7 @@ public class LRDemonReactHit : MonoBaseState
         owner.animator.SetParameter("HitReact", true);
         force = owner.force;
         _direction = (owner.target.position - owner.transform.position).normalized * -1;
+        _direction = new Vector3(_direction.x, 0, _direction.z);
 
     }
 

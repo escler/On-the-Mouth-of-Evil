@@ -18,6 +18,9 @@ public class BossBattleTrigger : MonoBehaviour
             nextTrigger.SetActive(true);
             door.SetDoor(false);
             demon.OnBossDefeated += BossDefeated;
+            demon.OnBossDefeated += Player.Instance.LevelUp;
+            demon.OnBossDefeated += Player.Instance.EnableSkill;
+            demon.OnBossDefeated += ObjetivesUI.Instance.BossKilled;
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
@@ -31,5 +34,6 @@ public class BossBattleTrigger : MonoBehaviour
     {
         door.SetDoor(true);
         GameManager.Instance.bossKilled = true;
+        print(GameManager.Instance.bossKilled);
     }
 }
