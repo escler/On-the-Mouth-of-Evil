@@ -24,6 +24,8 @@ public abstract class RangedWeapon : Weapon
     private AnimPlayer _anim;
     public float recoil;
     public int hitCount;
+    public AudioClip shootSound;
+    public AudioSource weaponAudioSource;
     public int ChargerBullets => _chargerBullets;
 
     public int force;
@@ -43,6 +45,7 @@ public abstract class RangedWeapon : Weapon
         _weaponsHandler.RefreshData();
         _recoil = GetComponentInChildren<CinemachineImpulseSource>();
         _anim = Player.Instance.GetComponentInChildren<AnimPlayer>();
+        weaponAudioSource.GetComponent<AudioSource>();
     }
 
     protected void OnUpdate()

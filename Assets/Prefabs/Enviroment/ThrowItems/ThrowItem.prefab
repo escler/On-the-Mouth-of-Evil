@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3517258221230488618}
   - component: {fileID: 2185225374352615961}
   - component: {fileID: 6445067323116752294}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4262271566588137886}
   - component: {fileID: 3509758099846458934}
   - component: {fileID: 973793547636487141}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ThrowItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,6 +136,11 @@ MonoBehaviour:
   shootSpeed: 20
   _collider: {fileID: 0}
   damage: 10
+  force: 1
+  reference: {fileID: 0}
+  hitCount: 3
+  timeToEnable: 10
+  hit: {fileID: 6607335470875040150, guid: 247b261771d10854b94e7c50458be363, type: 3}
 --- !u!65 &3509758099846458934
 BoxCollider:
   m_ObjectHideFlags: 0

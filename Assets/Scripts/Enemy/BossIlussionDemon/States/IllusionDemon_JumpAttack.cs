@@ -25,6 +25,7 @@ public class IllusionDemon_JumpAttack : MonoBaseState
         base.Enter(from, transitionParameters);
         owner.Anim.castCopies = true;
         owner.transform.position = owner.LocationForJumpAttack();
+        owner.MakeTpSound();
     }
 
     public override Dictionary<string, object> Exit(IState to)

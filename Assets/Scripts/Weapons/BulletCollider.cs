@@ -7,9 +7,24 @@ public class BulletCollider : MonoBehaviour
 {
     public int speed, damage;
 
+    private AudioSource _fireballAudioSource;
+    public AudioClip fire1, fire2;
     private void OnEnable()
     {
         transform.LookAt(Player.Instance.transform);
+        _fireballAudioSource = GetComponent<AudioSource>();
+        StartCoroutine(PlaySounds());
+        Destroy(gameObject, 20);
+    }
+
+    IEnumerator PlaySounds()
+    {
+        _fireballAudioSource.clip = fire1;
+        _fireballAudioSource.Play();
+        yield return new WaitForSeconds(_fireballAudioSource.clip.length);
+        _fireballAudioSource.clip = fire2;
+        _fireballAudioSource.loop = true;
+        _fireballAudioSource.Play();
     }
 
     private void Update()

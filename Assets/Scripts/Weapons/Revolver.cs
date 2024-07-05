@@ -22,6 +22,7 @@ public class Revolver : RangedWeapon
         RaycastHit hit;
         var ray = Physics.Raycast(cameraPos.position + transform.forward * .5f, dir, out hit, layerMask);
         actualCd = fireRate;
+        weaponAudioSource.PlayOneShot(shootSound);
         
         if (ray)
         {

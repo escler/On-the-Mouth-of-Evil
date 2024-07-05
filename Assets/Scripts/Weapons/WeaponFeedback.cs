@@ -20,7 +20,7 @@ public class WeaponFeedback : MonoBehaviour
                 break;
             //Obstacle
             case 8:
-                CreateHole(_bulletHole,hitPos,normal);
+                //CreateHole(_bulletHole,hitPos,normal);
                 break;
         }
     }

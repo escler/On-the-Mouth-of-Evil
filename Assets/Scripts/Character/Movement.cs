@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour
     private float _actualSpeed, _dashSpeed;
     private bool _aiming, _canDash;
     public bool cantMove;
+    public float cdDash;
+    public AudioSource audioSource;
+    public AudioClip dash;
     
     private void Start()
     {
@@ -45,8 +48,10 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         _aiming = Input.GetMouseButton(1);
+        if (cdDash > 0) cdDash -= Time.deltaTime;
+        _canDash = cdDash <= 0;
 
-        if (!isDashing && Input.GetButtonDown("Dash")) Dash();
+        if (!isDashing && Input.GetButtonDown("Dash") && _canDash) Dash();
         RunCheck();
     }
 
@@ -84,6 +89,7 @@ public class Movement : MonoBehaviour
     IEnumerator DashAbility()
     {
         isDashing = true;
+        audioSource.PlayOneShot(dash);
         var dashDirection = transform.forward * _controller.GetMovementInput().x +
                             transform.right * _controller.GetMovementInput().z;
         _rb.velocity = dashDirection * (dashSpeed * Time.fixedDeltaTime);
@@ -92,6 +98,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
 
         _view.DeactivateTrail();
+        cdDash = 1f;
         isDashing = false;
         _canDash = false;
 

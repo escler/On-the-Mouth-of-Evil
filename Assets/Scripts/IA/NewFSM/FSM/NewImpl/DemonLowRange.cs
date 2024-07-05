@@ -109,7 +109,6 @@ public class DemonLowRange : Enemy
     private void OnDisable()
     {
         EnemyManager.Instance.AddEnemy(this);
-        GameManager.Instance.activeZoneManager.EnemyDead();
         _spatial.Remove(this);
     }
 

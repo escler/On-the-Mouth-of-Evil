@@ -21,7 +21,7 @@ public class Shotgun : RangedWeapon
     protected override void Shoot()
     {
         actualCd = fireRate;
-        
+        weaponAudioSource.PlayOneShot(shootSound);
         for (int i = 0; i < _spreadDirX.Length; i++)
         {
             

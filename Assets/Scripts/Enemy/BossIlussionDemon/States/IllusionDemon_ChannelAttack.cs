@@ -28,6 +28,7 @@ public class IllusionDemon_ChannelAttack : MonoBaseState
         base.Enter(from, transitionParameters);
         _timeForAttack = owner.timeForChannelAttack;
         owner.transform.position = owner.NewLocation();
+        owner.MakeTpSound();
         owner.canHit = true;
         owner.Anim.castFireball = true;
         owner.SpawnExplosionCopies(-10, -1);

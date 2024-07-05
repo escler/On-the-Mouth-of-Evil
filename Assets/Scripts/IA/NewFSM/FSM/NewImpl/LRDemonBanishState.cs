@@ -17,6 +17,7 @@ public class LRDemonBanishState : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from,transitionParameters);
+        GameManager.Instance.activeZoneManager.EnemyDead();
         owner.animator.SetParameter("Death", true);
     }
 

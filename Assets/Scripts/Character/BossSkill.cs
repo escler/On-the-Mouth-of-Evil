@@ -40,6 +40,7 @@ public class BossSkill : MonoBehaviour
     public void ThrowItem()
     {
         _item.ThrowObject(Player.Instance.targetAim.position);
+        _item._callBackHit = true;
         _itemPicked = false;
         _item = null;
         actualTime = 0;

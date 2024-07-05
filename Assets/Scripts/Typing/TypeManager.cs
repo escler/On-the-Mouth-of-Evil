@@ -17,6 +17,8 @@ public class TypeManager : MonoBehaviour
     public float _actualTime;
     public float timeToResolve;
     public Action OnStartBanish, OnFinishBanish;
+    public AudioSource typeManagerAudioSource;
+    public AudioClip keySound;
 
     private string[] _avaiblesKeys = 
         { "q", "w", "e", "a", "s", "d" };
@@ -48,6 +50,7 @@ public class TypeManager : MonoBehaviour
     }
     private void SetLastKey(string key)
     {
+        typeManagerAudioSource.PlayOneShot(keySound);
         lastKeyPressed = key;
         keyPressed = true;
     }

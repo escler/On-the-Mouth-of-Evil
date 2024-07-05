@@ -31,7 +31,7 @@ public class PlayerView : MonoBehaviour
     private void Awake()
     {
         if (!postProcess.TryGet<Vignette>(out vignette)) return;
-        vignette.smoothness.value = 0;
+        vignette.intensity.value = 0;
         _life = GetComponent<PlayerLifeHandler>();
         _life.OnTakeDamage += DamageReceive;
 
@@ -63,14 +63,14 @@ public class PlayerView : MonoBehaviour
     IEnumerator DamagePostProcess()
     {
         _isActive = true;
-        if (!postProcess.TryGet<Vignette>(out vignette)) yield break;
+        if (!postProcess.TryGet(out vignette)) yield break;
 
         var smooth = vignette.smoothness.value = 1;
 
         while (smooth > 0)
         {
             smooth -= hurthRate;
-            vignette.smoothness.value = smooth;
+            vignette.intensity.value = smooth;
             yield return new WaitForSeconds(hurthRefreshRate);
         }
         _isActive = false;

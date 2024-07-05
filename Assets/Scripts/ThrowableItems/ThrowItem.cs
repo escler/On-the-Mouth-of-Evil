@@ -18,6 +18,9 @@ public class ThrowItem : MonoBehaviour
     public int force = 1;
     public GameObject reference;
     public int hitCount = 3;
+    public float timeToEnable = 10f;
+    private int _layer;
+    public GameObject hit;
 
     public bool LocationReached => _locationReached;
 
@@ -26,9 +29,18 @@ public class ThrowItem : MonoBehaviour
         _collider = GetComponent<BoxCollider>();
     }
 
+    private void OnEnable()
+    {
+        timeToEnable = 10f;
+    }
+
     private void Update()
     {
         modelTransform.Rotate(0,speedRot * Time.deltaTime,0);
+
+        if (_callBackHit) timeToEnable -= Time.deltaTime;
+
+        if (timeToEnable <= 0) gameObject.SetActive(false);
     }
 
     public void SetLocation(Vector3 location, GameObject refe)
@@ -36,6 +48,8 @@ public class ThrowItem : MonoBehaviour
         _location = location;
         _moving = true;
         reference = refe;
+        if (reference == null) return;
+        _layer = reference.layer == 6 ? 7 : 6;
         StartCoroutine(MoveObject());
     }
 
@@ -48,8 +62,15 @@ public class ThrowItem : MonoBehaviour
             if (Vector3.Distance(transform.position, _location) <= .5) _moving = false;
             yield return new WaitForEndOfFrame();
         }
-
         _locationReached = true;
+
+        while (!_callBackHit)
+        {
+            var refePos = new Vector3(reference.transform.position.x, transform.position.y,
+                reference.transform.position.z);
+            transform.position = Vector3.SmoothDamp(transform.position, refePos, ref zero, _time);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void ThrowObject(Vector3 location)
@@ -65,7 +86,9 @@ public class ThrowItem : MonoBehaviour
             transform.LookAt(location);
         }
 
-        while (!_callBackHit)
+        yield return new WaitUntil(() => _callBackHit);
+        
+        while (_callBackHit)
         {
             transform.position += transform.forward * (shootSpeed * Time.deltaTime);
             _collider.enabled = true;
@@ -81,13 +104,14 @@ public class ThrowItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == reference) return;
-        if (other.gameObject.layer == 6 || other.gameObject.layer == 7)
-        { 
-            other.GetComponent<LifeHandler>().TakeDamage(damage,force, hitCount);
-        }
+        if (other.gameObject.layer != _layer) return;
         
-        _callBackHit = true;
+        if(_layer == 7)
+            other.GetComponentInParent<LifeHandler>().TakeDamage(damage,force, hitCount);
+        else 
+            other.GetComponent<LifeHandler>().TakeDamage(damage,force, hitCount);
+
+        Instantiate(hit, transform.position, transform.rotation);
         ThrowManager.Instance.RemoveFormList(this);
         FactoryThrowItems.Instance.BackToPool(gameObject);
     }

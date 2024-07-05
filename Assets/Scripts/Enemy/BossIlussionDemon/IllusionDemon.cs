@@ -50,6 +50,9 @@ public class IllusionDemon : Enemy
     public float timeToBanish;
     public GameObject banishPS;
 
+    public AudioSource bossAudioSource;
+    public AudioClip tpSound;
+    
     #region FSM
     FiniteStateMachine fsm;
 
@@ -278,6 +281,7 @@ public class IllusionDemon : Enemy
     public void ThrowObject()
     {
         actualItem.ThrowObject(_characterPos.position);
+        actualItem._callBackHit = true;
     }
 
     public void ResultOfBanish()
@@ -311,6 +315,11 @@ public class IllusionDemon : Enemy
     public void DisableFSM()
     {
         fsm.Active = false;
+    }
+
+    public void MakeTpSound()
+    {
+        bossAudioSource.PlayOneShot(tpSound);
     }
 }
 

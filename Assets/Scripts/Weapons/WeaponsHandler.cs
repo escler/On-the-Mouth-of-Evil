@@ -12,6 +12,7 @@ public class WeaponsHandler : MonoBehaviour
     public event UpdateBulletUI OnUpdateBulletUI;
     [SerializeField] RangedWeapon _activeWeapon;
     private AnimPlayer _anim;
+    public AudioSource weaponAudioSource;
 
     private int _actualBullets, _maxBullets;
 
