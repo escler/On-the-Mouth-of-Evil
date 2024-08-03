@@ -62,8 +62,8 @@ public class KeyUIGenerator : MonoBehaviour
 
     public void ChangeColor(int count)
     {
-        _panelKeyUI.transform.GetChild(count).GetComponent<RawImage>().color = pressColor;
+        _panelKeyUI.transform.GetChild(count).GetComponent<Image>().color = pressColor;
         if (count == 0) return;
-        _panelKeyUI.transform.GetChild(count-1).GetComponent<RawImage>().color = normalColor;
+        _panelKeyUI.transform.GetChild(count-1).GetComponent<Image>().color = normalColor;
     }
 }
