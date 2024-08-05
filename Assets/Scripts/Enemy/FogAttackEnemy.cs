@@ -8,9 +8,13 @@ public class FogAttackEnemy : MonoBehaviour
     public bool isExplosionEnemy;
     public float speed;
     private Transform _characterPos;
+    public ParticleSystem _ps;
     private void Awake()
     {
         _characterPos = Player.Instance.transform;
+        
+        if (_ps == null) return;
+        _ps.GetComponent<Renderer>().sortingOrder = 0;
     }
 
     private void Update()
@@ -32,6 +36,13 @@ public class FogAttackEnemy : MonoBehaviour
             {
                 transform.GetChild(0).gameObject.SetActive(true);
             }
+        }
+        
+        if (other.gameObject.layer == 6)
+        {
+            if (_ps == null) return;
+
+            _ps.GetComponent<Renderer>().sortingOrder = 20;
         }
     }
 }

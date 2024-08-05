@@ -53,6 +53,8 @@ public class IllusionDemon : Enemy
     public AudioSource bossAudioSource;
     public AudioClip tpSound;
     public AudioClip throwItemSound;
+
+    public GameObject psTrail;
     
     #region FSM
     FiniteStateMachine fsm;
@@ -153,7 +155,14 @@ public class IllusionDemon : Enemy
                 
             return acum;
         });
+        CreateTrail();
         return new Vector3(furthestLocation.x, transform.position.y, furthestLocation.z);
+    }
+
+    private void CreateTrail()
+    {
+        var currentTrail = Instantiate(psTrail, transform.position, transform.rotation);
+        currentTrail.GetComponent<FollowTarget>().GetTarget(transform);
     }
 
     public Vector3 LocationForJumpAttack() //IA2-P1
@@ -167,6 +176,7 @@ public class IllusionDemon : Enemy
                 Vector3.Distance(acum, CharacterPos.position) && currentDistance > rangeForJumpAttack + .2f) acum = current.position;
             return acum;
         });
+        CreateTrail();
         return new Vector3(nearestLocation.x, transform.position.y, nearestLocation.z);
     }
 

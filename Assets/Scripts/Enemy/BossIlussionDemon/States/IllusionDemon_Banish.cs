@@ -14,6 +14,7 @@ public class IllusionDemon_Banish : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         owner.banishPS.SetActive(true);
+        print("ASD");
         owner.canBanish = true;
         _actualTimer = owner.timeToBanish;
     }
