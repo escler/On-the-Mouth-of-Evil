@@ -40,6 +40,7 @@ public class PlayerView : MonoBehaviour
 
     private void OnDestroy()
     {
+        damageMaterial.SetFloat("_Vignette_Darkness", 0);
         _life.OnTakeDamage -= DamageReceive;
     }
 
