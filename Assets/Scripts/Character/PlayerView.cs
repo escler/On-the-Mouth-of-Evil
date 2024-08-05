@@ -22,6 +22,7 @@ public class PlayerView : MonoBehaviour
     
     private Vignette vignette;
     [Header("DamagePostProcess")]
+    public Material damageMaterial;
     public VolumeProfile postProcess;
     public float hurthRate;
     public float hurthRefreshRate;
@@ -30,8 +31,8 @@ public class PlayerView : MonoBehaviour
 
     private void Awake()
     {
-        if (!postProcess.TryGet<Vignette>(out vignette)) return;
-        vignette.intensity.value = 0;
+        if (damageMaterial == null) return;
+        damageMaterial.SetFloat("_Vignette_Darkness", 0);
         _life = GetComponent<PlayerLifeHandler>();
         _life.OnTakeDamage += DamageReceive;
 
@@ -63,14 +64,15 @@ public class PlayerView : MonoBehaviour
     IEnumerator DamagePostProcess()
     {
         _isActive = true;
-        if (!postProcess.TryGet(out vignette)) yield break;
 
-        var smooth = vignette.smoothness.value = 1;
+        var smooth = 1f;
+
+        damageMaterial.SetFloat("_Vignette_Darkness", smooth);
 
         while (smooth > 0)
         {
             smooth -= hurthRate;
-            vignette.intensity.value = smooth;
+            damageMaterial.SetFloat("_Vignette_Darkness", smooth);
             yield return new WaitForSeconds(hurthRefreshRate);
         }
         _isActive = false;
