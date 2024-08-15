@@ -50,14 +50,14 @@ public abstract class RangedWeapon : Weapon
 
     protected void OnUpdate()
     {
-        _aiming = Input.GetMouseButton(1);
+        _aiming = Input.GetMouseButton(1) || _anim.Shooting;
         _shooting = _anim.Shooting;
         if (actualCd > 0) actualCd -= Time.deltaTime;
         if (_actualReloadCd > 0) _actualReloadCd -= Time.deltaTime;
+        SetCamera();
         if (_aiming)
         {
             _crosshair.OnAim();
-            _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
             Aim();
             if (Input.GetMouseButtonDown(0) && !_shooting)
             {
@@ -69,7 +69,6 @@ public abstract class RangedWeapon : Weapon
         else
         {
             _crosshair.OffAim();
-            _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
         }
     }
     
@@ -98,6 +97,12 @@ public abstract class RangedWeapon : Weapon
         _chargerBullets--;
         _weaponsHandler.RefreshData();
         _weaponFeedback.FireParticle();
+    }
+
+    public void SetCamera()
+    {
+        if(_aiming || _anim.Shooting)_cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Aim);
+        else _cmf.GetComponent<CameraMovement>().SetCameraMode(CameraMovement.CameraMode.Normal);
     }
 
     
