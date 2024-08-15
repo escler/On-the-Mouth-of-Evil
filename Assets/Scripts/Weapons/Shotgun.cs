@@ -37,9 +37,9 @@ public class Shotgun : RangedWeapon
             {
                 var target = hit.transform;
                 _weaponFeedback.WeaponShootFeedback(hit.point, target.gameObject.layer, hit.normal);
-                if (target.gameObject.layer == 7)
+                if (target.gameObject.layer == 14)
                 {
-                    target.GetComponentInParent<LifeHandler>().TakeDamage(damage, force, hitCount);
+                    target.GetComponent<AtenuattionDamage>().TakeDamage(damage, force, hitCount);
                 }
             }
         }

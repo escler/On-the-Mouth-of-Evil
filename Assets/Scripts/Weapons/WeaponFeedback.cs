@@ -15,7 +15,7 @@ public class WeaponFeedback : MonoBehaviour
         switch (targetLayer)
         {
             //Enemy
-            case 7: 
+            case 14: 
                 PlayParticle(_psBlood, hitPos);
                 break;
             //Obstacle

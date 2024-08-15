@@ -38,7 +38,7 @@ public class AnimPlayer : MonoBehaviour
 
     private void Update()
     {
-        _aiming = Input.GetMouseButton(1) || _animator.GetBool("Shooting");
+        _aiming = Input.GetMouseButton(1);
         _running = Input.GetButton("Run") && !_aiming && _rb.velocity != Vector3.zero;
         _animator.SetFloat("AxisX",_controller.GetMovementInput().x);
         _animator.SetFloat("AxisY",_controller.GetMovementInput().z);

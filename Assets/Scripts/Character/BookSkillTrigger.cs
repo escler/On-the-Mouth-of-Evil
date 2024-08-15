@@ -28,6 +28,7 @@ public class BookSkillTrigger : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Q) && _playerEnergyHandler.HaveEnoughEnergy())//IA2-P2
         {
+            Player.Instance.playerAnim.Shooting = false;
             Player.Instance.playerAnim.skillBook = true;
         }
     }

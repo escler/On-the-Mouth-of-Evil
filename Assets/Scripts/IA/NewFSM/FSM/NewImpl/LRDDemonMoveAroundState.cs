@@ -48,9 +48,9 @@ public class LRDDemonMoveAroundState : MonoBaseState
         _timeToTransition -= Time.deltaTime;
         
         var ray1 = Physics.Raycast(owner.transform.position, -transform.right,
-            1f, owner.layer);
+            2f, owner.layer);
         var ray2 = Physics.Raycast(owner.transform.position, transform.right,
-            1f, owner.layer);
+            2f, owner.layer);
 
         if (ray1) _direction = 1;
         else if (ray2) _direction = -1;

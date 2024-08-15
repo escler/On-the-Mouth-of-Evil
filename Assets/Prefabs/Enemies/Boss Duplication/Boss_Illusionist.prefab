@@ -22562,7 +22562,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2857314712320463188}
   - component: {fileID: 8991924503023814369}
-  m_Layer: 7
+  - component: {fileID: 3961720862200920203}
+  m_Layer: 14
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22611,6 +22612,19 @@ CapsuleCollider:
   m_Height: 1.83
   m_Direction: 1
   m_Center: {x: 0, y: -0.15, z: 0}
+--- !u!114 &3961720862200920203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7167711606707849249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf303fe87f537a4496bf83cd869926c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationPart: 1
 --- !u!1 &7620915776872218123
 GameObject:
   m_ObjectHideFlags: 0
