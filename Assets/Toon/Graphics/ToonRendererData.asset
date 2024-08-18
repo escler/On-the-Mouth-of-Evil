@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8245916387370056536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cfbecdd90207c408ad013fddd816c4, type: 3}
+  m_Name: NormalLine
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  setting:
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    normalTexMat: {fileID: 0}
+    normalLineMat: {fileID: 0}
 --- !u!114 &-8170998572127264418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +31,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: Water
     Event: 450
@@ -54,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: CharacterUnobstructedTransparents
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: CharacterUnobstructedTransparents
     Event: 300
@@ -96,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: OccludingObjects
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: OccludingObjects
     Event: 300
@@ -149,7 +168,8 @@ MonoBehaviour:
   - {fileID: 466668180145458491}
   - {fileID: -6682913900797327863}
   - {fileID: -8170998572127264418}
-  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8e
+  - {fileID: -8245916387370056536}
+  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8ea8443c03bc9e908d
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -205,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: HideWaterMask
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: HideWaterMask
     Event: 300
@@ -247,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: CharacterObstructed
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: CharacterObstructed
     Event: 300
@@ -289,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: ObstructedTransparentFiller
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: ObstructedTransparentFiller
     Event: 500
