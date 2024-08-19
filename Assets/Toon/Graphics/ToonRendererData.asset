@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cfbecdd90207c408ad013fddd816c4, type: 3}
   m_Name: NormalLine
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   setting:
     layer:
       serializedVersion: 2
@@ -105,6 +105,21 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &-4657681588026093503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736dbbd6a013ad642ad897d09fa37083, type: 3}
+  m_Name: CustomRenderFeatureToon
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    material: {fileID: 2100000, guid: a36e97432375d9a4a842937d45293726, type: 2}
 --- !u!114 &-3777622620742823688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +186,8 @@ MonoBehaviour:
   - {fileID: -6682913900797327863}
   - {fileID: -8170998572127264418}
   - {fileID: -8245916387370056536}
-  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8ea8443c03bc9e908d
+  - {fileID: -4657681588026093503}
+  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8ea8443c03bc9e908d41d0d3ec45975cbf
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
