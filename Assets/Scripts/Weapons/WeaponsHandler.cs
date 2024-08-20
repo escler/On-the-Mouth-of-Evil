@@ -49,7 +49,7 @@ public class WeaponsHandler : MonoBehaviour
         _activeWeapon.enabled = false;
 
         _activeWeapon = weapons[value];
-        
+        _anim._animator.SetBool("Shoot", false);
         _activeWeapon.enabled = true;
         
         _anim.ChangeLayerHeight(value);

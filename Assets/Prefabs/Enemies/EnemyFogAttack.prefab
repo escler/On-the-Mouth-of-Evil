@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 2269929880305189703}
   - component: {fileID: 5287302823420041533}
   - component: {fileID: 326073501463977176}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy-Lowpoly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1930,9 +1930,10 @@ GameObject:
   - component: {fileID: 528601686937534642}
   - component: {fileID: -2327061425813694206}
   - component: {fileID: 2321079790530972755}
-  - component: {fileID: 491363325251579916}
   - component: {fileID: 1768316719683054549}
-  m_Layer: 7
+  - component: {fileID: 5593130532759515428}
+  - component: {fileID: 5365817397874773065}
+  m_Layer: 14
   m_Name: EnemyFogAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1970,6 +1971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isExplosionEnemy: 0
   speed: 3
+  _ps: {fileID: 0}
 --- !u!114 &2321079790530972755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1983,7 +1985,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLife: 10
---- !u!136 &491363325251579916
+--- !u!114 &1768316719683054549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663439080989992509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db95c0d2f6e3ce4f9ac7b94d41976a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  banishAmount: 20
+  enemyType: 0
+--- !u!136 &5593130532759515428
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2006,7 +2022,7 @@ CapsuleCollider:
   m_Height: 1.75
   m_Direction: 1
   m_Center: {x: 0.03, y: 0, z: 0}
---- !u!114 &1768316719683054549
+--- !u!114 &5365817397874773065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2015,11 +2031,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6663439080989992509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db95c0d2f6e3ce4f9ac7b94d41976a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bf303fe87f537a4496bf83cd869926c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  banishAmount: 20
-  enemyType: 0
+  attenuationPart: 1
 --- !u!1 &6677588778610982896
 GameObject:
   m_ObjectHideFlags: 0

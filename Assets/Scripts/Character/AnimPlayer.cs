@@ -6,7 +6,7 @@ using UnityEngine.Animations.Rigging;
 
 public class AnimPlayer : MonoBehaviour
 {
-    private Animator _animator;
+    public Animator _animator;
     private RigBuilder _rig;
     [SerializeField] private Controller _controller;
     private Rigidbody _rb;
@@ -93,7 +93,7 @@ public class AnimPlayer : MonoBehaviour
     
     private void EnableRig()
     {
-        if (_aiming || _shooting)
+        if (_aiming || _animator.GetCurrentAnimatorStateInfo(1).IsName("Shoot") || _animator.GetCurrentAnimatorStateInfo(2).IsName("Shoot"))
         {
             if (!_shotgun)
             {

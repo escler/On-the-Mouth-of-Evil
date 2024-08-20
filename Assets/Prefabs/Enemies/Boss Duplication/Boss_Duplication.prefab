@@ -303,7 +303,8 @@ GameObject:
   - component: {fileID: 8822252885501680978}
   - component: {fileID: 7263089182252267466}
   - component: {fileID: 8861069124638584419}
-  m_Layer: 7
+  - component: {fileID: 5974889087192979615}
+  m_Layer: 14
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,6 +377,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db95c0d2f6e3ce4f9ac7b94d41976a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  banishAmount: 20
+  enemyType: 0
+--- !u!114 &5974889087192979615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811189638755867887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf303fe87f537a4496bf83cd869926c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationPart: 1
 --- !u!1 &1190260724825328379
 GameObject:
   m_ObjectHideFlags: 0
