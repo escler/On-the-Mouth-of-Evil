@@ -85,29 +85,24 @@ Shader "Hidden/Custom/BlackWhiteShader"
             }
 
             fixed4 frag(v2f i) : SV_Target
-            {
-                fixed4 color = tex2D(_MainTex, i.uv);
-                
-                // Apply Toon Shading
-                fixed4 toonColor = ApplyToonShading(color);
-                
-                // Specular Calculation
-                float spec = pow(max(0.0, dot(normalize(i.uv), normalize(float3(0.0, 0.0, 1.0)))), _Glossiness);
-                fixed4 specular = _SpecularColor * spec;
+ {
+    fixed4 color = tex2D(_MainTex, i.uv);
+    
+    fixed4 toonColor = ApplyToonShading(color);
+    
+    float spec = pow(max(0.0, dot(normalize(i.uv), normalize(float3(0.0, 0.0, 1.0)))), _Glossiness);
+    fixed4 specular = _SpecularColor * spec;
 
-                // Rim Lighting Calculation
-                float rim = 1.0 - max(0.0, dot(normalize(i.uv), float3(0.0, 0.0, 1.0)));
-                rim = smoothstep(_RimThreshold - 0.5, _RimThreshold + 0.5, rim);
-                fixed4 rimColor = _RimColor * rim * _RimAmount;
+    float rim = 1.0 - max(0.0, dot(normalize(i.uv), float3(0.0, 0.0, 1.0)));
+    rim = smoothstep(_RimThreshold - 0.5, _RimThreshold + 0.5, rim);
+    fixed4 rimColor = lerp(color, _RimColor, rim * _RimAmount); // Mezcla del rim con el color base
 
-                // Ambient Color
-                fixed4 ambientColor = _AmbientColor;
+    fixed4 ambientColor = _AmbientColor;
 
-                // Combine results
-                fixed4 finalColor = toonColor + specular + rimColor + ambientColor;
-                
-                return finalColor;
-            }
+    fixed4 finalColor = toonColor + specular + rimColor + ambientColor;
+    
+    return finalColor;
+}
 
             ENDCG
         }

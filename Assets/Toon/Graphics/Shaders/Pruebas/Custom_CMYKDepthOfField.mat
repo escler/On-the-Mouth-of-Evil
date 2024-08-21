@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Custom_CMYKDepthOfField
-  m_Shader: {fileID: 4800000, guid: b58151001800a6f46a406ac691214cc2, type: 3}
+  m_Shader: {fileID: 4800000, guid: b20aa6825b9c6ef4aa76ac1de099b9c6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -27,17 +27,29 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DiffusePattern:
+        m_Texture: {fileID: 2800000, guid: 1cf54c2de24707647a7ac217748f01e7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ca1923dd73653d84bbcb41773a7514b3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CircleDensity: 0.5
+    - _FallofThreshold: 0.5
     - _FocusArea: 0.1
     - _FocusDistance: 1
     - _Height: 1080
+    - _LitThreshold: 0.5
     - _OffsetIntensity: 0.05
     - _OffsetMax: 2
+    - _Rotation: 0.5
+    - _ShadingMultiplier: 0.5
+    - _ShadowSize: 0.5
+    - _Softness: 0.5
     - _Width: 1920
-    m_Colors: []
+    m_Colors:
+    - _BaseColor: {r: 0.764151, g: 0.139854, b: 0.139854, a: 1}
   m_BuildTextureStacks: []
