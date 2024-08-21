@@ -5,6 +5,14 @@ Shader "Custom/HalftoneDiffuseShader"
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _DiffusePattern ("Halftone Pattern", 2D) = "white" {}
         _ShadowSize ("Shadow Size", Range(0,1)) = 0.5
+        _BaseColor ("Base Color", Color) = (1,1,1,1)
+        _ShadingMultiplier ("Shading Multiplier", Range(0,1)) = 0.5
+        _CircleDensity ("Circle Density", Range(0,1)) = 0.5
+        _Softness ("Softness", Range(0,1)) = 0.5
+        _Rotation ("Rotation", Range(0,1)) = 0.5
+        _LitThreshold ("Lit Threshold", Range(0,1)) = 0.5
+        _FallofThreshold ("Fallof Threshold", Range(0,1)) = 0.5
+        //_ScreenSpace bool
     }
     SubShader
     {
