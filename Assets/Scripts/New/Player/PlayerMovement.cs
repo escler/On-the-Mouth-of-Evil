@@ -1,0 +1,41 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    [SerializeField] private float walkSpeed, runSpeed;
+    private float _actualSpeed, _inputX, _inputY;
+    private bool _run;
+    [SerializeField] private Transform cameraHolder;
+
+    private void Update()
+    {
+        _inputX = Input.GetAxisRaw("Horizontal");
+        _inputY = Input.GetAxisRaw("Vertical");
+        _run = Input.GetButton("Run");
+        Rotation();
+    }
+
+    private void FixedUpdate()
+    {
+        Movement();
+    }
+
+    private void Movement()
+    {
+        _actualSpeed = _run ? runSpeed : walkSpeed;
+
+        var inputVector = new Vector2(_inputX, _inputY);
+        Vector3 velocity = transform.forward * inputVector.y + transform.right * inputVector.x;
+        velocity.Normalize();
+        print(velocity);
+
+        transform.position += velocity * (_actualSpeed * Time.fixedDeltaTime);
+    }
+
+    private void Rotation()
+    {
+    }
+}
