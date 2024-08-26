@@ -10,12 +10,13 @@ public class PlayerMovement : MonoBehaviour
     private bool _run;
     [SerializeField] private Transform cameraHolder;
 
+    public bool Run => _run;
+    
     private void Update()
     {
         _inputX = Input.GetAxisRaw("Horizontal");
         _inputY = Input.GetAxisRaw("Vertical");
         _run = Input.GetButton("Run");
-        Rotation();
     }
 
     private void FixedUpdate()
@@ -33,9 +34,5 @@ public class PlayerMovement : MonoBehaviour
         print(velocity);
 
         transform.position += velocity * (_actualSpeed * Time.fixedDeltaTime);
-    }
-
-    private void Rotation()
-    {
     }
 }
