@@ -15,6 +15,7 @@ Shader "Hidden/Custom/BlackWhiteShader"
         _RimColor ("Rim Color", Color) = (1, 1, 1, 1)
         _RimAmount ("Rim Amount", Range(0, 1)) = 0.716
         _RimThreshold ("Rim Threshold", Range(0, 1)) = 0.1
+        _customColor ("Custom Color", Color) = (1, 1, 1, 1)
         
         [HDR]
         _AmbientColor ("Ambient Color", Color) = (0.4, 0.4, 0.4, 1)
@@ -22,7 +23,8 @@ Shader "Hidden/Custom/BlackWhiteShader"
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Overlay" }
+        Tags { "LightMode" = "ForwardBase" "PassFlags" = "OnlyDirectional" "RenderPipeline" = "UniversalRenderPipeline" }
+
         LOD 100
 
         Pass
@@ -33,6 +35,8 @@ Shader "Hidden/Custom/BlackWhiteShader"
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
+            #include "Lighting.cginc"
+			#include "AutoLight.cginc"
             #pragma target 3.0
 
             sampler2D _MainTex;
@@ -45,29 +49,49 @@ Shader "Hidden/Custom/BlackWhiteShader"
             
             float4 _RimColor;
             float _RimAmount;
-            float _RimThreshold;
-            
+            float _RimThreshold;            
             float4 _AmbientColor;
 
-            struct appdata_t
+            struct Attributes
             {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+                float4 positionOS : POSITION;
+                half3 normal : NORMAL;
             };
 
-            struct v2f
+            struct Varyings
             {
-                float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
+                float4 positionHCS : SV_POSITION;
+                half3 normalWS : NORMAL;
+                float3 viewDir : TEXCOORD1;
             };
 
-            v2f vert(appdata_t v)
+            // Use unity_WorldToObject matrix which is defined in UnityCG.cginc
+            half3 TransformNormalToWorldSpace(half3 normalOS)
             {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
-                return o;
+                // Transform object space normal to world space normal using unity_WorldToObject
+                half3x3 normalMatrix = (half3x3)unity_WorldToObject;
+                return normalize(mul(normalMatrix, normalOS));
             }
+
+            Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+                OUT.positionHCS = UnityObjectToClipPos(IN.positionOS);
+                OUT.normalWS = TransformNormalToWorldSpace(IN.normal);
+                return OUT;
+            }
+
+            // half4 frag(Varyings IN) : SV_Target
+            // {
+            //     half4 color = (0.5, 0, 0, 1);
+            //     color.rgb = IN.normalWS * 0.5 + 0.5;
+                
+            //     return color;
+            // }
+
+            
+
+            
 
             float linearstep(float min, float max, float t)
             {
@@ -76,6 +100,7 @@ Shader "Hidden/Custom/BlackWhiteShader"
 
             fixed4 ApplyToonShading(fixed4 color)
             {
+
                 float ramp = smoothstep(_RampThreshold - _RampSmooth * 0.5, _RampThreshold + _RampSmooth * 0.5, color.rgb);
                 float interval = 1.0 / _ToonSteps;
                 float level = round(ramp * _ToonSteps) / _ToonSteps;
@@ -84,25 +109,33 @@ Shader "Hidden/Custom/BlackWhiteShader"
                 return color * ramp;
             }
 
-            fixed4 frag(v2f i) : SV_Target
- {
-    fixed4 color = tex2D(_MainTex, i.uv);
-    
-    fixed4 toonColor = ApplyToonShading(color);
-    
-    float spec = pow(max(0.0, dot(normalize(i.uv), normalize(float3(0.0, 0.0, 1.0)))), _Glossiness);
-    fixed4 specular = _SpecularColor * spec;
+            fixed4 frag(Varyings IN) : SV_Target
+            {                
+                half4 color = (0.5, 0, 0, 1);
+                color.rgb = IN.normalWS * 0.5 + 0.5;
+                fixed4 toonColor = ApplyToonShading(color);
 
-    float rim = 1.0 - max(0.0, dot(normalize(i.uv), float3(0.0, 0.0, 1.0)));
-    rim = smoothstep(_RimThreshold - 0.5, _RimThreshold + 0.5, rim);
-    fixed4 rimColor = lerp(color, _RimColor, rim * _RimAmount); // Mezcla del rim con el color base
+                // Direcciones de la luz y la cámara en espacio mundial
+                float3 lightDir = normalize(float3(0.0, 0.0, 1.0)); // Dirección de la luz (puedes ajustar esto según tu escena)
+                float3 viewDir = normalize(IN.viewDir); // Dirección de la cámara (dirigido hacia el vértice)
 
-    fixed4 ambientColor = _AmbientColor;
+                // Cálculo de la reflexión especular
+                float3 reflectDir = reflect(-lightDir, normalize(IN.normalWS)); // Dirección de la reflexión
+                float spec = pow(max(0.0, dot(viewDir, reflectDir)), _Glossiness);
+                fixed4 specular = _SpecularColor * spec;
 
-    fixed4 finalColor = toonColor + specular + rimColor + ambientColor;
-    
-    return finalColor;
-}
+                // Rim Lighting (iluminación de borde)
+                float rim = 1.0 - max(0.0, dot(normalize(IN.normalWS), viewDir));
+                rim = smoothstep(_RimThreshold - 0.5, _RimThreshold + 0.5, rim);
+                fixed4 rimColor = lerp(color, _RimColor, rim * _RimAmount);
+
+                // Iluminación ambiental
+                fixed4 ambientColor = _AmbientColor;
+
+                // Color final
+                fixed4 finalColor = toonColor + specular + rimColor + ambientColor;
+                return finalColor;
+            }
 
             ENDCG
         }
