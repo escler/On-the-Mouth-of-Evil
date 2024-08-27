@@ -8,6 +8,7 @@ public class ObjectDetector : MonoBehaviour
     public LayerMask layer;
     public Transform _cameraPos;
     public int distance;
+    public GameObject ui;
 
     private void Awake()
     {
@@ -18,7 +19,8 @@ public class ObjectDetector : MonoBehaviour
     {
         RaycastHit hit;
         bool ray = Physics.Raycast(_cameraPos.position, _cameraPos.forward, out hit, distance, layer);
-        
+
+        ui.SetActive(ray);
         if (ray && Input.GetButtonDown("Interact"))
         {
             hit.transform.GetComponent<Item>().OnGrabItem();
