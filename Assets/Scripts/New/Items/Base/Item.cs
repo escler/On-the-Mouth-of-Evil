@@ -9,8 +9,13 @@ public class Item : MonoBehaviour, IInteractable
     
     public virtual void OnGrabItem()
     {
-        Inventory.Instance.AddItem(this);
-        Destroy(gameObject);
+        var itemGrabbed = Inventory.Instance.AddItem(this);
+        if (itemGrabbed) Destroy(gameObject);
+    }
+
+    public void OnDropItem()
+    {
+        
     }
 
     public virtual void OnInteract()

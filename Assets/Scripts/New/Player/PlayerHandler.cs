@@ -8,6 +8,7 @@ public class PlayerHandler : MonoBehaviour
     public static PlayerHandler Instance { get; private set; }
 
     public PlayerMovement movement;
+    public Transform handPivot;
     private void Awake()
     {
         if (Instance)
