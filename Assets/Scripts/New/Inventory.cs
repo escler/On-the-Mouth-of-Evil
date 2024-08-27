@@ -25,10 +25,19 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item i)
     {
-        var newObj = Instantiate(i);
-        inventory[count] = newObj.GetComponent<Item>();
-        InventoryUI.Instance.AddItem(newObj);
-        newObj.gameObject.SetActive(false);
+        if (count < capacity)
+        {
+            var newObj = Instantiate(i);
+            inventory[count] = newObj.GetComponent<Item>();
+            ChangeUI(count);
+            newObj.gameObject.SetActive(false);
+            count++;
+        }
+    }
+
+    public void ChangeUI(int index)
+    {
+        InventoryUI.Instance.ChangeItemUI(inventory[index], index); 
     }
     
 }
