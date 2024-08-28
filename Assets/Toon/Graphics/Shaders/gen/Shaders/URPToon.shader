@@ -1,6 +1,6 @@
-Shader "URPGenshinToon"
+Shader "URPToon"
 {
-    Properties
+      Properties
     {
         [Header(General)]
         [MainTexture]_BaseMap("Base Map", 2D) = "white" {}
