@@ -16,8 +16,15 @@ public class Door : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-
+        
     }
+
+    public void OnInteract(bool hit, RaycastHit i)
+    {
+        
+    }
+
+
     public void SetDoor(bool state)
     {
         _animator.SetBool("Open", state);

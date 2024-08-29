@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; }
     public GameObject emptyUI;
     private int _indexSelectedItem;
+    [SerializeField] private TextMeshProUGUI nameItemSelected;
     
     private void Awake()
     {
@@ -55,5 +56,6 @@ public class InventoryUI : MonoBehaviour
         transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.white;
         _indexSelectedItem = index;
         transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.yellow;
+        nameItemSelected.text = Inventory.Instance.selectedItem == null ? "" : Inventory.Instance.selectedItem.itemName;
     }
 }

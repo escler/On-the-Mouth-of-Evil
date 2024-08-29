@@ -9,21 +9,22 @@ public class ObjectDetector : MonoBehaviour
     public Transform _cameraPos;
     public int distance;
     public GameObject ui;
-
-    private void Awake()
-    {
-        //_cameraPos = Camera.main.transform;
-    }
+    private RaycastHit hit;
 
     private void Update()
     {
-        RaycastHit hit;
         bool ray = Physics.Raycast(_cameraPos.position, _cameraPos.forward, out hit, distance, layer);
 
         ui.SetActive(ray);
         if (ray && Input.GetButtonDown("Interact"))
         {
             hit.transform.GetComponent<Item>().OnGrabItem();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Inventory.Instance.selectedItem == null) return;
+            Inventory.Instance.selectedItem.OnInteract(ray,hit);
         }
     }
 }

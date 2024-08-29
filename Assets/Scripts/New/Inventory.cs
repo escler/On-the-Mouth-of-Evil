@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public int capacity;
     public Item selectedItem;
     public int countSelected;
+    private KeyCode _key;
 
     public Item[] inventory;
     private int count;
@@ -26,10 +27,7 @@ public class Inventory : MonoBehaviour
         countSelected = 0;
         StartCoroutine(DelayFunction());
     }
-
-    private void Start()
-    {
-    }
+    
 
     IEnumerator DelayFunction()
     {
@@ -43,19 +41,24 @@ public class Inventory : MonoBehaviour
         else if(Input.GetAxis("Mouse ScrollWheel") < 0f) ChangeSelectedItem(countSelected - 1);
         
         if(Input.GetButtonDown("Drop")) DropItem();
+        
+        if(Input.GetButtonDown("1")) ChangeSelectedItem(0);
+        if(Input.GetButtonDown("2")) ChangeSelectedItem(1);
+        if(Input.GetButtonDown("3")) ChangeSelectedItem(2);
+        if(Input.GetButtonDown("4")) ChangeSelectedItem(3);
     }
 
     public bool AddItem(Item i)
     {
         if (count < capacity)
         {
-            var newObj = Instantiate(i, PlayerHandler.Instance.handPivot, true);
-            newObj.transform.localPosition = Vector3.zero;
+            i.transform.SetParent(PlayerHandler.Instance.handPivot);
+            i.transform.localPosition = Vector3.zero;
             for (int j = 0; j < inventory.Length; j++)
             {
                 if (inventory[j] != null) continue;
 
-                inventory[j] = newObj.GetComponent<Item>();
+                inventory[j] = i.GetComponent<Item>();
                 inventory[j].GetComponent<BoxCollider>().enabled = false;
                 inventory[j].GetComponent<Rigidbody>().isKinematic = true;
 
@@ -63,40 +66,39 @@ public class Inventory : MonoBehaviour
                 break;
             }
 
-            newObj.gameObject.SetActive(false);
+            i.gameObject.SetActive(false);
             count++;
             ChangeSelectedItem(countSelected);
             return true;
         }
-        else
-        {
+        
             DropItem();
-            var newObj = Instantiate(i, PlayerHandler.Instance.handPivot, true);
-            newObj.transform.localPosition = Vector3.zero;
+            i.transform.SetParent(PlayerHandler.Instance.handPivot);
+            i.transform.localPosition = Vector3.zero;
             
-            inventory[countSelected] = newObj.GetComponent<Item>();
+            inventory[countSelected] = i.GetComponent<Item>();
             inventory[countSelected].GetComponent<BoxCollider>().enabled = false;
             inventory[countSelected].GetComponent<Rigidbody>().isKinematic = true;
 
             ChangeUI(countSelected);
             
-            newObj.gameObject.SetActive(false);
+            i.gameObject.SetActive(false);
             count++;
             ChangeSelectedItem(countSelected);
             return true;
-        }
+        
     }
 
-    private void DropItem()
+    public void DropItem()
     {
         if (selectedItem == null) return;
         count--;
-        var spawnObj = Instantiate(selectedItem, PlayerHandler.Instance.handPivot.position, PlayerHandler.Instance.handPivot.rotation);
-        spawnObj.GetComponent<BoxCollider>().enabled = true;
-        spawnObj.GetComponent<Rigidbody>().isKinematic = false;
-        spawnObj.transform.localScale = Vector3.one / 2;
+        selectedItem.transform.parent = null;
+        selectedItem.GetComponent<BoxCollider>().enabled = true;
+        selectedItem.GetComponent<Rigidbody>().isKinematic = false;
+        selectedItem.transform.localScale = Vector3.one / 2;
         inventory[countSelected] = null;
-        Destroy(selectedItem.gameObject);
+        selectedItem = inventory[countSelected];
         ChangeUI(countSelected);
     }
 

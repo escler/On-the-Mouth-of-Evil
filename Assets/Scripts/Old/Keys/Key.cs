@@ -12,4 +12,9 @@ public class Key : MonoBehaviour, IInteractable
         KeyHandler.Instance.AddKey(keyRoom, roomName);
         Destroy(gameObject);
     }
+
+    public void OnInteract(bool hit, RaycastHit i)
+    {
+        
+    }
 }
