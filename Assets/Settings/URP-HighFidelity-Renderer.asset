@@ -15,6 +15,19 @@ MonoBehaviour:
   m_Active: 0
   settings:
     material: {fileID: 0}
+--- !u!114 &-2698033802372849957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e9cfd28b3797e46937b6dfb680b777, type: 3}
+  m_Name: DepthNormalsFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
   m_Name: SSAO
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   m_Settings:
     AOMethod: 1
     Downsample: 0
@@ -90,7 +103,8 @@ MonoBehaviour:
   - {fileID: 1758029369843954299}
   - {fileID: -8566083382913361147}
   - {fileID: 3174585741838722815}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff27bb240be65c66518059b125d8c281f89ff26519be9640e2c
+  - {fileID: -2698033802372849957}
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff27bb240be65c66518059b125d8c281f89ff26519be9640e2cdbde91318da88eda
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
