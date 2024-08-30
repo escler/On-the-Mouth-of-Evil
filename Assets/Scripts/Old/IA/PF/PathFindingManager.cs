@@ -39,10 +39,10 @@ public class PathFindingManager : MonoBehaviour
         }
         else Destroy(gameObject);
 
-        foreach (var nodes in FindObjectsOfType<Node>())
+        /*foreach (var nodes in FindObjectsOfType<Node>())
         {
             _nodes.Add(nodes.GetComponent<Node>());
-        }
+        }*/
         
     }
     
@@ -64,7 +64,7 @@ public class PathFindingManager : MonoBehaviour
 
             if (ray)
             {
-                if (hit.collider.gameObject.layer != 6)
+                if (hit.collider.gameObject.layer != 8)
                 {
                     var nodeDistance = Vector3.Distance(node.transform.position, position);
 

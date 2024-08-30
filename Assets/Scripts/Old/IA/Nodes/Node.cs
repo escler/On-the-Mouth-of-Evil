@@ -9,7 +9,8 @@ public class Node : MonoBehaviour
     [SerializeField] List<Node> _neighbors = new List<Node>();
     [SerializeField] private LayerMask _layerMask;
     private int _cost = 0;
-    private bool blocked;
+    public bool blocked;
+    public bool blockNode;
 
     private LineRenderer _lineRenderer;
 
@@ -17,9 +18,17 @@ public class Node : MonoBehaviour
     {
         get { return _cost; }
     }
-    private void Start()
+
+    public bool Blocked => blocked;
+
+    private void OnEnable()
     {
-        CheckNeighboors();
+        StartCoroutine(AddNodeWithDelay());
+    }
+
+    private void OnDisable()
+    {
+        PathFindingManager.instance.Nodes.Remove(this);
     }
 
     public List<Node> GetNeighbors()
@@ -38,20 +47,32 @@ public class Node : MonoBehaviour
 
                 if (ray)
                 {
-                    if (hit.collider.gameObject.layer == 6)
+                    if (hit.collider.gameObject.layer == 8)
                     {
                         continue;
                     }
-                    if(_neighbors.Contains(hit.collider.GetComponent<Node>()))continue;
-                        
+
+                    if (_neighbors.Contains(hit.collider.GetComponent<Node>())) continue;
+
                     _neighbors.Add(hit.collider.GetComponent<Node>());
                 }
             }
-            
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    IEnumerator AddNodeWithDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        AddNode();
+    }
+
+    void AddNode()
+    {
+        PathFindingManager.instance.Nodes.Add(this);
+        CheckNeighboors();
+    }
+
+private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 6)
         {

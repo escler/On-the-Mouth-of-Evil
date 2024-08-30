@@ -7,7 +7,8 @@ public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private KeyType _roomType;
     [SerializeField] private Animator _animator;
-    public bool open;
+    [SerializeField] private List<Node> doorNodes;
+    public bool open, test;
 
     private void Awake()
     {
@@ -24,6 +25,35 @@ public class Door : MonoBehaviour, IInteractable
         
     }
 
+    public void BlockDoor()
+    {
+        StartCoroutine(BlockDoorCor());
+    }
+
+    private IEnumerator BlockDoorCor()
+    {
+        yield return new WaitForSeconds(1f);
+        DisableNodes();
+        yield return new WaitForSeconds(20f);
+        EnableNodes();
+    }
+
+    public void DisableNodes()
+    {
+        foreach (var node in doorNodes)
+        {
+            node.gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableNodes()
+    {
+        foreach (var node in doorNodes)
+        {
+            node.gameObject.SetActive(true);
+
+        }
+    }
 
     public void SetDoor(bool state)
     {

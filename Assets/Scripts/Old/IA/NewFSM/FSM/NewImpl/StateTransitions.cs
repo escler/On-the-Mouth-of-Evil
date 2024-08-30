@@ -6,6 +6,8 @@ public class StateTransitions
 {
     public const string ToIdle = "ToIdle";
     public const string ToMoveAround = "ToMoveAround";
+    public const string ToPatrol = "ToPatrol";
+    public const string ToSpecifyLocation = "ToSpecifyLocation";
     public const string ToChase = "ToChase";
     public const string ToAttack = "ToAttack";
     public const string ToChannelAttack = "ToChannelAttack";

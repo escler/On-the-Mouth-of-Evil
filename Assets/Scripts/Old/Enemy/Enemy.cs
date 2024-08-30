@@ -5,13 +5,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IGridEntity, IBanishable
 {
+    public static Enemy Instance { get; private set; }
     private LifeHandler _life;
     public LifeHandler Life => _life;
     public int banishAmount = 20;
     private int _amount;
     public EnemyType enemyType;
+
+    public Vector3 goalPosition;
+    public bool bibleBurning;
     protected void OnAwake()
     {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         _life = GetComponent<LifeHandler>();
     }
 
@@ -36,6 +47,12 @@ public class Enemy : MonoBehaviour, IGridEntity, IBanishable
 
     public virtual void FinishBanish()
     {
+    }
+
+    public void SetGoalPos(Vector3 position)
+    {
+        goalPosition = position;
+        bibleBurning = true;
     }
 }
 

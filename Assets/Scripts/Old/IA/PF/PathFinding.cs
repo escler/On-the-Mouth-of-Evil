@@ -21,7 +21,7 @@ public class PathFinding
         while (frontier.Count != 0)
         {
             current = frontier.Dequeue();
-
+            if(current.blockNode) goal = current;
 
             if (current == goal)
             {
@@ -69,7 +69,7 @@ public class PathFinding
     
     List<Vector3> _empty = new List<Vector3>();
     
-    public List<Vector3> ThetaStar(Node start, Node goal, LayerMask obstacle)
+    public List<Vector3>ThetaStar(Node start, Node goal, LayerMask obstacle)
     {
         if (start == null || goal == null) return _empty;
 
