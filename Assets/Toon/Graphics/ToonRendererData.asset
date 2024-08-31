@@ -105,6 +105,20 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &-4906743422586868222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cff13f4d7cc85c488ca9f66e356e110, type: 3}
+  m_Name: HatchingPostProcessFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  hatchingMaterial: {fileID: 2100000, guid: c9b39c097b9c3f94f86997247eb04511, type: 2}
 --- !u!114 &-4657681588026093503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +201,8 @@ MonoBehaviour:
   - {fileID: -8170998572127264418}
   - {fileID: -8245916387370056536}
   - {fileID: -4657681588026093503}
-  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8ea8443c03bc9e908d41d0d3ec45975cbf
+  - {fileID: -4906743422586868222}
+  m_RendererFeatureMap: f8d024bb3d3093cbec2b2cef2b7c072d007483323bf970503b4d8cc13cf07906098674fe368541a35e61212817c89a8ea8443c03bc9e908d41d0d3ec45975cbf02aeb9acdabee7bb
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
