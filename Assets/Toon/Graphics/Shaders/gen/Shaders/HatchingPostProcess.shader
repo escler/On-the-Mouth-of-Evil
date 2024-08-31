@@ -6,14 +6,14 @@ Shader "Hidden/HatchingPostProcess"
         _Hatch0 ("Hatch Texture 0", 2D) = "white" {}
         _Hatch1 ("Hatch Texture 1", 2D) = "white" {}
         _Intensity ("Intensity", Range(0,2)) = 1.0
-        _Dist ("Distance", Range(0.1, 10.0)) = 1.0
+        _Dist ("Distance", Range(0.1, 50.0)) = 1.0
     }
     SubShader
     {
         Pass
         {
             Name "HatchingEffect"
-            ZTest Always Cull Off ZWrite Off
+            ZTest Always Cull Back ZWrite On
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -45,7 +45,7 @@ Shader "Hidden/HatchingPostProcess"
             Varyings vert (Attributes v)
             {
                 Varyings o;
-                o.positionHCS = TransformObjectToHClip(v.positionOS);
+                o.positionHCS = mul(UNITY_MATRIX_MVP, v.positionOS);
                 o.uv = v.uv;
                 return o;
             }

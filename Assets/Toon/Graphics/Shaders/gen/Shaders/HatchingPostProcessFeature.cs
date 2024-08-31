@@ -53,7 +53,14 @@ public class HatchingPostProcessFeature : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        hatchingRenderPass.Setup(renderer.cameraColorTarget);
         renderer.EnqueuePass(hatchingRenderPass);
     }
+
+    public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
+    {
+        hatchingRenderPass.Setup(renderer.cameraColorTarget);
+
+    }
+
+
 }

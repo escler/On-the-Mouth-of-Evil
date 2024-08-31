@@ -8,12 +8,14 @@ public class CustomRenderFeaturee : ScriptableRendererFeature
     {
         private Material material;
         private RenderTargetIdentifier source;
-        private RenderTargetHandle tempTexture;
+        private RTHandle tempTexture;
+        private int tempTextureID; // Add this line
 
         public CustomRenderPass(Material material)
         {
             this.material = material;
-            tempTexture.Init("_TemporaryColorTexture");
+            tempTextureID = Shader.PropertyToID("tempTexture"); // Move this line before allocating tempTexture
+            tempTexture = RTHandles.Alloc(Vector2.zero);
         }
 
         public void Setup(RenderTargetIdentifier source)
@@ -34,11 +36,12 @@ public class CustomRenderFeaturee : ScriptableRendererFeature
             RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
             opaqueDesc.depthBufferBits = 0;
 
-            RenderTargetIdentifier destination = tempTexture.Identifier();
+            RenderTargetIdentifier destination = tempTexture;
 
-            cmd.GetTemporaryRT(tempTexture.id, opaqueDesc);
-            Blit(cmd, source, destination, material);
-            Blit(cmd, destination, source);
+            cmd.GetTemporaryRT(tempTextureID, opaqueDesc); // Replace tempTexture.name with tempTextureID
+
+            cmd.Blit(source, destination, material);
+            cmd.Blit(destination, source);
 
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
@@ -46,7 +49,7 @@ public class CustomRenderFeaturee : ScriptableRendererFeature
 
         public override void FrameCleanup(CommandBuffer cmd)
         {
-            cmd.ReleaseTemporaryRT(tempTexture.id);
+            cmd.ReleaseTemporaryRT(tempTextureID); // Replace tempTexture.name with tempTextureID
         }
     }
 
@@ -71,8 +74,6 @@ public class CustomRenderFeaturee : ScriptableRendererFeature
 
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
-        customRenderPass.Setup(renderer.cameraColorTarget);  // use of target after allocation
+        customRenderPass.Setup(renderer.cameraColorTargetHandle);  // use of target after allocation
     }
-
-
 }
