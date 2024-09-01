@@ -29,7 +29,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < inventory.Length; i++)
         {
-            var uiElement = Instantiate(emptyUI);
+            var uiElement = Instantiate(inventory[i] != null ? inventory[i].uiElement : emptyUI);
             uiElement.transform.SetParent(transform);
             uiElement.transform.localScale = Vector3.one;
         }
@@ -42,8 +42,7 @@ public class InventoryUI : MonoBehaviour
     {
         var actualElement = transform.GetChild(index);
         actualElement.SetParent(null);
-        GameObject uiElement = null;
-        uiElement = Instantiate(i != null ? i.uiElement : emptyUI);
+        GameObject uiElement = Instantiate(i != null ? i.uiElement : emptyUI);
         uiElement.transform.localScale = Vector3.one;
         uiElement.transform.SetParent(transform);
         uiElement.transform.SetSiblingIndex(index);

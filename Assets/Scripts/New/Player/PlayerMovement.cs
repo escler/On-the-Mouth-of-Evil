@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private float _actualSpeed, _inputX, _inputY;
     private Rigidbody _rb;
     private bool _run;
-    [SerializeField] private Transform cameraHolder;
 
     public bool Run => _run;
 

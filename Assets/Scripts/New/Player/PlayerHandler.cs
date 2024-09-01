@@ -8,7 +8,7 @@ public class PlayerHandler : MonoBehaviour
     public static PlayerHandler Instance { get; private set; }
 
     public PlayerMovement movement;
-    public Transform handPivot;
+    public Transform handPivot, cameraPos;
     private void Awake()
     {
         if (Instance)
@@ -16,6 +16,7 @@ public class PlayerHandler : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        DontDestroyOnLoad(this);
         Instance = this;
         movement = GetComponent<PlayerMovement>();
     }
