@@ -7,7 +7,8 @@ public class CanvasManager : MonoBehaviour
 {
     public static CanvasManager Instance { get; private set; }
 
-    public GameObject crossHair, InventoryUI, InteractionText, InventoryNameSelect;
+    public GameObject InventoryUI, InteractionText, InventoryNameSelect;
+    public CrosshairUI crossHairUI;
 
     private void Awake()
     {

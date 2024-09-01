@@ -17,4 +17,9 @@ public class Key : MonoBehaviour, IInteractable
     {
         
     }
+
+    public string ShowText()
+    {
+        return "";
+    }
 }

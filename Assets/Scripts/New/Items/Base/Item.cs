@@ -9,6 +9,7 @@ public class Item : MonoBehaviour, IInteractable
     public GameObject objectPrefab, uiElement;
     private bool _canInteract;
     protected bool canUse;
+    public string uiText;
     
     public void OnGrabItem()
     {
@@ -17,12 +18,17 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnInteract()
     {
-        
+        OnGrabItem();
     }
 
     public virtual void OnInteract(bool hit, RaycastHit i)
     {
         print(canUse ? "Usado" : "No Usado");
         canUse = false;
+    }
+
+    public string ShowText()
+    {
+        return uiText;
     }
 }

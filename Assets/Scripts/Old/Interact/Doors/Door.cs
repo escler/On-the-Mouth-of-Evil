@@ -9,6 +9,7 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private Animator _animator;
     [SerializeField] private List<Node> doorNodes;
     public bool open, test;
+    public string interactTextOpen, interactTextClose;
 
     private void Awake()
     {
@@ -17,12 +18,18 @@ public class Door : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        
+        open = !open;
+        SetDoor(open);
     }
 
     public void OnInteract(bool hit, RaycastHit i)
     {
         
+    }
+
+    public string ShowText()
+    {
+        return open ? interactTextOpen : interactTextClose;
     }
 
     public void BlockDoor()
