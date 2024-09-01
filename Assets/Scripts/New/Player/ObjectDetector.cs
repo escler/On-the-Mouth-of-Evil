@@ -11,18 +11,14 @@ public class ObjectDetector : MonoBehaviour
     public GameObject ui;
     private RaycastHit hit;
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
         if (_cameraPos == null) _cameraPos = PlayerHandler.Instance.cameraPos;
+        if (ui == null) ui = CanvasManager.Instance.InteractionText;
 
         bool ray = Physics.Raycast(_cameraPos.position, _cameraPos.forward, out hit, distance, layer);
-
-        //ui.SetActive(ray);
+        ui.SetActive(ray);
+        
         if (ray && Input.GetButtonDown("Interact"))
         {
             hit.transform.GetComponent<Item>().OnGrabItem();

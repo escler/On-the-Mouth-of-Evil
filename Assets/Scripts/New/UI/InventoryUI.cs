@@ -35,6 +35,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         _indexSelectedItem = Inventory.Instance.countSelected;
+        ChangeSelectedItem(_indexSelectedItem);
 
     }
 
