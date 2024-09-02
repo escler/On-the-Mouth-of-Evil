@@ -23,9 +23,11 @@ Shader "Hidden/HatchingPostProcess"
             TEXTURE2D(_MainTex);
             TEXTURE2D(_Hatch0);
             TEXTURE2D(_Hatch1);
+            TEXTURE2D(_CameraNormalsTexture);
             SAMPLER(sampler_MainTex);
             SAMPLER(sampler_Hatch0);
             SAMPLER(sampler_Hatch1);
+            SAMPLER(sampler_CameraNormalsTexture);
 
             float _Intensity;
             float _Dist;
@@ -74,12 +76,18 @@ Shader "Hidden/HatchingPostProcess"
                 hatch1 = hatch1 * weightsB;
                 return overbright + hatch0.r + hatch0.g + hatch0.b + hatch1.r + hatch1.g + hatch1.b;
             }
+            float4 _WorldSpaceLightPos0;
 
             half4 frag (Varyings i) : SV_Target
             {
-                float3 hatching = Hatching_float(i.uv, _Intensity, _Dist, _Hatch0, _Hatch1);
+                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                float3 normal = normalize(SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, i.uv).rgb * 2.0 - 1.0);
+                float lightIntensity = saturate(dot(normal, lightDir));
+                
+                float3 hatching = Hatching_float(i.uv, _Intensity * lightIntensity, _Dist, _Hatch0, _Hatch1);
                 return half4(hatching, 1.0);
             }
+          
             ENDHLSL
         }
     }

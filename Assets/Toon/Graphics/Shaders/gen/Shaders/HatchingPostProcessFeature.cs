@@ -1,66 +1,120 @@
-using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+//using UnityEngine;
+//using UnityEngine.Rendering;
+//using UnityEngine.Rendering.Universal;
+//using System;
 
-public class HatchingPostProcessFeature : ScriptableRendererFeature
-{
-    class HatchingRenderPass : ScriptableRenderPass
-    {
-        public Material hatchingMaterial = null;
-        private RenderTargetIdentifier source { get; set; }
-        private RenderTargetHandle tempTexture;
+//public class HatchingPostProcessFeature : ScriptableRendererFeature, IDisposable
+//{
+//    class HatchingRenderPass : ScriptableRenderPass
+//    {
+//        public Material hatchingMaterial = null;
+//        private RTHandle tempTexture;
+//        private RTHandle source;
 
-        public HatchingRenderPass(Material material)
-        {
-            this.hatchingMaterial = material;
-            tempTexture.Init("_TempTexture");
-        }
+//        public HatchingRenderPass(Material material)
+//        {
+//            this.hatchingMaterial = material;
+//        }
 
-        public void Setup(RenderTargetIdentifier source)
-        {
-            this.source = source;
-        }
+//        private void AllocateTempTexture(RenderTextureDescriptor descriptor)
+//        {
+//            if (tempTexture != null)
+//            {
+//                RTHandles.Release(tempTexture);
+//            }
+//            tempTexture = RTHandles.Alloc(descriptor, filterMode: FilterMode.Bilinear, name: "_TempTexture");
+//        }
 
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-        {
-            CommandBuffer cmd = CommandBufferPool.Get("Hatching Effect");
+//        public override void FrameCleanup(CommandBuffer cmd)
+//        {
+//            if (tempTexture != null)
+//            {
+//                RTHandles.Release(tempTexture);
+//                tempTexture = null;
+//            }
+//        }
 
-            RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
-            opaqueDesc.depthBufferBits = 0;
+//        public void Setup(RTHandle source)
+//        {
+//            this.source = source;
+//        }
 
-            cmd.GetTemporaryRT(tempTexture.id, opaqueDesc, FilterMode.Bilinear);
-            Blit(cmd, source, tempTexture.Identifier(), hatchingMaterial, 0);
-            Blit(cmd, tempTexture.Identifier(), source);
+//        public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
+//        {
+//            RenderTextureDescriptor descriptor = cameraTextureDescriptor;
+//            descriptor.depthBufferBits = 0; // No depth buffer needed
 
-            context.ExecuteCommandBuffer(cmd);
-            CommandBufferPool.Release(cmd);
-        }
+//            AllocateTempTexture(descriptor);
 
-        public override void FrameCleanup(CommandBuffer cmd)
-        {
-            cmd.ReleaseTemporaryRT(tempTexture.id);
-        }
-    }
+//            cmd.SetGlobalTexture("_MainTex", source);
+//        }
 
-    HatchingRenderPass hatchingRenderPass;
-    public Material hatchingMaterial;
+//        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+//        {
+//            if (hatchingMaterial == null || source == null || tempTexture == null)
+//            {
+//                Debug.LogError("HatchingRenderPass: Missing material or render textures.");
+//                return;
+//            }
 
-    public override void Create()
-    {
-        hatchingRenderPass = new HatchingRenderPass(hatchingMaterial);
-        hatchingRenderPass.renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
-    }
+//            CommandBuffer cmd = CommandBufferPool.Get("Hatching Effect");
 
-    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
-    {
-        renderer.EnqueuePass(hatchingRenderPass);
-    }
+//            Blit(cmd, source, tempTexture, hatchingMaterial, 0);
+//            Blit(cmd, tempTexture, source);
 
-    public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
-    {
-        hatchingRenderPass.Setup(renderer.cameraColorTarget);
+//            context.ExecuteCommandBuffer(cmd);
+//            CommandBufferPool.Release(cmd);
+//        }
 
-    }
+//        public void Dispose()
+//        {
+//            if (tempTexture != null)
+//            {
+//                RTHandles.Release(tempTexture);
+//                tempTexture = null;
+//            }
+//        }
 
+//        ~HatchingRenderPass()
+//        {
+//            Dispose();
+//        }
+//    }
 
-}
+//    HatchingRenderPass hatchingRenderPass;
+//    public Material hatchingMaterial;
+
+//    public override void Create()
+//    {
+//        hatchingRenderPass = new HatchingRenderPass(hatchingMaterial);
+//    }
+
+//    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+//    {
+//        renderer.EnqueuePass(hatchingRenderPass);
+//    }
+
+//    public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
+//    {
+//        hatchingRenderPass.Setup(renderer.cameraColorTargetHandle);
+//    }
+
+//    protected override void Dispose(bool disposing)
+//    {
+//        base.Dispose(disposing);
+//        if (disposing)
+//        {
+//            hatchingRenderPass.Dispose();
+//        }
+//    }
+
+//    void OnDisable()
+//    {
+//        Dispose();
+//    }
+
+//    ~HatchingPostProcessFeature()
+//    {
+//        Dispose();
+//    }
+//}

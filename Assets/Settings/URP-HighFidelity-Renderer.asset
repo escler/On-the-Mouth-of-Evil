@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8566083382913361147
+--- !u!114 &-5908408733987076171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,39 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 664624c4028eb9b4f9d6adb6d291d44b, type: 3}
-  m_Name: CustomRenderFeaturee
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    material: {fileID: 0}
---- !u!114 &-4154776185650893487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cff13f4d7cc85c488ca9f66e356e110, type: 3}
-  m_Name: HatchingPostProcessFeature
+  m_Script: {fileID: 11500000, guid: 261178d6b98b687479d7106c79faa795, type: 3}
+  m_Name: CustomPostProcessRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  hatchingMaterial: {fileID: 2100000, guid: a80c544a386679c48b0db8d676a83765, type: 2}
---- !u!114 &-2698033802372849957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e9cfd28b3797e46937b6dfb680b777, type: 3}
-  m_Name: DepthNormalsFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
+  m_bloomShader: {fileID: 4800000, guid: cb8a90343a578a24c8fdf71d7073975b, type: 3}
+  m_compositeShader: {fileID: -6465566751694194690, guid: b60b75a2fb304de45909eb0a62104157,
+    type: 3}
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,23 +51,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
---- !u!114 &-977535599768538957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: Outline
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  passMaterial: {fileID: 2100000, guid: a7232e5483ce08b47ac659b702bd7c11, type: 2}
-  injectionPoint: 450
-  requirements: 6
-  passIndex: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,14 +69,8 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
-  - {fileID: 5436159218825088093}
-  - {fileID: -977535599768538957}
-  - {fileID: 1758029369843954299}
-  - {fileID: -8566083382913361147}
-  - {fileID: 3174585741838722815}
-  - {fileID: -2698033802372849957}
-  - {fileID: -4154776185650893487}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff27bb240be65c66518059b125d8c281f89ff26519be9640e2cdbde91318da88eda51ad0675124557c6
+  - {fileID: -5908408733987076171}
+  m_RendererFeatureMap: adc0de57c6d2eee5b587e27e8f1d01ae
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -162,57 +113,3 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &1758029369843954299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc05b6097221c774a867c6e84867005e, type: 3}
-  m_Name: ToonAndOutlineRenderFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
---- !u!114 &3174585741838722815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4ffa7ff549bd9842af184f6d44edc3b, type: 3}
-  m_Name: NormalPostprocessingFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    material: {fileID: 2100000, guid: e830c1d91f6ca7247a51db4e70ebc60e, type: 2}
-    lightDirection: {x: 0.5, y: 0.5, z: -1}
-    lightColor: {r: 0.9433962, g: 0.8995622, b: 0, a: 1}
---- !u!114 &5436159218825088093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 445ec01bb9697d04bb45456e9ea061d2, type: 3}
-  m_Name: DrawFullscreenFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    renderPassEvent: 450
-    blitMaterial: {fileID: 2100000, guid: bb2269cf89dbc7c47adf724dd0efe01b, type: 2}
-    blitMaterialPassIndex: -1
-    sourceType: 0
-    destinationType: 0
-    sourceTextureId: _SourceTexture
-    destinationTextureId: _DestinationTexture
-    mask:
-      serializedVersion: 2
-      m_Bits: 0
