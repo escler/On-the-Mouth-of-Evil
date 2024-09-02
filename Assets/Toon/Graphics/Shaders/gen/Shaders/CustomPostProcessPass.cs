@@ -82,8 +82,8 @@ public class CustomPostProcessPass : ScriptableRenderPass
 
         using (new ProfilingScope(cmd, new ProfilingSampler("Custom Post Process Effect")))
         {
-            Texture ssaoTex = Shader.GetGlobalTexture(ScreenSpaceOcclusionTexture);
-            m_compositeMaterial.SetTexture("_SSAOTexture", ssaoTex);
+            Texture ssaoTex = Shader.GetGlobalTexture("_ScreenSpaceOcclusionTexture");
+            Shader.SetGlobalTexture("_SSAOTexture", ssaoTex);
 
             SetupBloom(cmd, m_CameraColorTarget);
 
