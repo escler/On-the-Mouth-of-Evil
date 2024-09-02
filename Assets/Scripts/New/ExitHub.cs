@@ -22,7 +22,6 @@ public class ExitHub : MonoBehaviour, IInteractable
         {
             if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName))
             {
-                print("si");
                 _count++;
                 continue;
             }
@@ -34,7 +33,6 @@ public class ExitHub : MonoBehaviour, IInteractable
 
         if (_count != _itemNeeded)
         {
-            print("No tenes todos los items");
             _count = 0;
             return;
         }

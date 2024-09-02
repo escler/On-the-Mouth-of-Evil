@@ -17,7 +17,6 @@ public class HouseEnemy_Idle : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        print("Asd");
         _idleTime = constTime + Random.Range(variantTimeMin, variantTimeMax);
 
     }
