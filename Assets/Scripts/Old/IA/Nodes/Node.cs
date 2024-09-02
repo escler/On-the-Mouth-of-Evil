@@ -62,7 +62,7 @@ public class Node : MonoBehaviour
 
     IEnumerator AddNodeWithDelay()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(2f);
         AddNode();
     }
 
@@ -74,7 +74,7 @@ public class Node : MonoBehaviour
 
 private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6)
+        if (other.gameObject.layer == 8)
         {
             blocked = true;
         }

@@ -32,7 +32,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         }
         else
         {
-            _pathFinish = true;
+            //_pathFinish = true;
         }
     }
 
@@ -41,6 +41,8 @@ public class HouseEnemy_Patrol : MonoBaseState
         _path.Clear();
         _pathCalculated = false;
         _pathFinish = false;
+        startNode = null;
+        goal = null;
         return base.Exit(to);
     }
 

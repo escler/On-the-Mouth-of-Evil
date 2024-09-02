@@ -16,7 +16,7 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_Chase chaseState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
     
-    private void Start()
+    private void Awake()
     {
         pf = new PathFinding();
         _fsm = new FiniteStateMachine(idleState, StartCoroutine);
@@ -41,10 +41,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
         
         _fsm.Active = true;
-    }
-
-    private void Awake()
-    {
         OnAwake();
     }
+
 }

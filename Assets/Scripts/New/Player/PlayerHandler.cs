@@ -8,7 +8,10 @@ public class PlayerHandler : MonoBehaviour
     public static PlayerHandler Instance { get; private set; }
 
     public PlayerMovement movement;
+    public PlayerCam playerCam;
+    public BobbingCamera bobbingCamera;
     public Transform handPivot, cameraPos;
+    public Mission actualMission;
     private void Awake()
     {
         if (Instance)
@@ -20,6 +23,33 @@ public class PlayerHandler : MonoBehaviour
         Instance = this;
         movement = GetComponent<PlayerMovement>();
     }
-    
+
+    private void Update()
+    {
+        if (actualMission != null && Input.GetKeyDown(KeyCode.Q))
+        {
+            var active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
+            CanvasManager.Instance.missionLevelHouse.SetActive(!active);
+            
+            if(!active) UnPossesPlayer();
+            else PossesPlayer();
+            
+        }
+    }
+
+
+    public void PossesPlayer()
+    {
+        movement.enabled = true;
+        playerCam.enabled = true;
+        bobbingCamera.enabled = true;
+    }
+
+    public void UnPossesPlayer()
+    {
+        movement.enabled = false;
+        playerCam.enabled = false;
+        bobbingCamera.enabled = false;
+    }
     
 }

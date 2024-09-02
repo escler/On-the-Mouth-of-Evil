@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 837920600097052086}
+  playerCam: {fileID: 4868285171184840852}
+  bobbingCamera: {fileID: 7472100395739103076}
   handPivot: {fileID: 2519420261725444890}
   cameraPos: {fileID: 2372193262579360146}
 --- !u!114 &7472100395739103076
@@ -241,7 +243,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 512
-  _cameraPos: {fileID: 0}
+  cameraPos: {fileID: 0}
   distance: 3
   ui: {fileID: 0}
 --- !u!54 &3626468360683052843

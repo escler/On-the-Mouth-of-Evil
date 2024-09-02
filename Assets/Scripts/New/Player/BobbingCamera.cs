@@ -38,7 +38,7 @@ public class BobbingCamera : MonoBehaviour
             _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
             MakeBobbing();
         }
-        else ResetCamera();
+        //else ResetCamera();
     }
 
     void MakeBobbing()

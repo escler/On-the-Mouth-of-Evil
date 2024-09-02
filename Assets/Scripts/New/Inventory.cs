@@ -48,7 +48,7 @@ public class Inventory : MonoBehaviour
         if(Input.GetButtonDown("4")) ChangeSelectedItem(3);
     }
 
-    public bool AddItem(Item i)
+    public void AddItem(Item i)
     {
         if (count < capacity)
         {
@@ -69,23 +69,23 @@ public class Inventory : MonoBehaviour
             i.gameObject.SetActive(false);
             count++;
             ChangeSelectedItem(countSelected);
-            return true;
+            return;
         }
         
-            DropItem();
-            i.transform.SetParent(PlayerHandler.Instance.handPivot);
-            i.transform.localPosition = Vector3.zero;
-            
-            inventory[countSelected] = i.GetComponent<Item>();
-            inventory[countSelected].GetComponent<BoxCollider>().enabled = false;
-            inventory[countSelected].GetComponent<Rigidbody>().isKinematic = true;
+        DropItem();
+        i.transform.SetParent(PlayerHandler.Instance.handPivot);
+        i.transform.localScale = new Vector3(.3f, .3f, .3f);
+        i.transform.localPosition = Vector3.zero;
+        
+        inventory[countSelected] = i.GetComponent<Item>();
+        inventory[countSelected].GetComponent<BoxCollider>().enabled = false;
+        inventory[countSelected].GetComponent<Rigidbody>().isKinematic = true;
 
-            ChangeUI(countSelected);
-            
-            i.gameObject.SetActive(false);
-            count++;
-            ChangeSelectedItem(countSelected);
-            return true;
+        ChangeUI(countSelected);
+        
+        i.gameObject.SetActive(false);
+        count++;
+        ChangeSelectedItem(countSelected);
         
     }
 
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
         selectedItem.transform.parent = null;
         selectedItem.GetComponent<BoxCollider>().enabled = true;
         selectedItem.GetComponent<Rigidbody>().isKinematic = false;
-        selectedItem.transform.localScale = Vector3.one / 2;
+        selectedItem.transform.localScale = new Vector3(.3f, .3f, .3f);
         inventory[countSelected] = null;
         selectedItem = inventory[countSelected];
         ChangeUI(countSelected);
