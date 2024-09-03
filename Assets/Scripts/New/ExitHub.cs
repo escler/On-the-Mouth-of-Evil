@@ -12,12 +12,12 @@ public class ExitHub : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
+        _count = 0;
         var playerInventory = Inventory.Instance.inventory;
-
+        if (PlayerHandler.Instance.actualMission == null) return;
         var actualMissionItemsNeededs = PlayerHandler.Instance.actualMission.
             itemsNeededs.Select(item => item.name);
 
-        if (actualMissionItemsNeededs == null) return;
         for (int i = 0; i < playerInventory.Length; i++)
         {
             if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName))
@@ -29,14 +29,8 @@ public class ExitHub : MonoBehaviour, IInteractable
             break;
         }
         
-        print(_count);
+        if (_count != _itemNeeded) return;
 
-        if (_count != _itemNeeded)
-        {
-            _count = 0;
-            return;
-        }
-        _count = 0;
         SceneManager.LoadScene(PlayerHandler.Instance.actualMission.misionName);
 
     }

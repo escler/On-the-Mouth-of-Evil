@@ -9,6 +9,7 @@ public class ObjectDetector : MonoBehaviour
     public GameObject ui;
     private CrosshairUI _crosshairUI;
     private RaycastHit _hit;
+    private GameObject descriptionItem;
 
     private void Update()
     {
@@ -22,10 +23,31 @@ public class ObjectDetector : MonoBehaviour
         if (ray)
         {
             _crosshairUI.IncreaseUI();
-            if(_hit.transform.TryGetComponent(out IInteractable interactable)) ui.GetComponent<TextMeshProUGUI>().text =
-                interactable.ShowText();
+            if(_hit.transform.TryGetComponent(out IInteractable interactable))
+            {
+                ui.GetComponent<TextMeshProUGUI>().text = interactable.ShowText();
+                if (_hit.transform.TryGetComponent(out Item item))
+                {
+                    var actualNewObject = CanvasManager.Instance.GetDescription(item.itemName);
+                    if (descriptionItem != actualNewObject && descriptionItem != null)
+                    {
+                        descriptionItem.SetActive(false);
+                    }
+                    descriptionItem = actualNewObject;
+                    descriptionItem.SetActive(true);
+                }
+            }
         }
-        else _crosshairUI.DecreaseUI();
+        else
+        {
+            _crosshairUI.DecreaseUI();
+            if (descriptionItem != null)
+            {
+                descriptionItem.SetActive(false);
+                descriptionItem = null;
+            }
+
+        }
         
         if (ray && Input.GetButtonDown("Interact"))
         {

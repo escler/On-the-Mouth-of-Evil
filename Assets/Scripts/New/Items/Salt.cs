@@ -12,6 +12,7 @@ public class Salt : Item
         if (i.transform.TryGetComponent(out Door door))
         {
             door.BlockDoor();
+            Inventory.Instance.DropItem();
             Destroy(gameObject);
         }
     }
