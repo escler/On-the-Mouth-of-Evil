@@ -23,7 +23,6 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnInteract(bool hit, RaycastHit i)
     {
-        print(canUse ? "Usado" : "No Usado");
         canUse = false;
     }
 
