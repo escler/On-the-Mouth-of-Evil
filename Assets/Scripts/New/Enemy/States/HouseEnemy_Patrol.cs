@@ -32,7 +32,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         }
         else
         {
-            //_pathFinish = true;
+            _pathFinish = true;
         }
     }
 
@@ -64,7 +64,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         owner.transform.rotation = Quaternion.LookRotation(dir);
         owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
         
-        if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _path.RemoveAt(0);
+        if (Vector3.Distance(target, owner.transform.position) <= 0.1f || target == null) _path.RemoveAt(0);
         if (_path.Count == 0) _pathFinish = true;
     }
 }
