@@ -29,14 +29,7 @@ Shader "URPToon"
         [Toggle(_NORMAL_MAP)] _UseNormalMap("Use Normal Map", Float) = 0
         [Normal] _NormalMap("Normal Map", 2D) = "bump" {}
 
-        [Header(Face)]
-        [Toggle(_IS_FACE)] _IsFace("Is Face", Float) = 0
-        _FaceDirection("Face Direction", Vector) = (0,0,1,0)
-        _FaceShadowOffset("Face Shadow Offset", Float) = 0
-        _FaceBlushColor("Face Blush Color", Color) = (1,1,1,1)
-        _FaceBlushStrength("Face Blush Strength", Float) = 1
-        _FaceLightMap("Face Light Map", 2D) = "white" {}
-        _FaceShadow("Face Shadow", 2D) = "white" {}
+       
 
         [Header(Specular)]
         [Toggle(_SPECULAR)] _UseSpecular("Use Specular", Float) = 0
@@ -85,7 +78,6 @@ Shader "URPToon"
 
             HLSLPROGRAM
 
-            // Universal Pipeline keywords
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
@@ -99,7 +91,6 @@ Shader "URPToon"
             #pragma multi_compile _ _FORWARD_PLUS
             #pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
 
-            // Unity defined keywords
             #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
             #pragma multi_compile _ SHADOWS_SHADOWMASK
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
