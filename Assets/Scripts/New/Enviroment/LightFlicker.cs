@@ -15,7 +15,6 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
     private void Awake()
     {
         _lights = GetComponentsInChildren<Light>();
-        _flicker = true;
     }
 
     public void OnStartInteract()

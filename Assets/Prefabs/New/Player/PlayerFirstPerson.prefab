@@ -89,7 +89,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5413281698991192845}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   bobbingCamera: {fileID: 7472100395739103076}
   handPivot: {fileID: 2519420261725444890}
   cameraPos: {fileID: 2372193262579360146}
+  actualMission: {fileID: 0}
 --- !u!114 &7472100395739103076
 MonoBehaviour:
   m_ObjectHideFlags: 0
