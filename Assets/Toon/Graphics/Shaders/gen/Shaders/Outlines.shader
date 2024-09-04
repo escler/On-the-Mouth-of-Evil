@@ -3,96 +3,59 @@ Shader "Custom/Outlines"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-		_outlineLen("outlineLen",float) = 0.2
+        _outlineLen ("Outline Length", float) = 0.2
+        _smoothFactor ("Smooth Factor", float) = 0.02 
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
 
-
         Pass
         {
-			Tags{ "LightMode" = "LightweightForward" }
-			Cull Back
+            Cull Front
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl"
-
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl"
 
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+                float3 normal : NORMAL;
             };
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
                 float4 pos : SV_POSITION;
+                float outlineAmount : TEXCOORD0;
             };
-			CBUFFER_START(UnityPerMaterial)
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-			CBUFFER_END
-            v2f vert (appdata v)
+
+            CBUFFER_START(UnityPerMaterial)
+            float _outlineLen;
+            float _smoothFactor; 
+            CBUFFER_END
+
+            v2f vert(appdata v)
             {
                 v2f o;
-				VertexPositionInputs vertexInput = GetVertexPositionInputs(v.vertex.xyz);
-				o.pos = vertexInput.positionCS;
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                float4 pos = mul(UNITY_MATRIX_MV, v.vertex);
+                float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
+                normal.z = -0.5;
+                pos = pos + float4(normalize(normal), 0) * _outlineLen;
+                o.pos = mul(UNITY_MATRIX_P, pos);
+                
+                o.outlineAmount = length(normalize(normal)) * _outlineLen;
+
                 return o;
             }
 
-            half4 frag (v2f i) : SV_Target
+            half4 frag(v2f i) : SV_Target
             {
-                // sample the texture
-				half4 col = tex2D(_MainTex, i.uv);
-                return col;
+                float edgeSmooth = smoothstep(_outlineLen - _smoothFactor, _outlineLen + _smoothFactor, i.outlineAmount);
+                return half4(0, 0, 0, edgeSmooth);
             }
             ENDHLSL
         }
-
-		Pass
-		{
-			Tags{ "LightMode" = "SRPDefaultUnlit" }
-			Cull Front
-			HLSLPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl"
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float3 normal :NORMAL;
-			};
-
-			struct v2f
-			{
-				float4 pos : SV_POSITION;
-			};
-			CBUFFER_START(UnityPerMaterial)
-			float _outlineLen;
-			CBUFFER_END
-			v2f vert(appdata v)
-			{
-				v2f o;
-				float4 pos = mul(UNITY_MATRIX_MV, v.vertex);
-				float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
-				normal.z = -0.5;
-				pos = pos + float4(normalize(normal), 0) * _outlineLen;
-				o.pos = mul(UNITY_MATRIX_P, pos);
-
-
-				return o;
-			}
-
-			half4 frag(v2f i) : SV_Target
-			{
-				return half4(0,0,0,1);
-			}
-		ENDHLSL
-	}
     }
 }
