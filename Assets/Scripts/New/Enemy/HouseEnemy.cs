@@ -1,14 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FSM;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HouseEnemy : Enemy
 {
     public float speed;
     public LayerMask obstacles;
-    public PathFinding pf; 
+    public PathFinding pf;
+    public Room actualRoom;
+    private PlayerHandler _player;
+    public float actualTime, timeToShowMe;
+    private List<IInteractableEnemy> objects;
+    private bool canInteract;
 
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
@@ -18,6 +25,8 @@ public class HouseEnemy : Enemy
     
     private void Awake()
     {
+        objects = new List<IInteractableEnemy>();
+        _player = PlayerHandler.Instance;
         pf = new PathFinding();
         _fsm = new FiniteStateMachine(idleState, StartCoroutine);
 
@@ -44,4 +53,50 @@ public class HouseEnemy : Enemy
         OnAwake();
     }
 
+    private void Update()
+    {
+        CompareRooms();
+    }
+
+    private void CompareRooms()
+    {
+        if (_player.actualRoom == null) return;
+        if (_player.actualRoom != actualRoom)
+        {
+            if (objects.Count() > 0)
+            {
+                foreach (var obj in objects)
+                {
+                    obj.OnEndInteract();
+                }
+            }
+            objects.Clear();
+            canInteract = true;
+            return;
+        }
+
+        if (!canInteract) return;
+        canInteract = false;
+        var objectsInRoom = actualRoom.interactableEnemy.ToList();
+        for (int i = 0; i < 6; i++)
+        {
+            if (objectsInRoom.Count() == 0) break;
+            int randomIndex = Random.Range(0, objectsInRoom.Count);
+            var actualObject = objectsInRoom[randomIndex];
+            objects.Add(actualObject.GetComponent<IInteractableEnemy>());
+            objectsInRoom.Remove(actualObject);
+        }
+
+        foreach (var obj in objects)
+        {
+            obj.OnStartInteract();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != 16) return;
+
+        actualRoom = other.GetComponent<Room>();
+    }
 }

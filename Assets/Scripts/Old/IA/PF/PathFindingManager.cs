@@ -1,7 +1,9 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //Es opcional hacerlo, este script va a mostrar el pathfinding en este proyecto.
 public class PathFindingManager : MonoBehaviour
@@ -39,11 +41,17 @@ public class PathFindingManager : MonoBehaviour
         }
         else Destroy(gameObject);
 
-        /*foreach (var nodes in FindObjectsOfType<Node>())
+        StartCoroutine(CheckNodes());
+
+    }
+
+    IEnumerator CheckNodes()
+    {
+        yield return new WaitForSeconds(3f);
+        foreach (var nodes in FindObjectsOfType<Node>())
         {
-            _nodes.Add(nodes.GetComponent<Node>());
-        }*/
-        
+            nodes.CheckNeighboors();
+        }
     }
     
 
@@ -127,5 +135,14 @@ public class PathFindingManager : MonoBehaviour
             }
         }
         return _farNode;
+    }
+
+    public Node CalculateOtherRoomNode(Node start)
+    {
+        var roomStartNode = start.room;
+
+        var nodesActuals = _nodes.Where(x => x.room != roomStartNode);
+
+        return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
     }
 }

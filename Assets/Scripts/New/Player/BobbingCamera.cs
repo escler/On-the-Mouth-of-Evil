@@ -31,13 +31,12 @@ public class BobbingCamera : MonoBehaviour
 
         _bobbingEnable = inputX != 0 || inputY != 0;
 
-        if (_bobbingEnable)
-        {
-            _run = _movement.Run;
-            _actualBobbingSpeed = _run ? runBobbingSpeed : bobbingSpeed;
-            _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
-            MakeBobbing();
-        }
+        if (!_bobbingEnable) return;
+        
+        _run = _movement.Run;
+        _actualBobbingSpeed = _run ? runBobbingSpeed : bobbingSpeed;
+        _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
+        MakeBobbing();
     }
 
     void MakeBobbing()

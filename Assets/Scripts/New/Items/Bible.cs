@@ -10,7 +10,6 @@ public class Bible : Item, IBurneable
     public void OnBurn()
     {
         if (!_placed) return;
-        print("Me quemo");
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         Enemy.Instance.SetGoalPos(transform.position);

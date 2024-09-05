@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public GameObject sphere;
     private bool _skillAdquired;
     public Transform bookPos;
-    public bool cantUse; 
+    public bool cantUse;
 
     private void Awake()
     {

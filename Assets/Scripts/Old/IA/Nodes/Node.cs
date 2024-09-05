@@ -39,45 +39,34 @@ public class Node : MonoBehaviour
 
     public void CheckNeighboors()
     {
-        if (!blocked)
+        foreach (Vector3 direction in PathFindingManager.instance.Directions)
         {
-            foreach (Vector3 direction in PathFindingManager.instance.Directions)
+            RaycastHit hit;
+            bool ray = Physics.Raycast(transform.position, direction, out hit,10f, _layerMask);
+
+            if (ray)
             {
-                RaycastHit hit;
-                bool ray = Physics.Raycast(transform.position, direction, out hit, _layerMask);
-
-                if (ray)
+                if (hit.collider.gameObject.layer == 8)
                 {
-                    if (hit.collider.gameObject.layer == 8)
-                    {
-                        continue;
-                    }
-
-                    if (_neighbors.Contains(hit.collider.GetComponent<Node>())) continue;
-
-                    _neighbors.Add(hit.collider.GetComponent<Node>());
+                    continue;
                 }
+
+                if (_neighbors.Contains(hit.collider.GetComponent<Node>())) continue;
+
+                _neighbors.Add(hit.collider.GetComponent<Node>());
             }
         }
     }
 
     IEnumerator AddNodeWithDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         AddNode();
     }
 
     void AddNode()
     {
         PathFindingManager.instance.Nodes.Add(this);
-        CheckNeighboors();
     }
 
-private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == 8)
-        {
-            blocked = true;
-        }
-    }
 }

@@ -12,6 +12,7 @@ public class PlayerHandler : MonoBehaviour
     public BobbingCamera bobbingCamera;
     public Transform handPivot, cameraPos;
     public Mission actualMission;
+    public Room actualRoom;
     private void Awake()
     {
         if (Instance)
@@ -50,6 +51,13 @@ public class PlayerHandler : MonoBehaviour
         movement.enabled = false;
         playerCam.enabled = false;
         bobbingCamera.enabled = false;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != 16) return;
+
+        actualRoom = other.GetComponent<Room>();
     }
     
 }
