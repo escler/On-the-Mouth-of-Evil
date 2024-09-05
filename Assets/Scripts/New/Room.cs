@@ -7,11 +7,16 @@ public class Room : MonoBehaviour
 {
     public Node[] nodesRoom;
     public Door[] doors;
+    public GameObject[] interactableEnemy;
     private int count;
 
     private void Awake()
     {
         count = doors.Length;
+        foreach (var node in nodesRoom)
+        {
+            node.room = this;
+        }
     }
 
     public void CheckDoors()

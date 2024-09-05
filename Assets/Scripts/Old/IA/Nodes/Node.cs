@@ -8,6 +8,7 @@ public class Node : MonoBehaviour
 {
     [SerializeField] List<Node> _neighbors = new List<Node>();
     [SerializeField] private LayerMask _layerMask;
+    public Room room;
     private int _cost = 0;
     public bool blocked;
     public bool blockNode;

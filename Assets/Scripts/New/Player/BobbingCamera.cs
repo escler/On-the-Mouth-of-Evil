@@ -26,8 +26,8 @@ public class BobbingCamera : MonoBehaviour
     void Update()
     {
         
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputY = Input.GetAxisRaw("Vertical");
 
         _bobbingEnable = inputX != 0 || inputY != 0;
 
@@ -38,7 +38,6 @@ public class BobbingCamera : MonoBehaviour
             _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
             MakeBobbing();
         }
-        //else ResetCamera();
     }
 
     void MakeBobbing()
@@ -47,12 +46,5 @@ public class BobbingCamera : MonoBehaviour
         cameraPos.transform.localPosition = new Vector3(cameraPos.transform.localPosition.x + Mathf.Sin(_timer) * _actualBobbingAmount * Time.deltaTime,
             cameraPos.transform.localPosition.y + Mathf.Cos(_timer) * _actualBobbingAmount / 8 * Time.deltaTime,
             cameraPos.transform.localPosition.z);
-    }
-
-    void ResetCamera()
-    {
-        cameraPos.transform.localPosition = new Vector3(Mathf.Lerp(cameraPos.transform.localPosition.x, _defaultPosX, Time.deltaTime * _actualBobbingSpeed),
-            Mathf.Lerp(cameraPos.transform.localPosition.y, _defaultPosY, Time.deltaTime * _actualBobbingSpeed),
-            cameraPos.localPosition.z);
     }
 }
