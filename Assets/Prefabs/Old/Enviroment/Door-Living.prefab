@@ -203,24 +203,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomType: 3
   _animator: {fileID: 1967156409241720706}
-  doorNodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  doorNode: {fileID: 0}
   open: 1
   test: 0
   interactTextOpen: Press E To Close Door
   interactTextClose: Press E To Open Door
+  saltBlock: 0
+  blockDuration: 30
+  rooms: []
 --- !u!1 &1724844055970736750
 GameObject:
   m_ObjectHideFlags: 0
