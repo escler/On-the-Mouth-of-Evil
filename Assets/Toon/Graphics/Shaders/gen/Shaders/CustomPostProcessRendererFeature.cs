@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomPostProcessRenderFeature : ScriptableRendererFeature
 {
     [SerializeField]
-    private Shader m_bloomShader;
+    private Shader m_LigthShader;
     [SerializeField]
     private Shader m_compositeShader;
 
@@ -16,7 +16,7 @@ public class CustomPostProcessRenderFeature : ScriptableRendererFeature
 
     public override void Create()
     {
-        m_bloomMaterial = CoreUtils.CreateEngineMaterial(m_bloomShader);
+        m_bloomMaterial = CoreUtils.CreateEngineMaterial(m_LigthShader);
         m_compositeMaterial = CoreUtils.CreateEngineMaterial(m_compositeShader);
         m_customPass = new CustomPostProcessPass(m_bloomMaterial, m_compositeMaterial);
     }

@@ -15,7 +15,7 @@ Material:
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -23,13 +23,55 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _LightMap:
+        m_Texture: {fileID: 2800000, guid: a77e0be9abde2ae489f2a257a8db0043, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LinePatternTex:
+        m_Texture: {fileID: 2800000, guid: a77e0be9abde2ae489f2a257a8db0043, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _OutlineMask:
+        m_Texture: {fileID: 2800000, guid: c29dcee38ce55ad4ea26b79f0477062a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineTex:
+        m_Texture: {fileID: 2800000, guid: 4f95b8b9189736e4f846de53b561a2cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowRamp:
+        m_Texture: {fileID: 2800000, guid: c29dcee38ce55ad4ea26b79f0477062a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _outlineLen: 0.01
-    - _smoothFactor: 0.1
-    m_Colors: []
+    - _CustomMaterialType: 1
+    - _EdgeSmoothFactor: 0.0005
+    - _OutlineWidth: 0.01
+    - _OutlineZOffset: 0.05
+    - _PatternScale: 0
+    - _RampThreshold1: 0
+    - _RampThreshold2: 0
+    - _ShadowOffset: 4.02
+    - _ShadowSmoothness: 3.32
+    - _UseCustomMaterialType: 0
+    - _UseLinePattern: 1
+    - _UseOutlineTex: 1
+    - _UseSmoothNormal: 1
+    - _outlineLen: 0.02
+    - _smoothFactor: 2
+    m_Colors:
+    - _LightDirectionMultiplier: {r: 1, g: 1, b: 1, a: 0}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor2: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+    - _OutlineColor3: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+    - _OutlineColor4: {r: 0.10145953, g: 0.8285655, b: 0.9433962, a: 1}
+    - _OutlineColor5: {r: 0.990566, g: 0, b: 0.9749666, a: 1}
+    - _OutlineWidthParams: {r: 1, g: 1, b: 1, a: 1}
+    - _ScreenOffset: {r: 0.001, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
