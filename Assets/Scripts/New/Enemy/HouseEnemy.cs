@@ -91,7 +91,7 @@ public class HouseEnemy : Enemy
         {
 
             mesh.enabled = true;
-
+           Fire.Play();
         }
     }
 
