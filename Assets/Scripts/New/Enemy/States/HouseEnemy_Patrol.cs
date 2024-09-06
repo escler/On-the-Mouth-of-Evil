@@ -19,8 +19,10 @@ public class HouseEnemy_Patrol : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
+        print("Entre a Patrol");
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
+        print(startNode);
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
         
         _path = owner.pf.ThetaStar(startNode,goal, owner.obstacles);
