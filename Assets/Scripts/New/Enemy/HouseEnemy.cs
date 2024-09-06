@@ -16,6 +16,7 @@ public class HouseEnemy : Enemy
     public float actualTime, timeToShowMe;
     private List<IInteractableEnemy> objects;
     private bool canInteract;
+    public MeshRenderer mesh;
 
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
@@ -56,6 +57,25 @@ public class HouseEnemy : Enemy
     private void Update()
     {
         CompareRooms();
+        ShowEnemy();
+    }
+
+    private void ShowEnemy()
+    {
+        if (_player.actualRoom == null) return;
+        if (_player.actualRoom != actualRoom)
+        {
+            actualTime = 0;
+            if (mesh.enabled) mesh.enabled = false;
+            return;
+        }
+
+        actualTime += Time.deltaTime;
+
+        if (actualTime > timeToShowMe)
+        {
+            mesh.enabled = true;
+        }
     }
 
     private void CompareRooms()
