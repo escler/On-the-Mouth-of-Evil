@@ -17,6 +17,8 @@ public class HouseEnemy : Enemy
     private List<IInteractableEnemy> objects;
     private bool canInteract;
     public MeshRenderer mesh;
+    public Transform Pivot;
+    public ParticleSystem Fire;
 
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
@@ -58,6 +60,15 @@ public class HouseEnemy : Enemy
     {
         CompareRooms();
         ShowEnemy();
+
+        /*if (mesh.enabled == true)
+        {
+            Fire.Play();
+        }
+        else
+        {
+            Fire.Pause();
+        }*/
     }
 
     private void ShowEnemy()
@@ -66,7 +77,11 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            if (mesh.enabled) mesh.enabled = false;
+            if (mesh.enabled)
+            {
+                mesh.enabled = false;
+
+            }
             return;
         }
 
@@ -74,7 +89,9 @@ public class HouseEnemy : Enemy
 
         if (actualTime > timeToShowMe)
         {
+
             mesh.enabled = true;
+
         }
     }
 
