@@ -13,6 +13,8 @@ public class PlayerHandler : MonoBehaviour
     public Transform handPivot, cameraPos;
     public Mission actualMission;
     public Room actualRoom;
+
+
     private void Awake()
     {
         if (Instance)
