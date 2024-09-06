@@ -54,7 +54,13 @@ Shader "URPToon"
         _OutlineColor2("Outline Color 2", Color) = (0,0,0,1)
         _OutlineColor3("Outline Color 3", Color) = (0,0,0,1)
         _OutlineColor4("Outline Color 4", Color) = (0,0,0,1)
-        _OutlineColor5("Outline Color 5", Color) = (0,0,0,1)
+        _OutlineColor5("Outline Color 5", Color) = (0,0,0,1)     
+        
+         [Header(Hatching)]
+        _HatchScale("Hatch Scale", Float) = 1
+        _HatchAngle("Hatch Angle", Float) = 45
+        _HatchIntensity("Hatch Intensity", Float) = 1
+         _ExponentialFalloff("Exponential Falloff", Float) = 1
     }
 
     Subshader
@@ -112,6 +118,7 @@ Shader "URPToon"
 
             #include "ToonInput.hlsl"
             #include "ToonForwardPass.hlsl"
+            
 
             ENDHLSL
         }
@@ -190,6 +197,9 @@ Shader "URPToon"
 
             #include "ToonInput.hlsl"
             #include "ToonOutlinePass.hlsl"
+
+
+           
 
             ENDHLSL
         }

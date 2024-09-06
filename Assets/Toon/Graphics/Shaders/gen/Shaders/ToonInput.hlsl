@@ -30,6 +30,10 @@ CBUFFER_START(UnityPerMaterial)
     half    _RimThreshold;
     half    _RimIntensity;
 
+    float _HatchSize;
+    float _HatchAngle;
+    float _ExponentialFalloff;
+
     half    _UseSmoothNormal;
     half    _OutlineWidth;
     half4   _OutlineWidthParams;

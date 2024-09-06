@@ -40,6 +40,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HatchingTexture:
+        m_Texture: {fileID: 2800000, guid: 1cf54c2de24707647a7ac217748f01e7, type: 3}
+        m_Scale: {x: 1.16, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HatchingTexture1:
+        m_Texture: {fileID: 2800000, guid: 0b3b568928745f944aa4def5ae5bc63a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HatchingTexture2:
+        m_Texture: {fileID: 2800000, guid: 0b3b568928745f944aa4def5ae5bc63a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HatchingTexture3:
+        m_Texture: {fileID: 2800000, guid: 0b3b568928745f944aa4def5ae5bc63a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _LightMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -61,31 +77,40 @@ Material:
     - _Cull: 2
     - _CustomMaterialType: 1
     - _DoubleSided: 1
-    - _DstBlend: 0
-    - _EmissionIntensity: 0.2
+    - _DstBlend: 10
+    - _EmissionIntensity: 0.1
+    - _ExponentialFalloff: 22.47
     - _FaceBlushStrength: 1
     - _FaceShadowOffset: 0
+    - _HatchAngle: 47.45
+    - _HatchIntensity: 20
+    - _HatchScale: 24.3
+    - _HatchingIntensity: 0.74
+    - _HatchingScale: 5.58
+    - _HatchingThreshold1: 4.17
+    - _HatchingThreshold2: 2.57
+    - _HatchingThreshold3: 2.62
     - _IsDay: 1
     - _IsFace: 0
-    - _MetallicIntensity: 1
+    - _MetallicIntensity: 0.7
     - _NonmetallicIntensity: 1
     - _OutlineWidth: 1
     - _OutlineZOffset: 1.5
     - _RimIntensity: 0.5
     - _RimOffset: 3
     - _RimThreshold: 0.2
-    - _ShadowOffset: 0.1
+    - _ShadowOffset: 0.01
     - _ShadowSmoothness: 1
     - _SpecularSmoothness: 1.3
-    - _SrcBlend: 3
+    - _SrcBlend: 1
     - _UseCustomMaterialType: 0
     - _UseEmission: 1
     - _UseNormalMap: 1
     - _UseRim: 1
-    - _UseSmoothNormal: 0
+    - _UseSmoothNormal: 1
     - _UseSpecular: 1
     m_Colors:
-    - _BaseColor: {r: 0.8301887, g: 0.80698484, b: 0.7706657, a: 1}
+    - _BaseColor: {r: 0.9433962, g: 0.93414026, b: 0.9202563, a: 1}
     - _FaceBlushColor: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
     - _FaceDirection: {r: 0, g: 0, b: 1, a: 0}
     - _LightDirectionMultiplier: {r: 0, g: 0, b: 0, a: 0}
@@ -96,5 +121,5 @@ Material:
     - _OutlineColor5: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineWidthParams: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
     - _ScreenOffset: {r: 0, g: 0.002, b: 0.001, a: 0}
-    - _ShadowColor: {r: 0.6415094, g: 0.25570145, b: 0.19003202, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

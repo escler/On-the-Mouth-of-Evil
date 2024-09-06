@@ -176,7 +176,20 @@ half4 ForwardPassFragment(Varyings input, FRONT_FACE_TYPE facing : FRONT_FACE_SE
     rim = albedo * GetRim(input);
 #endif
 
-    half3 finalColor = albedo * shadowColor + specular + rim + emission;
+    float hatchAngle = _HatchAngle * 3.14159 / 180.0;
+    float2 hatchUV = input.uv;
+    hatchUV = float2(hatchUV.x * cos(hatchAngle) - hatchUV.y * sin(hatchAngle),
+                     hatchUV.x * sin(hatchAngle) + hatchUV.y * cos(hatchAngle));
+
+    float hatchPattern = abs(sin(hatchUV.x * _HatchSize)) * abs(sin(hatchUV.y * _HatchSize));
+
+    // Controlar el grosor de las líneas y el patrón de hatching basado en la iluminación
+    float diffuseLighting = max(0.0, dot(input.normalWS, lightDirection));
+    float falloff = exp(-_ExponentialFalloff * (1.0 - shadow));
+    hatchPattern *= diffuseLighting * falloff;
+    
+    
+    half3 finalColor = albedo * shadowColor * hatchPattern + specular + rim + emission;
     half finalAlpha = 1.0;
 
     return half4(finalColor, finalAlpha);
