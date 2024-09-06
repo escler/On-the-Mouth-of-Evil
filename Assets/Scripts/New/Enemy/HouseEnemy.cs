@@ -80,7 +80,10 @@ public class HouseEnemy : Enemy
             if (mesh.enabled)
             {
                 mesh.enabled = false;
-
+                if (Fire != null)
+                {
+                    Fire.Stop();
+                }
             }
             return;
         }
@@ -91,7 +94,10 @@ public class HouseEnemy : Enemy
         {
 
             mesh.enabled = true;
-           Fire.Play();
+            if (Fire != null)
+            {
+                Fire.Play();
+            }
         }
     }
 
