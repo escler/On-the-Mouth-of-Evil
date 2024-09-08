@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8444314417864448088}
+  - component: {fileID: 6802154098557710484}
   m_Layer: 0
   m_Name: PS
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   - {fileID: 8297442067821319329}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6802154098557710484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612473468371647041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b6aa6ca78c3e43ba8998b07283bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 2248522030615442568}
 --- !u!1001 &293511489311497509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,6 +431,11 @@ PrefabInstance:
       propertyPath: stopAction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9223317419165697932, guid: 2245d8c367f6dda4f9f20db6396d4fae,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -556,6 +575,12 @@ PrefabInstance:
       addedObject: {fileID: 428737060036748970}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc294547df1f5cc428182b09e757349b, type: 3}
+--- !u!198 &2248522030615442568 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6185842579047819883, guid: cc294547df1f5cc428182b09e757349b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5398933949753368291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8297442067821319329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4164336843938581058, guid: cc294547df1f5cc428182b09e757349b,

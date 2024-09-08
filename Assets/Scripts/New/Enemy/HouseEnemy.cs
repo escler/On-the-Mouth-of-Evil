@@ -18,14 +18,16 @@ public class HouseEnemy : Enemy
     private bool canInteract;
     public MeshRenderer mesh;
     public Transform Pivot;
-    public ParticleSystem Fire;
-
+    public Transform PS;
+    PlayParticles Fire;
+    public bool appear;
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
     [SerializeField] private HouseEnemy_Patrol patrolState;
     [SerializeField] private HouseEnemy_Chase chaseState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
-    
+    private bool hasPlayedFire;
+
     private void Awake()
     {
         objects = new List<IInteractableEnemy>();
@@ -54,6 +56,7 @@ public class HouseEnemy : Enemy
         
         _fsm.Active = true;
         OnAwake();
+        appear = false;
     }
 
     private void Update()
@@ -61,14 +64,6 @@ public class HouseEnemy : Enemy
         CompareRooms();
         ShowEnemy();
 
-        /*if (mesh.enabled == true)
-        {
-            Fire.Play();
-        }
-        else
-        {
-            Fire.Pause();
-        }*/
     }
 
     private void ShowEnemy()
@@ -80,11 +75,9 @@ public class HouseEnemy : Enemy
             if (mesh.enabled)
             {
                 mesh.enabled = false;
-                if (Fire != null)
-                {
-                    Fire.Stop();
-                }
+               
             }
+            hasPlayedFire = false;
             return;
         }
 
@@ -92,12 +85,15 @@ public class HouseEnemy : Enemy
 
         if (actualTime > timeToShowMe)
         {
-
             mesh.enabled = true;
-            if (Fire != null)
+            appear = true;
+            if (appear && !hasPlayedFire)
             {
-                Fire.Play();
+                Fire = PS.GetComponentInChildren<PlayParticles>();
+                Fire.PlayP();
+                hasPlayedFire = true;
             }
+            appear = false;
         }
     }
 

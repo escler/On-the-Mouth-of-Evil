@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 2331161858086147234}
   - component: {fileID: 8921149377614665347}
   - component: {fileID: 3433673491691955081}
+  - component: {fileID: 8136380155633983683}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -120,7 +121,7 @@ MonoBehaviour:
   timeToShowMe: 5
   mesh: {fileID: 7144590335899472598}
   Pivot: {fileID: 17396773150919538}
-  Fire: {fileID: 8849677227352562575}
+  appear: 0
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
   chaseState: {fileID: 2331161858086147234}
@@ -210,6 +211,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8136380155633983683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b6aa6ca78c3e43ba8998b07283bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 8849677227352562575}
 --- !u!1 &8657699137423520515
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +319,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PS
+      objectReference: {fileID: 0}
+    - target: {fileID: 1788824930747900266, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2248522030615442568, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897750504695652796, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403596777717517242, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070351399849334079, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
