@@ -140,6 +140,7 @@ public class PathFindingManager : MonoBehaviour
     public Node CalculateOtherRoomNode(Node start)
     {
         var roomStartNode = start.room;
+        if (roomStartNode != HouseEnemy.Instance.actualRoom) return null;
 
         var nodesActuals = _nodes.Where(x => x.room != roomStartNode);
 

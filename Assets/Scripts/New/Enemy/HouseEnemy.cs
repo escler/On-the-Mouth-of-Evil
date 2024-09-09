@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class HouseEnemy : Enemy
 {
+    public static HouseEnemy Instance;
     public float speed;
     public LayerMask obstacles;
     public PathFinding pf;
@@ -30,6 +31,14 @@ public class HouseEnemy : Enemy
 
     private void Awake()
     {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        
         objects = new List<IInteractableEnemy>();
         _player = PlayerHandler.Instance;
         pf = new PathFinding();
