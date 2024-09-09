@@ -5,7 +5,20 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    public static CameraFollow Instance { get; private set; }
+    
     [SerializeField] private Transform cameraPos;
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -19,5 +32,11 @@ public class CameraFollow : MonoBehaviour
         if (cameraPos == null) cameraPos = PlayerHandler.Instance.cameraPos;
         transform.position = cameraPos.position;
         transform.rotation = cameraPos.rotation;
+    }
+
+    public void SetNewCameraPos(Transform pos)
+    {
+        print("ASd");
+        cameraPos = pos;
     }
 }
