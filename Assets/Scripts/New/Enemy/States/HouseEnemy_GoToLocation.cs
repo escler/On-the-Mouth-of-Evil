@@ -36,6 +36,7 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     private void TravelPath()
     {
         Vector3 target = _path[0];
+        target.y = owner.transform.position.y;
         Vector3 dir = target - owner.transform.position;
         owner.transform.rotation = Quaternion.LookRotation(dir);
         owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);

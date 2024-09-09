@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3907014600222788732}
   - component: {fileID: 180225231355265927}
   - component: {fileID: 2529571055409069058}
-  - component: {fileID: 8077095127617073676}
   - component: {fileID: 426684137964873926}
-  m_Layer: 0
+  - component: {fileID: 2021445149649926804}
+  m_Layer: 9
   m_Name: Piece3
   m_TagString: CanPickUp
   m_Icon: {fileID: 0}
@@ -113,19 +113,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8077095127617073676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5866873224391236021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427110630c26d434f9a2606c77c4097b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 0
 --- !u!64 &426684137964873926
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -148,3 +135,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 648434883616918593, guid: 2be7c534cf23d964f91242db108e649a, type: 3}
+--- !u!114 &2021445149649926804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5866873224391236021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017c1f5a39ce3774da1fb526039ee91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardCountPiece: 2

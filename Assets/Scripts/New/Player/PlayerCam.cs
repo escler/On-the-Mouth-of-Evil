@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-        [SerializeField] float sensX, sensY, limitAngleY, lerpTime;
+        public float sensX, sensY, limitAngleY, lerpTime;
         [SerializeField] Transform cameraPos;
         private float _mouseX, _mouseY;
         float _xRotation, _yRotation, newPosX, newPosY;
         private Quaternion _newRotation;
+        private bool _cameraLock;
+
+        public bool CameraLock
+        {
+                get => _cameraLock;
+                set => _cameraLock = value;
+        }
     
         void Update()
         {
+                if (_cameraLock)
+                {
+                        _mouseX = 0;
+                        _mouseY = 0;
+                        return;
+                }
                 _mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
                 _mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
 

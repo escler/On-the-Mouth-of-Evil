@@ -121,6 +121,7 @@ MonoBehaviour:
   timeToShowMe: 5
   mesh: {fileID: 7144590335899472598}
   Pivot: {fileID: 17396773150919538}
+  PS: {fileID: 1212663926077699935}
   appear: 0
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
@@ -218,7 +219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7959037354911713852}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b9b6aa6ca78c3e43ba8998b07283bd7, type: 3}
   m_Name: 
@@ -252,7 +253,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.04, y: -0.92347, z: 0.097}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 258484488048164082}
@@ -272,7 +273,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8657699137423520515}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -285,7 +286,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
+  - {fileID: 2100000, guid: 63011b5e25c878d4bab7fe4c044e57e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -348,17 +349,17 @@ PrefabInstance:
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.779
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
