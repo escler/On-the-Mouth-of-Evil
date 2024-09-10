@@ -121,7 +121,7 @@ MonoBehaviour:
   timeToShowMe: 5
   mesh: {fileID: 7144590335899472598}
   Pivot: {fileID: 17396773150919538}
-  PS: {fileID: 1212663926077699935}
+  PS: {fileID: 706127033777823831}
   appear: 0
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
@@ -323,28 +323,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1788824930747900266, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
-      propertyPath: playOnAwake
+      propertyPath: stopAction
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1788824930747900266, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2248522030615442568, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
-      propertyPath: playOnAwake
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897750504695652796, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: stopAction
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2897750504695652796, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353427218964095871, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353427218964095871, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403596777717517242, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: stopAction
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7403596777717517242, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793671125571931984, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8070351399849334079, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,
         type: 3}
@@ -401,6 +431,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f6b6257f5f35bd4690cca1edc0db092, type: 3}
+--- !u!1 &706127033777823831 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7793671125571931984, guid: 9f6b6257f5f35bd4690cca1edc0db092,
+    type: 3}
+  m_PrefabInstance: {fileID: 7341998048413724423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1212663926077699935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8444314417864448088, guid: 9f6b6257f5f35bd4690cca1edc0db092,

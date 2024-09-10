@@ -19,7 +19,7 @@ public class HouseEnemy : Enemy
     private bool canInteract;
     public MeshRenderer mesh;
     public Transform Pivot;
-    public Transform PS;
+    public GameObject PS;
     PlayParticles Fire;
     public bool appear;
     private FiniteStateMachine _fsm;
@@ -98,9 +98,8 @@ public class HouseEnemy : Enemy
             appear = true;
             if (appear && !hasPlayedFire)
             {
-                Fire = PS.GetComponentInChildren<PlayParticles>();
-                Fire.PlayP();
-                hasPlayedFire = true;
+                PS.SetActive(true);
+
             }
             appear = false;
         }
