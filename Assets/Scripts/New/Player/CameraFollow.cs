@@ -36,7 +36,6 @@ public class CameraFollow : MonoBehaviour
 
     public void SetNewCameraPos(Transform pos)
     {
-        print("ASd");
         cameraPos = pos;
     }
 }

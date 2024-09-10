@@ -41,6 +41,7 @@ public class SaltPuzzle : MonoBehaviour
 
     private void CheckPuzzleSolve()
     {
+        count = 0;
         foreach (var pair in recipientSolution)
         {
             if (solution.Contains(pair.Value))
@@ -52,10 +53,15 @@ public class SaltPuzzle : MonoBehaviour
             break;
         }
 
-        if (count == 4) print("Ganaste");
+        if (count >= 4)
+        {
+            foreach (var recipient in recipients)
+            {
+                recipient.finish = true;
+            }
+        }
         else
         {
-            print("Perdiste");
             foreach (var recipient in recipients)
             {
                 recipient.ResetRecipient();   

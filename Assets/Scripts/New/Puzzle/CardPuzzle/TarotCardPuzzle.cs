@@ -4,7 +4,7 @@ public class TarotCardPuzzle : MonoBehaviour
 {
     public static TarotCardPuzzle Instance { get; private set; }
     
-    public GameObject heldObj;
+    public GameObject heldObj, paperPuzzleSalt;
     public Rigidbody heldObjRb;
     public Transform holdPos;
     private PlayerCam _playerCam;
@@ -63,14 +63,13 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (_piecePlacesCount < piecesCard.Length) return;
 
-        print("Resolvi el puzzle");
+        paperPuzzleSalt.SetActive(true);
     }
 
     public void CompareOrientation()
     {
         var actualCardPiece = piecesCard[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward);
-        print(orientation);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
         if (orientation > .99f && distance < 1f)
         {

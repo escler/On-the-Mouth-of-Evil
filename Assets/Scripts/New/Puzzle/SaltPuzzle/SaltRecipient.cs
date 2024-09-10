@@ -10,6 +10,7 @@ public class SaltRecipient : MonoBehaviour
     private Material _normalMat;
     public Transform pressPosition, unPressPosition, nextPos;
     private Vector3 reference = Vector3.zero;
+    public bool finish;
     
     private List<MeshRenderer> meshes;
 
@@ -63,6 +64,11 @@ public class SaltRecipient : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, nextPos.position) < 0.01f)
         {
+            if (finish)
+            {
+                enabled = false;
+                return;
+            }
             _cantInteract = false;
             return;
         }
@@ -75,4 +81,16 @@ public class SaltRecipient : MonoBehaviour
         nextPos = _buttonPress ? pressPosition : unPressPosition;
     }
 
+    private void OnEnable()
+    {
+        _cantInteract = false;
+    }
+
+    private void OnDisable()
+    {
+        if (!finish) return;
+        _cantInteract = true;
+        print("ASD");
+        UnHighlightObject();
+    }
 }

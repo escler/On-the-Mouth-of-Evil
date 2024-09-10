@@ -42,6 +42,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         playerInTable = !playerInTable;
+        CanvasManager.Instance.crossHairUI.gameObject.SetActive(!playerInTable);
         PlayerHandler.Instance.playerCam.CameraLock = playerInTable;
         Cursor.visible = playerInTable;
         Cursor.lockState = CursorLockMode.Confined;
@@ -55,6 +56,6 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
 
     public string ShowText()
     {
-        return "Press E to View Table";
+        return playerInTable ? "Press E To Exit Table" : "Press E To View Table";
     }
 }
