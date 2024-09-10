@@ -53,11 +53,25 @@ public class ObjectDetector : MonoBehaviour
         {
             _hit.transform.GetComponent<IInteractable>().OnInteract();
         }
+        
+        if (Inventory.Instance.selectedItem == null) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Inventory.Instance.selectedItem.itemName == "Cross")
         {
-            if (Inventory.Instance.selectedItem == null) return;
-            Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+            if (Input.GetMouseButton(0))
+            {
+                Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+            }
+            
+            if(Input.GetMouseButtonUp(0))
+                Inventory.Instance.selectedItem.GetComponent<Cross>().OnUpCross();
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+            }
         }
     }
 }

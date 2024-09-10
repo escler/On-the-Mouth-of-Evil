@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
     public Door[] doors;
     public GameObject[] interactableEnemy;
     private int count;
-
+    public bool cantBlock;
     private void Awake()
     {
         count = doors.Length;

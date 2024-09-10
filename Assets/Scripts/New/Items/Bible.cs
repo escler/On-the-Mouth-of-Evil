@@ -7,12 +7,13 @@ public class Bible : Item, IBurneable
 {
     private bool _placed;
     public float timeToBurn;
+    public GameObject firePS; 
     public void OnBurn()
     {
         if (!_placed) return;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
-        Enemy.Instance.SetGoalPos(transform.position);
+        if(Enemy.Instance != null) Enemy.Instance.SetGoalPos(transform.position);
         StartCoroutine(BibleBurning());
     }
 
@@ -25,6 +26,7 @@ public class Bible : Item, IBurneable
 
     IEnumerator BibleBurning()
     {
+        firePS.SetActive(true);
         while (timeToBurn > 0)
         {
             timeToBurn -= 1;
@@ -32,7 +34,7 @@ public class Bible : Item, IBurneable
             yield return new WaitForSeconds(1f);
         }
 
-        Enemy.Instance.bibleBurning = false;
+        if(Enemy.Instance != null) Enemy.Instance.bibleBurning = false;
         Destroy(gameObject);
     }
 }

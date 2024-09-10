@@ -12,13 +12,13 @@ public class HouseEnemy : Enemy
     public float speed;
     public LayerMask obstacles;
     public PathFinding pf;
-    public Room actualRoom;
+    public Room actualRoom, crossRoom;
+    public bool crossUsed; 
     private PlayerHandler _player;
     public float actualTime, timeToShowMe;
     private List<IInteractableEnemy> objects;
     private bool canInteract;
     public MeshRenderer mesh;
-    public Transform Pivot;
     public GameObject PS;
     PlayParticles Fire;
     public bool appear;
@@ -52,6 +52,7 @@ public class HouseEnemy : Enemy
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
         _fsm.AddTransition(StateTransitions.ToChase, patrolState, chaseState);
+        _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
 
         
@@ -145,5 +146,11 @@ public class HouseEnemy : Enemy
         if (other.gameObject.layer != 16) return;
 
         actualRoom = other.GetComponent<Room>();
+    }
+
+    public void CheckRoom()
+    {
+        if (actualRoom != PlayerHandler.Instance.actualRoom) return;
+        crossUsed = true;
     }
 }

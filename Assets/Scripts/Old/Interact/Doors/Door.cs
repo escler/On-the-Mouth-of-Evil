@@ -13,6 +13,7 @@ public class Door : MonoBehaviour, IInteractable
     public bool saltBlock;
     public float blockDuration;
     public Room[] rooms;
+    public GameObject saltPS;
 
     private void Awake()
     {
@@ -37,15 +38,18 @@ public class Door : MonoBehaviour, IInteractable
 
     public void BlockDoor()
     {
+
         StartCoroutine(BlockDoorCor());
     }
 
     private IEnumerator BlockDoorCor()
     {
+        saltPS.SetActive(true);
         doorNode.gameObject.SetActive(false);
         DisableNodes();
         yield return new WaitForSeconds(blockDuration);
         saltBlock = false;
+        saltPS.SetActive(false);
         EnableNodes();
     }
 
