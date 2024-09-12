@@ -58,6 +58,7 @@ public class SaltPuzzle : MonoBehaviour
             foreach (var recipient in recipients)
             {
                 recipient.finish = true;
+                RitualManager.Instance.AltarCompleted();
             }
         }
         else

@@ -18,7 +18,7 @@ public class HouseEnemy : Enemy
     public float actualTime, timeToShowMe;
     private List<IInteractableEnemy> objects;
     private bool canInteract;
-    public MeshRenderer mesh;
+    public SkinnedMeshRenderer mesh;
     public GameObject PS;
     PlayParticles Fire;
     public bool appear;
@@ -137,6 +137,7 @@ public class HouseEnemy : Enemy
 
         foreach (var obj in objects)
         {
+            print(obj);
             obj.OnStartInteract();
         }
     }

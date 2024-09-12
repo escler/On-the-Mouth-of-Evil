@@ -48,6 +48,13 @@ public class PlayerHandler : MonoBehaviour
         bobbingCamera.enabled = true;
     }
 
+    public void ChangePlayerPosses(bool state)
+    {
+        movement.enabled = state;
+        playerCam.enabled = state;
+        bobbingCamera.enabled = state;
+    }
+
     public void UnPossesPlayer()
     {
         movement.enabled = false;
