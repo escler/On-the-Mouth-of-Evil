@@ -2,52 +2,237 @@ Shader "Custom/HatchingShadows"
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
-        _Glossiness ("Smoothness", Range(0,1)) = 0.5
-        _Metallic ("Metallic", Range(0,1)) = 0.0
+        _HatchingTex ("Hatching Texture", 2D) = "white" {} // Propiedad de textura de hatching
     }
-    SubShader
-    {
-        Tags { "RenderType"="Opaque" }
-        LOD 200
+    HLSLINCLUDE
+        #pragma editor_sync_compilation
+        #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
-        CGPROGRAM
-        // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        // Declaración de la textura de hatching
+        TEXTURE2D(_HatchingTex);
+        SAMPLER(sampler_HatchingTex);
 
-        // Use shader model 3.0 target, to get nicer looking lighting
-        #pragma target 3.0
-
-        sampler2D _MainTex;
-
-        struct Input
+        struct VertexInput
         {
-            float2 uv_MainTex;
+            float4 positionOS : POSITION;
+            float2 uv : TEXCOORD0; // Coordenadas UV
         };
 
-        half _Glossiness;
-        half _Metallic;
-        fixed4 _Color;
-
-        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-        // #pragma instancing_options assumeuniformscaling
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
-        void surf (Input IN, inout SurfaceOutputStandard o)
+        struct FragmentInput
         {
-            // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
-            // Metallic and smoothness come from slider variables
-            o.Metallic = _Metallic;
-            o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
+            float4 positionHCS : SV_POSITION;
+            float2 uv : TEXCOORD0; // Coordenadas UV
+        };
+
+        FragmentInput Vert(VertexInput input)
+        {
+            FragmentInput output;
+            output.positionHCS = TransformObjectToHClip(input.positionOS.xyz); // Usar solo xyz
+            output.uv = input.uv; // Pasar las coordenadas UV
+            return output;
         }
-        ENDCG
+    ENDHLSL
+
+    SubShader
+    {
+        Tags{ "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline"}
+        Cull Off ZWrite Off ZTest Always
+
+        // ------------------------------------------------------------------
+        // Ambient Occlusion
+        // ------------------------------------------------------------------
+
+        // 0 - Occlusion estimation
+        Pass
+        {
+            Name "SSAO_Occlusion"
+            ZTest Always
+            ZWrite Off
+            Cull Off
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment SSAO
+                #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+                #pragma multi_compile_local_fragment _INTERLEAVED_GRADIENT _BLUE_NOISE
+                #pragma multi_compile_local_fragment _SOURCE_DEPTH_LOW _SOURCE_DEPTH_MEDIUM _SOURCE_DEPTH_HIGH _SOURCE_DEPTH_NORMALS
+                #pragma multi_compile_local_fragment _ _ORTHOGRAPHIC
+                #pragma multi_compile_local_fragment _SAMPLE_COUNT_LOW _SAMPLE_COUNT_MEDIUM _SAMPLE_COUNT_HIGH
+                #pragma multi_compile_fragment _ _FOVEATED_RENDERING_NON_UNIFORM_RASTER
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // ------------------------------------------------------------------
+        // Bilateral Blur
+        // ------------------------------------------------------------------
+
+        // 1 - Horizontal
+        Pass
+        {
+            Name "SSAO_Bilateral_HorizontalBlur"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment HorizontalBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 2 - Vertical
+        Pass
+        {
+            Name "SSAO_Bilateral_VerticalBlur"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment VerticalBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 3 - Final
+        Pass
+        {
+            Name "SSAO_Bilateral_FinalBlur"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment FinalBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 4 - After Opaque
+        Pass
+        {
+            Name "SSAO_Bilateral_FinalBlur_AfterOpaque"
+
+            ZTest NotEqual
+            ZWrite Off
+            Cull Off
+            Blend One SrcAlpha, Zero One
+            BlendOp Add, Add
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment FragBilateralAfterOpaque
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+
+                half4 FragBilateralAfterOpaque(FragmentInput input) : SV_Target
+                {
+                    half ao = FinalBlur(input).r;
+                    half4 hatchingColor = SAMPLE_TEXTURE2D(_HatchingTex, sampler_HatchingTex, input.uv);
+                    return half4(hatchingColor.rgb*ao, 1); // Aplicar la textura de hatching
+                    //return half4(0.0, 0.0, 0.0, hatchingColor.rgb*ao);
+                }
+
+            ENDHLSL
+        }
+
+        // ------------------------------------------------------------------
+        // Gaussian Blur
+        // ------------------------------------------------------------------
+
+        // 5 - Horizontal
+        Pass
+        {
+            Name "SSAO_Gaussian_HorizontalBlur"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment HorizontalGaussianBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 6 - Vertical
+        Pass
+        {
+            Name "SSAO_Gaussian_VerticalBlur"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment VerticalGaussianBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 7 - After Opaque
+        Pass
+        {
+            Name "SSAO_Gaussian_VerticalBlur_AfterOpaque"
+
+            ZTest NotEqual
+            ZWrite Off
+            Cull Off
+            Blend One SrcAlpha, Zero One
+            BlendOp Add, Add
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment FragGaussianAfterOpaque
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+
+                half4 FragGaussianAfterOpaque(FragmentInput input) : SV_Target
+                {
+                    half ao = VerticalGaussianBlur(input);
+                    half4 hatchingColor = SAMPLE_TEXTURE2D(_HatchingTex, sampler_HatchingTex, input.uv);
+                    return half4(hatchingColor.rgb*ao,1); // Aplicar la textura de hatching
+                    //return half4(0.0, 0.0, 0.0, hatchingColor.rgb*ao);
+                }
+
+            ENDHLSL
+        }
+
+        // ------------------------------------------------------------------
+        // Kawase Blur
+        // ------------------------------------------------------------------
+
+        // 8 - Kawase Blur
+        Pass
+        {
+            Name "SSAO_Kawase"
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment KawaseBlur
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+            ENDHLSL
+        }
+
+        // 9 - After Opaque Kawase
+        Pass
+        {
+            Name "SSAO_Kawase_AfterOpaque"
+
+            ZTest NotEqual
+            ZWrite Off
+            Cull Off
+            Blend One SrcAlpha, Zero One
+            BlendOp Add, Add
+
+            HLSLPROGRAM
+                #pragma vertex Vert
+                #pragma fragment FragKawaseAfterOpaque
+
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SSAO.hlsl"
+
+                half4 FragKawaseAfterOpaque(FragmentInput input) : SV_Target
+                {
+                    half ao = KawaseBlur(input);
+                    half4 hatchingColor = SAMPLE_TEXTURE2D(_HatchingTex, sampler_HatchingTex, input.uv);
+                    return half4(hatchingColor.rgb*ao, 1); // Aplicar la textura de hatching
+                    //return half4(0.0, 0.0, 0.0, hatchingColor.rgb*ao);
+                }
+
+            ENDHLSL
+        }
     }
     FallBack "Diffuse"
 }

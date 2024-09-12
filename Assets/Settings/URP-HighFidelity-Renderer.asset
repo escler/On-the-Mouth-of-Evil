@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f40272f0af41e342ab9d3f39cc029d2, type: 3}
   m_Name: CustomPostProcessRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
-  m_LigthShader: {fileID: 4800000, guid: 51a56dd063bb00a44accbb7267f1cc32, type: 3}
+  m_Active: 0
+  m_LigthShader: {fileID: 4800000, guid: cfc9c659bf70602448443f6b9b1ba1c5, type: 3}
   m_compositeShader: {fileID: -6465566751694194690, guid: 5160965116a825a4698fbc21fe1f444c,
     type: 3}
 --- !u!114 &-3202480075762680482
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: RenderObjects
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: RenderObjects
     Event: 250
@@ -78,12 +78,12 @@ MonoBehaviour:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 1
+        m_Bits: 256
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 1f132ea894e833448bddcd2b97f9f918, type: 2}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
+    overrideMaterial: {fileID: 2100000, guid: bc02de0f1e813fc47931f0ab905150dc, type: 2}
+    overrideMaterialPassIndex: 2
+    overrideShader: {fileID: 4800000, guid: cfc9c659bf70602448443f6b9b1ba1c5, type: 3}
+    overrideShaderPassIndex: 2
     overrideMode: 1
     overrideDepthState: 0
     depthCompareFunction: 4
