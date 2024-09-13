@@ -12,6 +12,7 @@ public class SaltPuzzle : MonoBehaviour
     public Dictionary<SaltRecipient, int> recipientSolution;
     public int[] solution;
     private int count;
+    public PlayVFX playVFX;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class SaltPuzzle : MonoBehaviour
                 RitualManager.Instance.AltarCompleted();
             }
             //Aca se gana el puzzle y se activa el altar
+            playVFX.playFX();
         }
         else
         {
