@@ -19,7 +19,6 @@ public class HouseEnemy : Enemy
     private List<IInteractableEnemy> objects;
     private bool canInteract;
     public SkinnedMeshRenderer mesh;
-    public GameObject PS;
     PlayParticles Fire;
     public bool appear;
     private FiniteStateMachine _fsm;
@@ -28,6 +27,8 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_Chase chaseState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
     private bool hasPlayedFire;
+
+    private HouseEnemyView _enemyAnimator;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class HouseEnemy : Enemy
         }
 
         Instance = this;
+        _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         
         objects = new List<IInteractableEnemy>();
         _player = PlayerHandler.Instance;
@@ -85,9 +87,10 @@ public class HouseEnemy : Enemy
             if (mesh.enabled)
             {
                 mesh.enabled = false;
-               
             }
+            appear = false;
             hasPlayedFire = false;
+            _enemyAnimator.ChangeStateAnimation("Spawn", false);
             return;
         }
 
@@ -96,13 +99,14 @@ public class HouseEnemy : Enemy
         if (actualTime > timeToShowMe)
         {
             mesh.enabled = true;
-            appear = true;
-            if (appear && !hasPlayedFire)
-            {
-                PS.SetActive(true);
 
+            if (!appear)
+            {
+                _enemyAnimator.ChangeStateAnimation("Spawn", true);
+                appear = true;
             }
-            appear = false;
+            
+            
         }
     }
 
@@ -153,5 +157,7 @@ public class HouseEnemy : Enemy
     {
         if (actualRoom != PlayerHandler.Instance.actualRoom) return;
         crossUsed = true;
+        _enemyAnimator.ChangeStateAnimation("CrossUsed", true);
     }
+
 }

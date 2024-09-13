@@ -50,6 +50,7 @@ public class Cross : Item
         if (playerRoom.cantBlock) return;
         crossExplosion.Play();
         crossUsed = true;
+        
         HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
         HouseEnemy.Instance.CheckRoom();
     }

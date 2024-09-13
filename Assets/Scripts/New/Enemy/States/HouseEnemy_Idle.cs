@@ -26,6 +26,9 @@ public class HouseEnemy_Idle : MonoBaseState
         if (_idleTime <= 0 && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
 
+        if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
+            return Transitions[StateTransitions.ToPatrol];
+
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
 

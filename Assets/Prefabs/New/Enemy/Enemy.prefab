@@ -202,6 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 966648153294431406}
   - component: {fileID: 6596108291831185108}
+  - component: {fileID: 6851291306896791204}
   m_Layer: 0
   m_Name: DemonIdle
   m_TagString: Untagged
@@ -248,6 +249,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6851291306896791204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441891469106003476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d035184524dc694e947248817c1eafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6596108291831185108}
+  PS: {fileID: 706127033777823831}
 --- !u!1 &443370865586895020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4677,7 +4692,6 @@ MonoBehaviour:
   actualTime: 0
   timeToShowMe: 5
   mesh: {fileID: 638794724269363345}
-  PS: {fileID: 706127033777823831}
   appear: 0
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
@@ -4696,9 +4710,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3234476839139166343}
-  constTime: 10
-  variantTimeMin: 2
-  variantTimeMax: 3
+  constTime: 30
+  variantTimeMin: 10
+  variantTimeMax: 15
 --- !u!114 &4098424891984333558
 MonoBehaviour:
   m_ObjectHideFlags: 0
