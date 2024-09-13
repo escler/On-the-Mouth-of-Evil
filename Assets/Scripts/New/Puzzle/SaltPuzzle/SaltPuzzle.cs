@@ -60,6 +60,7 @@ public class SaltPuzzle : MonoBehaviour
                 recipient.finish = true;
                 RitualManager.Instance.AltarCompleted();
             }
+            //Aca se gana el puzzle y se activa el altar
         }
         else
         {

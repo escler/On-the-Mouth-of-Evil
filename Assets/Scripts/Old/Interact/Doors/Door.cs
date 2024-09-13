@@ -44,12 +44,12 @@ public class Door : MonoBehaviour, IInteractable
 
     private IEnumerator BlockDoorCor()
     {
-        saltPS.SetActive(true);
+        saltPS.SetActive(true); //Aca prendo la sal
         doorNode.gameObject.SetActive(false);
         DisableNodes();
         yield return new WaitForSeconds(blockDuration);
         saltBlock = false;
-        saltPS.SetActive(false);
+        saltPS.SetActive(false); //Aca apago la sal
         EnableNodes();
     }
 
