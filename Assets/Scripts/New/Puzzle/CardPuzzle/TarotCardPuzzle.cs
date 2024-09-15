@@ -66,12 +66,12 @@ public class TarotCardPuzzle : MonoBehaviour
         paperPuzzleSalt.SetActive(true);
     }
 
-    public void CompareOrientation()
+    private void CompareOrientation()
     {
         var actualCardPiece = piecesCard[_actualPiece].transform;
-        var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward);
+        var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > .99f && distance < 1f)
+        if (orientation > 1.9f && distance < 1f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _canPlace = true;
