@@ -20,7 +20,12 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (!playerInTable) return;
+        if (!playerInTable)
+        {
+            if(currentRecipient != null) currentRecipient.UnHighlightObject();
+            currentRecipient = null;
+            return;
+        }
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
