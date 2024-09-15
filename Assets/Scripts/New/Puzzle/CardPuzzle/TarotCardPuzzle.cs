@@ -71,7 +71,7 @@ public class TarotCardPuzzle : MonoBehaviour
         var actualCardPiece = piecesCard[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > 1.9f && distance < 1f)
+        if (orientation > 1.9f && distance < .5f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _canPlace = true;
