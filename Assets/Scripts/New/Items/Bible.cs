@@ -15,6 +15,7 @@ public class Bible : Item, IBurneable
         GetComponent<Rigidbody>().isKinematic = true;
         if(Enemy.Instance != null) Enemy.Instance.SetGoalPos(transform.position);
         StartCoroutine(BibleBurning());
+        GetComponentInChildren<MeshRenderer>().material.SetInt("_BurningON", 1);
     }
 
     public override void OnInteract(bool hit, RaycastHit i)
