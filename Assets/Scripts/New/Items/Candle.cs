@@ -46,10 +46,14 @@ public class Candle : Item, IInteractable
     {
         if(!canTake) return;
         base.OnInteractItem();
+        RitualManager.Instance.TakeCandle(this);
+        RitualManager.Instance.candleTaked = true;
     }
 
-    public void OnInteract(bool hit, RaycastHit i)
+    public override void OnInteract(bool hit, RaycastHit i)
     {
+        if (!hit) return;
+        print(i.transform.gameObject.name);
         if (i.transform.TryGetComponent(out RitualFloor ritualFloor))
         {
             ritualFloor.OnInteractItem();

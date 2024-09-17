@@ -57,5 +57,6 @@ public class RitualManager : MonoBehaviour
         candleTaked = false;
         _candlesPlaced++;
         Destroy(_actualCandleTaked.gameObject);
+        Inventory.Instance.DropItem();
     }
 }

@@ -46,12 +46,12 @@ public class PieceTarotCard : Item, IInteractable
     public override void OnDeselectItem()
     {
         TarotCardPuzzle.Instance.DeactivateMesh();
+        TarotCardPuzzle.Instance.heldObj = null;
     }
 
     private void OnDisable()
     {
         onHand = false;
-        //Inventory.Instance.DropItem();
         if (TarotCardPuzzle.Instance == null) TarotCardPuzzle.Instance.heldObj = null;
         if (CanvasManager.Instance == null) return;
         CanvasManager.Instance.rotateInfo.SetActive(false);

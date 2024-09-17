@@ -8,6 +8,7 @@ public class PuzzleSaltPaper : Item, IInteractable
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
+        if (PlayerHandler.Instance.cantPressInventory) return;
         CanvasManager.Instance.puzzleSaltPaper.SetActive(!active);
         active = CanvasManager.Instance.puzzleSaltPaper.activeInHierarchy;
         Inventory.Instance.cantSwitch = active;

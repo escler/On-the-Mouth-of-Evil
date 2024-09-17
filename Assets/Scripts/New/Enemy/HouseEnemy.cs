@@ -141,7 +141,6 @@ public class HouseEnemy : Enemy
 
         foreach (var obj in objects)
         {
-            print(obj);
             obj.OnStartInteract();
         }
     }

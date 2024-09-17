@@ -20,6 +20,7 @@ public class RitualFloor : MonoBehaviour, IInteractable
 
     public void OnInteract(bool hit, RaycastHit i)
     {
+
     }
 
     public string ShowText()

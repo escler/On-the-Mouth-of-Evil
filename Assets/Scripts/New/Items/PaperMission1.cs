@@ -26,6 +26,7 @@ public class PaperMission1 : Mission
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
+        if (PlayerHandler.Instance.cantPressInventory) return;
         CanvasManager.Instance.missionLevelHouse.SetActive(!active);
         active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
         Inventory.Instance.cantSwitch = active;

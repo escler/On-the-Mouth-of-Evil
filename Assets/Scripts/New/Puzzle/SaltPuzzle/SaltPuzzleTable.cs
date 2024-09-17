@@ -49,6 +49,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
         playerInTable = !playerInTable;
         CanvasManager.Instance.crossHairUI.gameObject.SetActive(!playerInTable);
         PlayerHandler.Instance.playerCam.CameraLock = playerInTable;
+        PlayerHandler.Instance.cantPressInventory = playerInTable;
         PlayerHandler.Instance.ChangePlayerPosses(!playerInTable);
         Cursor.visible = playerInTable;
         Cursor.lockState = CursorLockMode.Confined;

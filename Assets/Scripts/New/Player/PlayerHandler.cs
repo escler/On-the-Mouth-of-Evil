@@ -13,6 +13,7 @@ public class PlayerHandler : MonoBehaviour
     public Transform handPivot, cameraPos, puzzlePivot;
     public Mission actualMission;
     public Room actualRoom;
+    public bool cantPressInventory;
 
 
     private void Awake()
