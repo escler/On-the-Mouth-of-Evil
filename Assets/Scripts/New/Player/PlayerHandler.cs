@@ -30,14 +30,6 @@ public class PlayerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (actualMission != null && Input.GetKeyDown(KeyCode.Q))
-        {
-            var active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
-            CanvasManager.Instance.missionLevelHouse.SetActive(!active);
-            
-            if(!active) UnPossesPlayer();
-            else PossesPlayer();
-        }
     }
 
 

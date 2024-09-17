@@ -9,6 +9,5 @@ public class PaperPuzzleSaltUI : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q)) paper.SetActive(!paper.activeSelf);
     }
 }
