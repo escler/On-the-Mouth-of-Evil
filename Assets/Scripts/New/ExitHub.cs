@@ -13,7 +13,7 @@ public class ExitHub : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         _count = 0;
-        var playerInventory = Inventory.Instance.inventory;
+        var playerInventory = Inventory.Instance.hubInventory;
         if (PlayerHandler.Instance.actualMission == null) return;
         var actualMissionItemsNeededs = PlayerHandler.Instance.actualMission.
             itemsNeededs.Select(item => item.name);
