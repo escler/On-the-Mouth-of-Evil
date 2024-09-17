@@ -84,10 +84,10 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            if (mesh.enabled)
+            /*if (mesh.enabled)
             {
                 mesh.enabled = false;
-            }
+            }*/
             appear = false;
             hasPlayedFire = false;
             _enemyAnimator.ChangeStateAnimation("Spawn", false);
@@ -98,7 +98,7 @@ public class HouseEnemy : Enemy
 
         if (actualTime > timeToShowMe)
         {
-            mesh.enabled = true;
+            //mesh.enabled = true;
 
             if (!appear)
             {

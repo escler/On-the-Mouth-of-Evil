@@ -5,6 +5,7 @@ using UnityEngine;
 public class Lighter : Item
 {
     [SerializeField] private List<Item> _itemsInteractables;
+    public GameObject PSIdle;
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
@@ -18,5 +19,16 @@ public class Lighter : Item
             canUse = false;
         }
         base.OnInteract(hit,i);
+    }
+
+    public override void OnSelectItem()
+    {
+        base.OnSelectItem();
+        PSIdle.SetActive(true);
+    }
+
+    public override void OnDropItem()
+    {
+        PSIdle.SetActive(false);
     }
 }

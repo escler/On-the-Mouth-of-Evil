@@ -8,7 +8,7 @@ public class Cross : Item
     private float _currentTime, _actualCdTime;
     public float neededTime, coolDown;
     private bool crossUsed, holdingPSActive;
-    public ParticleSystem crossExplosion, holdingPS;
+    public ParticleSystem[] crossExplosion, holdingPS;
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit, i);
@@ -17,14 +17,20 @@ public class Cross : Item
         _currentTime += Time.deltaTime;
         if (!holdingPSActive)
         {
-            holdingPS.Play();
+            foreach (var holdPS in holdingPS)
+            {
+                holdPS.Play();
+            }
             holdingPSActive = true;
         }
 
         if (_currentTime >= neededTime)
         {
             CheckRoom();
-            holdingPS.Stop();
+            foreach (var holdPS in holdingPS)
+            {
+                holdPS.Stop();
+            }
             holdingPSActive = false;
 
             _currentTime = 0;
@@ -47,8 +53,12 @@ public class Cross : Item
     public void CheckRoom()
     {
         var playerRoom = PlayerHandler.Instance.actualRoom;
+        if (playerRoom == null) return;
         if (playerRoom.cantBlock) return;
-        crossExplosion.Play();
+        foreach (var explosionPS in crossExplosion)
+        {
+            explosionPS.Play();
+        }
         crossUsed = true;
         
         HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
@@ -59,7 +69,10 @@ public class Cross : Item
     {
         if (Input.GetMouseButtonUp(0))
         {
-            holdingPS.Stop();
+            foreach (var holdPS in holdingPS)
+            {
+                holdPS.Stop();
+            }
             holdingPSActive = false;
             _currentTime = 0;
         }
