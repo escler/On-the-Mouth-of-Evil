@@ -21,6 +21,7 @@ public class CanvasManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(this);
         descriptions = new Dictionary<string, GameObject>();
         descriptions.Add("Lighter", descriptionLighter);
         descriptions.Add("Cross", descriptionCross);

@@ -28,6 +28,7 @@ public class PaperMission1 : Mission
     {
         CanvasManager.Instance.missionLevelHouse.SetActive(!active);
         active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
+        Inventory.Instance.cantSwitch = active;
     }
 
     public string ShowText()

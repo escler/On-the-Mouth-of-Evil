@@ -43,14 +43,18 @@ public class PieceTarotCard : Item, IInteractable
         gameObject.layer = 9;
     }
 
+    public override void OnDeselectItem()
+    {
+        TarotCardPuzzle.Instance.DeactivateMesh();
+    }
+
     private void OnDisable()
     {
         onHand = false;
-        TarotCardPuzzle.Instance.heldObj = null;
-        TarotCardPuzzle.Instance.DeactivateMesh();
+        //Inventory.Instance.DropItem();
+        if (TarotCardPuzzle.Instance == null) TarotCardPuzzle.Instance.heldObj = null;
         if (CanvasManager.Instance == null) return;
         CanvasManager.Instance.rotateInfo.SetActive(false);
-
     }
 
     public string ShowText()

@@ -19,6 +19,7 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnInteractItem()
     {
+        print("?");
         OnGrabItem();
     }
 
@@ -26,6 +27,8 @@ public class Item : MonoBehaviour, IInteractable
     {
         
     }
+    
+    public virtual void OnDeselectItem(){}
 
     public virtual void OnDropItem()
     {

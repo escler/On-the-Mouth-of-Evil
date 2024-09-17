@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Candle : MonoBehaviour, IInteractable
+public class Candle : Item, IInteractable
 {
     private Rigidbody heldObjRb;
     private GameObject heldObj;
@@ -30,15 +30,30 @@ public class Candle : MonoBehaviour, IInteractable
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), _player.GetComponent<Collider>(), true);
     }
 
-    public void OnInteractItem()
+    public override void OnSelectItem()
     {
-        if (RitualManager.Instance.candleTaked) return;
-        PickUpObject(gameObject);
         RitualManager.Instance.TakeCandle(this);
+        RitualManager.Instance.candleTaked = true;
+    }
+
+    public override void OnDeselectItem()
+    {
+        RitualManager.Instance.UnassignCandle();
+        RitualManager.Instance.candleTaked = false;
+    }
+
+    public override void OnInteractItem()
+    {
+        if(!canTake) return;
+        base.OnInteractItem();
     }
 
     public void OnInteract(bool hit, RaycastHit i)
     {
+        if (i.transform.TryGetComponent(out RitualFloor ritualFloor))
+        {
+            ritualFloor.OnInteractItem();
+        }
     }
 
     public string ShowText()

@@ -12,10 +12,13 @@ public class Inventory : MonoBehaviour
     public int countSelected;
     private KeyCode _key;
     private int _inventorySelect;
+    public bool cantSwitch;
 
     public Item[] inventory, hubInventory, enviromentInventory;
     private int countHub, countEnviroment;
 
+    public int InventorySelected => _inventorySelect;
+    
     private void Awake()
     {
         if (Instance)
@@ -47,6 +50,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
+        if (cantSwitch) return;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) ChangeSelectedItem(countSelected + 1);
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) ChangeSelectedItem(countSelected - 1);
 
@@ -67,7 +71,7 @@ public class Inventory : MonoBehaviour
         if (count < capacity)
         {
             i.transform.SetParent(PlayerHandler.Instance.handPivot);
-            i.transform.localScale = Vector3.one;
+            //i.transform.localScale = Vector3.one;
             i.transform.localPosition = Vector3.zero;
             for (int j = 0; j < categoryInventory.Length; j++)
             {
@@ -91,7 +95,7 @@ public class Inventory : MonoBehaviour
 
         DropItem();
         i.transform.SetParent(PlayerHandler.Instance.handPivot);
-        i.transform.localScale = Vector3.one;
+        //i.transform.localScale = Vector3.one;
         i.transform.localPosition = Vector3.zero;
 
         categoryInventory[countSelected] = i.GetComponent<Item>();
@@ -118,7 +122,7 @@ public class Inventory : MonoBehaviour
         selectedItem.transform.parent = null;
         selectedItem.GetComponent<BoxCollider>().enabled = true;
         selectedItem.GetComponent<Rigidbody>().isKinematic = false;
-        selectedItem.transform.localScale = Vector3.one;
+        //selectedItem.transform.localScale = Vector3.one;
         selectedItem.OnDropItem();
         inventory[countSelected] = null;
         selectedItem = inventory[countSelected];
@@ -131,6 +135,7 @@ public class Inventory : MonoBehaviour
         else if (index < 0) index = inventory.Length - 1;
 
         countSelected = index;
+        if(selectedItem != null) selectedItem.OnDeselectItem();
         ChangeItemState(selectedItem, false);
         selectedItem = inventory[index];
         ChangeItemState(selectedItem, true);

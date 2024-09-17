@@ -99,7 +99,8 @@ public class TarotCardPuzzle : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             _playerCam.CameraLock = true;
-            _canDrop = false; 
+            _canDrop = false;
+            Inventory.Instance.cantSwitch = true;
             
             float XaxisRotation = Input.GetAxis("Mouse X") * _sensX * Time.deltaTime;
             float YaxisRotation = Input.GetAxis("Mouse Y") * _sensY *Time.deltaTime;
@@ -116,12 +117,13 @@ public class TarotCardPuzzle : MonoBehaviour
         {
             _playerCam.CameraLock = false;
             _canDrop = true;
+            Inventory.Instance.cantSwitch = false;
         }
     }
 
     public void DeactivateMesh()
     {
-        //piecesCard[_actualPiece].GetComponent<MeshRenderer>().enabled = false;
+        piecesCard[_actualPiece].GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void PickUpObject(GameObject pickUpObj, int actualPiece)

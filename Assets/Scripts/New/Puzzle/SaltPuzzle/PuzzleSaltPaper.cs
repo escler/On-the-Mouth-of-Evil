@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleSaltPaper : MonoBehaviour, IInteractable
+public class PuzzleSaltPaper : Item, IInteractable
 {
-    public void OnInteractItem()
+    private bool active;
+
+    public override void OnInteract(bool hit, RaycastHit i)
     {
-        CanvasManager.Instance.puzzleSaltPaper.SetActive(true);
-        gameObject.SetActive(false);
+        CanvasManager.Instance.puzzleSaltPaper.SetActive(!active);
+        active = CanvasManager.Instance.puzzleSaltPaper.activeInHierarchy;
+        Inventory.Instance.cantSwitch = active;
     }
 
-    public void OnInteract(bool hit, RaycastHit i)
-    {
-    }
 
     public string ShowText()
     {

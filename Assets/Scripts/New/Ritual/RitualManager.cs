@@ -40,15 +40,14 @@ public class RitualManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
-
     public void TakeCandle(Candle candle)
     {
         _actualCandleTaked = candle;
-        candleTaked = true;
+    }
+
+    public void UnassignCandle()
+    {
+        _actualCandleTaked = null;
     }
 
     public void CheckCandleFloor()

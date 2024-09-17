@@ -24,6 +24,6 @@ public class RitualFloor : MonoBehaviour, IInteractable
 
     public string ShowText()
     {
-        return !_ritualManager.candleTaked ? "" : "Press E To Place Candle";
+        return !_ritualManager.candleTaked ? "" : "Place Candle";
     }
 }
