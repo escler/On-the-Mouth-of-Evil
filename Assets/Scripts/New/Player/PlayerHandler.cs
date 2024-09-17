@@ -36,7 +36,6 @@ public class PlayerHandler : MonoBehaviour
             
             if(!active) UnPossesPlayer();
             else PossesPlayer();
-            
         }
     }
 

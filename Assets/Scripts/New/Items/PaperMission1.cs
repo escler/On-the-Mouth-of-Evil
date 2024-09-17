@@ -1,19 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PaperMission1 : Mission, IInteractable
+public class PaperMission1 : Mission
 {
     public string interactableText;
-    public void OnInteract()
+    private bool active;
+
+    private void Start()
     {
-        CanvasManager.Instance.missionLevelHouse.SetActive(true);
-        PlayerHandler.Instance.actualMission = this;
-        gameObject.SetActive(false);
+        active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
     }
 
-    public void OnInteract(bool hit, RaycastHit i)
+    public void OnInteract()
     {
+        //CanvasManager.Instance.missionLevelHouse.SetActive(true);
+        //PlayerHandler.Instance.actualMission = this;
+        PlayerHandler.Instance.actualMission = this;
+    }
+
+    public override void OnInteract(bool hit, RaycastHit i)
+    {
+        CanvasManager.Instance.missionLevelHouse.SetActive(!active);
+        active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
     }
 
     public string ShowText()

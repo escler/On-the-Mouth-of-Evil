@@ -10,7 +10,7 @@ public class ExitHub : MonoBehaviour, IInteractable
     private int _count;
     private int _itemNeeded = 4;
 
-    public void OnInteract()
+    public void OnInteractItem()
     {
         _count = 0;
         var playerInventory = Inventory.Instance.inventory;

@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.37, y: 0.65, z: -9.68}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6436545351253717465}
@@ -54,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4324767, y: 0.9096389, z: 0.43896043}
-  m_Center: {x: 0.036787935, y: 0.045180567, z: -0.0017913431}
+  m_Size: {x: 0.11805344, y: 0.25159407, z: 0.10757637}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-9019298181145331988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +73,7 @@ MonoBehaviour:
   uiElement: {fileID: 461621442566964039, guid: a1796665d85eca34ea0123ab5fb8aaa1,
     type: 3}
   uiText: Press E To Grab Salt
+  category: 0
 --- !u!54 &6374427812672020837
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,9 +128,9 @@ Transform:
   m_GameObject: {fileID: 3431554156877638070}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.233, y: -0.403, z: 0.020217896}
-  m_LocalScale: {x: 3.3333333, y: 3.3333333, z: 3.3333333}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.06, y: -0.109, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5378339894350150513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

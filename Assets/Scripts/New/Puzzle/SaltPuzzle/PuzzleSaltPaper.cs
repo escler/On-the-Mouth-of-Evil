@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PuzzleSaltPaper : MonoBehaviour, IInteractable
 {
-    public void OnInteract()
+    public void OnInteractItem()
     {
         CanvasManager.Instance.puzzleSaltPaper.SetActive(true);
         gameObject.SetActive(false);

@@ -7,7 +7,7 @@ public class CloseUI : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) gameObject.SetActive(false);
+        if (Input.GetButtonDown("InteractUI")) gameObject.SetActive(false);
     }
 
     private void OnEnable()

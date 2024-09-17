@@ -12,7 +12,7 @@ public class RitualFloor : MonoBehaviour, IInteractable
         _ritualManager = RitualManager.Instance;
     }
 
-    public void OnInteract()
+    public void OnInteractItem()
     {
         if (!_ritualManager.candleTaked) return;
         _ritualManager.CheckCandleFloor();

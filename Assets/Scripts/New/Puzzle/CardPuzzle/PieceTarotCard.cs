@@ -1,20 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PieceTarotCard : MonoBehaviour, IInteractable
+public class PieceTarotCard : Item, IInteractable
 {
     public int cardCountPiece;
+    public bool onHand;
     
-    public void OnInteract()
+    public override void OnInteractItem()
     {
-        if (TarotCardPuzzle.Instance.heldObj != null) return;
+        base.OnInteractItem();
+        onHand = true;
+    }
+
+    public override void OnInteract(bool hit, RaycastHit i)
+    {
+    }
+
+    public override void OnSelectItem()
+    {
+        onHand = true;
+    }
+
+    private void OnEnable()
+    {
+        if (!onHand) return;
+    }
+
+    private void Update()
+    {
+        if (!onHand) return;
         TarotCardPuzzle.Instance.PickUpObject(gameObject, cardCountPiece);
     }
 
-    public void OnInteract(bool hit, RaycastHit i)
+    public override void OnDropItem()
     {
+        base.OnDropItem();
+        onHand = false;
+        TarotCardPuzzle.Instance.ThrowObject();
+    }
 
+    private void OnDisable()
+    {
+        onHand = false;
+        TarotCardPuzzle.Instance.heldObj = null;
+        TarotCardPuzzle.Instance.DeactivateMesh();
     }
 
     public string ShowText()

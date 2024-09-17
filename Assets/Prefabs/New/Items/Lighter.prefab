@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 1267808285704750567}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.005, y: -0.033, z: 0.197}
-  m_LocalScale: {x: 3.3333333, y: 3.3333333, z: 3.3333333}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.005, y: -0.033, z: 0.051}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5378339894350150513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.37, y: 0.65, z: -9.68}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7115614404024871338}
@@ -137,8 +137,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.38940066, y: 0.8947845, z: 0.5449435}
-  m_Center: {x: 0, y: 0.2867152, z: 0.22752826}
+  m_Size: {x: 0.052649684, y: 0.15418488, z: 0.09115219}
+  m_Center: {x: 0, y: 0.0440754, z: 0.029953003}
 --- !u!114 &8111890655940720650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +156,7 @@ MonoBehaviour:
   uiElement: {fileID: 461621442566964039, guid: 2ea8e091f5fe1fc4b80389c7efc7387a,
     type: 3}
   uiText: Press E To Grab Lighter
+  category: 0
   _itemsInteractables: []
 --- !u!54 &-8253912469436683685
 Rigidbody:

@@ -19,39 +19,9 @@ public class ObjectDetector : MonoBehaviour
 
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
         ui.SetActive(ray);
-
-        if (ray)
-        {
-            _crosshairUI.IncreaseUI();
-            if(_hit.transform.TryGetComponent(out IInteractable interactable))
-            {
-                ui.GetComponent<TextMeshProUGUI>().text = interactable.ShowText();
-                if (_hit.transform.TryGetComponent(out Item item))
-                {
-                    var actualNewObject = CanvasManager.Instance.GetDescription(item.itemName);
-                    if (descriptionItem != actualNewObject && descriptionItem != null)
-                    {
-                        descriptionItem.SetActive(false);
-                    }
-                    descriptionItem = actualNewObject;
-                    descriptionItem.SetActive(true);
-                }
-            }
-        }
-        else
-        {
-            _crosshairUI.DecreaseUI();
-            if (descriptionItem != null)
-            {
-                descriptionItem.SetActive(false);
-                descriptionItem = null;
-            }
-
-        }
-        
         if (ray && Input.GetButtonDown("Interact"))
         {
-            _hit.transform.GetComponent<IInteractable>().OnInteract();
+            _hit.transform.GetComponent<IInteractable>().OnInteractItem();
         }
         
         if (Inventory.Instance.selectedItem == null) return;
@@ -73,5 +43,37 @@ public class ObjectDetector : MonoBehaviour
                 Inventory.Instance.selectedItem.OnInteract(ray,_hit);
             }
         }
+
+        if (ray)
+        {
+            _crosshairUI.IncreaseUI();
+            if(_hit.transform.TryGetComponent(out IInteractable interactable))
+            {
+                ui.GetComponent<TextMeshProUGUI>().text = interactable.ShowText();
+                if (_hit.transform.TryGetComponent(out Item item))
+                {
+                    var actualNewObject = CanvasManager.Instance.GetDescription(item.itemName);
+                    if (descriptionItem != actualNewObject && descriptionItem != null)
+                    {
+                        descriptionItem.SetActive(false);
+                    }
+
+                    if (actualNewObject == null) return;
+                    descriptionItem = actualNewObject;
+                    descriptionItem.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            _crosshairUI.DecreaseUI();
+            if (descriptionItem != null)
+            {
+                descriptionItem.SetActive(false);
+                descriptionItem = null;
+            }
+
+        }
+        
     }
 }

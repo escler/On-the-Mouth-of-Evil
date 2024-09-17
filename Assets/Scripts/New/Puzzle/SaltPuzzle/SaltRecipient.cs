@@ -90,7 +90,6 @@ public class SaltRecipient : MonoBehaviour
     {
         if (!finish) return;
         _cantInteract = true;
-        print("ASD");
         UnHighlightObject();
     }
 }

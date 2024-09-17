@@ -30,7 +30,7 @@ public class Candle : MonoBehaviour, IInteractable
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), _player.GetComponent<Collider>(), true);
     }
 
-    public void OnInteract()
+    public void OnInteractItem()
     {
         if (RitualManager.Instance.candleTaked) return;
         PickUpObject(gameObject);

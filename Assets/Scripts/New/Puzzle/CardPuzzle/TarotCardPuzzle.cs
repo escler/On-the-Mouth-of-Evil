@@ -40,13 +40,11 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (heldObj == null) return;
         
-        MoveObject();
         RotateObject();
         CompareOrientation();
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if(_canPlace) PlaceObject();
-            else if(_canDrop) ThrowObject();
         }
         
     }
@@ -71,7 +69,7 @@ public class TarotCardPuzzle : MonoBehaviour
         var actualCardPiece = piecesCard[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > 1.9f && distance < .5f)
+        if (orientation > 1.9f && distance < 1f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _canPlace = true;
@@ -84,7 +82,7 @@ public class TarotCardPuzzle : MonoBehaviour
         
     }
     
-    void ThrowObject()
+    public void ThrowObject()
     {
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), PlayerHandler.Instance.GetComponent<Collider>(), false);
         heldObj.layer = 9;
@@ -93,11 +91,7 @@ public class TarotCardPuzzle : MonoBehaviour
         heldObjRb.AddForce(transform.forward);
         heldObj = null;
     }
-    
-    void MoveObject()
-    {
-        heldObj.transform.position = _player.puzzlePivot.position;
-    }
+
     void RotateObject()
     {
         if (Input.GetKey(KeyCode.R))
@@ -111,8 +105,8 @@ public class TarotCardPuzzle : MonoBehaviour
             _xRot += XaxisRotation;
             _yRot += YaxisRotation;
        
-            heldObj.transform.Rotate(transform.up, XaxisRotation);
-            heldObj.transform.Rotate(transform.right, YaxisRotation);
+            heldObj.transform.Rotate(Vector3.up, XaxisRotation);
+            heldObj.transform.Rotate(Vector3.right, YaxisRotation);
             //heldObjRb.transform.Rotate(-YaxisRotation,XaxisRotation,0);
         }
 
@@ -120,8 +114,12 @@ public class TarotCardPuzzle : MonoBehaviour
         {
             _playerCam.CameraLock = false;
             _canDrop = true;
-
         }
+    }
+
+    public void DeactivateMesh()
+    {
+        //piecesCard[_actualPiece].GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void PickUpObject(GameObject pickUpObj, int actualPiece)
@@ -132,7 +130,6 @@ public class TarotCardPuzzle : MonoBehaviour
             heldObj = pickUpObj;
             heldObjRb = pickUpObj.GetComponent<Rigidbody>();
             heldObjRb.isKinematic = true;
-            heldObjRb.transform.parent = _player.puzzlePivot;
             heldObj.transform.localScale = Vector3.one;
             heldObj.layer = 2;
   

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2067317937207979360}
   - component: {fileID: 4403314098117823410}
   - component: {fileID: 4362565628387193741}
-  - component: {fileID: 216226221388144961}
   - component: {fileID: 989349974332545328}
+  - component: {fileID: 27257509972621858}
   m_Layer: 9
   m_Name: Piece2
   m_TagString: CanPickUp
@@ -113,8 +113,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &216226221388144961
-MeshCollider:
+--- !u!114 &989349974332545328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3136922787195926371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017c1f5a39ce3774da1fb526039ee91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Card Piece 2
+  objectPrefab: {fileID: 3136922787195926371}
+  uiElement: {fileID: 461621442566964039, guid: 74776abb3a3f08748b6af530a83b777b,
+    type: 3}
+  uiText: Press E To Grab
+  category: 1
+  cardCountPiece: 1
+  onHand: 0
+--- !u!65 &27257509972621858
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -131,20 +151,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 14444616739625460, guid: 2be7c534cf23d964f91242db108e649a, type: 3}
---- !u!114 &989349974332545328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3136922787195926371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017c1f5a39ce3774da1fb526039ee91b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardCountPiece: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3339949, y: 0.02630905, z: 0.43929565}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -10,15 +10,26 @@ public class Item : MonoBehaviour, IInteractable
     private bool _canInteract;
     protected bool canUse;
     public string uiText;
+    public ItemCategory category;
     
     public void OnGrabItem()
     {
-        Inventory.Instance.AddItem(this);
+        Inventory.Instance.AddItem(this, category);
     }
 
-    public virtual void OnInteract()
+    public virtual void OnInteractItem()
     {
         OnGrabItem();
+    }
+
+    public virtual void OnSelectItem()
+    {
+        
+    }
+
+    public virtual void OnDropItem()
+    {
+        
     }
 
     public virtual void OnInteract(bool hit, RaycastHit i)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    public void OnInteract();
+    public void OnInteractItem();
 
     public void OnInteract(bool hit, RaycastHit i);
 

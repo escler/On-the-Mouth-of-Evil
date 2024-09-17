@@ -44,7 +44,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnInteract()
+    public void OnInteractItem()
     {
         playerInTable = !playerInTable;
         CanvasManager.Instance.crossHairUI.gameObject.SetActive(!playerInTable);

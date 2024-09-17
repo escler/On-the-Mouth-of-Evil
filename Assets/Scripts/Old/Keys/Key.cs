@@ -7,7 +7,7 @@ public class Key : MonoBehaviour, IInteractable
     public KeyType keyRoom;
     public string roomName;
 
-    public void OnInteract()
+    public void OnInteractItem()
     {
         KeyHandler.Instance.AddKey(keyRoom, roomName);
         Destroy(gameObject);
