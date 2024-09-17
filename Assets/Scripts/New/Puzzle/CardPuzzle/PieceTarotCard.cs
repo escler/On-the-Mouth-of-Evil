@@ -52,7 +52,7 @@ public class PieceTarotCard : Item, IInteractable
     private void OnDisable()
     {
         onHand = false;
-        if (TarotCardPuzzle.Instance == null) TarotCardPuzzle.Instance.heldObj = null;
+        if (TarotCardPuzzle.Instance != null) TarotCardPuzzle.Instance.heldObj = null;
         if (CanvasManager.Instance == null) return;
         CanvasManager.Instance.rotateInfo.SetActive(false);
     }

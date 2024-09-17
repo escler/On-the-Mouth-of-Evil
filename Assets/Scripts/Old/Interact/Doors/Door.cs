@@ -44,6 +44,7 @@ public class Door : MonoBehaviour, IInteractable
 
     private IEnumerator BlockDoorCor()
     {
+        print("ASD");
         saltPS.SetActive(true); //Aca prendo la sal
         doorNode.gameObject.SetActive(false);
         DisableNodes();
