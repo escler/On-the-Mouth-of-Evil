@@ -8,11 +8,14 @@ public class Bible : Item, IBurneable
     private bool _placed;
     public float timeToBurn;
     public GameObject firePS;
-    private MaterialPropertyBlock burning;
+    private MaterialPropertyBlock _burning;
+    private MeshRenderer _mesh;
     private void Awake()
     {
-        GetComponentInChildren<MeshRenderer>().SetPropertyBlock(burning);
-        burning.SetInt("_BurningON", 0);
+        _burning = new MaterialPropertyBlock();
+        _mesh = GetComponentInChildren<MeshRenderer>();
+        _mesh.SetPropertyBlock(_burning);
+        _burning.SetInt("_BurningON", 0);
     }
 
     public void OnBurn()
@@ -22,7 +25,8 @@ public class Bible : Item, IBurneable
         GetComponent<Rigidbody>().isKinematic = true;
         if(Enemy.Instance != null) Enemy.Instance.SetGoalPos(transform.position);
         StartCoroutine(BibleBurning());        
-        burning.SetInt("_BurningON", 1);
+        _burning.SetInt("_BurningON", 1);
+        _mesh.SetPropertyBlock(_burning);
 
     }
 
