@@ -78,11 +78,22 @@ public class InventoryUI : MonoBehaviour
                 hubInventoryUI.SetActive(true);
                 enviromentInventoryUI.SetActive(false);
                 actualInventoryUI = hubInventoryUI;
+                var inventoryHub = Inventory.Instance.hubInventory;
+
+                for (int i = 0; i < inventoryHub.Length; i++)
+                {
+                    ChangeItemUI(inventoryHub[i], i);
+                }
                 break;
             case 1:
                 hubInventoryUI.SetActive(false);
                 enviromentInventoryUI.SetActive(true);
                 actualInventoryUI = enviromentInventoryUI;
+                var inventoryEnviroment = Inventory.Instance.enviromentInventory;
+                for (int i = 0; i < inventoryEnviroment.Length; i++)
+                {
+                    ChangeItemUI(inventoryEnviroment[i], i);
+                }
                 break;
         }
     }

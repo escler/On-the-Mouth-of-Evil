@@ -22,6 +22,7 @@ public class PieceTarotCard : Item, IInteractable
     public override void OnSelectItem()
     {
         onHand = true;
+        CanvasManager.Instance.rotateInfo.SetActive(true);
     }
 
     private void OnEnable()
@@ -39,7 +40,7 @@ public class PieceTarotCard : Item, IInteractable
     {
         base.OnDropItem();
         onHand = false;
-        TarotCardPuzzle.Instance.ThrowObject();
+        gameObject.layer = 9;
     }
 
     private void OnDisable()
@@ -47,6 +48,9 @@ public class PieceTarotCard : Item, IInteractable
         onHand = false;
         TarotCardPuzzle.Instance.heldObj = null;
         TarotCardPuzzle.Instance.DeactivateMesh();
+        if (CanvasManager.Instance == null) return;
+        CanvasManager.Instance.rotateInfo.SetActive(false);
+
     }
 
     public string ShowText()

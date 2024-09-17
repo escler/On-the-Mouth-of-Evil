@@ -52,6 +52,7 @@ public class TarotCardPuzzle : MonoBehaviour
     private void PlaceObject()
     {
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
+        Inventory.Instance.DropItem();
         Destroy(heldObj);
         _piecePlacesCount++;
         CheckPuzzleState();
@@ -62,6 +63,7 @@ public class TarotCardPuzzle : MonoBehaviour
         if (_piecePlacesCount < piecesCard.Length) return;
 
         paperPuzzleSalt.SetActive(true);
+        Inventory.Instance.ChangeUI(Inventory.Instance.countSelected);
     }
 
     private void CompareOrientation()

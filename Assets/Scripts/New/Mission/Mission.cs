@@ -13,4 +13,14 @@ public class Mission : Item
         base.OnDropItem();
         PlayerHandler.Instance.actualMission = null;
     }
+
+    public virtual void OnGrabMission()
+    {
+    }
+
+    public override void OnInteractItem()
+    {
+        base.OnInteractItem();
+        OnGrabMission();
+    }
 }

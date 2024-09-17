@@ -13,11 +13,15 @@ public class PaperMission1 : Mission
         active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
     }
 
+    public override void OnGrabMission()
+    {
+        base.OnGrabMission();
+        PlayerHandler.Instance.actualMission = this;
+    }
+
     public void OnInteract()
     {
         //CanvasManager.Instance.missionLevelHouse.SetActive(true);
-        //PlayerHandler.Instance.actualMission = this;
-        PlayerHandler.Instance.actualMission = this;
     }
 
     public override void OnInteract(bool hit, RaycastHit i)

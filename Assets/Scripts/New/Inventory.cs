@@ -116,10 +116,10 @@ public class Inventory : MonoBehaviour
         if (selectedItem.category == ItemCategory.hubItem) countHub = count;
         else countEnviroment = count;
         selectedItem.transform.parent = null;
-        selectedItem.OnDropItem();
         selectedItem.GetComponent<BoxCollider>().enabled = true;
         selectedItem.GetComponent<Rigidbody>().isKinematic = false;
         selectedItem.transform.localScale = Vector3.one;
+        selectedItem.OnDropItem();
         inventory[countSelected] = null;
         selectedItem = inventory[countSelected];
         ChangeUI(countSelected);
