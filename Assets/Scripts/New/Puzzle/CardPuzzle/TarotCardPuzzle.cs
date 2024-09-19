@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TarotCardPuzzle : MonoBehaviour
@@ -14,6 +15,8 @@ public class TarotCardPuzzle : MonoBehaviour
     public GameObject[] piecesCard;
     private int _actualPiece, _piecePlacesCount;
     public Material cardMaterial;
+    public Transform drawer;
+    private float _angleX;
 
 
     private void Awake()
@@ -58,12 +61,30 @@ public class TarotCardPuzzle : MonoBehaviour
         CheckPuzzleState();
     }
 
+    IEnumerator MoveDrawer()
+    {
+        while (_angleX < 50f)
+        {
+            drawer.Rotate(1, 0, 0);
+
+            _angleX = drawer.localRotation.eulerAngles.x;
+            print(_angleX);
+
+            yield return new WaitForSeconds(.01f);
+        }
+
+        paperPuzzleSalt.GetComponent<BoxCollider>().enabled = true;
+        paperPuzzleSalt.GetComponent<Rigidbody>().isKinematic = false;
+    }
+
     private void CheckPuzzleState()
     {
         if (_piecePlacesCount < piecesCard.Length) return;
 
-        paperPuzzleSalt.SetActive(true);
+        //paperPuzzleSalt.SetActive(true);
         Inventory.Instance.ChangeUI(Inventory.Instance.countSelected);
+        _angleX = 0;
+        StartCoroutine(MoveDrawer());
     }
 
     private void CompareOrientation()

@@ -4697,6 +4697,7 @@ MonoBehaviour:
   patrolState: {fileID: 4098424891984333558}
   chaseState: {fileID: 2331161858086147234}
   goToLocationState: {fileID: 8921149377614665347}
+  enemyMaterial: {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
 --- !u!114 &8785165011350344749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4710,9 +4711,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3234476839139166343}
-  constTime: 10
-  variantTimeMin: 2
-  variantTimeMax: 5
+  constTime: 30
+  variantTimeMin: 10
+  variantTimeMax: 15
 --- !u!114 &4098424891984333558
 MonoBehaviour:
   m_ObjectHideFlags: 0

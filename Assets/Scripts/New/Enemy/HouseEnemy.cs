@@ -28,6 +28,10 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
     private bool hasPlayedFire;
 
+    public Material enemyMaterial;
+    private float _enemyVisibility;
+    private bool corroutineActivate;
+
     private HouseEnemyView _enemyAnimator;
 
     private void Awake()
@@ -40,6 +44,8 @@ public class HouseEnemy : Enemy
 
         Instance = this;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
+        enemyMaterial.SetFloat("_Power", 10);
+        _enemyVisibility = enemyMaterial.GetFloat("_Power");
         
         objects = new List<IInteractableEnemy>();
         _player = PlayerHandler.Instance;
@@ -84,10 +90,10 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            /*if (mesh.enabled)
+            if (!corroutineActivate && _enemyVisibility < 10)
             {
-                mesh.enabled = false;
-            }*/
+                StartCoroutine(HideEnemy());
+            }
             appear = false;
             hasPlayedFire = false;
             _enemyAnimator.ChangeStateAnimation("Spawn", false);
@@ -98,16 +104,41 @@ public class HouseEnemy : Enemy
 
         if (actualTime > timeToShowMe)
         {
-            //mesh.enabled = true;
-
             if (!appear)
             {
                 _enemyAnimator.ChangeStateAnimation("Spawn", true);
                 appear = true;
+
             }
-            
-            
+            if (!corroutineActivate && _enemyVisibility > 0)
+                StartCoroutine(ShowEnemyLerp());
         }
+    }
+
+    IEnumerator ShowEnemyLerp()
+    {
+        corroutineActivate = true;
+        while (_enemyVisibility > 0)
+        {
+            _enemyVisibility -= .5f;
+            enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        corroutineActivate = false;
+    }
+
+    IEnumerator HideEnemy()
+    {
+        corroutineActivate = true;
+        while (_enemyVisibility < 10)
+        {
+            _enemyVisibility += .5f;
+            enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        corroutineActivate = false;
     }
 
     private void CompareRooms()
