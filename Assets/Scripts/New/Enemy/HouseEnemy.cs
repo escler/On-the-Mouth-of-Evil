@@ -30,7 +30,10 @@ public class HouseEnemy : Enemy
 
     public Material enemyMaterial;
     private float _enemyVisibility;
-    private bool corroutineActivate;
+    private bool _corroutineActivate;
+
+    private CorduraHandler _corduraHandler;
+
 
     private HouseEnemyView _enemyAnimator;
 
@@ -43,6 +46,7 @@ public class HouseEnemy : Enemy
         }
 
         Instance = this;
+        _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 10);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
@@ -90,7 +94,8 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            if (!corroutineActivate && _enemyVisibility < 10)
+            _corduraHandler.CorduraOn = false;
+            if (!_corroutineActivate && _enemyVisibility < 10)
             {
                 StartCoroutine(HideEnemy());
             }
@@ -108,29 +113,31 @@ public class HouseEnemy : Enemy
             {
                 _enemyAnimator.ChangeStateAnimation("Spawn", true);
                 appear = true;
-
             }
-            if (!corroutineActivate && _enemyVisibility > 0)
+            if (!_corroutineActivate && _enemyVisibility > 0)
                 StartCoroutine(ShowEnemyLerp());
         }
     }
 
     IEnumerator ShowEnemyLerp()
     {
-        corroutineActivate = true;
+        _corroutineActivate = true;
         while (_enemyVisibility > 0)
         {
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
-
-        corroutineActivate = false;
+        _corduraHandler.CorduraOn = true;
+        CorduraHandler.Instance.StartCordura();
+        _corroutineActivate = false;
     }
+
+
 
     IEnumerator HideEnemy()
     {
-        corroutineActivate = true;
+        _corroutineActivate = true;
         while (_enemyVisibility < 10)
         {
             _enemyVisibility += .5f;
@@ -138,7 +145,7 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
 
-        corroutineActivate = false;
+        _corroutineActivate = false;
     }
 
     private void CompareRooms()
