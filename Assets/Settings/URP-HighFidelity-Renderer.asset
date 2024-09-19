@@ -1,5 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7903521964806673707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: ligth
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    passTag: ligth
+    Event: 300
+    filterSettings:
+      RenderQueueType: 1
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 4294967295
+      PassNames: []
+    overrideMaterial: {fileID: -876546973899608171, guid: b8977afaeafc2d0439b84d5fae054a98,
+      type: 3}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 0
+    depthCompareFunction: 4
+    enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
 --- !u!114 &-5482889138667380168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10,11 +53,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f40272f0af41e342ab9d3f39cc029d2, type: 3}
-  m_Name: CustomPostProcessRenderFeature
+  m_Name: custom
   m_EditorClassIdentifier: 
   m_Active: 0
-  m_LigthShader: {fileID: 4800000, guid: 51a56dd063bb00a44accbb7267f1cc32, type: 3}
-  m_compositeShader: {fileID: -6465566751694194690, guid: 5160965116a825a4698fbc21fe1f444c,
+  m_LigthShader: {fileID: 4800000, guid: b1c7f8059f44ae444bdec4e321a8e8d7, type: 3}
+  m_compositeShader: {fileID: -6465566751694194690, guid: a688d9a9a517f1e49b3f523ff72e1077,
     type: 3}
 --- !u!114 &-3202480075762680482
 MonoBehaviour:
@@ -103,12 +146,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: Outline
+  m_Name: hatch
   m_EditorClassIdentifier: 
   m_Active: 0
-  passMaterial: {fileID: 0}
+  passMaterial: {fileID: -876546973899608171, guid: a688d9a9a517f1e49b3f523ff72e1077,
+    type: 3}
   injectionPoint: 450
-  requirements: 6
+  requirements: 7
   passIndex: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -132,7 +176,9 @@ MonoBehaviour:
   - {fileID: -977535599768538957}
   - {fileID: -5482889138667380168}
   - {fileID: -3202480075762680482}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff23822e2c260dde8b35e3de6ab56818ed3
+  - {fileID: -7903521964806673707}
+  - {fileID: 5991442567388085536}
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff23822e2c260dde8b35e3de6ab56818ed3d56a33cda50c5192203d526145e12553
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -199,3 +245,46 @@ MonoBehaviour:
     mask:
       serializedVersion: 2
       m_Bits: 0
+--- !u!114 &5991442567388085536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: RenderObjects
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: RenderObjects
+    Event: 250
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 256
+      PassNames: []
+    overrideMaterial: {fileID: -876546973899608171, guid: a688d9a9a517f1e49b3f523ff72e1077,
+      type: 3}
+    overrideMaterialPassIndex: 1
+    overrideShader: {fileID: 4800000, guid: ac25accc82216a84e80a67dcd02e2eb6, type: 3}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 0
+    depthCompareFunction: 4
+    enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
