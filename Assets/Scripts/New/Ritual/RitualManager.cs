@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RitualManager : MonoBehaviour
 {
-    public GameObject ritualFloor, chains;
+    public GameObject ritualFloor, stampBlock, stampRelease;
     public Candle[] candles;
     public GameObject[] candlesInRitual;
     private int _candlesPlaced;
@@ -33,7 +33,8 @@ public class RitualManager : MonoBehaviour
     public void AltarCompleted()
     {
         ritualFloor.SetActive(true);
-        chains.SetActive(false);
+        stampBlock.SetActive(false);
+        stampRelease.SetActive(true);
         foreach (var candle in candles)
         {
             candle.canTake = true;

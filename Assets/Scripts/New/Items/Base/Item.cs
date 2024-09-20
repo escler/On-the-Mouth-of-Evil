@@ -19,7 +19,6 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnInteractItem()
     {
-        print("?");
         OnGrabItem();
     }
 
