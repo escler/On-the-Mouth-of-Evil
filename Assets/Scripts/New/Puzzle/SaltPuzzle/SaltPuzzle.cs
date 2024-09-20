@@ -14,7 +14,9 @@ public class SaltPuzzle : MonoBehaviour
     public int[] solution;
     private int count;
     public PlayVFX playVFX;
-    public GameObject psAura; 
+    public GameObject psAura;
+    public GameObject tree;
+
 
     private void Awake()
     {
@@ -64,8 +66,9 @@ public class SaltPuzzle : MonoBehaviour
                 RitualManager.Instance.AltarCompleted();
             }
             //Aca se gana el puzzle y se activa el altar
-            playVFX.playFX();
             psAura.SetActive(true);
+            playVFX.playFX();
+            tree.SetActive(true);
         }
         else
         {
