@@ -68,8 +68,6 @@ public class TarotCardPuzzle : MonoBehaviour
             drawer.Rotate(1, 0, 0);
 
             _angleX = drawer.localRotation.eulerAngles.x;
-            print(_angleX);
-
             yield return new WaitForSeconds(.01f);
         }
 

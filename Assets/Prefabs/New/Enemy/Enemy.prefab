@@ -4616,6 +4616,7 @@ GameObject:
   - component: {fileID: 4098424891984333558}
   - component: {fileID: 2331161858086147234}
   - component: {fileID: 8921149377614665347}
+  - component: {fileID: 4825668535195307386}
   - component: {fileID: 3433673491691955081}
   - component: {fileID: 8136380155633983683}
   m_Layer: 7
@@ -4697,8 +4698,11 @@ MonoBehaviour:
   patrolState: {fileID: 4098424891984333558}
   chaseState: {fileID: 2331161858086147234}
   goToLocationState: {fileID: 8921149377614665347}
+  goToRitual: {fileID: 4825668535195307386}
+  ritualDone: 0
+  nodeRitual: {fileID: 0}
   enemyMaterial: {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
-  corduraMaterial: {fileID: 2100000, guid: c9e857263f845604da5aed18f335f2ee, type: 2}
+  onRitual: 0
 --- !u!114 &8785165011350344749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,6 +4758,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c85604d47b99c7b4d919d36e064d4929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 3234476839139166343}
+--- !u!114 &4825668535195307386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffcfbaeef7ec4248a33d544775e4aa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3234476839139166343}

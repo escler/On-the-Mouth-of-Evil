@@ -26,11 +26,16 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_Patrol patrolState;
     [SerializeField] private HouseEnemy_Chase chaseState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
+    [SerializeField] private HouseEnemy_Ritual goToRitual;
     private bool hasPlayedFire;
+    public bool ritualDone;
+    public Node nodeRitual;
 
     public Material enemyMaterial;
     private float _enemyVisibility;
     private bool _corroutineActivate;
+
+    public bool onRitual;
 
     private CorduraHandler _corduraHandler;
 
@@ -60,21 +65,29 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
         _fsm.AddTransition(StateTransitions.ToChase, idleState, chaseState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, idleState, goToRitual);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
         _fsm.AddTransition(StateTransitions.ToChase, patrolState, chaseState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, patrolState, goToRitual);
+
 
         
         //Chase
         _fsm.AddTransition(StateTransitions.ToIdle, chaseState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, chaseState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, chaseState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, chaseState, goToRitual);
+
         
         //GoToLocation
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
+        _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, goToRitual);
+
         
         _fsm.Active = true;
         OnAwake();
@@ -83,6 +96,7 @@ public class HouseEnemy : Enemy
 
     private void Update()
     {
+        if (onRitual) return;
         CompareRooms();
         ShowEnemy();
 
@@ -119,6 +133,14 @@ public class HouseEnemy : Enemy
         }
     }
 
+    public void ShowEnemyRitual()
+    {
+        onRitual = true;
+        StopCoroutine(ShowEnemyLerp());
+        StopCoroutine(HideEnemy());
+        StartCoroutine(ShowEnemyOnRitual());
+    }
+    
     IEnumerator ShowEnemyLerp()
     {
         _corroutineActivate = true;
@@ -131,6 +153,27 @@ public class HouseEnemy : Enemy
         _corduraHandler.CorduraOn = true;
         CorduraHandler.Instance.StartCordura();
         _corroutineActivate = false;
+    }
+
+    IEnumerator ShowEnemyOnRitual()
+    {
+        while (_enemyVisibility > 0)
+        {
+            _enemyVisibility -= .5f;
+            enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        yield return new WaitForSeconds(5f);
+        
+        while (_enemyVisibility < 10)
+        {
+            _enemyVisibility += .5f;
+            enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        gameObject.SetActive(false);
     }
 
 
@@ -195,6 +238,12 @@ public class HouseEnemy : Enemy
         if (actualRoom != PlayerHandler.Instance.actualRoom) return;
         crossUsed = true;
         _enemyAnimator.ChangeStateAnimation("CrossUsed", true);
+    }
+
+    public void RitualReady(Node node)
+    {
+        nodeRitual = node;
+        ritualDone = true;
     }
 
 }

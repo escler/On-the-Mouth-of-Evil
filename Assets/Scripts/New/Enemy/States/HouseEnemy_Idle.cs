@@ -23,6 +23,10 @@ public class HouseEnemy_Idle : MonoBaseState
 
     public override IState ProcessInput()
     {
+        
+        if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
+            return Transitions[StateTransitions.ToRitual];
+        
         if (_idleTime <= 0 && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
 

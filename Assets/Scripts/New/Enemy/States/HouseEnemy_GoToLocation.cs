@@ -15,17 +15,20 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     {
         if (!_pathCalculated) return;
 
-        if(_path.Count > 0)
+        if (_path.Count > 0)
+        {
             TravelPath();
+        }
+        else GoToNodeGoal();
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
         _startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
-        _goalNode = PathFindingManager.instance.CalculateDistance(owner.goalPosition);
+        _goalNode = owner.ritualDone ? owner.nodeRitual : PathFindingManager.instance.CalculateDistance(owner.goalPosition);
         _path = owner.pf.ThetaStar(_startNode, _goalNode, owner.obstacles);
-
+        
         if (_path.Count > 0)
         {
             _path.Reverse();
@@ -42,7 +45,17 @@ public class HouseEnemy_GoToLocation : MonoBaseState
         owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
         
         if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _path.RemoveAt(0);
-        if (_path.Count == 0) _pathFinish = true;
+    }
+
+    private void GoToNodeGoal()
+    {
+        if (_pathFinish) return;
+        Vector3 target = _goalNode.transform.position;
+        target.y = owner.transform.position.y;
+        Vector3 dir = target - owner.transform.position;
+        owner.transform.rotation = Quaternion.LookRotation(dir);
+        owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
+        if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _pathFinish = true;
     }
 
     public override Dictionary<string, object> Exit(IState to)
@@ -55,8 +68,14 @@ public class HouseEnemy_GoToLocation : MonoBaseState
 
     public override IState ProcessInput()
     {
-        if (!owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToIdle))
+        if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
+            return Transitions[StateTransitions.ToRitual];
+        
+        if (!owner.bibleBurning && _pathFinish && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
+        
+        if (!owner.ritualDone && _pathFinish && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
+            return Transitions[StateTransitions.ToSpecifyLocation];
         
         return this;
     }

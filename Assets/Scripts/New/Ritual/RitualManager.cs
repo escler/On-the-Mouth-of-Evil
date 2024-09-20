@@ -6,15 +6,16 @@ using UnityEngine;
 
 public class RitualManager : MonoBehaviour
 {
-    public GameObject ritualFloor, stampBlock, stampRelease;
+    public GameObject ritualFloor, stampBlock, stampRelease, psRitual;
     public Candle[] candles;
     public GameObject[] candlesInRitual;
-    private int _candlesPlaced;
+    private int _candlesPlaced, _candlesBurning;
     public bool candleTaked;
     private Candle _actualCandleTaked;
     private Transform cameraPos;
     private RaycastHit _hit;
     public LayerMask layermask;
+    public Node ritualNode;
     
     public static RitualManager Instance { get; private set; }
 
@@ -59,5 +60,16 @@ public class RitualManager : MonoBehaviour
         _candlesPlaced++;
         Destroy(_actualCandleTaked.gameObject);
         Inventory.Instance.DropItem();
+
+    }
+
+    public void CandlesBurned()
+    {
+        _candlesBurning++;
+        if (_candlesBurning >= candlesInRitual.Length)
+        {
+            psRitual.SetActive(true);
+            HouseEnemy.Instance.RitualReady(ritualNode);
+        }
     }
 }

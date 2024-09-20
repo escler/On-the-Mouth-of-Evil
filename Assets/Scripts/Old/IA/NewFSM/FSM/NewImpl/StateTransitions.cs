@@ -17,4 +17,5 @@ public class StateTransitions
     public const string ToHit = "ToHit";
     public const string ToBanish = "ToBanish";
     public const string ToDeath = "ToDeath";
+    public const string ToRitual = "ToRitual";
 }

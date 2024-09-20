@@ -49,6 +49,9 @@ public class HouseEnemy_Patrol : MonoBaseState
 
     public override IState ProcessInput()
     {
+        if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
+            return Transitions[StateTransitions.ToRitual];
+        
         if (_pathFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
 
