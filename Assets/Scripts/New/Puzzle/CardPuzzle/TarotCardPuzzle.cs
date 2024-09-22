@@ -20,7 +20,6 @@ public class TarotCardPuzzle : MonoBehaviour
     public Transform drawer;
     private float _angleX;
     Vector3 reference =Vector3.zero;
-    private bool testRotate;
 
 
     private void Awake()
@@ -121,7 +120,7 @@ public class TarotCardPuzzle : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             heldObj.transform.position = Vector3.SmoothDamp(heldObj.transform.position,
-                PlayerHandler.Instance.lookObjectPos.position, ref reference,.1f);
+                PlayerHandler.Instance.farFocusPos.position, ref reference,.1f);
             _playerCam.CameraLock = true;
             _canDrop = false;
             Inventory.Instance.cantSwitch = true;

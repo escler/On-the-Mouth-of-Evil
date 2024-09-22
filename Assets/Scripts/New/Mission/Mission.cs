@@ -21,6 +21,7 @@ public class Mission : Item
     public override void OnInteractItem()
     {
         base.OnInteractItem();
+        transform.localScale = Vector3.one;
         OnGrabMission();
     }
 }

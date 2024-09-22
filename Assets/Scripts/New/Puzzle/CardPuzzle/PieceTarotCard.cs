@@ -25,11 +25,6 @@ public class PieceTarotCard : Item, IInteractable
         CanvasManager.Instance.rotateInfo.SetActive(true);
     }
 
-    private void OnEnable()
-    {
-        if (!onHand) return;
-    }
-
     private void Update()
     {
         if (!onHand) return;
@@ -41,6 +36,7 @@ public class PieceTarotCard : Item, IInteractable
         base.OnDropItem();
         onHand = false;
         gameObject.layer = 9;
+        TarotCardPuzzle.Instance.heldObj = null;
     }
 
     public override void OnDeselectItem()
