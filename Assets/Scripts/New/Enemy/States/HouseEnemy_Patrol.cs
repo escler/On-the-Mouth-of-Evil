@@ -12,8 +12,14 @@ public class HouseEnemy_Patrol : MonoBaseState
     public override void UpdateLoop()
     {
         if (!_pathCalculated) return;
+
+        if (_path.Count > 0)
+        {
+            TravelPath();
+            return;
+        }
         
-        TravelPath();
+        GoToNodeGoal();
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -73,6 +79,17 @@ public class HouseEnemy_Patrol : MonoBaseState
         owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
         
         if (Vector3.Distance(target, owner.transform.position) <= 0.1f || target == null) _path.RemoveAt(0);
-        if (_path.Count == 0) _pathFinish = true;
     }
+    
+    private void GoToNodeGoal()
+    {
+        if (_pathFinish) return;
+        Vector3 target = goal.transform.position;
+        target.y = owner.transform.position.y;
+        Vector3 dir = target - owner.transform.position;
+        owner.transform.rotation = Quaternion.LookRotation(dir);
+        owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
+        if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _pathFinish = true;
+    }
+
 }

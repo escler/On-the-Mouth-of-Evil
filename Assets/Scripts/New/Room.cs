@@ -43,6 +43,15 @@ public class Room : MonoBehaviour
     
     public void EnableNodes()
     {
+        int actualCount = 0;
+        foreach (var door in doors)
+        {
+            if(door.saltBlock) continue;
+            actualCount++;
+        }
+
+        if (actualCount != count) return;
+        
         foreach (var node in nodesRoom)
         {
             node.gameObject.SetActive(true);

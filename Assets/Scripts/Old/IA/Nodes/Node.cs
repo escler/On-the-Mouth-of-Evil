@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class Node : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Node : MonoBehaviour
     private int _cost = 0;
     public bool blocked;
     public bool blockNode;
+    public bool doorNode;
 
     private LineRenderer _lineRenderer;
 
@@ -24,11 +26,13 @@ public class Node : MonoBehaviour
 
     private void OnEnable()
     {
+        blocked = false;
         StartCoroutine(AddNodeWithDelay());
     }
 
     private void OnDisable()
     {
+        blocked = true;
         PathFindingManager.instance.Nodes.Remove(this);
     }
 
@@ -42,7 +46,7 @@ public class Node : MonoBehaviour
         foreach (Vector3 direction in PathFindingManager.instance.Directions)
         {
             RaycastHit hit;
-            bool ray = Physics.Raycast(transform.position, direction, out hit,10f, _layerMask);
+            bool ray = Physics.Raycast(transform.position, direction, out hit,3f, _layerMask);
 
             if (ray)
             {
@@ -68,5 +72,4 @@ public class Node : MonoBehaviour
     {
         PathFindingManager.instance.Nodes.Add(this);
     }
-
 }

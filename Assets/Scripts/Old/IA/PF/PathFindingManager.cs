@@ -139,10 +139,11 @@ public class PathFindingManager : MonoBehaviour
 
     public Node CalculateOtherRoomNode(Node start)
     {
+        if (start == null) return null;
         var roomStartNode = start.room;
         if (roomStartNode != HouseEnemy.Instance.actualRoom) return null;
 
-        var nodesActuals = _nodes.Where(x => x.room != roomStartNode || x.room != HouseEnemy.Instance.crossRoom);
+        var nodesActuals = _nodes.Where(x => x.room != roomStartNode || x.room != HouseEnemy.Instance.crossRoom || !x.doorNode);
 
         return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
     }

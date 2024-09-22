@@ -27,13 +27,15 @@ public class PathFinding
             {
                 break;
             }
+            
 
             foreach (var next in current.GetNeighbors())
             {
+                if(next.blocked) continue;
                 if (next != null)
                 {
                     int newCost = nodeCost[current] + next.Cost;
-
+            
                     if (!nodeCost.ContainsKey(next))
                     {
                       nodeCost.Add(next, newCost);
