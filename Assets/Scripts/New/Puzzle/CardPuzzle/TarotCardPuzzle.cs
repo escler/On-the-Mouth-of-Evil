@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class TarotCardPuzzle : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class TarotCardPuzzle : MonoBehaviour
     public Material cardMaterial;
     public Transform drawer;
     private float _angleX;
+    Vector3 reference =Vector3.zero;
+    private bool testRotate;
 
 
     private void Awake()
@@ -79,7 +83,6 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (_piecePlacesCount < piecesCard.Length) return;
 
-        //paperPuzzleSalt.SetActive(true);
         Inventory.Instance.ChangeUI(Inventory.Instance.countSelected);
         _angleX = 0;
         StartCoroutine(MoveDrawer());
@@ -117,6 +120,8 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.R))
         {
+            heldObj.transform.position = Vector3.SmoothDamp(heldObj.transform.position,
+                PlayerHandler.Instance.lookObjectPos.position, ref reference,.1f);
             _playerCam.CameraLock = true;
             _canDrop = false;
             Inventory.Instance.cantSwitch = true;
@@ -127,9 +132,17 @@ public class TarotCardPuzzle : MonoBehaviour
             _xRot += XaxisRotation;
             _yRot += YaxisRotation;
        
-            heldObj.transform.Rotate(Vector3.up, XaxisRotation);
-            heldObj.transform.Rotate(Vector3.right, YaxisRotation);
+            //heldObj.transform.Rotate(Vector3.up, XaxisRotation);
+            //heldObj.transform.Rotate(Vector3.right, YaxisRotation);
             //heldObjRb.transform.Rotate(-YaxisRotation,XaxisRotation,0);
+
+            heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.right, YaxisRotation);
+            heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.up, XaxisRotation);
+
+
+            /*heldObj.transform.Rotate(transform.up, XaxisRotation);
+            heldObj.transform.Rotate(transform.right, YaxisRotation);
+            heldObjRb.transform.localEulerAngles += transform.up * XaxisRotation + transform.right * YaxisRotation;*/
         }
 
         if (Input.GetKeyUp(KeyCode.R))
@@ -137,6 +150,7 @@ public class TarotCardPuzzle : MonoBehaviour
             _playerCam.CameraLock = false;
             _canDrop = true;
             Inventory.Instance.cantSwitch = false;
+            heldObj.transform.position = PlayerHandler.Instance.handPivot.position;
         }
     }
 
