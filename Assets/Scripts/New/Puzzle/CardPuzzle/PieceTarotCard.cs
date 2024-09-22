@@ -37,6 +37,7 @@ public class PieceTarotCard : Item, IInteractable
         onHand = false;
         gameObject.layer = 9;
         TarotCardPuzzle.Instance.heldObj = null;
+        CanvasManager.Instance.rotateInfo.SetActive(false);
     }
 
     public override void OnDeselectItem()

@@ -14,7 +14,7 @@ public class PaperMission1 : Mission
 
     private void Start()
     {
-        active = CanvasManager.Instance.missionLevelHouse.activeInHierarchy;
+        active = false;
         focusPos = PlayerHandler.Instance.closeFocusPos;
         handPos = PlayerHandler.Instance.handPivot;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
@@ -36,8 +36,8 @@ public class PaperMission1 : Mission
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (PlayerHandler.Instance.cantPressInventory) return;
-        //CanvasManager.Instance.missionLevelHouse.SetActive(!active);
         active = !active;
+        CanvasManager.Instance.rotateInfo.SetActive(active);
         StartCoroutine(active ? FocusObject() : UnFocusObject());
         Inventory.Instance.cantSwitch = active;
     }
@@ -78,13 +78,6 @@ public class PaperMission1 : Mission
         {
             RotateObject();
         }
-
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            ///_playerCam.CameraLock = false;
-            //_canDrop = true;
-            //Inventory.Instance.cantSwitch = false;
-        }
     }
 
     void RotateObject()
@@ -95,10 +88,5 @@ public class PaperMission1 : Mission
         
         transform.RotateAround(transform.position, _playerCam.transform.right, YaxisRotation);
         transform.RotateAround(transform.position, _playerCam.transform.up, XaxisRotation);
-
-
-        /*heldObj.transform.Rotate(transform.up, XaxisRotation);
-        heldObj.transform.Rotate(transform.right, YaxisRotation);
-        heldObjRb.transform.localEulerAngles += transform.up * XaxisRotation + transform.right * YaxisRotation;*/
     }
 }

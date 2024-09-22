@@ -38,7 +38,6 @@ public class Door : MonoBehaviour, IInteractable
 
     public void BlockDoor()
     {
-
         StartCoroutine(BlockDoorCor());
     }
 

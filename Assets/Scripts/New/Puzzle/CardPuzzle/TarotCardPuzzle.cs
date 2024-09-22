@@ -45,6 +45,7 @@ public class TarotCardPuzzle : MonoBehaviour
     private void Update()
     {
         if (heldObj == null) return;
+        if (!heldObj.GetComponent<PieceTarotCard>().onHand) heldObj = null;
         
         RotateObject();
         CompareOrientation();
@@ -57,9 +58,10 @@ public class TarotCardPuzzle : MonoBehaviour
 
     private void PlaceObject()
     {
+        var actualPiece = heldObj;
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
         Inventory.Instance.DropItem();
-        Destroy(heldObj);
+        Destroy(actualPiece);
         _piecePlacesCount++;
         CheckPuzzleState();
     }
