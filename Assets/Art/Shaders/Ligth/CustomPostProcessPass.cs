@@ -5,8 +5,8 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.Universal.Internal;
-using static Unity.VisualScripting.Member;
 
+[System.Serializable]
 public class CustomPostProcessPass : ScriptableRenderPass
 {
     private Material m_bloomMaterial;
@@ -21,7 +21,7 @@ public class CustomPostProcessPass : ScriptableRenderPass
     private RTHandle[] m_BloomMipUp;
     private RTHandle[] m_BloomMipDown;
     private GraphicsFormat hdrFormat;
-    private CustomBloomEffectComponent1 m_BloomEffect;
+    private CustomBloomEffectComponent m_BloomEffect;
     private RenderTextureDescriptor m_Descriptor;
     private static readonly int ScreenSpaceOcclusionTexture = Shader.PropertyToID("_ScreenSpaceOcclusionTexture");
     private bool isReady = false;
@@ -38,9 +38,9 @@ public class CustomPostProcessPass : ScriptableRenderPass
         m_Descriptor = renderingData.cameraData.cameraTargetDescriptor;
     }
 
-    public CustomPostProcessPass(Material bloomMaterial, Material compositeMaterial)
+    public CustomPostProcessPass(Material hatchMaterial, Material compositeMaterial)
     {
-        this.m_bloomMaterial = bloomMaterial;
+        this.m_bloomMaterial = hatchMaterial;
         this.m_compositeMaterial = compositeMaterial;
 
         renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
@@ -60,7 +60,7 @@ public class CustomPostProcessPass : ScriptableRenderPass
         }
 
         const FormatUsage usage = FormatUsage.Linear | FormatUsage.Render;
-        if (SystemInfo.IsFormatSupported(GraphicsFormat.B10G11R11_UFloatPack32, usage)) 
+        if (SystemInfo.IsFormatSupported(GraphicsFormat.B10G11R11_UFloatPack32, usage))
         {
             hdrFormat = GraphicsFormat.B10G11R11_UFloatPack32;
         }
@@ -74,11 +74,11 @@ public class CustomPostProcessPass : ScriptableRenderPass
     {
         if (!isReady) return;
         VolumeStack stack = VolumeManager.instance.stack;
-        m_BloomEffect = stack.GetComponent<CustomBloomEffectComponent1>();
+        m_BloomEffect = stack.GetComponent<CustomBloomEffectComponent>();
 
         CommandBuffer cmd = CommandBufferPool.Get();
 
-       
+
 
         using (new ProfilingScope(cmd, new ProfilingSampler("Custom Post Process Effect")))
         {
@@ -105,13 +105,6 @@ public class CustomPostProcessPass : ScriptableRenderPass
 
     private void SetupBloom(CommandBuffer cmd, RTHandle source)
     {
-       
-
-      
-
-       
-
-
         int downres = 1;
         int tw = m_Descriptor.width >> downres;
         int th = m_Descriptor.height >> downres;

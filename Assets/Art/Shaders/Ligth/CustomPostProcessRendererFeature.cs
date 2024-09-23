@@ -2,10 +2,11 @@
 using UnityEngine.Rendering;
 using UnityEngine;
 
+
 public class CustomPostProcessRenderFeature : ScriptableRendererFeature
 {
     [SerializeField]
-    private Shader m_LigthShader;
+    private Shader m_bloomShader;
     [SerializeField]
     private Shader m_compositeShader;
 
@@ -14,18 +15,22 @@ public class CustomPostProcessRenderFeature : ScriptableRendererFeature
 
     private CustomPostProcessPass m_customPass;
 
-    public override void Create()
-    {
-        m_bloomMaterial = CoreUtils.CreateEngineMaterial(m_LigthShader);
-        m_compositeMaterial = CoreUtils.CreateEngineMaterial(m_compositeShader);
-        m_customPass = new CustomPostProcessPass(m_bloomMaterial, m_compositeMaterial);
-    }
-
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
 
         renderer.EnqueuePass(m_customPass);
     }
+
+    public override void Create()
+    {
+        m_bloomMaterial = CoreUtils.CreateEngineMaterial(m_bloomShader);
+        m_compositeMaterial = CoreUtils.CreateEngineMaterial(m_compositeShader);
+        m_customPass = new CustomPostProcessPass(m_bloomMaterial, m_compositeMaterial);
+    }
+
+   
+
+
 
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
