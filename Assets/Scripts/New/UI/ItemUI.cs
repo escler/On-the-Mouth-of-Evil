@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemUI : MonoBehaviour
 {
-    private Image _image;
-
+    protected Image _image;
+    
     private void OnEnable()
     {
         _image = GetComponent<Image>();
@@ -17,4 +18,5 @@ public class ItemUI : MonoBehaviour
     {
         _image.color = Color.white;
     }
+
 }
