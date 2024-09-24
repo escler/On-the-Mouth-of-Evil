@@ -1,9 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Salt : Item
 {
+    private Animator _animator;
+    public ParticleSystem ps;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit, i);
@@ -15,5 +24,45 @@ public class Salt : Item
             //Inventory.Instance.DropItem();
             //Destroy(gameObject);
         }
+    }
+
+    public override void OnSelectItem()
+    {
+        SaltPuzzleTable.Instance.playerInTable = true;
+    }
+
+    public override void OnDeselectItem()
+    {
+        SaltPuzzleTable.Instance.playerInTable = false;
+    }
+
+    public override void OnDropItem()
+    {
+        SaltPuzzleTable.Instance.playerInTable = false;
+    }
+
+    public void PlacingBool()
+    {
+        _animator.SetBool("PutSalt", true);
+    }
+
+    public void DisableBool()
+    {
+        _animator.SetBool("PutSalt", false);
+    }
+
+    public void ParticlePlay()
+    {
+        ps.Play();
+    }
+
+    public void ParticlePause()
+    {
+        ps.Stop();
+    }
+
+    public void ParticleStop()
+    {
+        ps.Stop();
     }
 }
