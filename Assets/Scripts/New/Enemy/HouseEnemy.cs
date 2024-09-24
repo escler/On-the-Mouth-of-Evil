@@ -53,7 +53,7 @@ public class HouseEnemy : Enemy
         Instance = this;
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
-        enemyMaterial.SetFloat("_Power", 0);
+        enemyMaterial.SetFloat("_Power", 10);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
         
         objects = new List<IInteractableEnemy>();
@@ -109,10 +109,10 @@ public class HouseEnemy : Enemy
         {
             actualTime = 0;
             _corduraHandler.CorduraOn = false;
-            //if (!_corroutineActivate && _enemyVisibility < 10)
-           // {
-           //     StartCoroutine(HideEnemy());
-           // }
+            if (!_corroutineActivate && _enemyVisibility < 10)
+            {
+                StartCoroutine(HideEnemy());
+            }
             appear = false;
             hasPlayedFire = false;
             _enemyAnimator.ChangeStateAnimation("Spawn", false);
@@ -129,8 +129,7 @@ public class HouseEnemy : Enemy
                 appear = true;
             }
             
-            //if (!_corroutineActivate && _enemyVisibility > 0)
-            //    StartCoroutine(ShowEnemyLerp());
+            if (!_corroutineActivate && _enemyVisibility > 0) StartCoroutine(ShowEnemyLerp());
         }
     }
 

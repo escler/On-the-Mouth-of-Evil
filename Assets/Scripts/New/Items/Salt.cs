@@ -28,16 +28,19 @@ public class Salt : Item
 
     public override void OnSelectItem()
     {
+        if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = true;
     }
 
     public override void OnDeselectItem()
     {
+        if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
     }
 
     public override void OnDropItem()
     {
+        if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
     }
 
