@@ -36,6 +36,9 @@ public class HouseEnemy_Idle : MonoBaseState
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
 
+        if (owner.enemyShowed && Transitions.ContainsKey(StateTransitions.ToChase))
+            return Transitions[StateTransitions.ToChase];
+
         return this;
     }
 }
