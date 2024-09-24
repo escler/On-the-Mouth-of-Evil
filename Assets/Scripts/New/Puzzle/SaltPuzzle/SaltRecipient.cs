@@ -54,6 +54,7 @@ public class SaltRecipient : MonoBehaviour
         selectedSalt.position = saltPivot.position;
         selectedSalt.SetParent(saltPivot);
         Inventory.Instance.selectedItem.GetComponent<Salt>().PlacingBool();
+        SaltPuzzleTable.Instance.canInteractWithSalt = true;
         if (_buttonPress) SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
         else SaltPuzzle.Instance.DeleteRecipient(this);
         _cantInteract = false;
@@ -119,5 +120,7 @@ public class SaltRecipient : MonoBehaviour
         selectedSalt.position = PlayerHandler.Instance.handPivot.position;
         selectedSalt.SetParent(PlayerHandler.Instance.handPivot);
         Inventory.Instance.cantSwitch = false;
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
+        SaltPuzzleTable.Instance.canInteractWithSalt = false;
     }
 }

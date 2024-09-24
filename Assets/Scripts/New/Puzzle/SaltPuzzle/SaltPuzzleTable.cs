@@ -16,6 +16,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
     private RaycastHit _hit;
     private float distance = 3;
     public LayerMask layer;
+    public bool canInteractWithSalt;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
 
     private void Update()
     {
+        if (canInteractWithSalt) return;
+        
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
 
         if (!playerInTable)

@@ -135,10 +135,10 @@ public class HouseEnemy : Enemy
 
     public void ShowEnemyRitual()
     {
+        if(!onRitual)StartCoroutine(ShowEnemyOnRitual());
         onRitual = true;
         StopCoroutine(ShowEnemyLerp());
         StopCoroutine(HideEnemy());
-        StartCoroutine(ShowEnemyOnRitual());
     }
     
     IEnumerator ShowEnemyLerp()
