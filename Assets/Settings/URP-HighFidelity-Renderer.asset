@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: Outlines
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: Outlines
     Event: 300
@@ -117,12 +117,12 @@ MonoBehaviour:
   m_Settings:
     AOMethod: 1
     Downsample: 0
-    AfterOpaque: 0
+    AfterOpaque: 1
     Source: 1
     NormalSamples: 1
-    Intensity: 1.15
+    Intensity: 0.09
     DirectLightingStrength: 1
-    Radius: 16.1
+    Radius: 9.06
     Samples: 0
     BlurQuality: 0
     Falloff: 100.95
@@ -136,6 +136,48 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+--- !u!114 &-1583063131792185827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: ao
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: ao
+    Event: 250
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 1
+      PassNames: []
+    overrideMaterial: {fileID: 2100000, guid: 94f86a20512590f47a9e84827eb1f817, type: 2}
+    overrideMaterialPassIndex: 1
+    overrideShader: {fileID: 4800000, guid: 3180c88e180850e4383a123fd608b23e, type: 3}
+    overrideShaderPassIndex: 0
+    overrideMode: 2
+    overrideDepthState: 0
+    depthCompareFunction: 4
+    enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
 --- !u!114 &-977535599768538957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +219,8 @@ MonoBehaviour:
   - {fileID: -3202480075762680482}
   - {fileID: -7903521964806673707}
   - {fileID: 5208299923775800778}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed3d56a33cda50c5192cac559982f994748
+  - {fileID: -1583063131792185827}
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed3d56a33cda50c5192cac559982f9947481d66821478d407ea
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -232,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f40272f0af41e342ab9d3f39cc029d2, type: 3}
   m_Name: CustomPostProcessRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   m_bloomShader: {fileID: 4800000, guid: 51a56dd063bb00a44accbb7267f1cc32, type: 3}
   m_compositeShader: {fileID: -6465566751694194690, guid: 5160965116a825a4698fbc21fe1f444c,
     type: 3}
