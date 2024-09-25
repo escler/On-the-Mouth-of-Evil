@@ -1,48 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7903521964806673707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: ligth
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    passTag: ligth
-    Event: 300
-    filterSettings:
-      RenderQueueType: 1
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 4294967295
-      PassNames: []
-    overrideMaterial: {fileID: -876546973899608171, guid: b8977afaeafc2d0439b84d5fae054a98,
-      type: 3}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
 --- !u!114 &-5482889138667380168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,12 +114,13 @@ MonoBehaviour:
       LayerMask:
         serializedVersion: 2
         m_Bits: 1024
-      PassNames: []
+      PassNames:
+      - Outlines
     overrideMaterial: {fileID: 2100000, guid: 94f86a20512590f47a9e84827eb1f817, type: 2}
-    overrideMaterialPassIndex: 1
+    overrideMaterialPassIndex: 0
     overrideShader: {fileID: 4800000, guid: 3180c88e180850e4383a123fd608b23e, type: 3}
     overrideShaderPassIndex: 0
-    overrideMode: 2
+    overrideMode: 1
     overrideDepthState: 0
     depthCompareFunction: 4
     enableWrite: 1
@@ -178,24 +136,6 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
---- !u!114 &-977535599768538957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: hatch
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  passMaterial: {fileID: -876546973899608171, guid: a688d9a9a517f1e49b3f523ff72e1077,
-    type: 3}
-  injectionPoint: 450
-  requirements: 7
-  passIndex: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,12 +155,9 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: 5436159218825088093}
-  - {fileID: -977535599768538957}
   - {fileID: -3202480075762680482}
-  - {fileID: -7903521964806673707}
-  - {fileID: 5208299923775800778}
   - {fileID: -1583063131792185827}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed3d56a33cda50c5192cac559982f9947481d66821478d407ea
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714b5e3de6ab56818ed31d66821478d407ea
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -263,22 +200,6 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &5208299923775800778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f40272f0af41e342ab9d3f39cc029d2, type: 3}
-  m_Name: CustomPostProcessRenderFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  m_bloomShader: {fileID: 4800000, guid: 51a56dd063bb00a44accbb7267f1cc32, type: 3}
-  m_compositeShader: {fileID: -6465566751694194690, guid: 5160965116a825a4698fbc21fe1f444c,
-    type: 3}
 --- !u!114 &5436159218825088093
 MonoBehaviour:
   m_ObjectHideFlags: 0

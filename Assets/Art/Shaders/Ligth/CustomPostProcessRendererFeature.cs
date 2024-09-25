@@ -15,11 +15,6 @@ public class CustomPostProcessRenderFeature : ScriptableRendererFeature
 
     private CustomPostProcessPass m_customPass;
 
-    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
-    {
-
-        renderer.EnqueuePass(m_customPass);
-    }
 
     public override void Create()
     {
@@ -28,6 +23,15 @@ public class CustomPostProcessRenderFeature : ScriptableRendererFeature
         m_customPass = new CustomPostProcessPass(m_bloomMaterial, m_compositeMaterial);
     }
 
+
+
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+    {
+
+        renderer.EnqueuePass(m_customPass);
+    }
+
+   
    
 
 

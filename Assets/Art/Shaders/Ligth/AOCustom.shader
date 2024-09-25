@@ -1,15 +1,16 @@
 ﻿Shader "Custom/AOCustom"
 {
-     Properties
-     {
-		_MainTex ("Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1,1,1,1)
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		
-     }
+    Properties
+    {
+        _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1,1,1,1)
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _DiffusePattern ("Hatching Pattern", 2D) = "white" {}  
+        _ShadowSize ("Shadow Size", Range(0, 1)) = 0.5  
+    }
 
-     SubShader
-	 {  // UnlitFrameDebugger
+    SubShader
+    {  
         Pass
         {
             Name "DepthOnly"
@@ -18,37 +19,24 @@
                 "LightMode" = "DepthOnly"
             }
 
-            // -------------------------------------
-            // Render State Commands
             ZWrite On
             ColorMask R
 
             HLSLPROGRAM
             #pragma target 2.0
 
-            // -------------------------------------
-            // Shader Stages
             #pragma vertex DepthOnlyVertex
             #pragma fragment DepthOnlyFragment
 
-            // -------------------------------------
-            // Material Keywords
             #pragma shader_feature_local _ALPHATEST_ON
 
-            // -------------------------------------
-            // Unity defined keywords
             #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 
-            //--------------------------------------
-            // GPU Instancing
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
-
-            // -------------------------------------
-            // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl" 
-            
+
             struct DepthOnlyAttributes
             {
                 float4 position : POSITION;
@@ -99,11 +87,10 @@
                 return input.positionCS.z;
             }
 
-            
             ENDHLSL
         }     
         
-         Pass
+        Pass
         {
             Name "DepthNormals"
             Tags{"LightMode" = "DepthNormals"}
@@ -117,9 +104,15 @@
             #pragma vertex vert
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" // Incluir Core.hlsl para UnityObjectToClipPos
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" 
            
-             float4 _Color;
+            CBUFFER_START(UnityPerMaterial)
+                float4 _Color;
+                float _ShadowSize;
+            CBUFFER_END
+
+            TEXTURE2D(_DiffusePattern);
+            SAMPLER(sampler_DiffusePattern);
 
             struct a2v
             {
@@ -131,7 +124,37 @@
                 float4 positionCS : SV_POSITION;
             };
 
-         
+            struct CustomSurface
+            {
+                float3 Normal;
+                float Alpha;
+                float2 diffusePatternUV;
+            };
+
+            void HatchingDiffuse(CustomSurface s, inout half atten, inout half4 color)
+            {
+                
+                float3 lightDir = normalize(float3(0.5, 0.5, 0.5));  
+
+                half NdotL = dot(s.Normal, lightDir);
+
+                NdotL = smoothstep(-_ShadowSize, _ShadowSize, NdotL);
+                atten = atten > 0.91 ? 1 : atten;
+                NdotL = min(NdotL, atten);
+
+                #ifdef SCREEN_SPACE_UVS
+                    float2 uv = TRANSFORM_TEX(s.diffusePatternUV, _DiffusePattern) * 1000;
+                    float val = max(tex2Dlod(_DiffusePattern, sampler_DiffusePattern, float4(uv, 0, 0)).r, 0.001);  
+                #else
+                    float val = tex2D(_DiffusePattern, sampler_DiffusePattern, s.diffusePatternUV).r;  
+                #endif
+
+                val = step(1 - val, NdotL) - (step(NdotL, 0.001) / 2 * step(1 - val, NdotL));
+
+                atten = val;
+                color.rgb += _Color.rgb * atten;
+                color.a = s.Alpha;
+            }
 
             v2f vert(a2v v)
             {
@@ -146,28 +169,28 @@
             half4 frag(v2f i) : SV_Target
             {
                 float2 screenUV = float2(i.positionCS.x, i.positionCS.y) / i.positionCS.w;
-    
-                // Obtener el factor de oclusión ambiental
+                
                 AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(screenUV);
                 half ind = aoFactor.indirectAmbientOcclusion;
                 half d = aoFactor.directAmbientOcclusion;
-    
-                // Generar un patrón de hatching basado en las coordenadas de pantalla
+
                 float hatchingPattern = abs(sin(screenUV.x * 50.0) * sin(screenUV.y * 50.0));
 
-                // Aplicar oclusión ambiental como máscara
                 half aoMask = ind * d;
 
-                // Multiplicar el patrón de hatching por la máscara de oclusión ambiental
+                half atten = 1.0;
                 half4 color = _Color;
-                half4 hatchingColor = half4(aoMask * hatchingPattern, aoMask * hatchingPattern, aoMask * hatchingPattern, color.a);
 
-                return hatchingColor; // Devuelve el color sombreado con el patrón de hatching
+                CustomSurface s;
+                s.Normal = i.normalWS; 
+                s.Alpha = 1.0;           
+                s.diffusePatternUV = screenUV; 
+                HatchingDiffuse(s, atten, color);  
+
+                return color;
             }
             ENDHLSL
         }
-     }
-  FallBack "Diffuse"
+    }
+    FallBack "Diffuse"
 }
-         
-   
