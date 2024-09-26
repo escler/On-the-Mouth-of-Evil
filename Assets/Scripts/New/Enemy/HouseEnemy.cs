@@ -53,6 +53,8 @@ public class HouseEnemy : Enemy
     public bool canChase;
     public float cdChase, actualTimeChase;
 
+    public bool attackEnded;
+
     private void Awake()
     {
         if (Instance)
@@ -126,7 +128,6 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            _corduraHandler.CorduraOn = false;
             if (!_corroutineActivate && _enemyVisibility < 10)
             {
                 StartCoroutine(HideEnemy());
@@ -168,8 +169,6 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
-        _corduraHandler.CorduraOn = true;
-        CorduraHandler.Instance.StartCordura();
         _corroutineActivate = false;
     }
 
@@ -181,6 +180,11 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
+
+        _enemyAnimator.animator.applyRootMotion = true;
+
+        RitualManager.Instance.ActivateCraterFloor();
+        _enemyAnimator.ChangeStateAnimation("Exorcism", true);
         
         yield return new WaitForSeconds(5f);
         

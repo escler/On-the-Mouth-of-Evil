@@ -16,6 +16,7 @@ public class RitualManager : MonoBehaviour
     private RaycastHit _hit;
     public LayerMask layermask;
     public Node ritualNode;
+    public GameObject floor, craterFloor;
     
     public static RitualManager Instance { get; private set; }
 
@@ -61,6 +62,12 @@ public class RitualManager : MonoBehaviour
         Destroy(_actualCandleTaked.gameObject);
         Inventory.Instance.DropItem();
 
+    }
+
+    public void ActivateCraterFloor()
+    {
+        floor.SetActive(false);
+        craterFloor.SetActive(true);
     }
 
     public void CandlesBurned()
