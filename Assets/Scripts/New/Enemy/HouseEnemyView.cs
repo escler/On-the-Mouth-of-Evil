@@ -8,9 +8,9 @@ public class HouseEnemyView : MonoBehaviour
     public GameObject PS;
 
     
-    public void ChangeStateAnimation(string idleName, bool stateParameter)
+    public void ChangeStateAnimation(string stateName, bool stateParameter)
     {
-        animator.SetBool(idleName, stateParameter);
+        animator.SetBool(stateName, stateParameter);
     }
 
     public void ActivateSpawnPS()
@@ -22,5 +22,15 @@ public class HouseEnemyView : MonoBehaviour
     public void DisableCrossBool()
     {
         ChangeStateAnimation("CrossUsed", false);
+    }
+
+    public void ActivateGrabHead()
+    {
+        ChangeStateAnimation("GrabHead", true);
+    }
+
+    public void DisableGrabHead()
+    {
+        ChangeStateAnimation("GrabHead", false);
     }
 }

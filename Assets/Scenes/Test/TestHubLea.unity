@@ -10145,7 +10145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423976150}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: PivotToCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48114,7 +48114,7 @@ GameObject:
   - component: {fileID: 1976819457}
   - component: {fileID: 1976819456}
   - component: {fileID: 1976819455}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48138,6 +48138,9 @@ MonoBehaviour:
   camera: {fileID: 0}
   hightlightMat: {fileID: -876546973899608171, guid: 28d506cbe53cae44db41eec337c5d670,
     type: 3}
+  layer:
+    serializedVersion: 2
+    m_Bits: 131072
 --- !u!65 &1976819456
 BoxCollider:
   m_ObjectHideFlags: 0

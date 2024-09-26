@@ -8,9 +8,10 @@ public class SaltRecipient : MonoBehaviour
     public int buttonNumber;
     public bool _buttonPress, _cantInteract;
     private Material _normalMat;
-    public Transform pressPosition, unPressPosition, nextPos;
+    public Transform pressPosition, unPressPosition, nextPos, saltPivot;
     private Vector3 reference = Vector3.zero;
     public bool finish;
+    private Animator _animator;
     
     private List<MeshRenderer> meshes;
 
@@ -25,6 +26,7 @@ public class SaltRecipient : MonoBehaviour
         }
 
         nextPos = unPressPosition;
+        _animator = GetComponent<Animator>();
     }
 
     public void HightlightObject(Material mat)
@@ -48,11 +50,16 @@ public class SaltRecipient : MonoBehaviour
     {
         if (_cantInteract) return;
         _buttonPress = !_buttonPress;
+        var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();
+        selectedSalt.position = saltPivot.position;
+        selectedSalt.SetParent(saltPivot);
+        Inventory.Instance.selectedItem.GetComponent<Salt>().PlacingBool();
+        SaltPuzzleTable.Instance.canInteractWithSalt = true;
         if (_buttonPress) SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
         else SaltPuzzle.Instance.DeleteRecipient(this);
         _cantInteract = false;
         UnHighlightObject();
-        MoveRecipient();
+        StartCoroutine(WaitForMove());
     }
 
     private void MoveRecipient()
@@ -91,5 +98,29 @@ public class SaltRecipient : MonoBehaviour
         if (!finish) return;
         _cantInteract = true;
         UnHighlightObject();
+    }
+
+    public void OpenAnimation()
+    {
+        _animator.SetBool("Interact", true);
+    }
+
+    public void DisableBool()
+    {
+        _animator.SetBool("Interact", false);
+    }
+
+    IEnumerator WaitForMove()
+    {
+        Inventory.Instance.cantSwitch = true;
+        OpenAnimation();
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient") && _animator.GetBool("Interact") == false);
+        MoveRecipient();
+        var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();
+        selectedSalt.position = PlayerHandler.Instance.handPivot.position;
+        selectedSalt.SetParent(PlayerHandler.Instance.handPivot);
+        Inventory.Instance.cantSwitch = false;
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
+        SaltPuzzleTable.Instance.canInteractWithSalt = false;
     }
 }

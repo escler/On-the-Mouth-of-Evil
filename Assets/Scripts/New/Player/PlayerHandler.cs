@@ -28,11 +28,6 @@ public class PlayerHandler : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
     }
 
-    private void Update()
-    {
-    }
-
-
     public void PossesPlayer()
     {
         movement.enabled = true;
@@ -59,6 +54,30 @@ public class PlayerHandler : MonoBehaviour
         if (other.gameObject.layer != 16) return;
 
         actualRoom = other.GetComponent<Room>();
+    }
+
+    public void HeadGrabbed(Transform target)
+    {
+        StartCoroutine(LookEnemy(target));
+    }
+
+    IEnumerator LookEnemy(Transform point)
+    {
+        print("LookEnemy");
+        UnPossesPlayer();
+        while (HouseEnemy.Instance.grabHead)
+        {
+            Quaternion lookDirection = Quaternion.LookRotation(point.position - transform.position).normalized;
+            lookDirection.x = transform.rotation.x;
+            lookDirection.z = transform.rotation.z;
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, 10f * Time.deltaTime);
+            
+
+            yield return new WaitForSeconds(0.01f);
+        }
+        
+        PossesPlayer();
     }
     
 }

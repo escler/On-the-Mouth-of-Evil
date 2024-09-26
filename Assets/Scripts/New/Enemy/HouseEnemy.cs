@@ -26,7 +26,8 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_Patrol patrolState;
     [SerializeField] private HouseEnemy_Chase chaseState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
-    [SerializeField] private HouseEnemy_Ritual goToRitual;
+    [SerializeField] private HouseEnemy_Ritual ritualState;
+    [SerializeField] private HouseEnemy_GrabHead grabHeadState;
     private bool hasPlayedFire;
     public bool ritualDone;
     public Node nodeRitual;
@@ -42,6 +43,16 @@ public class HouseEnemy : Enemy
 
     private HouseEnemyView _enemyAnimator;
 
+    public HouseEnemyView EnemyAnimator => _enemyAnimator;
+
+    public bool grabHead;
+    public Transform headPos;
+
+    public bool enemyShowed;
+    public bool chasePlayer;
+    public bool canChase;
+    public float cdChase, actualTimeChase;
+
     private void Awake()
     {
         if (Instance)
@@ -53,7 +64,7 @@ public class HouseEnemy : Enemy
         Instance = this;
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
-        enemyMaterial.SetFloat("_Power", 0);
+        enemyMaterial.SetFloat("_Power", 10);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
         
         objects = new List<IInteractableEnemy>();
@@ -65,29 +76,29 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
         _fsm.AddTransition(StateTransitions.ToChase, idleState, chaseState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
-        _fsm.AddTransition(StateTransitions.ToRitual, idleState, goToRitual);
+        _fsm.AddTransition(StateTransitions.ToRitual, idleState, ritualState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
         _fsm.AddTransition(StateTransitions.ToChase, patrolState, chaseState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
-        _fsm.AddTransition(StateTransitions.ToRitual, patrolState, goToRitual);
-
-
+        _fsm.AddTransition(StateTransitions.ToRitual, patrolState, ritualState);
         
         //Chase
         _fsm.AddTransition(StateTransitions.ToIdle, chaseState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, chaseState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, chaseState, goToLocationState);
-        _fsm.AddTransition(StateTransitions.ToRitual, chaseState, goToRitual);
+        _fsm.AddTransition(StateTransitions.ToRitual, chaseState, ritualState);
 
         
         //GoToLocation
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
-        _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, goToRitual);
+        _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, ritualState);
 
+        //GoToGrabHead
+        _fsm.AddTransition(StateTransitions.ToIdle, grabHeadState, idleState);
         
         _fsm.Active = true;
         OnAwake();
@@ -97,6 +108,12 @@ public class HouseEnemy : Enemy
     private void Update()
     {
         if (onRitual) return;
+        canChase = actualTimeChase <= 0;
+        if (actualTimeChase > 0)
+        {
+            actualTimeChase -= Time.deltaTime;
+        }
+        enemyShowed = _enemyVisibility <= 0 && canChase;
         CompareRooms();
         ShowEnemy();
 
@@ -105,14 +122,15 @@ public class HouseEnemy : Enemy
     private void ShowEnemy()
     {
         if (_player.actualRoom == null) return;
+        if (chasePlayer) return;
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
             _corduraHandler.CorduraOn = false;
-            //if (!_corroutineActivate && _enemyVisibility < 10)
-           // {
-           //     StartCoroutine(HideEnemy());
-           // }
+            if (!_corroutineActivate && _enemyVisibility < 10)
+            {
+                StartCoroutine(HideEnemy());
+            }
             appear = false;
             hasPlayedFire = false;
             _enemyAnimator.ChangeStateAnimation("Spawn", false);
@@ -129,17 +147,16 @@ public class HouseEnemy : Enemy
                 appear = true;
             }
             
-            //if (!_corroutineActivate && _enemyVisibility > 0)
-            //    StartCoroutine(ShowEnemyLerp());
+            if (!_corroutineActivate && _enemyVisibility > 0) StartCoroutine(ShowEnemyLerp());
         }
     }
 
     public void ShowEnemyRitual()
     {
+        if(!onRitual)StartCoroutine(ShowEnemyOnRitual());
         onRitual = true;
         StopCoroutine(ShowEnemyLerp());
         StopCoroutine(HideEnemy());
-        StartCoroutine(ShowEnemyOnRitual());
     }
     
     IEnumerator ShowEnemyLerp()

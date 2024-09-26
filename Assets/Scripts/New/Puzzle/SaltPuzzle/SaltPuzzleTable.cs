@@ -12,35 +12,59 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
     public Camera camera;
     public Material hightlightMat;
     private SaltRecipient currentRecipient;
+    private Transform cameraPos;
+    private RaycastHit _hit;
+    private float distance = 3;
+    public LayerMask layer;
+    public bool canInteractWithSalt;
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
         camera = CameraFollow.Instance.GetComponentInChildren<Camera>();
+        cameraPos = PlayerHandler.Instance.cameraPos;
     }
 
     private void Update()
     {
+        if (canInteractWithSalt) return;
+        
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
+
         if (!playerInTable)
         {
             if(currentRecipient != null) currentRecipient.UnHighlightObject();
             currentRecipient = null;
             return;
         }
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (!ray)
         {
-            if (hit.collider.TryGetComponent(out SaltRecipient saltRecipient))
+            if(currentRecipient != null) currentRecipient.UnHighlightObject();
+            currentRecipient = null;
+            return;
+        }
+
+
+        if (_hit.collider.TryGetComponent(out SaltRecipient saltRecipient))
+        {
+            if (saltRecipient != currentRecipient || currentRecipient == null)
             {
-                if (saltRecipient != currentRecipient || currentRecipient == null)
-                {
-                    if(currentRecipient != null) currentRecipient.UnHighlightObject();
-                    currentRecipient = saltRecipient;
-                    currentRecipient.HightlightObject(hightlightMat);
-                }
-                
-                if (Input.GetMouseButtonDown(0)) saltRecipient.OnRecipientPress();
+                if(currentRecipient != null) currentRecipient.UnHighlightObject();
+                currentRecipient = saltRecipient;
+                currentRecipient.HightlightObject(hightlightMat);
             }
+            
+            if (Input.GetMouseButtonDown(0)) saltRecipient.OnRecipientPress();
         }
     }
 

@@ -25,6 +25,7 @@ public class HouseEnemy_Patrol : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
+        if (owner.crossUsed) owner.chasePlayer = false;
         owner.crossUsed = false;
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
@@ -40,6 +41,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         else
         {
             _pathFinish = true;
+            print("a ver");
         }
     }
 
@@ -66,6 +68,9 @@ public class HouseEnemy_Patrol : MonoBaseState
 
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
+        
+        /*if (owner.canChase && Transitions.ContainsKey(StateTransitions.ToChase))
+            return Transitions[StateTransitions.ToChase];*/
 
         return this;
     }
