@@ -63,11 +63,17 @@ public class PlayerHandler : MonoBehaviour
 
     IEnumerator LookEnemy(Transform point)
     {
+        print("LookEnemy");
         UnPossesPlayer();
         while (HouseEnemy.Instance.grabHead)
         {
-            var targetRot = Quaternion.LookRotation(transform.position - point.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 1f);
+            Quaternion lookDirection = Quaternion.LookRotation(point.position - transform.position).normalized;
+            lookDirection.x = transform.rotation.x;
+            lookDirection.z = transform.rotation.z;
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, 10f * Time.deltaTime);
+            
+
             yield return new WaitForSeconds(0.01f);
         }
         
