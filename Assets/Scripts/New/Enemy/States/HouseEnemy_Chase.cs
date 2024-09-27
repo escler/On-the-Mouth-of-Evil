@@ -17,6 +17,7 @@ public class HouseEnemy_Chase : MonoBaseState
     public float grabCD;
     public int[] enemyAction = { 0, 1, 2 }; //0 - Chase and Grab Head / 1 - Cordura Attack / 2 - Block Doors 
     private int _actualAction;
+    private bool animationStarted;
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -28,6 +29,7 @@ public class HouseEnemy_Chase : MonoBaseState
                 OnUpdateCorduraAttack();
                 break;
             case 2:
+                OnUpdateBlockDoorAttack();
                 break;
         }
     }
@@ -37,8 +39,7 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Attacks");
-        _actualAction = Random.Range(0, 2);
-        print(_actualAction);
+        _actualAction = Random.Range(0, enemyAction.Length);
         switch (_actualAction)
         {
             case 0:
@@ -48,6 +49,7 @@ public class HouseEnemy_Chase : MonoBaseState
                 OnEnterCorduraAttack();
                 break;
             case 2:
+                OnEnterBlockDoorAttack();
                 break;
         }
     }
@@ -63,6 +65,7 @@ public class HouseEnemy_Chase : MonoBaseState
                 OnExitCorduraAttack();
                 break;
             case 2:
+                OnExitBlockDoorAttack();
                 break;
         }
         print("Sali de attack");
@@ -233,6 +236,31 @@ public class HouseEnemy_Chase : MonoBaseState
     void OnExitCorduraAttack()
     {
     }
+
+    #endregion
+
+    #region BloockDoorAttack
+
+    private void OnEnterBlockDoorAttack()
+    {
+        print("entre a block");
+        owner.attackEnded = false;
+        owner.EnemyAnimator.ChangeStateAnimation("BlockDoor", true);
+        StartCoroutine(WaitForAnimationEnd());
+    }
+
+    IEnumerator WaitForAnimationEnd()
+    {
+        yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+        yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+        print("Llego aca");
+        owner.attackEnded = true;
+    }
+
+    private void OnUpdateBlockDoorAttack()
+    {
+    }
+    private void OnExitBlockDoorAttack(){}
 
     #endregion
 

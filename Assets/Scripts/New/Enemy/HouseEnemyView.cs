@@ -43,4 +43,14 @@ public class HouseEnemyView : MonoBehaviour
     {
         CorduraHandler.Instance.StartCordura();
     }
+
+    public void DisableBlockDoorBool()
+    {
+        ChangeStateAnimation("BlockDoor", false);
+    }
+
+    public void LockDoor()
+    {
+        HouseEnemy.Instance.actualRoom.BlockDoors();
+    }
 }
