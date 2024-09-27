@@ -21,6 +21,9 @@ public class HouseEnemy : Enemy
     public SkinnedMeshRenderer mesh;
     PlayParticles Fire;
     public bool appear;
+    [SerializeField] public GameObject lavaPrefab;
+    private Vector3 targetScale;
+
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
     [SerializeField] private HouseEnemy_Patrol patrolState;
@@ -64,7 +67,9 @@ public class HouseEnemy : Enemy
             Destroy(gameObject);
             return;
         }
-
+        lavaPrefab.SetActive(false);
+        targetScale=lavaPrefab.transform.localScale;
+        lavaPrefab.transform.localScale = Vector3.zero;
         Instance = this;
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
@@ -148,8 +153,11 @@ public class HouseEnemy : Enemy
             {
                 _enemyAnimator.ChangeStateAnimation("Spawn", true);
                 appear = true;
+                lavaPrefab.SetActive(true);
+                lavaPrefab.transform.localScale = Vector3.Lerp(Vector3.zero,targetScale, 2f);
+
             }
-            
+
             if (!_corroutineActivate && _enemyVisibility > 0) StartCoroutine(ShowEnemyLerp());
         }
     }
