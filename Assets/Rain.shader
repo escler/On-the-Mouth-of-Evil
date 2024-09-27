@@ -13,7 +13,9 @@ Shader "Custom/Rain"
 
     SubShader
     {
-        Tags { "Queue"="Transparent" "RenderType"="Opaque" }
+         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite Off
 
         Pass
         {
@@ -163,44 +165,24 @@ Shader "Custom/Rain"
 
             fixed4 frag (v2f _iParam) : SV_Target
             {
-                float4 fragColor = 0;
-
-                float2 uv = _iParam.uv;
-                float2 UV = _iParam.uv;
+                 float2 uv = _iParam.uv;
                 float3 M = 2;
                 float T = (_Time.y + M.x * 2) * _Speed;
-
                 float t = T * (.2 + 0.1 * _MoreRainAmount);
-
+                
                 float rainAmount = M.y;
-
                 uv *= 0.5;
 
                 float staticDrops = smoothstep(-.5, 1., rainAmount) * 2.;
                 float layer1 = smoothstep(.25, .75, rainAmount);
                 float layer2 = smoothstep(.0, .5, rainAmount);
-
-                float2 n = float2(0, 0);
+                
                 float2 c = Drops(uv, t, staticDrops, layer1, layer2);
-                float2 e = float2(0.001, 0.);
-                float cx = Drops(uv + e, t, staticDrops, layer1, layer2).x;
-                float cy = Drops(uv + e.yx, t, staticDrops, layer1, layer2).x;
-                n += float2(cx - c.x, cy - c.x);
-                float moreRainAmount = 1.25 + 1.25 * _MoreRainAmount;
-                for(float i = 1.25; i < moreRainAmount; i += 0.25)
-                {
-                    float2 _c = DropsDynamic(uv, t * i, layer1, layer2);
-                    float _cx = DropsDynamic(uv + e, t * i, layer1, layer2).x;
-                    float _cy = DropsDynamic(uv + e.yx, t * i, layer1, layer2).x;
-                    n += float2(_cx - _c.x, _cy - _c.x);
-                }
+                float4 fragColor = _DropletColor * c.x; 
 
-                c.x += n.x;
-                c.x += n.y;
+                fragColor.a = c.x; 
 
-                float4 texColor = tex2D(_MainTex, UV);
-                fragColor = texColor * (1.0 - c.x) + _DropletColor * c.x; 
-                return fragColor;
+                return fragColor; 
             }
             ENDCG
         }
