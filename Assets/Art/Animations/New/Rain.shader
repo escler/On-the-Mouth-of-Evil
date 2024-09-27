@@ -6,7 +6,7 @@ Shader "Custom/Rain"
         _DropletColor ("Droplet Color", Color) = (0.5, 0.05, 0.05, 1.0) 
         _MoreRainAmount("Droplet Amount", Range(0, 1)) = 1
         _FixedDroplet("Fixed Droplet", Range(0 ,1)) = 0.7
-        _DropletSize("Droplet Size", Range(0 ,1)) = 0.5 // 
+        _DropletSize("Droplet Size", Range(0 ,1)) = 0.5
         _DropletDensity("Droplet Density", Range(0 ,10)) = 1.85
         _Speed("Droplet Speed", Range(0 ,0.5)) = 0.2 
     }
@@ -36,29 +36,27 @@ Shader "Custom/Rain"
             {
                 float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float4 scrPos : TEXCOORD1;
-                float3 worldNormal : TEXCOORD2;
-                float3 normal : TEXCOORD3;
-                float3 worldPos : TEXCOORD4;
+                float3 worldPos : TEXCOORD1;
             };
 
             sampler2D _MainTex;
-            float4 _MainTex_ST;
-            float4 _DropletColor;
-            float _FixedDroplet;
-            float _MoreRainAmount;
-            float _DropletSize;
-            float _DropletDensity;
-            float _Speed;
+
+            cbuffer UnityPerMaterial
+            {
+                float4 _DropletColor;
+                float4 _MainTex_ST;
+
+                float _FixedDroplet;
+                float _MoreRainAmount;
+                float _DropletSize;
+                float _DropletDensity;
+                float _Speed;
+            };
 
             float3 N13(float p) {
                 float3 p3 = frac(float3(p,p,p) * float3(.1031,.11369,.13787));
                 p3 += dot(p3, p3.yzx + 19.19);
                 return frac(float3((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y, (p3.y+p3.z)*p3.x));
-            }
-
-            float4 N14(float t) {
-                return frac(sin(t*float4(123., 1024., 1456., 264.))*float4(6547., 345., 8799., 1564.));
             }
 
             float N(float t) {
@@ -115,64 +113,33 @@ Shader "Custom/Rain"
                 return float2(m, trail);
             }
 
-            float StaticDrops(float2 uv, float t) {
-                uv *= 40.;
-                
-                float2 id = floor(uv);
-                uv = frac(uv) - .5;
-                float3 n = N13(id.x * 107.45 + id.y * 3543.654);
-                float2 p = (n.xy - .5) * .7;
-                float d = length(uv - p);
-                
-                float fade = Saw(.025, frac(t + n.z));
-                float c = smoothstep(.3, 0., d) * frac(n.z * 10.) * fade;
-                return c;
-            }
-            
             float2 Drops(float2 uv, float t, float l0, float l1, float l2) {
-                float s = StaticDrops(uv, t) * l0; 
                 float2 m1 = DropLayer2(uv, t) * l1;
                 float2 m2 = DropLayer2(uv * _DropletDensity, t) * l2;
                 
-                float c = s + m1.x + m2.x;
+                float c = m1.x + m2.x;
                 c = smoothstep(0.3, 1, c);
                 
                 return float2(c, max(m1.y * l0, m2.y * l1));
-            }
-
-            float2 DropsDynamic(float2 uv, float t, float l1, float l2)
-            {
-                float2 m1 = DropLayer2(uv, t) * l1;
-                float2 m2 = DropLayer2(uv * 1.75, t) * l2;
-                
-                float c = m1.x + m2.x;
-                c = smoothstep(.4, 1., c);
-                
-                return float2(c, max(0, m2.y * l1));
             }
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
-                o.scrPos = ComputeScreenPos(o.pos);
-                o.normal = v.normal;
-                o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
-                o.worldNormal  = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);  
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;  
                 return o;
             }
 
-            fixed4 frag (v2f _iParam) : SV_Target
+            fixed4 frag (v2f i) : SV_Target
             {
-                 float2 uv = _iParam.uv;
-                float3 M = 2;
-                float T = (_Time.y + M.x * 2) * _Speed;
+                float2 uv = i.uv;
+                float T = (_Time.y) * _Speed;
                 float t = T * (.2 + 0.1 * _MoreRainAmount);
                 
-                float rainAmount = M.y;
-                uv *= 0.5;
-
+                float rainAmount = 1.0;
+                
                 float staticDrops = smoothstep(-.5, 1., rainAmount) * 2.;
                 float layer1 = smoothstep(.25, .75, rainAmount);
                 float layer2 = smoothstep(.0, .5, rainAmount);
