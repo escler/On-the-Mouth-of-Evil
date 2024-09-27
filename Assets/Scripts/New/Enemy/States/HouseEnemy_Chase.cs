@@ -15,7 +15,70 @@ public class HouseEnemy_Chase : MonoBaseState
     private bool _playerLost;
     private float _actualGrabCD;
     public float grabCD;
+    public int[] enemyAction = { 0, 1, 2 }; //0 - Chase and Grab Head / 1 - Cordura Attack / 2 - Block Doors 
+    private int _actualAction;
     public override void UpdateLoop()
+    {
+        switch (_actualAction)
+        {
+            case 0:
+                OnUpdateChase();
+                break;
+            case 1:
+                OnUpdateCorduraAttack();
+                break;
+            case 2:
+                break;
+        }
+    }
+
+
+    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
+    {
+        base.Enter(from, transitionParameters);
+        //_actualAction = Random.Range(0, enemyAction.Length);
+        _actualAction = 1;
+        switch (_actualAction)
+        {
+            case 0:
+                OnEnterChase();
+                break;
+            case 1:
+                OnEnterCorduraAttack();
+                break;
+            case 2:
+                break;
+        }
+    }
+    
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        switch (_actualAction)
+        {
+            case 0:
+                OnExitChase();
+                break;
+            case 1:
+                OnExitCorduraAttack();
+                break;
+            case 2:
+                break;
+        }
+
+        return base.Exit(to);
+    }
+
+
+    #region Chase and GrabHead
+
+    void OnEnterChase()
+    {
+        print("Entre a Chase");
+        owner.chasePlayer = true;
+        _actualTime = timeToLostPlayer;
+        _actualGrabCD = grabCD/2;
+    }
+    private void OnUpdateChase()
     {
         var playerPos = PlayerHandler.Instance.transform.position;
         var dir = playerPos - transform.position;
@@ -38,16 +101,7 @@ public class HouseEnemy_Chase : MonoBaseState
         _actualTime -= Time.deltaTime;
     }
 
-    public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
-    {
-        base.Enter(from, transitionParameters);
-        print("Entre a Chase");
-        owner.chasePlayer = true;
-        _actualTime = timeToLostPlayer;
-        _actualGrabCD = grabCD/2;
-    }
-    
-    public override Dictionary<string, object> Exit(IState to)
+    private void OnExitChase()
     {
         owner.actualTimeChase = owner.cdChase;
         _path.Clear();
@@ -55,10 +109,10 @@ public class HouseEnemy_Chase : MonoBaseState
         goal = null;
         owner.chasePlayer = false;
         _playerLost = false;
+        owner.grabHead = false;
+        owner.attackEnded = false;
         print("Sali del chase");
-        return base.Exit(to);
     }
-
     private void CalculatePath()
     {
         if(_path.Count > 0)
@@ -134,7 +188,47 @@ public class HouseEnemy_Chase : MonoBaseState
         _actualGrabCD = grabCD;
         owner.grabHead = false;
         _headGrabbed = false;
+        owner.attackEnded = true;
     }
+    
+
+    #endregion
+
+    #region CorduraAttack
+
+    void OnEnterCorduraAttack()
+    {
+        owner.EnemyAnimator.ChangeStateAnimation("CorduraAttack", true);
+        if (CorduraHandler.Instance.CorduraOn > 0)
+        {
+            owner.attackEnded = true;
+            return;
+        }
+        StartCoroutine(CorduraAttackCor());
+    }
+
+    IEnumerator CorduraAttackCor()
+    {
+        yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
+        yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
+        owner.attackEnded = true;
+    }
+
+    void OnUpdateCorduraAttack()
+    {
+        Quaternion lookDirection = Quaternion.LookRotation(PlayerHandler.Instance.transform.position - owner.transform.position).normalized;
+        lookDirection.x = transform.rotation.x;
+        lookDirection.z = transform.rotation.z;
+
+        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookDirection, 10f * Time.deltaTime);
+    }
+
+    void OnExitCorduraAttack()
+    {
+        owner.attackEnded = false;
+    }
+
+    #endregion
 
     public override IState ProcessInput()
     {
@@ -149,6 +243,11 @@ public class HouseEnemy_Chase : MonoBaseState
         
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
+
+        if (owner.attackEnded && Transitions.ContainsKey(StateTransitions.ToChase))
+        {
+            return Transitions[StateTransitions.ToChase];
+        }
         
         return this;
     }

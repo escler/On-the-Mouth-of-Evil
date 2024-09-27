@@ -33,4 +33,14 @@ public class HouseEnemyView : MonoBehaviour
     {
         ChangeStateAnimation("GrabHead", false);
     }
+
+    public void DisablePointAttack()
+    {
+        ChangeStateAnimation("CorduraAttack", false);
+    }
+
+    public void ActivateCordura()
+    {
+        CorduraHandler.Instance.StartCordura();
+    }
 }
