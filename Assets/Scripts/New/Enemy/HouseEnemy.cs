@@ -244,6 +244,7 @@ public class HouseEnemy : Enemy
             int randomIndex = Random.Range(0, objectsInRoom.Count);
             var actualObject = objectsInRoom[randomIndex];
             objects.Add(actualObject.GetComponent<IInteractableEnemy>());
+            Debug.Log("Added object: " + actualObject.name);
             objectsInRoom.Remove(actualObject);
         }
 

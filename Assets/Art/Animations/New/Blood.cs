@@ -16,6 +16,7 @@ public class Blood : MonoBehaviour, IInteractableEnemy
 
     public void OnStartInteract()
     {
+        _blood = true;
         if (_meshRenderer != null)
         {
            
@@ -38,12 +39,12 @@ public class Blood : MonoBehaviour, IInteractableEnemy
 
     public void OnEndInteract()
     {
-       
-            if (_meshRenderer != null)
-            {
+        _blood = false;
+        if (_meshRenderer != null)
+        {
                
-                _meshRenderer.enabled = false;
-            }
+           _meshRenderer.enabled = false;
+        }
        
 
 
