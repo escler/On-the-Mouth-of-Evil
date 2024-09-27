@@ -58,9 +58,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   solution: 05000000070000000300000000000000
-  playVFX: {fileID: 5176281894798380710}
-  psAura: {fileID: 6294762673298618338}
-  tree: {fileID: 6026608055396199375}
+  playVFX: {fileID: 8850566016848019273}
+  play: 1
 --- !u!1 &9092903939626119032
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +179,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9092903939626119032}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 307acf11c7851c446aaa0a2c8e18dd0e, type: 3}
   m_Name: 
@@ -270,12 +269,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 508491211883707587}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6026608055396199375 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6101346190523733772, guid: 7b3b4675084ade94bbea3e5b5d4287e4,
-    type: 3}
-  m_PrefabInstance: {fileID: 508491211883707587}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7942183029097159788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -292,7 +285,7 @@ PrefabInstance:
     - target: {fileID: 1507522271456420645, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2165969324714761352, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
@@ -314,9 +307,19 @@ PrefabInstance:
       propertyPath: autoRandomSeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4492318362961465342, guid: 2a6274fab608da34ba789eb4807aa299,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4977383937781965173, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225644684256468178, guid: 2a6274fab608da34ba789eb4807aa299,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6258623329648339451, guid: 2a6274fab608da34ba789eb4807aa299,
@@ -327,12 +330,17 @@ PrefabInstance:
     - target: {fileID: 7222795317911820240, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7460880645471818659, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470795014826773490, guid: 2a6274fab608da34ba789eb4807aa299,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8693004151893744480, guid: 2a6274fab608da34ba789eb4807aa299,
         type: 3}
@@ -400,9 +408,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7942183029097159788}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6294762673298618338 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4135201858880990094, guid: 2a6274fab608da34ba789eb4807aa299,
+--- !u!198 &8850566016848019273 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1507522271456420645, guid: 2a6274fab608da34ba789eb4807aa299,
     type: 3}
   m_PrefabInstance: {fileID: 7942183029097159788}
   m_PrefabAsset: {fileID: 0}
