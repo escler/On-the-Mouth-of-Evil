@@ -36,8 +36,9 @@ public class HouseEnemy_Chase : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        //_actualAction = Random.Range(0, enemyAction.Length);
-        _actualAction = 1;
+        print("Attacks");
+        _actualAction = Random.Range(0, 2);
+        print(_actualAction);
         switch (_actualAction)
         {
             case 0:
@@ -64,6 +65,7 @@ public class HouseEnemy_Chase : MonoBaseState
             case 2:
                 break;
         }
+        print("Sali de attack");
 
         return base.Exit(to);
     }
@@ -74,6 +76,7 @@ public class HouseEnemy_Chase : MonoBaseState
     void OnEnterChase()
     {
         print("Entre a Chase");
+        owner.attackEnded = false;
         owner.chasePlayer = true;
         _actualTime = timeToLostPlayer;
         _actualGrabCD = grabCD/2;
@@ -110,7 +113,6 @@ public class HouseEnemy_Chase : MonoBaseState
         owner.chasePlayer = false;
         _playerLost = false;
         owner.grabHead = false;
-        owner.attackEnded = false;
         print("Sali del chase");
     }
     private void CalculatePath()
@@ -198,10 +200,12 @@ public class HouseEnemy_Chase : MonoBaseState
 
     void OnEnterCorduraAttack()
     {
+        owner.attackEnded = false;
         owner.EnemyAnimator.ChangeStateAnimation("CorduraAttack", true);
         if (CorduraHandler.Instance.CorduraOn > 0)
         {
             owner.attackEnded = true;
+            print("No activo cor");
             return;
         }
         StartCoroutine(CorduraAttackCor());
@@ -211,11 +215,14 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
         yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
+        print("Llego aca");
         owner.attackEnded = true;
     }
 
     void OnUpdateCorduraAttack()
     {
+        _playerLost = owner.actualRoom = PlayerHandler.Instance.actualRoom;
+        
         Quaternion lookDirection = Quaternion.LookRotation(PlayerHandler.Instance.transform.position - owner.transform.position).normalized;
         lookDirection.x = transform.rotation.x;
         lookDirection.z = transform.rotation.z;
@@ -225,7 +232,6 @@ public class HouseEnemy_Chase : MonoBaseState
 
     void OnExitCorduraAttack()
     {
-        owner.attackEnded = false;
     }
 
     #endregion
@@ -244,7 +250,7 @@ public class HouseEnemy_Chase : MonoBaseState
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
 
-        if (owner.attackEnded && Transitions.ContainsKey(StateTransitions.ToChase))
+        if (owner.attackEnded && !_playerLost && Transitions.ContainsKey(StateTransitions.ToChase))
         {
             return Transitions[StateTransitions.ToChase];
         }

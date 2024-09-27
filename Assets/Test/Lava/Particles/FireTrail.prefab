@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2213533354770246213}
   - component: {fileID: 4707879351336820903}
   - component: {fileID: 4811367023161940110}
-  - component: {fileID: 2345165647956262392}
   m_Layer: 0
   m_Name: FireTrail
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1743503890018869821}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.16, y: -4.2, z: -7.74}
+  m_LocalPosition: {x: 0.16, y: -4.2, z: -4.91}
   m_LocalScale: {x: 1.9268, y: 1, z: 1.9452}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,10 +47,10 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  emitterVelocityMode: 1
-  looping: 0
+  emitterVelocityMode: 0
+  looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -871,7 +870,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100.32
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -924,7 +923,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 100
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4829,15 +4828,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2345165647956262392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743503890018869821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6612602ed1d844cb0b5721e1ac8027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

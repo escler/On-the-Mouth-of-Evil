@@ -55,6 +55,8 @@ public class HouseEnemy : Enemy
 
     public bool attackEnded;
 
+    public ParticleSystem trailFire;
+
     private void Awake()
     {
         if (Instance)
@@ -169,6 +171,8 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
+
+        trailFire.Play();
         _corroutineActivate = false;
     }
 
@@ -209,6 +213,7 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
+        trailFire.Stop();
 
         _corroutineActivate = false;
     }
