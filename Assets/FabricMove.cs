@@ -5,6 +5,7 @@ using UnityEngine;
 public class FabricMove : MonoBehaviour, IInteractableEnemy
 {
     private bool _fabric;
+    [SerializeField]
     AnimationClip _clip;
     public void OnEndInteract()
     {
@@ -28,9 +29,8 @@ public class FabricMove : MonoBehaviour, IInteractableEnemy
 
     void Update()
     {
-        if (_fabric)
-        {
-            GetComponent<Animation>().Play(_clip.name);
-        }
+        if (!_fabric) return;
+        GetComponent<Animation>().Play(_clip.name);
+        
     }
 }

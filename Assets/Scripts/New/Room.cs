@@ -8,6 +8,7 @@ public class Room : MonoBehaviour
     public Node[] nodesRoom;
     public Door[] doors;
     public GameObject[] interactableEnemy;
+    public MovableItem[] movableItems;
     private int count;
     public bool cantBlock;
     private void Awake()
@@ -56,6 +57,14 @@ public class Room : MonoBehaviour
         {
             node.gameObject.SetActive(true);
 
+        }
+    }
+
+    public void BlockDoors()
+    {
+        for (int i = 0; i < movableItems.Length; i++)
+        {
+            movableItems[i].LockDoor();
         }
     }
 

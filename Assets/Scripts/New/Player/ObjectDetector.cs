@@ -23,8 +23,19 @@ public class ObjectDetector : MonoBehaviour
         {
             _hit.transform.GetComponent<IInteractable>().OnInteractItem();
         }
-        
-        if (Inventory.Instance.selectedItem == null) return;
+
+        if (Inventory.Instance.selectedItem == null)
+        {
+            if (ray && Input.GetMouseButton(0))
+            {
+                if(_hit.transform.TryGetComponent(out MovableItem movable))
+                {
+                    movable.RelocateItem();
+                    return;
+                }
+            }
+            return;
+        }
 
         if (Inventory.Instance.selectedItem.itemName == "Cross")
         {
