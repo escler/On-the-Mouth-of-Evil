@@ -47,9 +47,19 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (heldObj == null) return;
         if (!heldObj.GetComponent<PieceTarotCard>().onHand) heldObj = null;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _rotating = !_rotating;
+            ChangePlayerLockState();
+        }
         
-        RotateObject();
+        MoveObject(_rotating ? PlayerHandler.Instance.farFocusPos.position : PlayerHandler.Instance.handPivot.position);
+        
         CompareOrientation();
+        
+        if (_rotating) RotateObject();
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if(_canPlace) PlaceObject();
@@ -121,42 +131,44 @@ public class TarotCardPuzzle : MonoBehaviour
         heldObj = null;
     }
 
+    void MoveObject(Vector3 position)
+    {
+        heldObj.transform.position = Vector3.SmoothDamp(heldObj.transform.position,
+            position, ref reference,.1f);
+    }
+
+    void ChangePlayerLockState()
+    {
+        _playerCam.CameraLock = _rotating;
+        _canDrop = !_rotating;
+        Inventory.Instance.cantSwitch = _rotating;
+        if(_rotating) PlayerHandler.Instance.UnPossesPlayer();
+        else PlayerHandler.Instance.PossesPlayer();
+    }
+
     void RotateObject()
     {
-        if (Input.GetKey(KeyCode.R))
-        {
-            heldObj.transform.position = Vector3.SmoothDamp(heldObj.transform.position,
-                PlayerHandler.Instance.farFocusPos.position, ref reference,.1f);
-            _playerCam.CameraLock = true;
-            _canDrop = false;
-            Inventory.Instance.cantSwitch = true;
-            
-            float XaxisRotation = Input.GetAxis("Mouse X") * _sensX * Time.deltaTime;
-            float YaxisRotation = Input.GetAxis("Mouse Y") * _sensY *Time.deltaTime;
-
-            _xRot += XaxisRotation;
-            _yRot += YaxisRotation;
-       
-            //heldObj.transform.Rotate(Vector3.up, XaxisRotation);
-            //heldObj.transform.Rotate(Vector3.right, YaxisRotation);
-            //heldObjRb.transform.Rotate(-YaxisRotation,XaxisRotation,0);
-
-            heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.right, YaxisRotation);
-            heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.up, XaxisRotation);
+        _playerCam.CameraLock = true;
+        _canDrop = false;
+        PlayerHandler.Instance.UnPossesPlayer();
+        Inventory.Instance.cantSwitch = true;
+        
+        float XaxisRotation = Input.GetAxis("Horizontal") * _sensX * Time.deltaTime;
+        float YaxisRotation = Input.GetAxis("Vertical") * _sensY *Time.deltaTime;
+        float ZaxisRotation = Input.GetAxis("ZAxis") * _sensY *Time.deltaTime;
+   
+        heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.right, YaxisRotation);
+        heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.up, XaxisRotation);
+        heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.forward, ZaxisRotation);
+        //heldObj.transform.Rotate(Vector3.up, XaxisRotation);
+        //heldObj.transform.Rotate(Vector3.right, YaxisRotation);
+        //heldObjRb.transform.Rotate(-YaxisRotation,XaxisRotation,0);
 
 
-            /*heldObj.transform.Rotate(transform.up, XaxisRotation);
-            heldObj.transform.Rotate(transform.right, YaxisRotation);
-            heldObjRb.transform.localEulerAngles += transform.up * XaxisRotation + transform.right * YaxisRotation;*/
-        }
 
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            _playerCam.CameraLock = false;
-            _canDrop = true;
-            Inventory.Instance.cantSwitch = false;
-            heldObj.transform.position = PlayerHandler.Instance.handPivot.position;
-        }
+        /*heldObj.transform.Rotate(transform.up, XaxisRotation);
+        heldObj.transform.Rotate(transform.right, YaxisRotation);
+        heldObjRb.transform.localEulerAngles += transform.up * XaxisRotation + transform.right * YaxisRotation;*/
     }
 
     public void DeactivateMesh()

@@ -69,19 +69,18 @@ public class PuzzleSaltPaper : Item, IInteractable
     private void Update()
     {
         if (!active) return;
-        if (Input.GetKey(KeyCode.R))
-        {
-            RotateObject();
-        }
+        
+        RotateObject();
     }
 
     void RotateObject()
     {
-            
-        float XaxisRotation = Input.GetAxis("Mouse X") * _sensX * Time.deltaTime;
-        float YaxisRotation = Input.GetAxis("Mouse Y") * _sensY *Time.deltaTime;
+        float XaxisRotation = Input.GetAxis("Horizontal") * _sensX * Time.deltaTime;
+        float YaxisRotation = Input.GetAxis("Vertical") * _sensY *Time.deltaTime;
+        float ZaxisRotation = Input.GetAxis("ZAxis") * _sensY *Time.deltaTime;
         
         transform.RotateAround(transform.position, _playerCam.transform.right, YaxisRotation);
         transform.RotateAround(transform.position, _playerCam.transform.up, XaxisRotation);
+        transform.RotateAround(transform.position, _playerCam.transform.forward, ZaxisRotation);
     }
 }
