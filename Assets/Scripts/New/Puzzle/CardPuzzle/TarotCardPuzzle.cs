@@ -60,7 +60,7 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         var actualPiece = heldObj;
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
-        Inventory.Instance.DropItem();
+        Inventory.Instance.DropItem(Inventory.Instance.selectedItem);
         Destroy(actualPiece);
         _piecePlacesCount++;
         CheckPuzzleState();

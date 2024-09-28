@@ -54,7 +54,7 @@ public class Inventory : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) ChangeSelectedItem(countSelected + 1);
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) ChangeSelectedItem(countSelected - 1);
 
-        if (Input.GetButtonDown("Drop")) DropItem();
+        if (Input.GetButtonDown("Drop")) DropItem(selectedItem);
 
         if (Input.GetButtonDown("1")) ChangeSelectedItem(0);
         if (Input.GetButtonDown("2")) ChangeSelectedItem(1);
@@ -93,7 +93,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        DropItem();
+        if(inventories[_inventorySelect] == categoryInventory)DropItem(selectedItem);
+        else
+        {
+            var item = categoryInventory[countSelected];
+            item.gameObject.SetActive(true);
+            DropItem(item);
+        }
         i.transform.SetParent(PlayerHandler.Instance.handPivot);
         //i.transform.localScale = Vector3.one;
         i.transform.localPosition = Vector3.zero;
@@ -112,19 +118,20 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void DropItem()
+    public void DropItem(Item i)
     {
-        if (selectedItem == null) return;
-        var count = selectedItem.category == ItemCategory.hubItem ? countHub : countEnviroment;
+        if (i == null) return;
+        var count = i.category == ItemCategory.hubItem ? countHub : countEnviroment;
+        var categoryInventory = i.category == ItemCategory.hubItem ? inventories[0] : inventories[1];
         count--;
-        if (selectedItem.category == ItemCategory.hubItem) countHub = count;
+        if (i.category == ItemCategory.hubItem) countHub = count;
         else countEnviroment = count;
-        selectedItem.transform.parent = null;
-        selectedItem.GetComponent<BoxCollider>().enabled = true;
-        selectedItem.GetComponent<Rigidbody>().isKinematic = false;
+        i.transform.parent = null;
+        i.GetComponent<BoxCollider>().enabled = true;
+        i.GetComponent<Rigidbody>().isKinematic = false;
         //selectedItem.transform.localScale = Vector3.one;
-        selectedItem.OnDropItem();
-        inventory[countSelected] = null;
+        i.OnDropItem();
+        categoryInventory[countSelected] = null;
         selectedItem = inventory[countSelected];
         ChangeUI(countSelected);
     }

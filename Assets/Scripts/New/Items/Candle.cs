@@ -32,12 +32,14 @@ public class Candle : Item, IInteractable
 
     public override void OnSelectItem()
     {
+        if (!RitualManager.Instance) return;
         RitualManager.Instance.TakeCandle(this);
         RitualManager.Instance.candleTaked = true;
     }
 
     public override void OnDeselectItem()
     {
+        if (!RitualManager.Instance) return;
         RitualManager.Instance.UnassignCandle();
         RitualManager.Instance.candleTaked = false;
     }
@@ -46,6 +48,7 @@ public class Candle : Item, IInteractable
     {
         if(!canTake) return;
         base.OnInteractItem();
+        if (!RitualManager.Instance) return;
         RitualManager.Instance.TakeCandle(this);
         RitualManager.Instance.candleTaked = true;
     }

@@ -32,7 +32,7 @@ public class Bible : Item, IBurneable
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
-        Inventory.Instance.DropItem();
+        Inventory.Instance.DropItem(this);
         _placed = true;
         base.OnInteract(hit,i);
     }
