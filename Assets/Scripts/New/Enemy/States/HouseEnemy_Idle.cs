@@ -18,7 +18,7 @@ public class HouseEnemy_Idle : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         _idleTime = constTime + Random.Range(variantTimeMin, variantTimeMax);
-
+        print("Entre a Idle");
     }
 
     public override IState ProcessInput()
@@ -36,7 +36,7 @@ public class HouseEnemy_Idle : MonoBaseState
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
 
-        if (owner.enemyShowed && Transitions.ContainsKey(StateTransitions.ToChase))
+        if (owner.canAttackPlayer && Transitions.ContainsKey(StateTransitions.ToChase)) 
             return Transitions[StateTransitions.ToChase];
 
         return this;

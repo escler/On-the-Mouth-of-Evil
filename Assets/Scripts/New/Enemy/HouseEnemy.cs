@@ -51,14 +51,12 @@ public class HouseEnemy : Enemy
     public bool grabHead;
     public Transform headPos;
 
-    public bool enemyShowed;
-    public bool chasePlayer;
-    public bool canChase;
-    public float cdChase, actualTimeChase;
-
     public bool attackEnded;
 
     public ParticleSystem trailFire;
+
+    public bool enemyVisible, canAttackPlayer, compareRoom;
+    public float actualTimeToLost;
 
     private void Awake()
     {
@@ -67,9 +65,6 @@ public class HouseEnemy : Enemy
             Destroy(gameObject);
             return;
         }
-        lavaPrefab.SetActive(false);
-        targetScale=lavaPrefab.transform.localScale;
-        lavaPrefab.transform.localScale = Vector3.zero;
         Instance = this;
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
@@ -99,6 +94,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToPatrol, chaseState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, chaseState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, chaseState, ritualState);
+        _fsm.AddTransition(StateTransitions.ToChase, chaseState, chaseState);
 
         
         //GoToLocation
@@ -117,21 +113,19 @@ public class HouseEnemy : Enemy
     private void Update()
     {
         if (onRitual) return;
-        canChase = actualTimeChase <= 0;
-        if (actualTimeChase > 0)
-        {
-            actualTimeChase -= Time.deltaTime;
-        }
-        enemyShowed = _enemyVisibility <= 0 && canChase;
         CompareRooms();
         ShowEnemy();
+
+        if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
+        compareRoom = _player.actualRoom == actualRoom;
+        canAttackPlayer = enemyVisible && compareRoom;
 
     }
 
     private void ShowEnemy()
     {
         if (_player.actualRoom == null) return;
-        if (chasePlayer) return;
+        if (actualTimeToLost > 0) return;
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
@@ -153,8 +147,8 @@ public class HouseEnemy : Enemy
             {
                 _enemyAnimator.ChangeStateAnimation("Spawn", true);
                 appear = true;
-                lavaPrefab.SetActive(true);
-                lavaPrefab.transform.localScale = Vector3.Lerp(Vector3.zero,targetScale, 2f);
+                //lavaPrefab.SetActive(true);
+                //lavaPrefab.transform.localScale = Vector3.Lerp(Vector3.zero,targetScale, 2f);
 
             }
 
@@ -179,6 +173,8 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
+
+        enemyVisible = true;
 
         trailFire.Play();
         _corroutineActivate = false;
@@ -222,6 +218,7 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
         trailFire.Stop();
+        enemyVisible = false;
 
         _corroutineActivate = false;
     }
@@ -252,7 +249,6 @@ public class HouseEnemy : Enemy
             int randomIndex = Random.Range(0, objectsInRoom.Count);
             var actualObject = objectsInRoom[randomIndex];
             objects.Add(actualObject.GetComponent<IInteractableEnemy>());
-            Debug.Log("Added object: " + actualObject.name);
             objectsInRoom.Remove(actualObject);
         }
 

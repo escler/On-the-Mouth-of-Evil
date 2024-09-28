@@ -12,7 +12,6 @@ public class HouseEnemy_Chase : MonoBaseState
     public Node startNode, goal;
     public float timeToLostPlayer;
     private float _actualTime;
-    private bool _playerLost;
     private float _actualGrabCD;
     public float grabCD;
     public int[] enemyAction = { 0, 1, 2 }; //0 - Chase and Grab Head / 1 - Cordura Attack / 2 - Block Doors 
@@ -38,8 +37,9 @@ public class HouseEnemy_Chase : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        print("Attacks");
-        _actualAction = Random.Range(0, enemyAction.Length);
+        print("Entre a Chase");
+        //_actualAction = Random.Range(0, enemyAction.Length);
+        _actualAction = 0;
         switch (_actualAction)
         {
             case 0:
@@ -70,6 +70,8 @@ public class HouseEnemy_Chase : MonoBaseState
         }
         print("Sali de attack");
 
+        owner.attackEnded = false;
+
         return base.Exit(to);
     }
 
@@ -80,41 +82,38 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         print("Entre a Chase");
         owner.attackEnded = false;
-        owner.chasePlayer = true;
-        _actualTime = timeToLostPlayer;
-        _actualGrabCD = grabCD/2;
+        owner.actualTimeToLost = timeToLostPlayer;
     }
     private void OnUpdateChase()
     {
         var playerPos = PlayerHandler.Instance.transform.position;
         var dir = playerPos - transform.position;
+
+        if (owner.actualTimeToLost <= 0) owner.attackEnded = true;
+        
         if (_actualGrabCD > 0)
         {
             _actualGrabCD -= Time.deltaTime;
         }
-        if (_actualTime <= 0)
-            _playerLost = true;
 
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 
         if (!_ray)
         {
             MoveToPlayer();
+            owner.actualTimeToLost = timeToLostPlayer;
             return;
         }
+
         
         CalculatePath();
-        _actualTime -= Time.deltaTime;
     }
 
     private void OnExitChase()
     {
-        owner.actualTimeChase = owner.cdChase;
         _path.Clear();
         startNode = null;
         goal = null;
-        owner.chasePlayer = false;
-        _playerLost = false;
         owner.grabHead = false;
         print("Sali del chase");
     }
@@ -148,11 +147,10 @@ public class HouseEnemy_Chase : MonoBaseState
 
     public void MoveToPlayer()
     {
-        _actualTime = timeToLostPlayer;
 
         Vector3 target = PlayerHandler.Instance.transform.position;
         target.y = owner.transform.position.y;
-        if (Vector3.Distance(target, owner.transform.position) < .75) 
+        if (Vector3.Distance(target, owner.transform.position) < .75f) 
         {
             if(_actualGrabCD <= 0)GrabHead();
             return;
@@ -218,13 +216,11 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
         yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Point"));
-        print("Llego aca");
         owner.attackEnded = true;
     }
 
     void OnUpdateCorduraAttack()
     {
-        _playerLost = owner.actualRoom = PlayerHandler.Instance.actualRoom;
         
         Quaternion lookDirection = Quaternion.LookRotation(PlayerHandler.Instance.transform.position - owner.transform.position).normalized;
         lookDirection.x = transform.rotation.x;
@@ -253,7 +249,6 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
         yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
-        print("Llego aca");
         owner.attackEnded = true;
     }
 
@@ -269,19 +264,14 @@ public class HouseEnemy_Chase : MonoBaseState
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
         
-        if (_playerLost && Transitions.ContainsKey(StateTransitions.ToIdle))
-            return Transitions[StateTransitions.ToIdle];
-        
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
         
+        if (owner.attackEnded && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+        
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
-
-        if (owner.attackEnded && !_playerLost && Transitions.ContainsKey(StateTransitions.ToChase))
-        {
-            return Transitions[StateTransitions.ToChase];
-        }
         
         return this;
     }

@@ -72,4 +72,12 @@ public class Node : MonoBehaviour
     {
         PathFindingManager.instance.Nodes.Add(this);
     }
+
+    private void OnDrawGizmos()
+    {
+        foreach (var direction in PathFindingManager.instance.Directions)
+        {
+            Gizmos.DrawRay(transform.position, direction * 3);
+        }
+    }
 }

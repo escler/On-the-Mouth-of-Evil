@@ -25,6 +25,7 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
+        print("Entre a GoToLocation");
         _startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         _goalNode = owner.ritualDone ? owner.nodeRitual : PathFindingManager.instance.CalculateDistance(owner.goalPosition);
         _path = owner.pf.ThetaStar(_startNode, _goalNode, owner.obstacles);
