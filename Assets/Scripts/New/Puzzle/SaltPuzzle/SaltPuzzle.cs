@@ -13,7 +13,7 @@ public class SaltPuzzle : MonoBehaviour
     public Dictionary<SaltRecipient, int> recipientSolution;
     public int[] solution;
     private int count;
-    public ParticleSystem playVFX;
+    public GameObject playVFX;
     //public GameObject psAura;
     //public GameObject tree;
 
@@ -66,7 +66,7 @@ public class SaltPuzzle : MonoBehaviour
             }
             //Aca se gana el puzzle y se activa el altar
             // psAura.SetActive(true);
-            playVFX.Play();
+            playVFX.SetActive(true);
             //tree.SetActive(true);
         }
         else
