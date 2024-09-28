@@ -20,6 +20,7 @@ public class TarotCardPuzzle : MonoBehaviour
     public Transform drawer;
     private float _angleX;
     Vector3 reference =Vector3.zero;
+    private bool _rotating;
 
 
     private void Awake()
@@ -64,6 +65,9 @@ public class TarotCardPuzzle : MonoBehaviour
         Destroy(actualPiece);
         _piecePlacesCount++;
         CheckPuzzleState();
+        _playerCam.CameraLock = false;
+        _canDrop = true;
+        Inventory.Instance.cantSwitch = false;
     }
 
     IEnumerator MoveDrawer()
