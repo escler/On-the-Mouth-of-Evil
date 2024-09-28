@@ -121,7 +121,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 37.594, y: 2.823, z: 17.978}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4872546100811824887}
@@ -297,11 +297,17 @@ MonoBehaviour:
   buttonNumber: 0
   _buttonPress: 0
   _cantInteract: 0
+  _normalTopMat: {fileID: 2100000, guid: 74d4619a4ed701e43961a24d35420787, type: 2}
+  baseMats:
+  - {fileID: 2100000, guid: 1243b7394896a7a4d91e2181719d3491, type: 2}
+  - {fileID: 2100000, guid: 74d4619a4ed701e43961a24d35420787, type: 2}
   pressPosition: {fileID: 275765757812880420}
   unPressPosition: {fileID: 8553038105841430634}
   nextPos: {fileID: 0}
   saltPivot: {fileID: 4448677292336495433}
   finish: 0
+  bodyMesh: {fileID: 8661644264205808079}
+  topMesh: {fileID: 1178756195529375674}
 --- !u!65 &7664736852719095322
 BoxCollider:
   m_ObjectHideFlags: 0

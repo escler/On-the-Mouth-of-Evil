@@ -7,18 +7,19 @@ public class SaltRecipient : MonoBehaviour
 {
     public int buttonNumber;
     public bool _buttonPress, _cantInteract;
-    private Material _normalMat;
+    public Material _normalTopMat;
+    public Material[] baseMats;
     public Transform pressPosition, unPressPosition, nextPos, saltPivot;
     private Vector3 reference = Vector3.zero;
     public bool finish;
     private Animator _animator;
+    public MeshRenderer bodyMesh, topMesh; 
     
     private List<MeshRenderer> meshes;
 
     private void Awake()
     {
         meshes = new List<MeshRenderer>();
-        _normalMat = GetComponentInChildren<MeshRenderer>().material;
         var objectMeshes = GetComponentsInChildren<MeshRenderer>();
         foreach (var mesh in objectMeshes)
         {
@@ -40,10 +41,8 @@ public class SaltRecipient : MonoBehaviour
 
     public void UnHighlightObject()
     {
-        foreach (var mesh in meshes)
-        {
-            mesh.material = _normalMat;
-        }
+        bodyMesh.materials = baseMats;
+        topMesh.material = _normalTopMat;
     }
 
     public void OnRecipientPress()
