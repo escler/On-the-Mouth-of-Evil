@@ -13,13 +13,12 @@ public class MovableItem : MonoBehaviour, IInteractable
     private float _relocatedSpeed, _actualSpeed;
     private bool onHand;
     private bool canMove;
-    private bool relocated;
+    public bool relocated;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         relocated = true;
-        LockDoor();
         _relocatedSpeed = normalSpeed / 2;
         _actualSpeed = normalSpeed;
     }

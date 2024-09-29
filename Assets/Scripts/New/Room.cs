@@ -56,16 +56,36 @@ public class Room : MonoBehaviour
         foreach (var node in nodesRoom)
         {
             node.gameObject.SetActive(true);
-
         }
     }
 
     public void BlockDoors()
     {
+        if(!HouseEnemy.Instance.compareRoom) return;
         for (int i = 0; i < movableItems.Length; i++)
         {
             movableItems[i].LockDoor();
         }
+
+        for (int i = 0; i < doors.Length; i++)
+        {
+            doors[i].open = false;
+            doors[i].SetDoor(doors[i].open);
+        }
+    }
+
+    public bool DoorsBlocked()
+    {
+        int count = 0;
+        for (int i = 0; i < movableItems.Length; i++)
+        {
+            if (movableItems[i].relocated) count++;
+            else break;
+        }
+        print(count);
+        print(movableItems.Length);
+
+        return count == movableItems.Length;
     }
 
 }

@@ -39,7 +39,7 @@ public class HouseEnemy_Chase : MonoBaseState
         base.Enter(from, transitionParameters);
         print("Entre a Chase");
         //_actualAction = Random.Range(0, enemyAction.Length);
-        _actualAction = 1;
+        _actualAction = 2;
         switch (_actualAction)
         {
             case 0:
@@ -219,6 +219,15 @@ public class HouseEnemy_Chase : MonoBaseState
 
     void OnUpdateCorduraAttack()
     {
+        var playerPos = PlayerHandler.Instance.transform.position;
+        var dir = playerPos - transform.position;
+        
+        _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+        if (!_ray)
+        {
+            owner.actualTimeToLost = timeToLostPlayer;
+        }
         
         Quaternion lookDirection = Quaternion.LookRotation(PlayerHandler.Instance.transform.position - owner.transform.position).normalized;
         lookDirection.x = transform.rotation.x;
@@ -238,6 +247,12 @@ public class HouseEnemy_Chase : MonoBaseState
     private void OnEnterBlockDoorAttack()
     {
         print("entre a block");
+        if (!owner.actualRoom.DoorsBlocked())
+        {
+            OnEnterChase();
+            _actualAction = 0;
+            return;
+        }
         owner.attackEnded = false;
         owner.EnemyAnimator.ChangeStateAnimation("BlockDoor", true);
         StartCoroutine(WaitForAnimationEnd());
@@ -252,6 +267,15 @@ public class HouseEnemy_Chase : MonoBaseState
 
     private void OnUpdateBlockDoorAttack()
     {
+        var playerPos = PlayerHandler.Instance.transform.position;
+        var dir = playerPos - transform.position;
+        
+        _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+        if (!_ray)
+        {
+            owner.actualTimeToLost = timeToLostPlayer;
+        }
     }
     private void OnExitBlockDoorAttack(){}
 
