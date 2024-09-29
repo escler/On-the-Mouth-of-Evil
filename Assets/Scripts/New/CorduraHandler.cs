@@ -41,6 +41,7 @@ public class CorduraHandler : MonoBehaviour
 
     public void StartCordura()
     {
+        if (!HouseEnemy.Instance.compareRoom) return;
         _corduraOn = 10f;
         if (_corduraActivate) return;
         _corduraActivate = true;
@@ -53,6 +54,11 @@ public class CorduraHandler : MonoBehaviour
         while (_corduraOn > 0)
         {
             _corduraOn -= 0.01f;
+            if (!HouseEnemy.Instance.compareRoom && HouseEnemy.Instance.actualTimeToLost <= 0)
+            {
+                _corduraOn = 0;
+                break;
+            }
             if (_actualVignette < _targetVignette)
             {
                 _actualVignette += .5f;

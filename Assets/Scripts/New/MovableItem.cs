@@ -9,7 +9,8 @@ public class MovableItem : MonoBehaviour, IInteractable
     public Transform initialPos, finalPos;
     private Transform actualTarget;
     private Rigidbody _rb;
-    public float speed;
+    public float normalSpeed;
+    private float _relocatedSpeed, _actualSpeed;
     private bool onHand;
     private bool canMove;
     private bool relocated;
@@ -18,6 +19,9 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
         _rb = GetComponent<Rigidbody>();
         relocated = true;
+        LockDoor();
+        _relocatedSpeed = normalSpeed / 2;
+        _actualSpeed = normalSpeed;
     }
 
     private void Update()
@@ -26,6 +30,7 @@ public class MovableItem : MonoBehaviour, IInteractable
         {
             onHand = false;
             actualTarget = finalPos;
+            _actualSpeed = normalSpeed;
         }
     }
 
@@ -49,11 +54,12 @@ public class MovableItem : MonoBehaviour, IInteractable
             }
             return;
         }
+
         Vector3 dir = target - _rb.position;
         // Get the velocity required to reach the target in the next frame
         dir /= Time.fixedDeltaTime;
         // Clamp that to the max speed
-        dir = Vector3.ClampMagnitude(dir, speed);
+        dir = Vector3.ClampMagnitude(dir, _actualSpeed);
         // Apply that to the rigidbody
         _rb.velocity = dir;
     }
@@ -70,6 +76,7 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
         onHand = true;
         actualTarget = initialPos;
+        _actualSpeed = _relocatedSpeed;
     }
 
     public void OnInteractItem()

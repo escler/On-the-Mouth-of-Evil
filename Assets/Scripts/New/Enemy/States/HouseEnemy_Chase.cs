@@ -39,7 +39,7 @@ public class HouseEnemy_Chase : MonoBaseState
         base.Enter(from, transitionParameters);
         print("Entre a Chase");
         //_actualAction = Random.Range(0, enemyAction.Length);
-        _actualAction = 0;
+        _actualAction = 1;
         switch (_actualAction)
         {
             case 0:
@@ -80,7 +80,6 @@ public class HouseEnemy_Chase : MonoBaseState
 
     void OnEnterChase()
     {
-        print("Entre a Chase");
         owner.attackEnded = false;
         owner.actualTimeToLost = timeToLostPlayer;
     }
@@ -115,7 +114,6 @@ public class HouseEnemy_Chase : MonoBaseState
         startNode = null;
         goal = null;
         owner.grabHead = false;
-        print("Sali del chase");
     }
     private void CalculatePath()
     {

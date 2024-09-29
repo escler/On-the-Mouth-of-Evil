@@ -22,6 +22,7 @@ public class HouseEnemyView : MonoBehaviour
     public void DisableCrossBool()
     {
         ChangeStateAnimation("CrossUsed", false);
+        ResetVariablesInCross();
     }
 
     public void ActivateGrabHead()
@@ -52,5 +53,16 @@ public class HouseEnemyView : MonoBehaviour
     public void LockDoor()
     {
         HouseEnemy.Instance.actualRoom.BlockDoors();
+    }
+
+    public void ResetVariablesInCross()
+    {
+        ChangeStateAnimation("Spawn", false);
+        ChangeStateAnimation("Scare", false);
+        ChangeStateAnimation("BibleBurning", false);
+        ChangeStateAnimation("GrabHead", false);
+        ChangeStateAnimation("CorduraAttack", false);
+        ChangeStateAnimation("BlockDoor", false);
+        ChangeStateAnimation("Exorcism", false);
     }
 }

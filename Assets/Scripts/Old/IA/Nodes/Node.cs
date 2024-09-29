@@ -60,6 +60,8 @@ public class Node : MonoBehaviour
                 _neighbors.Add(hit.collider.GetComponent<Node>());
             }
         }
+        
+        if(_neighbors.Count == 0) print(gameObject.name + " No Tiene nodos vecimnos");
     }
 
     IEnumerator AddNodeWithDelay()

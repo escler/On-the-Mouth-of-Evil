@@ -144,14 +144,8 @@ public class PathFindingManager : MonoBehaviour
             print("Start null");
             return null;
         }
-        var roomStartNode = start.room;
-        if (roomStartNode != HouseEnemy.Instance.actualRoom)
-        {
-            print("??");
-            return null;
-        }
 
-        var nodesActuals = _nodes.Where(x => x.room != roomStartNode || x.room != HouseEnemy.Instance.crossRoom || !x.doorNode);
+        var nodesActuals = _nodes.Where(x => x.room != start.room && x.room != HouseEnemy.Instance.crossRoom && !x.doorNode);
 
         return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
     }
