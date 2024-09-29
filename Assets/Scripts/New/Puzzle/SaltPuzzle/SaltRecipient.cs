@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaltRecipient : MonoBehaviour
+public class SaltRecipient : MonoBehaviour, IInteractable
 {
     public int buttonNumber;
     public bool _buttonPress, _cantInteract;
@@ -121,5 +121,25 @@ public class SaltRecipient : MonoBehaviour
         Inventory.Instance.cantSwitch = false;
         yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
         SaltPuzzleTable.Instance.canInteractWithSalt = false;
+    }
+
+    public void OnInteractItem()
+    {
+        
+    }
+
+    public void OnInteract(bool hit, RaycastHit i)
+    {
+    }
+
+    public string ShowText()
+    {
+        if (Inventory.Instance.selectedItem == null) return "";
+        if (Inventory.Instance.selectedItem.itemName == "Salt")
+        {
+            return _buttonPress ? "Clear Recipient" : "Fill recipient";
+        }
+        
+        return "";
     }
 }

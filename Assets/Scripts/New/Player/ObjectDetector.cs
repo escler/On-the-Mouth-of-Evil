@@ -16,6 +16,7 @@ public class ObjectDetector : MonoBehaviour
         if (cameraPos == null) cameraPos = PlayerHandler.Instance.cameraPos;
         if (ui == null) ui = CanvasManager.Instance.InteractionText;
         if (_crosshairUI == null) _crosshairUI = CanvasManager.Instance.crossHairUI;
+        if (Inventory.Instance == null) return;
 
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
         ui.SetActive(ray);
@@ -28,32 +29,35 @@ public class ObjectDetector : MonoBehaviour
         {
             if (ray && Input.GetMouseButton(0))
             {
-                if(_hit.transform.TryGetComponent(out MovableItem movable))
+                if (_hit.transform.TryGetComponent(out MovableItem movable))
                 {
                     movable.RelocateItem();
                     return;
                 }
             }
-            return;
         }
 
-        if (Inventory.Instance.selectedItem.itemName == "Cross")
+        if (Inventory.Instance.selectedItem != null)
         {
-            if (Input.GetMouseButton(0))
+            if (Inventory.Instance.selectedItem.itemName == "Cross")
             {
-                Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                if (Input.GetMouseButton(0))
+                {
+                    Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                }
+                
+                if(Input.GetMouseButtonUp(0))
+                    Inventory.Instance.selectedItem.GetComponent<Cross>().OnUpCross();
             }
-            
-            if(Input.GetMouseButtonUp(0))
-                Inventory.Instance.selectedItem.GetComponent<Cross>().OnUpCross();
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
+            else
             {
-                Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                }
             }
         }
+
 
         if (ray)
         {

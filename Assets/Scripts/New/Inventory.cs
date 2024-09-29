@@ -101,7 +101,7 @@ public class Inventory : MonoBehaviour
             DropItem(item);
         }
         i.transform.SetParent(PlayerHandler.Instance.handPivot);
-        //i.transform.localScale = Vector3.one;
+        i.transform.localScale = Vector3.one;
         i.transform.localPosition = Vector3.zero;
 
         categoryInventory[countSelected] = i.GetComponent<Item>();
@@ -129,7 +129,7 @@ public class Inventory : MonoBehaviour
         i.transform.parent = null;
         i.GetComponent<BoxCollider>().enabled = true;
         i.GetComponent<Rigidbody>().isKinematic = false;
-        //selectedItem.transform.localScale = Vector3.one;
+        selectedItem.transform.localScale = Vector3.one;
         i.OnDropItem();
         categoryInventory[countSelected] = null;
         selectedItem = inventory[countSelected];
