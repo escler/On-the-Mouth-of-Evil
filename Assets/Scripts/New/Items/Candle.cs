@@ -65,6 +65,6 @@ public class Candle : Item, IInteractable
 
     public string ShowText()
     {
-        return "Press E To Grab Candle";
+        return canTake ? "Press E To Grab Candle" : "";
     }
 }
