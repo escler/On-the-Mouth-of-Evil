@@ -19,8 +19,8 @@ public class LRDemonIdleState : MonoBaseState
         if(_timeToTransition < 0 && owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
             return Transitions[StateTransitions.ToAttack];
 
-        if(_timeToTransition < 0 && owner.IsPersuitDistance() && owner.IsAttackDistance() && Transitions.ContainsKey(StateTransitions.ToChase))
-            return Transitions[StateTransitions.ToChase];
+        if(_timeToTransition < 0 && owner.IsPersuitDistance() && owner.IsAttackDistance() && Transitions.ContainsKey(StateTransitions.ToAttacks))
+            return Transitions[StateTransitions.ToAttacks];
         
         if(_timeToTransition < 0 && !owner.IsAttackDistance() && Transitions.ContainsKey(StateTransitions.ToMoveAround))
             return Transitions[StateTransitions.ToMoveAround];

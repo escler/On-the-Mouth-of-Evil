@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FSM;
 using UnityEngine;
 
-public class HouseEnemy_Chase : MonoBaseState
+public class HouseEnemy_Attacks : MonoBaseState
 {
     [SerializeField] private HouseEnemy owner;
     private bool _ray;
@@ -38,8 +38,7 @@ public class HouseEnemy_Chase : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Chase");
-        //_actualAction = Random.Range(0, enemyAction.Length);
-        _actualAction = 2;
+        _actualAction = Random.Range(0, enemyAction.Length);
         switch (_actualAction)
         {
             case 0:

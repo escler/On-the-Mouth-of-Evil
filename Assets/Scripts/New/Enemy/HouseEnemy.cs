@@ -27,7 +27,7 @@ public class HouseEnemy : Enemy
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Idle idleState;
     [SerializeField] private HouseEnemy_Patrol patrolState;
-    [SerializeField] private HouseEnemy_Chase chaseState;
+    [SerializeField] private HouseEnemy_Attacks attacksState;
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
     [SerializeField] private HouseEnemy_Ritual ritualState;
     [SerializeField] private HouseEnemy_GrabHead grabHeadState;
@@ -78,23 +78,23 @@ public class HouseEnemy : Enemy
 
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
-        _fsm.AddTransition(StateTransitions.ToChase, idleState, chaseState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, idleState, attacksState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, idleState, ritualState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
-        _fsm.AddTransition(StateTransitions.ToChase, patrolState, chaseState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, patrolState, attacksState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, patrolState, ritualState);
         
         //Chase
-        _fsm.AddTransition(StateTransitions.ToIdle, chaseState, idleState);
-        _fsm.AddTransition(StateTransitions.ToPatrol, chaseState, patrolState);
-        _fsm.AddTransition(StateTransitions.ToSpecifyLocation, chaseState, goToLocationState);
-        _fsm.AddTransition(StateTransitions.ToRitual, chaseState, ritualState);
-        _fsm.AddTransition(StateTransitions.ToChase, chaseState, chaseState);
+        _fsm.AddTransition(StateTransitions.ToIdle, attacksState, idleState);
+        _fsm.AddTransition(StateTransitions.ToPatrol, attacksState, patrolState);
+        _fsm.AddTransition(StateTransitions.ToSpecifyLocation, attacksState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, attacksState, ritualState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, attacksState, attacksState);
 
         
         //GoToLocation

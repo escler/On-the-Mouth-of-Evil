@@ -20,8 +20,8 @@ public class LRDDemonMoveAroundState : MonoBaseState
         if (_timeToTransition < 0 && owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttack))
             return Transitions[StateTransitions.ToAttack];
         
-        if (_timeToTransition < 0 && !owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToChase))
-            return Transitions[StateTransitions.ToChase];
+        if (_timeToTransition < 0 && !owner.IsAttackDistance() && owner.CanAttack() && Transitions.ContainsKey(StateTransitions.ToAttacks))
+            return Transitions[StateTransitions.ToAttacks];
 
         return this;
     }

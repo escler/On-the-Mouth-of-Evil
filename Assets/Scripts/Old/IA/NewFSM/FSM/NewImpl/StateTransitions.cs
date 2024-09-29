@@ -8,7 +8,7 @@ public class StateTransitions
     public const string ToMoveAround = "ToMoveAround";
     public const string ToPatrol = "ToPatrol";
     public const string ToSpecifyLocation = "ToSpecifyLocation";
-    public const string ToChase = "ToChase";
+    public const string ToAttacks = "ToChase";
     public const string ToAttack = "ToAttack";
     public const string ToChannelAttack = "ToChannelAttack";
     public const string ToJumpAttack = "ToJumpAttack";

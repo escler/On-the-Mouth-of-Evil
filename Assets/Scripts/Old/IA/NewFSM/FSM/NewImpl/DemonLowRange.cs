@@ -57,7 +57,7 @@ public class DemonLowRange : Enemy
         fsm = new FiniteStateMachine(idleState, StartCoroutine);
 
         //Idle
-        fsm.AddTransition(StateTransitions.ToChase, idleState, chaseState);
+        fsm.AddTransition(StateTransitions.ToAttacks, idleState, chaseState);
         fsm.AddTransition(StateTransitions.ToAttack, idleState, attackState);
         fsm.AddTransition(StateTransitions.ToMoveAround, idleState, moveAroundState);
         fsm.AddTransition(StateTransitions.ToBanish, idleState, banishState);
@@ -76,7 +76,7 @@ public class DemonLowRange : Enemy
 
 
         //Move Around
-        fsm.AddTransition(StateTransitions.ToChase, moveAroundState, chaseState);
+        fsm.AddTransition(StateTransitions.ToAttacks, moveAroundState, chaseState);
         fsm.AddTransition(StateTransitions.ToAttack, moveAroundState, attackState);
         fsm.AddTransition(StateTransitions.ToBanish, moveAroundState, banishState);
         fsm.AddTransition(StateTransitions.ToHit, moveAroundState, hitState);
