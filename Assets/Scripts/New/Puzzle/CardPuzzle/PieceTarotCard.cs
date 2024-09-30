@@ -8,7 +8,17 @@ public class PieceTarotCard : Item, IInteractable
 {
     public int cardCountPiece;
     public bool onHand;
-    
+    private MaterialPropertyBlock _alpha;
+    private MeshRenderer _mesh;
+
+    private void Awake()
+    {
+        _alpha = new MaterialPropertyBlock();
+        _alpha.SetFloat("_Alpha", 0);
+        _mesh = GetComponent<MeshRenderer>();
+        _mesh.SetPropertyBlock(_alpha);
+    }
+
     public override void OnInteractItem()
     {
         base.OnInteractItem();
@@ -29,6 +39,20 @@ public class PieceTarotCard : Item, IInteractable
     {
         if (!onHand) return;
         TarotCardPuzzle.Instance.PickUpObject(gameObject, cardCountPiece);
+        if (TarotCardPuzzle.Instance.CanPlace)
+        {
+            if (_alpha.GetFloat("_Alpha") < .1f)
+            {
+                _alpha.SetFloat("_Alpha", .1f);
+                _mesh.SetPropertyBlock(_alpha);
+                
+            }
+        }
+        else
+        {
+            _alpha.SetFloat("_Alpha",0);
+            _mesh.SetPropertyBlock(_alpha);
+        }
     }
 
     public override void OnDropItem()
@@ -36,14 +60,19 @@ public class PieceTarotCard : Item, IInteractable
         base.OnDropItem();
         onHand = false;
         gameObject.layer = 9;
+        TarotCardPuzzle.Instance.DeactivateMesh();
         TarotCardPuzzle.Instance.heldObj = null;
         CanvasManager.Instance.rotateInfo.SetActive(false);
+        _alpha.SetFloat("_Alpha",0);
+        _mesh.SetPropertyBlock(_alpha);
     }
 
     public override void OnDeselectItem()
     {
         TarotCardPuzzle.Instance.DeactivateMesh();
         TarotCardPuzzle.Instance.heldObj = null;
+        _alpha.SetFloat("_Alpha",0);
+        _mesh.SetPropertyBlock(_alpha);
     }
 
     private void OnDisable()
@@ -52,6 +81,8 @@ public class PieceTarotCard : Item, IInteractable
         if (TarotCardPuzzle.Instance != null) TarotCardPuzzle.Instance.heldObj = null;
         if (CanvasManager.Instance == null) return;
         CanvasManager.Instance.rotateInfo.SetActive(false);
+        _alpha.SetFloat("_Alpha",0);
+        _mesh.SetPropertyBlock(_alpha);
     }
 
     public string ShowText()

@@ -22,6 +22,8 @@ public class TarotCardPuzzle : MonoBehaviour
     Vector3 reference =Vector3.zero;
     private bool _rotating;
 
+    public bool CanPlace => _canPlace;
+
 
     private void Awake()
     {
@@ -72,12 +74,13 @@ public class TarotCardPuzzle : MonoBehaviour
         var actualPiece = heldObj;
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem);
+        piecesCard[_actualPiece].GetComponent<MeshRenderer>().enabled = true;
         Destroy(actualPiece);
         _piecePlacesCount++;
         CheckPuzzleState();
-        _playerCam.CameraLock = false;
-        _canDrop = true;
-        Inventory.Instance.cantSwitch = false;
+        _rotating = false;
+        ChangePlayerLockState();
+        
     }
 
     IEnumerator MoveDrawer()
@@ -108,7 +111,7 @@ public class TarotCardPuzzle : MonoBehaviour
         var actualCardPiece = piecesCard[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > 1.9f && distance < 1f)
+        if (orientation > 1.8f && distance < 1f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _canPlace = true;

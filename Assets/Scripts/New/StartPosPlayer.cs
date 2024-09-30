@@ -7,6 +7,7 @@ public class StartPosPlayer : MonoBehaviour
 {
     private void Awake()
     {
+        if (PlayerHandler.Instance == null) return;
         PlayerHandler.Instance.transform.position = transform.position;
         PlayerHandler.Instance.transform.rotation = transform.rotation;
     }

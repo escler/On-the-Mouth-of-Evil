@@ -27,6 +27,11 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
+        InitializeUI();
+    }
+
+    public void InitializeUI()
+    {
         var inventory = Inventory.Instance.hubInventory;
         
         for (int i = 0; i < inventory.Length; i++)
@@ -47,7 +52,6 @@ public class InventoryUI : MonoBehaviour
 
         _indexSelectedItem = Inventory.Instance.countSelected;
         ChangeSelectedItem(_indexSelectedItem);
-
     }
 
     public void ChangeItemUI(Item i, int index)

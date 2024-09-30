@@ -4932,7 +4932,6 @@ GameObject:
   - component: {fileID: 194374048}
   - component: {fileID: 194374047}
   - component: {fileID: 194374046}
-  - component: {fileID: 194374049}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -5058,25 +5057,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &194374049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194374044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017c1f5a39ce3774da1fb526039ee91b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: 
-  objectPrefab: {fileID: 0}
-  uiElement: {fileID: 0}
-  uiText: 
-  category: 0
-  cardCountPiece: 0
-  onHand: 0
 --- !u!1001 &195586948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8820,7 +8800,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pickup
       value: 
-      objectReference: {fileID: 194374049}
+      objectReference: {fileID: 0}
     - target: {fileID: 5686242245857353632, guid: e5c5c965f96b05d40bf0d5c213a779f3,
         type: 3}
       propertyPath: player
@@ -21526,6 +21506,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4403314098117823410, guid: 563fd04e5b7c340489015247ba2cd968,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4403314098117823410, guid: 563fd04e5b7c340489015247ba2cd968,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: adb5e24e27356944d980241e3e74c495, type: 2}
     - target: {fileID: 7843267972906955851, guid: 563fd04e5b7c340489015247ba2cd968,
         type: 3}
       propertyPath: m_LocalPosition.x
