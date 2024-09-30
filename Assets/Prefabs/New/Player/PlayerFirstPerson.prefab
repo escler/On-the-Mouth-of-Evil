@@ -199,7 +199,7 @@ MonoBehaviour:
   cameraPos: {fileID: 2372193262579360146}
   puzzlePivot: {fileID: 4593532697000044065}
   closeFocusPos: {fileID: 6897344335465354563}
-  farFocusPos: {fileID: 6206038718092206911}
+  farFocusPos: {fileID: 4942471101758727101}
   actualMission: {fileID: 0}
   actualRoom: {fileID: 0}
   cantPressInventory: 0
@@ -359,7 +359,39 @@ Transform:
   m_Children:
   - {fileID: 6897344335465354563}
   - {fileID: 6206038718092206911}
+  - {fileID: 4942471101758727101}
   m_Father: {fileID: 2158725607080879916}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5895135028980908293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4942471101758727101}
+  m_Layer: 2
+  m_Name: FartestLookObjectPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4942471101758727101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895135028980908293}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2372193262579360146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6317563221517621351
 GameObject:

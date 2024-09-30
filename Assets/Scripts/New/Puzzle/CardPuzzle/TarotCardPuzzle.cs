@@ -187,7 +187,6 @@ public class TarotCardPuzzle : MonoBehaviour
             heldObjRb = pickUpObj.GetComponent<Rigidbody>();
             heldObjRb.isKinematic = true;
             heldObj.transform.localScale = Vector3.one;
-            heldObj.layer = 2;
   
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), _player.GetComponent<Collider>(), true);
         }

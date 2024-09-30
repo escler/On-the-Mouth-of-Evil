@@ -58,7 +58,6 @@ public class ObjectDetector : MonoBehaviour
             }
         }
 
-
         if (ray)
         {
             _crosshairUI.IncreaseUI();
@@ -87,7 +86,6 @@ public class ObjectDetector : MonoBehaviour
                 descriptionItem.SetActive(false);
                 descriptionItem = null;
             }
-
         }
         
     }

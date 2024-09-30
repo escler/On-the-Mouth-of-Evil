@@ -134,12 +134,16 @@ public class SaltRecipient : MonoBehaviour, IInteractable
 
     public string ShowText()
     {
-        if (Inventory.Instance.selectedItem == null) return "";
+        if (Inventory.Instance.selectedItem == null)
+        {
+            print("Llegue aca");
+            return "";
+        }
         if (Inventory.Instance.selectedItem.itemName == "Salt")
         {
             return _buttonPress ? "Clear Recipient" : "Fill recipient";
         }
-        
+        print("Llegue aca2");
         return "";
     }
 }

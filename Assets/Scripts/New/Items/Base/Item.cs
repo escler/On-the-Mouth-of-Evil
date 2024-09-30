@@ -12,7 +12,7 @@ public class Item : MonoBehaviour, IInteractable
     public string uiText;
     public ItemCategory category;
     
-    public void OnGrabItem()
+    public virtual void OnGrabItem()
     {
         Inventory.Instance.AddItem(this, category);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;

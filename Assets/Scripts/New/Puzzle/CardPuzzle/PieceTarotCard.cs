@@ -19,6 +19,12 @@ public class PieceTarotCard : Item, IInteractable
         _mesh.SetPropertyBlock(_alpha);
     }
 
+    public override void OnGrabItem()
+    {
+        Inventory.Instance.AddItem(this, category);
+        GetComponent<MeshRenderer>().gameObject.layer = 18;
+    }
+
     public override void OnInteractItem()
     {
         base.OnInteractItem();
@@ -58,7 +64,7 @@ public class PieceTarotCard : Item, IInteractable
 
     public override void OnDropItem()
     {
-        base.OnDropItem();
+        GetComponent<MeshRenderer>().gameObject.layer = 9;
         onHand = false;
         gameObject.layer = 9;
         TarotCardPuzzle.Instance.DeactivateMesh();

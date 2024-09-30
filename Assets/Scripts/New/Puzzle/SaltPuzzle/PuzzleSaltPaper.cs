@@ -35,8 +35,6 @@ public class PuzzleSaltPaper : Item, IInteractable
         base.OnInteractItem();
         transform.localScale = Vector3.one;
     }
-
-
     public string ShowText()
     {
         return "Press E To Grab Paper";

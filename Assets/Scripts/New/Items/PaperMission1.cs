@@ -74,10 +74,8 @@ public class PaperMission1 : Mission
     private void Update()
     {
         if (!active) return;
-        if (Input.GetKey(KeyCode.R))
-        {
-            RotateObject();
-        }
+        RotateObject();
+        
     }
 
     void RotateObject()

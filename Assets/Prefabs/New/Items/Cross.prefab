@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6116775854119727696}
   - component: {fileID: 5336170537279257204}
   - component: {fileID: 1943379506435066080}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: ExplosionCross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5090,6 +5090,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8277038423736656443}
     m_Modifications:
+    - target: {fileID: 3780865616548401205, guid: dd04a4b13ae308248a3b5330d258f8d1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 3814898918329308235, guid: dd04a4b13ae308248a3b5330d258f8d1,
         type: 3}
       propertyPath: m_Name
@@ -5097,8 +5102,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3814898918329308235, guid: dd04a4b13ae308248a3b5330d258f8d1,
         type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814898918329308235, guid: dd04a4b13ae308248a3b5330d258f8d1,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622951854964866338, guid: dd04a4b13ae308248a3b5330d258f8d1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8784801339615067907, guid: dd04a4b13ae308248a3b5330d258f8d1,
         type: 3}
@@ -5181,6 +5196,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8277038423736656443}
     m_Modifications:
+    - target: {fileID: 4470076742373624932, guid: f4717971d0ce10e41a80fcc4d6c91966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 7506904476849469707, guid: f4717971d0ce10e41a80fcc4d6c91966,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5231,10 +5251,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7565845177473648072, guid: f4717971d0ce10e41a80fcc4d6c91966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919394802001184818, guid: f4717971d0ce10e41a80fcc4d6c91966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 9215321138605951119, guid: f4717971d0ce10e41a80fcc4d6c91966,
         type: 3}
       propertyPath: m_Name
       value: CrossHOLDPSEmpty
+      objectReference: {fileID: 0}
+    - target: {fileID: 9215321138605951119, guid: f4717971d0ce10e41a80fcc4d6c91966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
