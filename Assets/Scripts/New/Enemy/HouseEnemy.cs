@@ -36,6 +36,7 @@ public class HouseEnemy : Enemy
     public Node nodeRitual;
 
     public Material enemyMaterial;
+    public Material lavaMaterial;
     private float _enemyVisibility;
     private bool _corroutineActivate;
 
@@ -69,8 +70,10 @@ public class HouseEnemy : Enemy
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 10);
+        lavaMaterial.SetFloat("_Power", 10);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
-        
+
+
         objects = new List<IInteractableEnemy>();
         _player = PlayerHandler.Instance;
         pf = new PathFinding();
@@ -171,6 +174,7 @@ public class HouseEnemy : Enemy
         {
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -186,6 +190,8 @@ public class HouseEnemy : Enemy
         {
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Power", _enemyVisibility);
+
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -200,6 +206,8 @@ public class HouseEnemy : Enemy
         {
             _enemyVisibility += .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Power", _enemyVisibility);
+
             yield return new WaitForSeconds(0.1f);
         }
         
@@ -215,6 +223,8 @@ public class HouseEnemy : Enemy
         {
             _enemyVisibility += .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Power", _enemyVisibility);
+
             yield return new WaitForSeconds(0.1f);
         }
         trailFire.Stop();
