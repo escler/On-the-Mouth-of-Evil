@@ -27,6 +27,7 @@ public class PieceTarotCard : Item, IInteractable
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
+        TarotCardPuzzle.Instance.PressButton();
     }
 
     public override void OnSelectItem()

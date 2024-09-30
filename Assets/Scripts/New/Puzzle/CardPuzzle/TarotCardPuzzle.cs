@@ -49,12 +49,6 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (heldObj == null) return;
         if (!heldObj.GetComponent<PieceTarotCard>().onHand) heldObj = null;
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            _rotating = !_rotating;
-            ChangePlayerLockState();
-        }
         
         MoveObject(_rotating ? PlayerHandler.Instance.farFocusPos.position : PlayerHandler.Instance.handPivot.position);
         
@@ -69,6 +63,11 @@ public class TarotCardPuzzle : MonoBehaviour
         
     }
 
+    public void PressButton()
+    {
+        _rotating = !_rotating;
+        ChangePlayerLockState();
+    }
     private void PlaceObject()
     {
         var actualPiece = heldObj;
