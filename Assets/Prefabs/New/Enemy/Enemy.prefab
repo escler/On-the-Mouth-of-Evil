@@ -5626,7 +5626,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1484628512706039030, guid: b768265654edc8c488533c8c0aaf9b03, type: 3}
+    - {fileID: 6125507665997679906, guid: b768265654edc8c488533c8c0aaf9b03, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5657,6 +5659,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 258484488048164082}
     m_Modifications:
+    - target: {fileID: 2085411786076741551, guid: b768265654edc8c488533c8c0aaf9b03,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2238012813410461543, guid: b768265654edc8c488533c8c0aaf9b03,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5767,7 +5774,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: LavaComplete
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1484628512706039030, guid: b768265654edc8c488533c8c0aaf9b03, type: 3}
+    - {fileID: 6125507665997679906, guid: b768265654edc8c488533c8c0aaf9b03, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

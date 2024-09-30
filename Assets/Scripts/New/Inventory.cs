@@ -41,22 +41,25 @@ public class Inventory : MonoBehaviour
         StartCoroutine(DelayFunction());
         SceneManager.sceneLoaded += ClearInventories;
     }
+    
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ClearInventories;
+    }
 
     private void ClearInventories(Scene scene, LoadSceneMode loadSceneMode)
     {
-        print("ALo");
         if (SceneManager.GetActiveScene().name != "Hub") return;
+        print("ALo");
         
         foreach (var inv in inventories)
         {
             for (int i = 0; i < inv.Length; i++)
             {
-                if (inv[i] != null)
-                {
-                    Destroy(inv[i].gameObject);
-                    inv[i] = null;
-                    ChangeUI(i, inv[i].category);
-                }
+                if (inv[i] == null) continue;
+                InventoryUI.Instance.DeleteUI(i, inv[i].category);
+                Destroy(inv[i].gameObject);
+                inv[i] = null;
             }
         }
 
@@ -75,8 +78,6 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) SceneManager.LoadScene("Hub");
-        
         if (cantSwitch) return;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) ChangeSelectedItem(countSelected + 1);
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) ChangeSelectedItem(countSelected - 1);

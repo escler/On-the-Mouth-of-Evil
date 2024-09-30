@@ -59,8 +59,8 @@ public class RitualManager : MonoBehaviour
         candlesInRitual[_candlesPlaced].SetActive(true);
         candleTaked = false;
         _candlesPlaced++;
-        Destroy(_actualCandleTaked.gameObject);
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
+        Destroy(_actualCandleTaked.gameObject);
 
     }
 
@@ -78,5 +78,14 @@ public class RitualManager : MonoBehaviour
             psRitual.SetActive(true);
             HouseEnemy.Instance.RitualReady(ritualNode);
         }
+    }
+
+    public void RitualFinish()
+    {
+        floor.SetActive(true);
+        craterFloor.SetActive(false);
+        ritualFloor.SetActive(false);
+        stampRelease.SetActive(false);
+
     }
 }

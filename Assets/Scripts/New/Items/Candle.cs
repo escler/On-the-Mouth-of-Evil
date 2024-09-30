@@ -56,7 +56,6 @@ public class Candle : Item, IInteractable
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
-        print(i.transform.gameObject.name);
         if (i.transform.TryGetComponent(out RitualFloor ritualFloor))
         {
             ritualFloor.OnInteractItem();

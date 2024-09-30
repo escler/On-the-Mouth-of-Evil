@@ -79,7 +79,6 @@ public class TarotCardPuzzle : MonoBehaviour
         CheckPuzzleState();
         _rotating = false;
         ChangePlayerLockState();
-        
     }
 
     IEnumerator MoveDrawer()
@@ -100,8 +99,9 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (_piecePlacesCount < piecesCard.Length) return;
 
-        Inventory.Instance.ChangeUI(Inventory.Instance.countSelected,Inventory.Instance.inventory[Inventory.Instance.countSelected].category);
+        //Inventory.Instance.ChangeUI(Inventory.Instance.countSelected,Inventory.Instance.inventory[Inventory.Instance.countSelected].category);
         _angleX = 0;
+        print("termine");
         StartCoroutine(MoveDrawer());
     }
 

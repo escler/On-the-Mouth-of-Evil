@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 //Es opcional hacerlo, este script va a mostrar el pathfinding en este proyecto.
@@ -41,11 +42,23 @@ public class PathFindingManager : MonoBehaviour
         }
         else Destroy(gameObject);
 
-        StartCoroutine(CheckNodes());
-
+        StartCoroutine(CheckNodesCor());
+        SceneManager.sceneLoaded += CheckNodes;
     }
 
-    IEnumerator CheckNodes()
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= CheckNodes;
+    }
+
+    public void CheckNodes(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (SceneManager.GetActiveScene().name != "HouseLevel") return;
+        StartCoroutine(CheckNodesCor());
+    }
+    
+
+    IEnumerator CheckNodesCor()
     {
         yield return new WaitForSeconds(3f);
         foreach (var nodes in FindObjectsOfType<Node>())
