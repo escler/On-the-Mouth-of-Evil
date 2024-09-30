@@ -32,6 +32,7 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnDropItem()
     {
+        gameObject.SetActive(true);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
     }
 

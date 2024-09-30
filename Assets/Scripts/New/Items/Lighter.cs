@@ -29,6 +29,7 @@ public class Lighter : Item
 
     public override void OnDropItem()
     {
+        gameObject.SetActive(true);
         PSIdle.SetActive(false);
     }
 }

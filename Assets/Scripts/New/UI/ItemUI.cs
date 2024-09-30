@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ItemUI : MonoBehaviour
 {
     protected Image _image;
+    public string itemName;
     
     private void OnEnable()
     {

@@ -40,6 +40,7 @@ public class Salt : Item
 
     public override void OnDropItem()
     {
+        gameObject.SetActive(true);
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
     }

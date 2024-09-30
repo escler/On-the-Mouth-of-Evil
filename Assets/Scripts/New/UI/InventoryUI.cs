@@ -9,9 +9,10 @@ using Image = UnityEngine.UI.Image;
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; }
-    public GameObject emptyUI, hubInventoryUI, enviromentInventoryUI, actualInventoryUI;
+    public GameObject hubInventoryUI, enviromentInventoryUI, actualInventoryUI, blurHub, blurEnviroment;
     private int _indexSelectedItem;
     [SerializeField] private TextMeshProUGUI nameItemSelected;
+    public Transform activePos, deactivePos;
     
     private void Awake()
     {
@@ -32,45 +33,36 @@ public class InventoryUI : MonoBehaviour
 
     public void InitializeUI()
     {
-        var inventory = Inventory.Instance.hubInventory;
-        
-        for (int i = 0; i < inventory.Length; i++)
-        {
-            var uiElement = Instantiate(inventory[i] != null ? inventory[i].uiElement : emptyUI);
-            uiElement.transform.SetParent(hubInventoryUI.transform);
-            uiElement.transform.localScale = Vector3.one;
-        }
-
-        inventory = Inventory.Instance.enviromentInventory;
-
-        for (int i = 0; i < inventory.Length; i++)
-        {
-            var uiElement = Instantiate(inventory[i] != null ? inventory[i].uiElement : emptyUI);
-            uiElement.transform.SetParent(enviromentInventoryUI.transform);
-            uiElement.transform.localScale = Vector3.one;
-        }
-
         _indexSelectedItem = Inventory.Instance.countSelected;
         ChangeSelectedItem(_indexSelectedItem);
     }
 
-    public void ChangeItemUI(Item i, int index)
+    public void ChangeItemUI(Item i, int index, ItemCategory category)
     {
-        var actualElement = actualInventoryUI.transform.GetChild(index);
-        actualElement.SetParent(null);
-        GameObject uiElement = Instantiate(i != null ? i.uiElement : emptyUI);
+        var actualElement = category == ItemCategory.hubItem ? 
+            hubInventoryUI.transform.GetChild(index) : enviromentInventoryUI.transform.GetChild(index);
+        
+        GameObject uiElement = Instantiate(i.uiElement);
+        uiElement.transform.SetParent(actualElement);
+        uiElement.transform.localPosition = Vector3.zero;
         uiElement.transform.localScale = Vector3.one;
-        uiElement.transform.SetParent(actualInventoryUI.transform);
-        uiElement.transform.SetSiblingIndex(index);
-        Destroy(actualElement.gameObject);
+    }
+
+    public void DeleteUI(int index, ItemCategory category)
+    {
+        var inventory = category == ItemCategory.hubItem ? hubInventoryUI : enviromentInventoryUI;
+
+        var ui = inventory.transform.GetChild(index).GetChild(0);
+        ui.SetParent(null);
+        Destroy(ui.gameObject);
     }
 
     public void ChangeSelectedItem(int index)
     {
         if (actualInventoryUI.transform.childCount <= _indexSelectedItem) return;
-        actualInventoryUI.transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.white;
+     //       actualInventoryUI.transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.white;
         _indexSelectedItem = index;
-        actualInventoryUI.transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.yellow;
+       //    actualInventoryUI.transform.GetChild(_indexSelectedItem).GetComponent<Image>().color = Color.yellow;
         nameItemSelected.text = Inventory.Instance.selectedItem == null ? "" : Inventory.Instance.selectedItem.itemName;
     }
 
@@ -79,25 +71,22 @@ public class InventoryUI : MonoBehaviour
         switch (category)
         {
             case 0:
-                hubInventoryUI.SetActive(true);
-                enviromentInventoryUI.SetActive(false);
+                hubInventoryUI.transform.localPosition = activePos.localPosition;
+                hubInventoryUI.transform.localScale = activePos.localScale;
+                enviromentInventoryUI.transform.localPosition = deactivePos.localPosition;
+                enviromentInventoryUI.transform.localScale = deactivePos.localScale;
                 actualInventoryUI = hubInventoryUI;
-                var inventoryHub = Inventory.Instance.hubInventory;
-
-                for (int i = 0; i < inventoryHub.Length; i++)
-                {
-                    ChangeItemUI(inventoryHub[i], i);
-                }
+                blurHub.SetActive(false);
+                blurEnviroment.SetActive(true);
                 break;
             case 1:
-                hubInventoryUI.SetActive(false);
-                enviromentInventoryUI.SetActive(true);
+                hubInventoryUI.transform.localPosition = deactivePos.localPosition;
+                hubInventoryUI.transform.localScale = deactivePos.localScale;
+                enviromentInventoryUI.transform.localPosition = activePos.localPosition;
+                enviromentInventoryUI.transform.localScale = activePos.localScale;
                 actualInventoryUI = enviromentInventoryUI;
-                var inventoryEnviroment = Inventory.Instance.enviromentInventory;
-                for (int i = 0; i < inventoryEnviroment.Length; i++)
-                {
-                    ChangeItemUI(inventoryEnviroment[i], i);
-                }
+                blurHub.SetActive(true);
+                blurEnviroment.SetActive(false);
                 break;
         }
     }

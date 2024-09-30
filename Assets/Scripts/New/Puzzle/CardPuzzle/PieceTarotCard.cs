@@ -64,6 +64,7 @@ public class PieceTarotCard : Item, IInteractable
 
     public override void OnDropItem()
     {
+        gameObject.SetActive(true);
         GetComponent<MeshRenderer>().gameObject.layer = 9;
         onHand = false;
         gameObject.layer = 9;

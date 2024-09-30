@@ -72,7 +72,7 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         var actualPiece = heldObj;
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
-        Inventory.Instance.DropItem(Inventory.Instance.selectedItem);
+        Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
         piecesCard[_actualPiece].GetComponent<MeshRenderer>().enabled = true;
         Destroy(actualPiece);
         _piecePlacesCount++;
@@ -100,7 +100,7 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         if (_piecePlacesCount < piecesCard.Length) return;
 
-        Inventory.Instance.ChangeUI(Inventory.Instance.countSelected);
+        Inventory.Instance.ChangeUI(Inventory.Instance.countSelected,Inventory.Instance.inventory[Inventory.Instance.countSelected].category);
         _angleX = 0;
         StartCoroutine(MoveDrawer());
     }
