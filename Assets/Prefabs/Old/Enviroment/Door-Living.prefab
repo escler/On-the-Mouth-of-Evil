@@ -212,6 +212,7 @@ MonoBehaviour:
   blockDuration: 30
   rooms: []
   saltPS: {fileID: 7357792500321077298}
+  triggerObstacle: {fileID: 2741661746294188800}
 --- !u!1 &1724844055970736750
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +296,59 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2741661746294188800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4505197267880567259}
+  - component: {fileID: 8221886383771451538}
+  m_Layer: 8
+  m_Name: TriggerSalt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4505197267880567259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2741661746294188800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.36276886, z: -0, w: 0.93187916}
+  m_LocalPosition: {x: -39.340134, y: 14.588621, z: 33.943996}
+  m_LocalScale: {x: 1.8942615, y: 1, z: 0.081459865}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6523512007132244988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8221886383771451538
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2741661746294188800}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 54.131363, y: 266.13214, z: 251.70035}
+  m_Center: {x: -0.000091552734, y: 0, z: -0.0004882815}
 --- !u!1 &4416789076343393844
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +494,7 @@ Transform:
   m_Children:
   - {fileID: 8720942467660346899}
   - {fileID: 3941764601377417148}
+  - {fileID: 4505197267880567259}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 2.042, z: 0}
 --- !u!1 &6437825803310115318
