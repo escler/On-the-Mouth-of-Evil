@@ -84,4 +84,9 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
     {
         return playerInTable ? "Press E To Exit Table" : "Press E To View Table";
     }
+
+    public bool CanShowText()
+    {
+        return false;
+    }
 }

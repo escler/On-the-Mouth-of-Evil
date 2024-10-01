@@ -6,6 +6,7 @@ using UnityEngine;
 public class RitualFloor : MonoBehaviour, IInteractable
 {
     private RitualManager _ritualManager;
+    public bool canShowText;
 
     private void Start()
     {
@@ -26,5 +27,10 @@ public class RitualFloor : MonoBehaviour, IInteractable
     public string ShowText()
     {
         return !_ritualManager.candleTaked ? "" : "Place Candle";
+    }
+
+    public bool CanShowText()
+    {
+        return canShowText;
     }
 }

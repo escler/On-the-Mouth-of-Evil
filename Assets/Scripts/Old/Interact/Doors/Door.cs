@@ -36,6 +36,11 @@ public class Door : MonoBehaviour, IInteractable
         return open ? interactTextOpen : interactTextClose;
     }
 
+    public bool CanShowText()
+    {
+        return true;
+    }
+
     public void BlockDoor()
     {
         StartCoroutine(BlockDoorCor());

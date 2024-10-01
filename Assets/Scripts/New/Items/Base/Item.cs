@@ -11,6 +11,7 @@ public class Item : MonoBehaviour, IInteractable
     protected bool canUse;
     public string uiText;
     public ItemCategory category;
+    public bool canShowText;
     
     public virtual void OnGrabItem()
     {
@@ -44,5 +45,10 @@ public class Item : MonoBehaviour, IInteractable
     public string ShowText()
     {
         return uiText;
+    }
+
+    public virtual bool CanShowText()
+    {
+        return canShowText;
     }
 }

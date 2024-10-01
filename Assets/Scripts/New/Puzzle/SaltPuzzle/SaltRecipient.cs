@@ -144,4 +144,9 @@ public class SaltRecipient : MonoBehaviour, IInteractable
         print("Llegue aca2");
         return "";
     }
+
+    public bool CanShowText()
+    {
+        return false;
+    }
 }

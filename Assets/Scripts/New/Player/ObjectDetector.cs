@@ -22,14 +22,47 @@ public class ObjectDetector : MonoBehaviour
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
         ui.SetActive(ray && !_hit.transform.TryGetComponent(out MovableItem movablei));
         ui2.SetActive(ray && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
-        if (ray && Input.GetButtonDown("Interact"))
+
+
+        CheckInteractText();
+        InputCheck();
+        CrossHair();
+        DescriptionChecker();
+    }
+
+    private bool CheckRayCast()
+    {
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
+        return ray;
+    }
+
+    private void CheckInteractText()
+    {
+        var raycast = CheckRayCast();
+        
+        ui.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText());
+        ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
+    }
+
+    private void CrossHair()
+    {
+        var raycast = CheckRayCast();
+        if(raycast) _crosshairUI.IncreaseUI();
+        else _crosshairUI.DecreaseUI();
+    }
+
+    private void InputCheck()
+    {
+        var raycast = CheckRayCast();
+        
+        if (raycast && Input.GetButtonDown("Interact"))
         {
             _hit.transform.GetComponent<IInteractable>().OnInteractItem();
         }
-
+        
         if (Inventory.Instance.selectedItem == null)
         {
-            if (ray && Input.GetMouseButton(0))
+            if (raycast && Input.GetMouseButton(0))
             {
                 if (_hit.transform.TryGetComponent(out MovableItem movable))
                 {
@@ -45,7 +78,7 @@ public class ObjectDetector : MonoBehaviour
             {
                 if (Input.GetMouseButton(0))
                 {
-                    Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                    Inventory.Instance.selectedItem.OnInteract(raycast,_hit);
                 }
                 
                 if(Input.GetMouseButtonUp(0))
@@ -55,17 +88,20 @@ public class ObjectDetector : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Inventory.Instance.selectedItem.OnInteract(ray,_hit);
+                    Inventory.Instance.selectedItem.OnInteract(raycast,_hit);
                 }
             }
         }
+    }
 
-        if (ray)
+    public void DescriptionChecker()
+    {
+        var raycast = CheckRayCast();
+        
+        if (raycast)
         {
-            _crosshairUI.IncreaseUI();
             if(_hit.transform.TryGetComponent(out IInteractable interactable))
             {
-                ui.GetComponent<TextMeshProUGUI>().text = interactable.ShowText();
                 if (_hit.transform.TryGetComponent(out Item item))
                 {
                     var actualNewObject = CanvasManager.Instance.GetDescription(item.itemName);
@@ -82,13 +118,9 @@ public class ObjectDetector : MonoBehaviour
         }
         else
         {
-            _crosshairUI.DecreaseUI();
-            if (descriptionItem != null)
-            {
-                descriptionItem.SetActive(false);
-                descriptionItem = null;
-            }
+            if (descriptionItem == null) return;
+            descriptionItem.SetActive(false);
+            descriptionItem = null;
         }
-        
     }
 }

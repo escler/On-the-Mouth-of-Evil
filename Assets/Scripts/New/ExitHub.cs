@@ -43,4 +43,9 @@ public class ExitHub : MonoBehaviour, IInteractable
     {
         return interactDescription;
     }
+
+    public bool CanShowText()
+    {
+        return true;
+    }
 }

@@ -22,4 +22,9 @@ public class Key : MonoBehaviour, IInteractable
     {
         return "";
     }
+
+    public bool CanShowText()
+    {
+        return false;
+    }
 }

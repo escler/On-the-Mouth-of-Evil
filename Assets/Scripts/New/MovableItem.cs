@@ -91,4 +91,9 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
         return "Hold to Relocation";
     }
+
+    public bool CanShowText()
+    {
+        return false;
+    }
 }

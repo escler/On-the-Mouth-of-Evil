@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CandleRitual : MonoBehaviour, IBurneable
+public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
 {
     public GameObject psFire;
     private bool burning;
@@ -12,5 +12,23 @@ public class CandleRitual : MonoBehaviour, IBurneable
         psFire.SetActive(true);
         burning = true;
         RitualManager.Instance.CandlesBurned();
+    }
+
+    public void OnInteractItem()
+    {
+    }
+
+    public void OnInteract(bool hit, RaycastHit i)
+    {
+    }
+
+    public string ShowText()
+    {
+        return "";
+    }
+
+    public bool CanShowText()
+    {
+        return false;
     }
 }

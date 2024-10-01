@@ -6,4 +6,5 @@ public interface IInteractableEnemy
 {
     public void OnStartInteract();
     public void OnEndInteract();
+
 }
