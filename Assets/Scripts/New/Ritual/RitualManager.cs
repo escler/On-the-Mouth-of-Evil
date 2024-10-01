@@ -56,12 +56,13 @@ public class RitualManager : MonoBehaviour
     public void CheckCandleFloor()
     {
         if (_actualCandleTaked == null) return;
+        var candle = _actualCandleTaked;
+        _actualCandleTaked = null;
         candlesInRitual[_candlesPlaced].SetActive(true);
         candleTaked = false;
         _candlesPlaced++;
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
-        Destroy(_actualCandleTaked.gameObject);
-
+        Destroy(candle.gameObject);
     }
 
     public void ActivateCraterFloor()

@@ -16,20 +16,6 @@ public class Candle : Item, IInteractable
         _player = PlayerHandler.Instance;
     }
 
-    public void PickUpObject(GameObject pickUpObj)
-    {
-        if (!canTake) return;
-        if (!pickUpObj.GetComponent<Rigidbody>()) return;
-        heldObj = pickUpObj;
-        heldObjRb = pickUpObj.GetComponent<Rigidbody>();
-        heldObjRb.isKinematic = true;
-        heldObjRb.transform.parent = _player.puzzlePivot;
-        heldObj.transform.localScale = Vector3.one;
-        heldObj.layer = 2;
-  
-        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), _player.GetComponent<Collider>(), true);
-    }
-
     public override void OnSelectItem()
     {
         if (!RitualManager.Instance) return;
@@ -49,7 +35,6 @@ public class Candle : Item, IInteractable
         if(!canTake) return;
         base.OnInteractItem();
         if (!RitualManager.Instance) return;
-        RitualManager.Instance.TakeCandle(this);
         RitualManager.Instance.candleTaked = true;
     }
 

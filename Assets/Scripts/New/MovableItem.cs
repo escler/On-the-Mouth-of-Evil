@@ -21,7 +21,6 @@ public class MovableItem : MonoBehaviour, IInteractable
         relocated = true;
         _relocatedSpeed = normalSpeed / 2;
         _actualSpeed = normalSpeed;
-        LockDoor();
     }
 
     private void Update()
