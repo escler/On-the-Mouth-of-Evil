@@ -40,6 +40,7 @@ public class RitualManager : MonoBehaviour
         foreach (var candle in candles)
         {
             candle.canTake = true;
+            candle.canShowText = true;
         }
     }
 
