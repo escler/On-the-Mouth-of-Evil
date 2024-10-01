@@ -54,7 +54,7 @@ public class CorduraHandler : MonoBehaviour
         while (_corduraOn > 0)
         {
             _corduraOn -= 0.01f;
-            if (!HouseEnemy.Instance.compareRoom && HouseEnemy.Instance.actualTimeToLost <= 0)
+            if (!HouseEnemy.Instance.compareRoom && !HouseEnemy.Instance.canAttackPlayer)
             {
                 _corduraOn = 0;
                 break;
