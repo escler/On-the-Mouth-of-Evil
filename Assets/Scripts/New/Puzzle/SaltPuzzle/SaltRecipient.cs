@@ -13,7 +13,8 @@ public class SaltRecipient : MonoBehaviour, IInteractable
     private Vector3 reference = Vector3.zero;
     public bool finish;
     private Animator _animator;
-    public MeshRenderer bodyMesh, topMesh; 
+    public MeshRenderer bodyMesh, topMesh;
+    private bool animationRunning, test;
     
     private List<MeshRenderer> meshes;
 
@@ -34,15 +35,18 @@ public class SaltRecipient : MonoBehaviour, IInteractable
     {
         if (_cantInteract) return;
         _buttonPress = !_buttonPress;
-        var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();
-        selectedSalt.position = saltPivot.position;
-        selectedSalt.SetParent(saltPivot);
-        Inventory.Instance.selectedItem.GetComponent<Salt>().PlacingBool();
+        _animator.SetBool("Filled", _buttonPress);
+        if(_buttonPress)
+        {
+            var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();
+            selectedSalt.position = saltPivot.position;
+            selectedSalt.SetParent(saltPivot);
+            Inventory.Instance.selectedItem.GetComponent<Salt>().PlacingBool();
+        }
         SaltPuzzleTable.Instance.canInteractWithSalt = true;
-        if (_buttonPress) SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
-        else SaltPuzzle.Instance.DeleteRecipient(this);
         _cantInteract = false;
-        StartCoroutine(WaitForMove());
+        if (_buttonPress) StartCoroutine(WaitToFill());
+        else StartCoroutine(WaitToClear());
     }
 
     private void MoveRecipient()
@@ -52,6 +56,7 @@ public class SaltRecipient : MonoBehaviour, IInteractable
 
     private void Update()
     {
+        
         if (Vector3.Distance(transform.position, nextPos.position) < 0.01f)
         {
             if (finish)
@@ -67,8 +72,12 @@ public class SaltRecipient : MonoBehaviour, IInteractable
 
     public void ResetRecipient()
     {
-        _buttonPress = false;
-        nextPos = _buttonPress ? pressPosition : unPressPosition;
+        if (_buttonPress)
+        {
+            _buttonPress = false;
+            _animator.SetBool("Filled", _buttonPress);
+            StartCoroutine(WaitToClear());
+        }
     }
 
     private void OnEnable()
@@ -82,27 +91,28 @@ public class SaltRecipient : MonoBehaviour, IInteractable
         _cantInteract = true;
     }
 
-    public void OpenAnimation()
+    IEnumerator WaitToFill()
     {
-        _animator.SetBool("Interact", true);
-    }
-
-    public void DisableBool()
-    {
-        _animator.SetBool("Interact", false);
-    }
-
-    IEnumerator WaitForMove()
-    {
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient"));
         Inventory.Instance.cantSwitch = true;
-        OpenAnimation();
-        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient") && _animator.GetBool("Interact") == false);
-        MoveRecipient();
+        animationRunning = true;
+        yield return new WaitUntil(() => !_animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient"));
+        SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
         var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();
         selectedSalt.position = PlayerHandler.Instance.handPivot.position;
         selectedSalt.SetParent(PlayerHandler.Instance.handPivot);
         Inventory.Instance.cantSwitch = false;
-        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
+        SaltPuzzleTable.Instance.canInteractWithSalt = false;
+    }
+    
+    IEnumerator WaitToClear()
+    {
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("UnloadFill"));
+        Inventory.Instance.cantSwitch = true;
+        animationRunning = true;
+        yield return new WaitUntil(() => !_animator.GetCurrentAnimatorStateInfo(0).IsName("UnloadFill"));
+        SaltPuzzle.Instance.DeleteRecipient(this);
+        Inventory.Instance.cantSwitch = false;
         SaltPuzzleTable.Instance.canInteractWithSalt = false;
     }
 
@@ -113,6 +123,11 @@ public class SaltRecipient : MonoBehaviour, IInteractable
 
     public void OnInteract(bool hit, RaycastHit i)
     {
+    }
+
+    public void SetAnimationFinish()
+    {
+        animationRunning = false;
     }
 
     public string ShowText()

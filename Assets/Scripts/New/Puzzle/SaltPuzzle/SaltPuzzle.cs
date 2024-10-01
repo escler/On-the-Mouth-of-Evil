@@ -33,6 +33,7 @@ public class SaltPuzzle : MonoBehaviour
     public void AddRecipient(SaltRecipient recipient, int number)
     {
         recipientSolution.Add(recipient, number);
+        print("Agregue recipient");
         if (recipientSolution.Count == 4) CheckPuzzleSolve();
     }
 
@@ -71,6 +72,7 @@ public class SaltPuzzle : MonoBehaviour
         }
         else
         {
+            print("resetee");
             foreach (var recipient in recipients)
             {
                 recipient.ResetRecipient();   
