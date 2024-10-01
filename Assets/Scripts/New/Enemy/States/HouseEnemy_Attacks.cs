@@ -38,7 +38,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Chase");
-        _actualAction = Random.Range(0, enemyAction.Length);
+        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
         switch (_actualAction)
         {
             case 0:

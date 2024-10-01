@@ -6,7 +6,7 @@ public class ObjectDetector : MonoBehaviour
     public LayerMask layer;
     public Transform cameraPos;
     public int distance;
-    public GameObject ui;
+    public GameObject ui, ui2;
     private CrosshairUI _crosshairUI;
     private RaycastHit _hit;
     private GameObject descriptionItem;
@@ -15,11 +15,13 @@ public class ObjectDetector : MonoBehaviour
     {
         if (cameraPos == null) cameraPos = PlayerHandler.Instance.cameraPos;
         if (ui == null) ui = CanvasManager.Instance.InteractionText;
+        if (ui2 == null) ui2 = CanvasManager.Instance.moveObjectUI;
         if (_crosshairUI == null) _crosshairUI = CanvasManager.Instance.crossHairUI;
         if (Inventory.Instance == null) return;
 
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
-        ui.SetActive(ray);
+        ui.SetActive(ray && !_hit.transform.TryGetComponent(out MovableItem movablei));
+        ui2.SetActive(ray && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
         if (ray && Input.GetButtonDown("Interact"))
         {
             _hit.transform.GetComponent<IInteractable>().OnInteractItem();

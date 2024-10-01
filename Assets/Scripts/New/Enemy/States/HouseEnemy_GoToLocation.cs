@@ -35,6 +35,10 @@ public class HouseEnemy_GoToLocation : MonoBaseState
             _path.Reverse();
             _pathCalculated = true;
         }
+        else
+        {
+            _pathFinish = true;
+        }
     }
     
     private void TravelPath()
