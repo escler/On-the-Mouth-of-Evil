@@ -43,13 +43,11 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
 
         if (!playerInTable)
         {
-            if(currentRecipient != null) currentRecipient.UnHighlightObject();
             currentRecipient = null;
             return;
         }
         if (!ray)
         {
-            if(currentRecipient != null) currentRecipient.UnHighlightObject();
             currentRecipient = null;
             return;
         }
@@ -59,9 +57,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
         {
             if (saltRecipient != currentRecipient || currentRecipient == null)
             {
-                if(currentRecipient != null) currentRecipient.UnHighlightObject();
                 currentRecipient = saltRecipient;
-                currentRecipient.HightlightObject(hightlightMat);
             }
             
             if (Input.GetMouseButtonDown(0)) saltRecipient.OnRecipientPress();

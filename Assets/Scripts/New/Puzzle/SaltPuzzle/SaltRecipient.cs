@@ -30,21 +30,6 @@ public class SaltRecipient : MonoBehaviour, IInteractable
         _animator = GetComponent<Animator>();
     }
 
-    public void HightlightObject(Material mat)
-    {
-        if (_cantInteract) return;
-        foreach (var mesh in meshes)
-        {
-            mesh.material = mat;
-        }
-    }
-
-    public void UnHighlightObject()
-    {
-        bodyMesh.materials = baseMats;
-        topMesh.material = _normalTopMat;
-    }
-
     public void OnRecipientPress()
     {
         if (_cantInteract) return;
@@ -57,7 +42,6 @@ public class SaltRecipient : MonoBehaviour, IInteractable
         if (_buttonPress) SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
         else SaltPuzzle.Instance.DeleteRecipient(this);
         _cantInteract = false;
-        UnHighlightObject();
         StartCoroutine(WaitForMove());
     }
 
@@ -96,7 +80,6 @@ public class SaltRecipient : MonoBehaviour, IInteractable
     {
         if (!finish) return;
         _cantInteract = true;
-        UnHighlightObject();
     }
 
     public void OpenAnimation()
