@@ -21,6 +21,7 @@ public class MovableItem : MonoBehaviour, IInteractable
         relocated = true;
         _relocatedSpeed = normalSpeed / 2;
         _actualSpeed = normalSpeed;
+        LockDoor();
     }
 
     private void Update()
@@ -46,6 +47,7 @@ public class MovableItem : MonoBehaviour, IInteractable
         
         if (Vector3.Distance(transform.position, target) < .1f)
         {
+            transform.position = target;
             if (target == initialPos.position && !relocated)
             {
                 relocated = true;
