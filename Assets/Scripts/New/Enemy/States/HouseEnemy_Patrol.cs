@@ -30,9 +30,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         owner.crossUsed = false;
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
-        print("Nodo Start: " + startNode.name);
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
-        print("Nodo Goal: " + goal.name);
         
         _path = owner.pf.ThetaStar(startNode,goal, owner.obstacles);
 

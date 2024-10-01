@@ -29,7 +29,8 @@ public class Lighter : Item
 
     public override void OnDropItem()
     {
-        gameObject.SetActive(true);
+        GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
         PSIdle.SetActive(false);
+        gameObject.SetActive(true);
     }
 }

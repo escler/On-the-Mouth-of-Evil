@@ -41,6 +41,7 @@ public class Salt : Item
     public override void OnDropItem()
     {
         gameObject.SetActive(true);
+        GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
     }
