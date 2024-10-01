@@ -66,6 +66,7 @@ public class TarotCardPuzzle : MonoBehaviour
     public void PressButton()
     {
         _rotating = !_rotating;
+        CanvasManager.Instance.rotateInfo.SetActive(_rotating);
         ChangePlayerLockState();
     }
     private void PlaceObject()

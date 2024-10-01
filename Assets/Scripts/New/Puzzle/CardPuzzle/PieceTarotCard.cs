@@ -39,7 +39,6 @@ public class PieceTarotCard : Item, IInteractable
     public override void OnSelectItem()
     {
         onHand = true;
-        CanvasManager.Instance.rotateInfo.SetActive(true);
     }
 
     private void Update()
