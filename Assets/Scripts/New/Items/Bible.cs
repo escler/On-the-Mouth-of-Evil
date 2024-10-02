@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bible : Item, IBurneable
+public class Bible : Item
 {
     private bool _placed;
     public float timeToBurn;
     public GameObject firePS;
     private MaterialPropertyBlock _burning;
     private MeshRenderer _mesh;
+    public GameObject paperBible;
+    private RaycastHit _hit;
+    public LayerMask layer;
+    public float distance;
+    private bool ray;
     private void Awake()
     {
         _burning = new MaterialPropertyBlock();
@@ -18,36 +23,21 @@ public class Bible : Item, IBurneable
         _burning.SetInt("_BurningON", 0);
     }
 
-    public void OnBurn()
-    {
-        if (!_placed) return;
-        GetComponent<BoxCollider>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
-        if(Enemy.Instance != null) Enemy.Instance.SetGoalPos(transform.position);
-        StartCoroutine(BibleBurning());        
-        _burning.SetInt("_BurningON", 1);
-        _mesh.SetPropertyBlock(_burning);
-
-    }
-
     public override void OnInteract(bool hit, RaycastHit i)
     {
-        Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
-        _placed = true;
         base.OnInteract(hit,i);
+        if (ray)
+        {
+            if (_hit.transform.gameObject.layer != 19) return;
+            var paper = Instantiate(paperBible);
+            paper.transform.position = _hit.point + Vector3.up * 0.01f;
+            print("Instancie papel");
+        }
     }
 
-    IEnumerator BibleBurning()
+    private void Update()
     {
-        firePS.SetActive(true);
-        while (timeToBurn > 0)
-        {
-            timeToBurn -= 1;
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        if(Enemy.Instance != null) Enemy.Instance.bibleBurning = false;
-        Destroy(gameObject);
+        ray = Physics.Raycast(PlayerHandler.Instance.cameraPos.position, PlayerHandler.Instance.cameraPos.forward, out _hit, distance, layer);
+        print(ray);
     }
 }
