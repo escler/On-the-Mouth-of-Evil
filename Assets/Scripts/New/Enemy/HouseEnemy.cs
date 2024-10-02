@@ -59,7 +59,7 @@ public class HouseEnemy : Enemy
     public ParticleSystem closeSmokeParticles;
     public ParticleSystem trailSmokeParticles;
 
-    public GameObject particleTrail;
+
 
     public bool enemyVisible, canAttackPlayer, compareRoom;
     public float actualTimeToLost;
@@ -76,8 +76,8 @@ public class HouseEnemy : Enemy
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 10);
         lavaMaterial.SetFloat("_Power", 10);
-        //closeSmokeParticles.Stop();
-        //trailSmokeParticles.Stop();
+        closeSmokeParticles.Stop();
+        trailSmokeParticles.Stop();
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
 
 
@@ -186,10 +186,9 @@ public class HouseEnemy : Enemy
         }
 
         enemyVisible = true;
-        //closeSmokeParticles.Play();
-        //trailSmokeParticles.Play();
-        //trailFire.Play();
-        particleTrail.SetActive(true);
+        closeSmokeParticles.Play();
+        trailSmokeParticles.Play();
+        trailFire.Play();
         _corroutineActivate = false;
     }
 
@@ -237,10 +236,9 @@ public class HouseEnemy : Enemy
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
-        //closeSmokeParticles.Stop();
-        //trailSmokeParticles.Stop();
-        //trailFire.Stop();
-        particleTrail.SetActive(false);
+        closeSmokeParticles.Stop();
+        trailSmokeParticles.Stop();
+        trailFire.Stop();
         enemyVisible = false;
 
         _corroutineActivate = false;
