@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 4889294204515461422, guid: e2fa64c425cb0a14c97c8f2aa6da60b7,
         type: 3}
       propertyPath: m_Name
-      value: FireTrail Variant
+      value: EnemyFireTrail
       objectReference: {fileID: 0}
     - target: {fileID: 8326621456294180911, guid: e2fa64c425cb0a14c97c8f2aa6da60b7,
         type: 3}
@@ -228,7 +228,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2484915217045390609, guid: e2fa64c425cb0a14c97c8f2aa6da60b7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

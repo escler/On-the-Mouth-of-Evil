@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 4889294204515461422, guid: 58b0a9ac0cf0bfe4d91c301946248fe3,
         type: 3}
       propertyPath: m_Name
-      value: BossTrailPS Variant
+      value: EnemySmokeTrail
       objectReference: {fileID: 0}
     - target: {fileID: 8326621456294180911, guid: 58b0a9ac0cf0bfe4d91c301946248fe3,
         type: 3}
@@ -78,7 +78,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2484915217045390609, guid: 58b0a9ac0cf0bfe4d91c301946248fe3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
