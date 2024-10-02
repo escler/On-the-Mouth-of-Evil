@@ -63,6 +63,7 @@ public class HouseEnemy : Enemy
 
     public bool enemyVisible, canAttackPlayer, compareRoom;
     public float actualTimeToLost;
+    public bool activateExorcism;
 
     private void Awake()
     {
@@ -99,7 +100,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, patrolState, ritualState);
         
-        //Chase
+        //Attack
         _fsm.AddTransition(StateTransitions.ToIdle, attacksState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, attacksState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, attacksState, goToLocationState);
@@ -207,6 +208,8 @@ public class HouseEnemy : Enemy
 
             yield return new WaitForSeconds(0.1f);
         }
+
+        activateExorcism = true;
 
         RitualManager.Instance.ritualFloor.SetActive(false);
 

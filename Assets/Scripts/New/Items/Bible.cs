@@ -28,6 +28,13 @@ public class Bible : Item
         base.OnInteract(hit,i);
         if (ray)
         {
+            if (_hit.transform.TryGetComponent(out RitualFloor ritual))
+            {
+                var paperRitual = Instantiate(paperBible);
+                paperRitual.transform.position = RitualManager.Instance.ritualFloor.transform.position;
+                paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
+                return;
+            }
             if (_hit.transform.gameObject.layer != 19) return;
             var paper = Instantiate(paperBible);
             paper.transform.position = _hit.point + Vector3.up * 0.01f;

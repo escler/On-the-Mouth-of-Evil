@@ -78,7 +78,6 @@ public class RitualManager : MonoBehaviour
         if (_candlesBurning >= candlesInRitual.Length)
         {
             psRitual.SetActive(true);
-            HouseEnemy.Instance.RitualReady(ritualNode);
         }
     }
 

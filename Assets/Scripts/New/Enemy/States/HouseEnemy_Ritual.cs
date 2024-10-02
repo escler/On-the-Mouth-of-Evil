@@ -14,6 +14,8 @@ public class HouseEnemy_Ritual : MonoBaseState
     
     public override void UpdateLoop()
     {
+        if(owner.activateExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
+        
         if (!_pathCalculated) return;
 
         if (_path.Count > 0)
@@ -28,6 +30,7 @@ public class HouseEnemy_Ritual : MonoBaseState
 
         if (_pathFinish && owner.ritualDone)
         {
+            print("llegue?");
             ritualReached = true;
             owner.ShowEnemyRitual();
         }
@@ -84,8 +87,8 @@ public class HouseEnemy_Ritual : MonoBaseState
         if (_path.Count > 0)
         {
             _path.Reverse();
-            _pathCalculated = true;
         }
+        _pathCalculated = true;
     }
     
     private void TravelPath()

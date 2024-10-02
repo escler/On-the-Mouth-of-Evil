@@ -8,6 +8,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
     public GameObject firePS;
     private MaterialPropertyBlock _burning;
     public MeshRenderer[] meshesh;
+    public bool paperOnRitual;
     
     private void Awake()
     {
@@ -22,7 +23,8 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
     public void OnBurn()
     {
         GetComponent<BoxCollider>().enabled = false;
-        if(Enemy.Instance != null) Enemy.Instance.SetGoalPos(transform.position);
+        if(Enemy.Instance != null && !paperOnRitual) Enemy.Instance.SetGoalPos(transform.position);
+        if (HouseEnemy.Instance != null && paperOnRitual) HouseEnemy.Instance.RitualReady(RitualManager.Instance.ritualNode);
         StartCoroutine(BibleBurning());        
         _burning.SetInt("_BurningON", 1);
         foreach (var mesh in meshesh)
@@ -42,7 +44,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
             yield return new WaitForSeconds(1f);
         }
 
-        if(Enemy.Instance != null) Enemy.Instance.bibleBurning = false;
+        if(Enemy.Instance != null && !paperOnRitual) Enemy.Instance.bibleBurning = false;
         Destroy(gameObject);
     }
 
