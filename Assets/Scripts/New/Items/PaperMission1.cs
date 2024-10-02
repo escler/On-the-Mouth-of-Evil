@@ -11,6 +11,7 @@ public class PaperMission1 : Mission
     private Vector3 reference = Vector3.zero;
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
+    private bool canInteract;
 
     private void Start()
     {
@@ -38,8 +39,8 @@ public class PaperMission1 : Mission
         if (PlayerHandler.Instance.cantPressInventory) return;
         active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
-        StartCoroutine(active ? FocusObject() : UnFocusObject());
         Inventory.Instance.cantSwitch = active;
+        if(!canInteract) StartCoroutine(active ? FocusObject() : UnFocusObject());
     }
 
     public string ShowText()
@@ -49,6 +50,8 @@ public class PaperMission1 : Mission
 
     IEnumerator FocusObject()
     {
+        canInteract = true;
+        transform.SetParent(null);
         PlayerHandler.Instance.UnPossesPlayer();
         while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
         {
@@ -57,10 +60,14 @@ public class PaperMission1 : Mission
         }
 
         transform.position = focusPos.position;
+        canInteract = false;
     }
 
     IEnumerator UnFocusObject()
     {
+        canInteract = true;
+        Inventory.Instance.cantSwitch = true;
+        transform.SetParent(handPos);
         PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {
@@ -69,6 +76,8 @@ public class PaperMission1 : Mission
         }
 
         transform.position = handPos.position;
+        canInteract = false;
+        Inventory.Instance.cantSwitch = false;
     }
 
     private void Update()
@@ -84,7 +93,7 @@ public class PaperMission1 : Mission
         float XaxisRotation = Input.GetAxis("Horizontal") * _sensX * Time.deltaTime;
         float YaxisRotation = Input.GetAxis("Vertical") * _sensY *Time.deltaTime;
         float ZaxisRotation = Input.GetAxis("ZAxis") * _sensY *Time.deltaTime;
-        
+
         transform.RotateAround(transform.position, _playerCam.transform.right, YaxisRotation);
         transform.RotateAround(transform.position, _playerCam.transform.up, XaxisRotation);
         transform.RotateAround(transform.position, _playerCam.transform.forward, ZaxisRotation);

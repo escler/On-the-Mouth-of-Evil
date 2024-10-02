@@ -10,6 +10,7 @@ public class PuzzleSaltPaper : Item, IInteractable
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
     private bool active;
+    private bool canInteract;
 
     private void Start()
     {
@@ -26,8 +27,8 @@ public class PuzzleSaltPaper : Item, IInteractable
         if (PlayerHandler.Instance.cantPressInventory) return;
         active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
-        StartCoroutine(active ? FocusObject() : UnFocusObject());
         Inventory.Instance.cantSwitch = active;
+        if(!canInteract) StartCoroutine(active ? FocusObject() : UnFocusObject());
     }
 
     public override void OnInteractItem()
@@ -42,6 +43,8 @@ public class PuzzleSaltPaper : Item, IInteractable
     
     IEnumerator FocusObject()
     {
+        canInteract = true;
+        transform.SetParent(null);
         PlayerHandler.Instance.UnPossesPlayer();
         while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
         {
@@ -50,10 +53,14 @@ public class PuzzleSaltPaper : Item, IInteractable
         }
 
         transform.position = focusPos.position;
+        canInteract = false;
     }
 
     IEnumerator UnFocusObject()
     {
+        Inventory.Instance.cantSwitch = true;
+        canInteract = true;
+        transform.SetParent(handPos);
         PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {
@@ -62,6 +69,8 @@ public class PuzzleSaltPaper : Item, IInteractable
         }
 
         transform.position = handPos.position;
+        canInteract = false;
+        Inventory.Instance.cantSwitch = false;
     }
 
     private void Update()

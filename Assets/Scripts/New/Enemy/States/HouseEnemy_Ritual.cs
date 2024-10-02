@@ -30,7 +30,6 @@ public class HouseEnemy_Ritual : MonoBaseState
 
         if (_pathFinish && owner.ritualDone)
         {
-            print("llegue?");
             ritualReached = true;
             owner.ShowEnemyRitual();
         }
@@ -61,6 +60,7 @@ public class HouseEnemy_Ritual : MonoBaseState
 
         yield return new WaitForSeconds(0.3f);
         bool inNode = false;
+        if (CorduraHandler.Instance.CorduraOn > 0) CorduraHandler.Instance.CorduraOn = 0;
         while (!inNode)
         {
             Vector3 target = RitualManager.Instance.ritualNode.transform.position;
