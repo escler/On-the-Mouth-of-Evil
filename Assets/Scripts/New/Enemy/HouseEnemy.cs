@@ -194,10 +194,13 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnRitual()
     {
-        _enemyAnimator.animator.applyRootMotion = true;
-        _enemyAnimator.ChangeStateAnimation("Exorcism", true);
         while (_enemyVisibility > 0)
         {
+            if (_enemyVisibility >= 0.2f)
+            {
+                _enemyAnimator.animator.applyRootMotion = true;
+                _enemyAnimator.ChangeStateAnimation("Exorcism", true);
+            }
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);

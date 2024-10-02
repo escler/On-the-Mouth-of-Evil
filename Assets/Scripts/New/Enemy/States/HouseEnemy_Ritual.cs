@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FSM;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class HouseEnemy_Ritual : MonoBaseState
@@ -8,7 +9,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     [SerializeField] private HouseEnemy owner;
     private List<Vector3> _path;
     private Node _startNode, _goalNode;
-    private bool _pathCalculated, _pathFinish, bibleBurning;
+    private bool _pathCalculated, _pathFinish, bibleBurning, ritualReached, startRitualCor;
     
     
     public override void UpdateLoop()
@@ -19,13 +20,56 @@ public class HouseEnemy_Ritual : MonoBaseState
         {
             TravelPath();
         }
-        else GoToNodeGoal();
-        
-        
+        else
+        {
+            if (!ritualReached) GoToNodeGoal();
+            else StartRitualSequence();
+        }
 
         if (_pathFinish && owner.ritualDone)
         {
+            ritualReached = true;
             owner.ShowEnemyRitual();
+        }
+    }
+
+    void StartRitualSequence()
+    {
+        if (startRitualCor) return;
+        startRitualCor = true;
+        StartCoroutine(RitualSequenceCor());
+    }
+
+    IEnumerator RitualSequenceCor()
+    {
+        yield return new WaitForSeconds(0.7f);
+        float timer = 0;
+
+        while (timer < 1)
+        {
+            Vector3 target = PlayerHandler.Instance.transform.position;
+            target.y = owner.transform.position.y;
+            Vector3 dir = target - owner.transform.position;
+            owner.transform.rotation = Quaternion.LookRotation(dir);
+            owner.transform.position += dir.normalized * owner.speed / 2 * Time.deltaTime;
+            timer += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        yield return new WaitForSeconds(0.3f);
+        bool inNode = false;
+        while (!inNode)
+        {
+            Vector3 target = RitualManager.Instance.ritualNode.transform.position;
+            target.y = owner.transform.position.y;
+            Vector3 dir = target - owner.transform.position;
+            Vector3 targetPlayer = PlayerHandler.Instance.transform.position;
+            targetPlayer.y = owner.transform.position.y;
+            Vector3 dirPlayer = targetPlayer - owner.transform.position;
+            inNode = Vector3.Distance(owner.transform.position, target) <= 0.1f;
+            owner.transform.rotation = Quaternion.LookRotation(dirPlayer);
+            owner.transform.position += dir.normalized * owner.speed / 3 * Time.deltaTime;
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
