@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private float _actualSpeed, _inputX, _inputY;
     private Rigidbody _rb;
     private bool _run;
-
+    private AudioSource _walkAudioSource;
     public bool Run => _run;
 
     private void Awake()
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         _inputX = Input.GetAxisRaw("Horizontal");
         _inputY = Input.GetAxisRaw("Vertical");
         _run = Input.GetButton("Run");
+        HandleWalkSound();
     }
 
     private void FixedUpdate()
@@ -39,4 +40,23 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);
     }
+
+    private void HandleWalkSound()
+    {
+        bool isWalking = _inputX != 0 || _inputY != 0;
+
+        if (isWalking && _walkAudioSource == null)
+        {
+            MusicManager.Instance.PlaySound("Footsteps-concrete", true, (source) =>
+            {
+                _walkAudioSource = source;
+            });
+        }
+        else if (!isWalking && _walkAudioSource != null)
+        {
+            MusicManager.Instance.StopSound(_walkAudioSource);
+            _walkAudioSource = null;
+        }
+    }
+
 }
