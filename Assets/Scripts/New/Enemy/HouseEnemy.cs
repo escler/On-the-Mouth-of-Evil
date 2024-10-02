@@ -135,7 +135,7 @@ public class HouseEnemy : Enemy
     private void ShowEnemy()
     {
         if (_player.actualRoom == null) return;
-        if (actualTimeToLost > 0) return;
+        if (actualTimeToLost > 0 && enemyVisible) return;
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
@@ -194,6 +194,8 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnRitual()
     {
+        _enemyAnimator.animator.applyRootMotion = true;
+        _enemyAnimator.ChangeStateAnimation("Exorcism", true);
         while (_enemyVisibility > 0)
         {
             _enemyVisibility -= .5f;
@@ -203,12 +205,13 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
 
-        _enemyAnimator.animator.applyRootMotion = true;
+        RitualManager.Instance.ritualFloor.SetActive(false);
 
         RitualManager.Instance.ActivateCraterFloor();
-        _enemyAnimator.ChangeStateAnimation("Exorcism", true);
+        yield return new WaitUntil(
+            () => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("RitualExorcism"));
         
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4.8f);
         
         while (_enemyVisibility < 10)
         {
