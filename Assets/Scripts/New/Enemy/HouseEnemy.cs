@@ -55,9 +55,7 @@ public class HouseEnemy : Enemy
 
     public bool attackEnded;
 
-    public ParticleSystem trailFire;
-    public ParticleSystem closeSmokeParticles;
-    public ParticleSystem trailSmokeParticles;
+    public GameObject trailPS;
 
 
 
@@ -77,8 +75,7 @@ public class HouseEnemy : Enemy
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 10);
         lavaMaterial.SetFloat("_Power", 10);
-        closeSmokeParticles.Stop();
-        trailSmokeParticles.Stop();
+        lavaMaterial.SetFloat("_Alpha", 1);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
 
 
@@ -183,13 +180,12 @@ public class HouseEnemy : Enemy
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
             yield return new WaitForSeconds(0.1f);
         }
 
+        trailPS.SetActive(true);
         enemyVisible = true;
-        closeSmokeParticles.Play();
-        trailSmokeParticles.Play();
-        trailFire.Play();
         _corroutineActivate = false;
     }
 
@@ -197,6 +193,7 @@ public class HouseEnemy : Enemy
     {
         while (_enemyVisibility > 0)
         {
+            lavaMaterial.SetFloat("_Alpha", 0);
             if (_enemyVisibility >= 0.2f)
             {
                 _enemyAnimator.animator.applyRootMotion = true;
@@ -205,9 +202,12 @@ public class HouseEnemy : Enemy
             _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
-
+            lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
+            
             yield return new WaitForSeconds(0.1f);
         }
+
+        trailPS.SetActive(false);
 
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateExorcism = true;
@@ -215,6 +215,7 @@ public class HouseEnemy : Enemy
         RitualManager.Instance.ritualFloor.SetActive(false);
 
         RitualManager.Instance.ActivateCraterFloor();
+        trailPS.SetActive(false);
         yield return new WaitUntil(
             () => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("RitualExorcism"));
         
@@ -225,6 +226,7 @@ public class HouseEnemy : Enemy
             _enemyVisibility += .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -233,9 +235,7 @@ public class HouseEnemy : Enemy
         RitualManager.Instance.RitualFinish();
         gameObject.SetActive(false);
     }
-
-
-
+    
     IEnumerator HideEnemy()
     {
         _corroutineActivate = true;
@@ -244,12 +244,12 @@ public class HouseEnemy : Enemy
             _enemyVisibility += .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
+            lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
+
             yield return new WaitForSeconds(0.1f);
         }
-        closeSmokeParticles.Stop();
-        trailSmokeParticles.Stop();
-        trailFire.Stop();
         enemyVisible = false;
+        trailPS.SetActive(false);
 
         _corroutineActivate = false;
     }

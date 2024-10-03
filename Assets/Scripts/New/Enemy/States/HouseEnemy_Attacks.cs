@@ -291,6 +291,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         if (owner.attackEnded && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         
+        if (!owner.enemyVisible && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+        
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
         

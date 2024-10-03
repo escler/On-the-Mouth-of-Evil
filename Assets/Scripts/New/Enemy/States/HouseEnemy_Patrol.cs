@@ -27,7 +27,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         base.Enter(from, transitionParameters);
         _path.Clear();
         print("Entre a Patrol");
-        owner.crossUsed = false;
+
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
@@ -38,6 +38,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         {
             _path.Reverse();
             _pathCalculated = true;
+            if(owner.crossUsed) owner.crossUsed = false;
         }
         else
         {
