@@ -15,6 +15,14 @@ public class Bible : Item
     public LayerMask layer;
     public float distance;
     private bool ray;
+    private BibleCD _bibleCD;
+
+    
+    private void Start()
+    {
+        _bibleCD = PlayerHandler.Instance.GetComponent<BibleCD>();
+    }
+
     private void Awake()
     {
         _burning = new MaterialPropertyBlock();
@@ -26,6 +34,7 @@ public class Bible : Item
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit,i);
+        if (_bibleCD.Cooldown > 0) return;
         if (ray)
         {
             if (_hit.transform.TryGetComponent(out RitualFloor ritual))
@@ -33,11 +42,13 @@ public class Bible : Item
                 var paperRitual = Instantiate(paperBible);
                 paperRitual.transform.position = RitualManager.Instance.ritualFloor.transform.position;
                 paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
+                _bibleCD.SetCooldown(10);
                 return;
             }
             if (_hit.transform.gameObject.layer != 19) return;
             var paper = Instantiate(paperBible);
             paper.transform.position = _hit.point + Vector3.up * 0.01f;
+            _bibleCD.SetCooldown(10);
             print("Instancie papel");
         }
     }
