@@ -113,6 +113,10 @@ public class CorduraHandler : MonoBehaviour
             corduraMaterial.SetFloat("_TwirlStrength", _actualCordura);
             yield return new WaitForSeconds(.01f);
         }
+
+        _inverseCordura = false;
+        _targetCordura = _corduraMax;
+        _interval = MathF.Abs(_interval);
         
         corduraMaterial.SetFloat("_TwirlStrength", 0);
     }

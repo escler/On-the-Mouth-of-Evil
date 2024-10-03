@@ -38,7 +38,11 @@ public class HouseEnemy_Patrol : MonoBaseState
         {
             _path.Reverse();
             _pathCalculated = true;
-            if(owner.crossUsed) owner.crossUsed = false;
+            if (owner.crossUsed)
+            {
+                owner.actualTimeToLost = 0;
+                owner.crossUsed = false;
+            }
         }
         else
         {
@@ -70,10 +74,6 @@ public class HouseEnemy_Patrol : MonoBaseState
 
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
-        
-        /*if (owner.canChase && Transitions.ContainsKey(StateTransitions.ToChase))
-            return Transitions[StateTransitions.ToChase];*/
-
         return this;
     }
     

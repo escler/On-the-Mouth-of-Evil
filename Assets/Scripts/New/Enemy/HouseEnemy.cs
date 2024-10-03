@@ -239,6 +239,7 @@ public class HouseEnemy : Enemy
     IEnumerator HideEnemy()
     {
         _corroutineActivate = true;
+        enemyVisible = false;
         while (_enemyVisibility < 10)
         {
             _enemyVisibility += .5f;
@@ -248,7 +249,6 @@ public class HouseEnemy : Enemy
             if(_enemyVisibility < 2) trailPS.SetActive(false);
             yield return new WaitForSeconds(0.1f);
         }
-        enemyVisible = false;
 
         _corroutineActivate = false;
     }

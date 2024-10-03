@@ -246,7 +246,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private void OnEnterBlockDoorAttack()
     {
         print("entre a block");
-        if (!owner.actualRoom.DoorsBlocked())
+        if (!owner.actualRoom.DoorsBlocked() || owner.actualRoom.movableItems.Length <= 0)
         {
             OnEnterChase();
             _actualAction = 0;
