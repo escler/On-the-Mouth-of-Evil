@@ -7,7 +7,7 @@ using UnityEngine;
 public class HouseEnemy_Ritual : MonoBaseState
 {
     [SerializeField] private HouseEnemy owner;
-    private List<Vector3> _path;
+    private List<Transform> _path;
     private Node _startNode, _goalNode;
     private bool _pathCalculated, _pathFinish, bibleBurning, ritualReached, startRitualCor;
     
@@ -93,7 +93,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     
     private void TravelPath()
     {
-        Vector3 target = _path[0];
+        Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
         Vector3 dir = target - owner.transform.position;
         owner.transform.rotation = Quaternion.LookRotation(dir);

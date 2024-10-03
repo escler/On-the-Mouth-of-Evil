@@ -8,7 +8,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     [SerializeField] private HouseEnemy owner;
     private bool _ray;
     private bool _headGrabbed;
-    public List<Vector3> _path;
+    public List<Transform> _path;
     public Node startNode, goal;
     public float timeToLostPlayer;
     private float _actualTime;
@@ -133,7 +133,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     
     private void TravelPath()
     {
-        Vector3 target = _path[0];
+        Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
         Vector3 dir = target - owner.transform.position;
         owner.transform.rotation = Quaternion.LookRotation(dir);

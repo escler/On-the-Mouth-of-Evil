@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathFinding
 {
     
-    public List<Vector3> AStar(Node start, Node goal)
+    public List<Transform> AStar(Node start, Node goal)
     {
         PriorityQueue<Node> frontier = new PriorityQueue<Node>();
         frontier.Enqueue(start, 0);
@@ -52,7 +52,7 @@ public class PathFinding
             }
         }
 
-        List<Vector3> path = new List<Vector3>();
+        List<Transform> path = new List<Transform>();
         if (current != goal)
         {
             return path;
@@ -61,7 +61,7 @@ public class PathFinding
         current = cameFrom[current];
         while (current != start && current != null)
         {
-            path.Add(current.transform.position);
+            path.Add(current.transform);
             current = cameFrom[current];
         }
         return path;
@@ -69,9 +69,9 @@ public class PathFinding
 
     float Heuristic (Vector3 start, Vector3 goal) => Vector3.Distance(start, goal);
     
-    List<Vector3> _empty = new List<Vector3>();
+    List<Transform> _empty = new List<Transform>();
     
-    public List<Vector3>ThetaStar(Node start, Node goal, LayerMask obstacle)
+    public List<Transform>ThetaStar(Node start, Node goal, LayerMask obstacle)
     {
         if (start == null || goal == null) return _empty;
 
@@ -81,7 +81,7 @@ public class PathFinding
 
         while (current + 2 < path.Count)
         {
-            if (InLineOfSight(path[current], path[current + 2], obstacle))
+            if (InLineOfSight(path[current].position, path[current + 2].position, obstacle))
                 path.RemoveAt(current + 1);
             else current++;
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class HouseEnemy_GoToLocation : MonoBaseState
 {
     [SerializeField] private HouseEnemy owner;
-    private List<Vector3> _path;
+    private List<Transform> _path;
     private Node _startNode, _goalNode;
     private bool _pathCalculated, _pathFinish, bibleBurning;
     
@@ -44,7 +44,8 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     
     private void TravelPath()
     {
-        Vector3 target = _path[0];
+        if (_path[0].GetComponent<Node>().blocked) _pathFinish = true;
+        Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
         Vector3 dir = target - owner.transform.position;
         owner.transform.rotation = Quaternion.LookRotation(dir);
