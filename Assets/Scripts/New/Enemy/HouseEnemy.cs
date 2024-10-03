@@ -126,7 +126,7 @@ public class HouseEnemy : Enemy
 
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
         compareRoom = _player.actualRoom == actualRoom;
-        canAttackPlayer = enemyVisible && compareRoom;
+        canAttackPlayer = enemyVisible && actualTimeToLost > 0;
 
     }
 
@@ -183,6 +183,8 @@ public class HouseEnemy : Enemy
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
             yield return new WaitForSeconds(0.1f);
         }
+
+        actualTimeToLost = 4;
 
         trailPS.SetActive(true);
         enemyVisible = true;

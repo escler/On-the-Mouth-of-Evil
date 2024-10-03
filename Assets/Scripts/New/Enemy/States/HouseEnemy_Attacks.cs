@@ -190,7 +190,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         _headGrabbed = false;
         owner.attackEnded = true;
     }
-    
 
     #endregion
 
@@ -199,6 +198,13 @@ public class HouseEnemy_Attacks : MonoBaseState
     void OnEnterCorduraAttack()
     {
         owner.attackEnded = false;
+        if(owner.compareRoom) owner.actualTimeToLost = timeToLostPlayer;
+        if (!owner.compareRoom && owner.actualTimeToLost > 0)
+        {
+            _actualAction = 0;
+            OnEnterChase();
+            return;
+        }
         if (CorduraHandler.Instance.CorduraOn > 0)
         {
             owner.attackEnded = true;
@@ -246,6 +252,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private void OnEnterBlockDoorAttack()
     {
         print("entre a block");
+        if (owner.compareRoom) owner.actualTimeToLost = timeToLostPlayer;
         if (!owner.actualRoom.DoorsBlocked() || owner.actualRoom.movableItems.Length <= 0)
         {
             OnEnterChase();
