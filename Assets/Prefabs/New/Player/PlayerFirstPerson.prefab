@@ -236,6 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 100
   runSpeed: 200
+  _walkAudioSource: {fileID: 0}
 --- !u!114 &4868285171184840852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 131584
   cameraPos: {fileID: 0}
   distance: 3
   ui: {fileID: 0}
@@ -359,7 +360,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -199,13 +199,13 @@ public class HouseEnemy_Attacks : MonoBaseState
     void OnEnterCorduraAttack()
     {
         owner.attackEnded = false;
-        owner.EnemyAnimator.ChangeStateAnimation("CorduraAttack", true);
         if (CorduraHandler.Instance.CorduraOn > 0)
         {
             owner.attackEnded = true;
             print("No activo cor");
             return;
         }
+        owner.EnemyAnimator.ChangeStateAnimation("CorduraAttack", true);
         StartCoroutine(CorduraAttackCor());
     }
 

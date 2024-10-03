@@ -246,10 +246,9 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
-            if(_enemyVisibility < 2) trailPS.SetActive(false);
+            if(_enemyVisibility > 5) trailPS.SetActive(false);
             yield return new WaitForSeconds(0.1f);
         }
-
         _corroutineActivate = false;
     }
 
