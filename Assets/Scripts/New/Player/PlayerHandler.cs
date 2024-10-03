@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -26,6 +27,17 @@ public class PlayerHandler : MonoBehaviour
         DontDestroyOnLoad(this);
         Instance = this;
         movement = GetComponent<PlayerMovement>();
+        SceneManager.sceneLoaded += UnlockPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= UnlockPlayer;
+    }
+
+    private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        PossesPlayer();
     }
 
     public void PossesPlayer()
@@ -79,5 +91,7 @@ public class PlayerHandler : MonoBehaviour
         
         PossesPlayer();
     }
+    
+    
     
 }

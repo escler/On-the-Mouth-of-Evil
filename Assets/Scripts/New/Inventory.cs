@@ -65,6 +65,7 @@ public class Inventory : MonoBehaviour
 
         countEnviroment = 0;
         countHub = 0;
+        cantSwitch = false;
 
     }
 

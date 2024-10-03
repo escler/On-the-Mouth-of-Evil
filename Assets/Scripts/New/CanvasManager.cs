@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -27,6 +28,19 @@ public class CanvasManager : MonoBehaviour
         descriptions.Add("Cross", descriptionCross);
         descriptions.Add("Bible", descriptionBible);
         descriptions.Add("Salt", descriptionSalt);
+        SceneManager.sceneLoaded += DisableInfo;
+    }
+
+    private void DisableInfo(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        rotateInfo.SetActive(false);
+        moveObjectUI.SetActive(false);
+        InteractionText.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DisableInfo;
     }
 
     public GameObject GetDescription(string nameItem)
