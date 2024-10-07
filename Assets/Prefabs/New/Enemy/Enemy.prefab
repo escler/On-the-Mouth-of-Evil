@@ -1127,6 +1127,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9102773304211076860}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1778762513554425406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1193576353264498481}
+  m_Layer: 7
+  m_Name: ObstaclePivotLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1193576353264498481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778762513554425406}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35, y: -0.528, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 258484488048164082}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1839325640381534939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,6 +1189,37 @@ Transform:
   m_Children:
   - {fileID: 1565299042884823682}
   m_Father: {fileID: 6917347567975928443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1846738155415588387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7393648537524181346}
+  m_Layer: 7
+  m_Name: ObstaclePivotRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7393648537524181346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846738155415588387}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.35, y: -0.528, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 258484488048164082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849439093288582316
 GameObject:
@@ -4645,6 +4707,8 @@ Transform:
   - {fileID: 17396773150919538}
   - {fileID: 1212663926077699935}
   - {fileID: 4812140157765374651}
+  - {fileID: 7393648537524181346}
+  - {fileID: 1193576353264498481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &9077910510145259794
@@ -4686,7 +4750,7 @@ MonoBehaviour:
   enemyType: 0
   goalPosition: {x: 0, y: 0, z: 0}
   bibleBurning: 0
-  speed: 3
+  speed: 1.5
   obstacles:
     serializedVersion: 2
     m_Bits: 256
@@ -4718,6 +4782,13 @@ MonoBehaviour:
   compareRoom: 0
   actualTimeToLost: 0
   activateExorcism: 0
+  obstaclePosRight: {fileID: 7393648537524181346}
+  obstaclePosLeft: {fileID: 1193576353264498481}
+  distanceObstacleRay: 1.5
+  intensityObstacleAvoidance: 1
+  reference: {x: 0, y: 0, z: 0}
+  capsule: {fileID: 9077910510145259794}
+  rotationSmoothTime: 2.5
 --- !u!114 &8785165011350344749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4731,7 +4802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3234476839139166343}
-  constTime: 15
+  constTime: 5
   variantTimeMin: 0
   variantTimeMax: 0
 --- !u!114 &4098424891984333558

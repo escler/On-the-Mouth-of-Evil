@@ -63,6 +63,13 @@ public class HouseEnemy : Enemy
     public float actualTimeToLost;
     public bool activateExorcism;
 
+    public Transform obstaclePosRight, obstaclePosLeft;
+    public float distanceObstacleRay;
+    public float intensityObstacleAvoidance;
+    public Vector3 reference = Vector3.zero;
+    public CapsuleCollider capsule;
+    public float rotationSmoothTime;
+    
     private void Awake()
     {
         if (Instance)
@@ -71,9 +78,10 @@ public class HouseEnemy : Enemy
             return;
         }
         Instance = this;
+        capsule.GetComponent<CapsuleCollider>();
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
-        enemyMaterial.SetFloat("_Power", 10);
+        enemyMaterial.SetFloat("_Power", 0);
         lavaMaterial.SetFloat("_Power", 10);
         lavaMaterial.SetFloat("_Alpha", 1);
         _enemyVisibility = enemyMaterial.GetFloat("_Power");
@@ -307,6 +315,13 @@ public class HouseEnemy : Enemy
     {
         nodeRitual = node;
         ritualDone = true;
+    }
+
+    public Vector3 MoveSmooth(Vector3 target)
+    {
+        var dir = (target - transform.position).normalized;
+
+        return dir;
     }
 
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FSM;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HouseEnemy_Attacks : MonoBaseState
 {
@@ -135,28 +137,61 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
-        Vector3 dir = target - owner.transform.position;
-        owner.transform.rotation = Quaternion.LookRotation(dir);
-        owner.transform.position += dir.normalized * (owner.speed / 4 * Time.deltaTime);
+        var dir = owner.MoveSmooth(target);
         
-        if (Vector3.Distance(target, owner.transform.position) <= 0.1f || target == null) _path.RemoveAt(0);
+        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.obstaclePosRight.forward, owner.distanceObstacleRay,owner.obstacles);
+        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.obstaclePosLeft.forward,
+            owner.distanceObstacleRay, owner.obstacles);
+
+        if (ray1) dir -= transform.right;
+        else if (ray2) dir += transform.right;
+        
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
+        transform.position += dir * Time.deltaTime * owner.speed;
+        
+        
+        if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null) _path.RemoveAt(0);
     }
 
     public void MoveToPlayer()
     {
-
         Vector3 target = PlayerHandler.Instance.transform.position;
         target.y = owner.transform.position.y;
+        var dir = (target - owner.transform.position).normalized;
+
+        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.transform.forward,
+            owner.distanceObstacleRay, owner.obstacles);
+        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.transform.forward,
+            owner.distanceObstacleRay, owner.obstacles);
+
+
+        if (ray1)
+        {
+            print("Ray1");
+            dir -= owner.transform.right;
+        }
+        else if (ray2)
+        {
+            print("Ray2");
+            dir += owner.transform.right;
+        }
+        
+
         if (Vector3.Distance(target, owner.transform.position) < .75f) 
         {
             if(_actualGrabCD <= 0)GrabHead();
             return;
         }
-        
+
+        transform.LookAt(Vector3.SmoothDamp(transform.position,target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
+        owner.transform.position += dir * Time.deltaTime * owner.speed;
         _headGrabbed = false;
-        Vector3 dir = target - owner.transform.position;
-        owner.transform.rotation = Quaternion.LookRotation(dir);
-        owner.transform.position += dir.normalized * (owner.speed / 2 * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(owner.obstaclePosRight.position, transform.forward);
+        Gizmos.DrawRay(owner.obstaclePosLeft.position, transform.forward);
 
     }
 

@@ -44,14 +44,22 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     
     private void TravelPath()
     {
-        if (_path[0].GetComponent<Node>().blocked) _pathFinish = true;
         Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
-        Vector3 dir = target - owner.transform.position;
-        owner.transform.rotation = Quaternion.LookRotation(dir);
-        owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
+        var dir = owner.MoveSmooth(target);
         
-        if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _path.RemoveAt(0);
+        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.obstaclePosRight.forward, owner.distanceObstacleRay,owner.obstacles);
+        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.obstaclePosLeft.forward,
+            owner.distanceObstacleRay, owner.obstacles);
+
+        if (ray1) dir -= transform.right;
+        else if (ray2) dir += transform.right;
+        
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
+        transform.position += dir * Time.deltaTime * owner.speed;
+        
+        
+        if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null) _path.RemoveAt(0);
     }
 
     private void GoToNodeGoal()
@@ -59,9 +67,18 @@ public class HouseEnemy_GoToLocation : MonoBaseState
         if (_pathFinish) return;
         Vector3 target = _goalNode.transform.position;
         target.y = owner.transform.position.y;
-        Vector3 dir = target - owner.transform.position;
-        owner.transform.rotation = Quaternion.LookRotation(dir);
-        owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
+        var dir = owner.MoveSmooth(target);
+        
+        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.obstaclePosRight.forward, owner.distanceObstacleRay,owner.obstacles);
+        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.obstaclePosLeft.forward,
+            owner.distanceObstacleRay, owner.obstacles);
+
+        if (ray1) dir -= transform.right * owner.intensityObstacleAvoidance * Time.deltaTime;
+        else if (ray2) dir += transform.right * owner.intensityObstacleAvoidance * Time.deltaTime;
+        
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
+        transform.position += dir * Time.deltaTime * owner.speed;
+        
         if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _pathFinish = true;
     }
 
