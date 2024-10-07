@@ -45,7 +45,7 @@ public class PieceTarotCard : Item, IInteractable
     {
         if (!onHand) return;
         TarotCardPuzzle.Instance.PickUpObject(gameObject, cardCountPiece);
-        if (TarotCardPuzzle.Instance.CanPlace)
+        if (TarotCardPuzzle.Instance.CanPlace || TarotCardPuzzle.Instance.CanPlaceInverse)
         {
             if (_alpha.GetFloat("_Alpha") < .1f)
             {
