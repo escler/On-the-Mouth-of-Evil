@@ -93,59 +93,6 @@ public class Inventory : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Tab)) ChangeInventoryType();
     }
 
-    /*public void AddItem(Item i, ItemCategory category)
-    {
-        var categoryInventory = category == ItemCategory.hubItem ? inventories[0] : inventories[1];
-        var count = category == ItemCategory.hubItem ? countHub : countEnviroment;
-        if (count < capacity)
-        {
-            i.transform.SetParent(PlayerHandler.Instance.handPivot);
-            //i.transform.localScale = Vector3.one;
-            i.transform.localPosition = Vector3.zero;
-            for (int j = 0; j < categoryInventory.Length; j++)
-            {
-                if (categoryInventory[j] != null) continue;
-
-                categoryInventory[j] = i.GetComponent<Item>();
-                categoryInventory[j].GetComponent<BoxCollider>().enabled = false;
-                categoryInventory[j].GetComponent<Rigidbody>().isKinematic = true;
-
-                ChangeUI(j, category);
-                break;
-            }
-
-            i.gameObject.SetActive(false);
-            count++;
-            if (category == ItemCategory.hubItem) countHub = count;
-            else countEnviroment = count;
-            ChangeSelectedItem(countSelected);
-            return;
-        }
-
-        if(inventories[_inventorySelect] == categoryInventory)DropItem(selectedItem);
-        else
-        {
-            var item = categoryInventory[countSelected];
-            item.gameObject.SetActive(true);
-            DropItem(item);
-        }
-        i.transform.SetParent(PlayerHandler.Instance.handPivot);
-        i.transform.localScale = Vector3.one;
-        i.transform.localPosition = Vector3.zero;
-
-        categoryInventory[countSelected] = i.GetComponent<Item>();
-        categoryInventory[countSelected].GetComponent<BoxCollider>().enabled = false;
-        categoryInventory[countSelected].GetComponent<Rigidbody>().isKinematic = true;
-
-        ChangeUI(countSelected, category);
-
-        i.gameObject.SetActive(false);
-        count++;
-        if (category == ItemCategory.hubItem) countHub = count;
-        else countEnviroment = count;
-        ChangeSelectedItem(countSelected);
-    }*/
-
     public void AddItem(Item i, ItemCategory category)
     {
         var inventoryAssigned = category == ItemCategory.hubItem ? inventories[0] : inventories[1];
@@ -220,12 +167,6 @@ public class Inventory : MonoBehaviour
     {
         if (actualItem == null) return;
         actualItem.gameObject.SetActive(showState);
-    }
-
-    public void ChangeUI(int index, ItemCategory category)
-    {
-        InventoryUI.Instance.ChangeItemUI(inventory[index], index, category);
-        //InventoryUI.Instance.ChangeSelectedItem(countSelected);
     }
 
     public void ChangeInventoryType()

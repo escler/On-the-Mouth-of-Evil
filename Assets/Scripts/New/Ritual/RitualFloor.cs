@@ -24,6 +24,11 @@ public class RitualFloor : MonoBehaviour, IInteractable
 
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return !_ritualManager.candleTaked ? "" : "Place Candle";

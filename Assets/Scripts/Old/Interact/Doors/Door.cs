@@ -31,6 +31,11 @@ public class Door : MonoBehaviour, IInteractable
         
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return open ? interactTextOpen : interactTextClose;

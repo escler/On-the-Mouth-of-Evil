@@ -125,6 +125,11 @@ public class SaltRecipient : MonoBehaviour, IInteractable
     {
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public void SetAnimationFinish()
     {
         animationRunning = false;

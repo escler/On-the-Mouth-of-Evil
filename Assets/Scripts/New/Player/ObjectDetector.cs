@@ -59,6 +59,7 @@ public class ObjectDetector : MonoBehaviour
         {
             _hit.transform.GetComponent<IInteractable>().OnInteractItem();
         }
+
         
         if (Inventory.Instance.selectedItem == null)
         {
@@ -91,6 +92,10 @@ public class ObjectDetector : MonoBehaviour
                     Inventory.Instance.selectedItem.OnInteract(raycast,_hit);
                 }
             }
+        }
+        if (raycast && Input.GetMouseButtonDown(0))
+        {
+            _hit.transform.GetComponent<IInteractable>().OnInteractWithObject();
         }
     }
 

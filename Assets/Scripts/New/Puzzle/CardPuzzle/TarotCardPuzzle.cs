@@ -7,7 +7,7 @@ public class TarotCardPuzzle : MonoBehaviour
 {
     public static TarotCardPuzzle Instance { get; private set; }
     
-    public GameObject heldObj, paperPuzzleSalt;
+    public GameObject heldObj, paperPuzzleSalt, skull;
     public Rigidbody heldObjRb;
     public Transform holdPos;
     private PlayerCam _playerCam;
@@ -97,6 +97,8 @@ public class TarotCardPuzzle : MonoBehaviour
 
     IEnumerator MoveDrawer()
     {
+        if(_goodPath) paperPuzzleSalt.SetActive(true);
+        else skull.SetActive(true);
         while (_angleX < 50f)
         {
             drawer.Rotate(1, 0, 0);
@@ -112,7 +114,8 @@ public class TarotCardPuzzle : MonoBehaviour
         }
         else
         {
-            print("Vamo por el mal camino");
+            skull.GetComponent<BoxCollider>().enabled = true;
+            skull.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 

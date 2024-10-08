@@ -22,6 +22,11 @@ public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
     {
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return "";

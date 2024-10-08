@@ -87,6 +87,11 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return "Hold to Relocation";

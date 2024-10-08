@@ -39,6 +39,11 @@ public class ExitHub : MonoBehaviour, IInteractable
     {
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return interactDescription;

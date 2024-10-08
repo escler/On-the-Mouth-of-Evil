@@ -56,6 +56,5 @@ public class Bible : Item
     private void Update()
     {
         ray = Physics.Raycast(PlayerHandler.Instance.cameraPos.position, PlayerHandler.Instance.cameraPos.forward, out _hit, distance, layer);
-        print(ray);
     }
 }

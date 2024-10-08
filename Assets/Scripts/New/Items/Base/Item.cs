@@ -42,6 +42,11 @@ public class Item : MonoBehaviour, IInteractable
         canUse = false;
     }
 
+    public void OnInteractWithObject()
+    {
+        
+    }
+
     public string ShowText()
     {
         return uiText;
