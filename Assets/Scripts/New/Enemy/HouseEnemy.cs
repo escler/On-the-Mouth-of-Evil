@@ -56,9 +56,6 @@ public class HouseEnemy : Enemy
     public bool attackEnded;
 
     public GameObject trailPS;
-
-
-
     public bool enemyVisible, canAttackPlayer, compareRoom;
     public float actualTimeToLost;
     public bool activateExorcism;

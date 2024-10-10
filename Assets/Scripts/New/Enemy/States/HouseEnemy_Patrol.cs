@@ -90,8 +90,8 @@ public class HouseEnemy_Patrol : MonoBaseState
         if (ray1) dir -= transform.right;
         else if (ray2) dir += transform.right;
         
-        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
-        transform.position += dir * Time.deltaTime * owner.speed;
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime / 2), Vector3.up);
+        transform.position += dir * Time.deltaTime * owner.speed * 2;
         if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null)
         {
             print("Entre");
@@ -113,8 +113,8 @@ public class HouseEnemy_Patrol : MonoBaseState
         if (ray1) dir -= transform.right * owner.intensityObstacleAvoidance * Time.deltaTime;
         else if (ray2) dir += transform.right * owner.intensityObstacleAvoidance * Time.deltaTime;
         
-        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
-        transform.position += dir * Time.deltaTime * owner.speed;
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime / 2), Vector3.up);
+        transform.position += dir * Time.deltaTime * owner.speed * 2;
         
         if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _pathFinish = true;
     }

@@ -4761,7 +4761,7 @@ MonoBehaviour:
   timeToShowMe: 5
   mesh: {fileID: 638794724269363345}
   appear: 0
-  lavaPrefab: {fileID: 5858667677504221066}
+  lavaPrefab: {fileID: 0}
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
   attacksState: {fileID: 2331161858086147234}
@@ -5692,6 +5692,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8638517586151972033, guid: be139d9883414a14daa30584472d585a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.063
+      objectReference: {fileID: 0}
     - target: {fileID: 9201545754706211677, guid: be139d9883414a14daa30584472d585a,
         type: 3}
       propertyPath: moveWithTransform
@@ -5705,12 +5710,6 @@ PrefabInstance:
 --- !u!4 &2627814008593041418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5088048551613572971, guid: be139d9883414a14daa30584472d585a,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128001770535907169}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5858667677504221066 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3721544419121709291, guid: be139d9883414a14daa30584472d585a,
     type: 3}
   m_PrefabInstance: {fileID: 7128001770535907169}
   m_PrefabAsset: {fileID: 0}
