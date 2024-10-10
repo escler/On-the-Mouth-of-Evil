@@ -17,7 +17,7 @@ public class Skull : Item
 
     private void Start()
     {
-        focusPos = PlayerHandler.Instance.farFocusPos;
+        focusPos = PlayerHandler.Instance.closeFocusPos;
         handPos = PlayerHandler.Instance.handPivot;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
         _sensY = PlayerHandler.Instance.playerCam.sensY;
@@ -29,6 +29,12 @@ public class Skull : Item
         _onHand = true;
     }
 
+
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        transform.localScale = Vector3.one;
+    }
     public override void OnDeselectItem()
     {
         base.OnDeselectItem();
@@ -50,6 +56,7 @@ public class Skull : Item
             CanvasManager.Instance.rotateInfo.SetActive(_active);
             Inventory.Instance.cantSwitch = _active;
             StartCoroutine(_active ? FocusObject() : UnFocusObject());
+            transform.localScale = Vector3.one;
             return;
         }
         
@@ -77,7 +84,6 @@ public class Skull : Item
     IEnumerator FocusObject()
     {
         canInteract = true;
-        transform.SetParent(null);
         PlayerHandler.Instance.UnPossesPlayer();
         while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
         {
@@ -93,7 +99,6 @@ public class Skull : Item
     {
         canInteract = true;
         Inventory.Instance.cantSwitch = true;
-        transform.SetParent(handPos);
         PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {

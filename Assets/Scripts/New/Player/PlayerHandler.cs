@@ -11,7 +11,7 @@ public class PlayerHandler : MonoBehaviour
     public PlayerMovement movement;
     public PlayerCam playerCam;
     public BobbingCamera bobbingCamera;
-    public Transform handPivot, cameraPos, puzzlePivot, closeFocusPos, farFocusPos;
+    public Transform handPivot, cameraPos, puzzlePivot, closeFocusPos,farFocusPos, farthestFocusPos;
     public Mission actualMission;
     public Room actualRoom;
     public bool cantPressInventory;

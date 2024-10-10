@@ -201,7 +201,8 @@ MonoBehaviour:
   cameraPos: {fileID: 2372193262579360146}
   puzzlePivot: {fileID: 4593532697000044065}
   closeFocusPos: {fileID: 6897344335465354563}
-  farFocusPos: {fileID: 4942471101758727101}
+  farFocusPos: {fileID: 6206038718092206911}
+  farthestFocusPos: {fileID: 4942471101758727101}
   actualMission: {fileID: 0}
   actualRoom: {fileID: 0}
   cantPressInventory: 0
@@ -236,7 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 100
   runSpeed: 200
-  _walkAudioSource: {fileID: 0}
 --- !u!114 &4868285171184840852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +501,7 @@ Transform:
   m_GameObject: {fileID: 5895135028980908293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -532,7 +532,7 @@ Transform:
   m_GameObject: {fileID: 6317563221517621351}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -563,7 +563,7 @@ Transform:
   m_GameObject: {fileID: 7031502362517672716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
