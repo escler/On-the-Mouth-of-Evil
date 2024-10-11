@@ -11,15 +11,7 @@ public class HouseEnemy_Patrol : MonoBaseState
     private bool _pathCalculated, _pathFinish;
     public override void UpdateLoop()
     {
-        if (!_pathCalculated) return;
-
-        if (_path.Count > 0)
-        {
-            TravelPath();
-            return;
-        }
         
-        GoToNodeGoal();
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -27,28 +19,25 @@ public class HouseEnemy_Patrol : MonoBaseState
         base.Enter(from, transitionParameters);
         _path.Clear();
         print("Entre a Patrol");
-
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
-        
-        _path = owner.pf.ThetaStar(startNode,goal, owner.obstacles);
 
-        if (_path.Count > 0)
+        if (goal == null)
         {
-            _path.Reverse();
-            _pathCalculated = true;
-            if (owner.crossUsed)
-            {
-                owner.actualTimeToLost = 0;
-                owner.crossUsed = false;
-            }
-        }
-        else
-        {
-            print("No tengo path");
+            print("Goal null");
             _pathFinish = true;
         }
+        else GoToNode();
+    }
+
+    private void GoToNode()
+    {
+        Vector3 goalPos = goal.transform.position;
+        goalPos.y = owner.transform.position.y;
+        owner.transform.position = goalPos;
+        if (owner.crossUsed) owner.crossUsed = false;
+        _pathFinish = true;
     }
 
     public override Dictionary<string, object> Exit(IState to)

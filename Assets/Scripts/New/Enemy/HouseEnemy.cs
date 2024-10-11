@@ -66,6 +66,8 @@ public class HouseEnemy : Enemy
     public Vector3 reference = Vector3.zero;
     public CapsuleCollider capsule;
     public float rotationSmoothTime;
+
+    public int playerGrabbedCount;
     
     private void Awake()
     {
@@ -112,6 +114,7 @@ public class HouseEnemy : Enemy
         
         //GoToLocation
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
+        _fsm.AddTransition(StateTransitions.ToPatrol, goToLocationState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, ritualState);
 
@@ -132,7 +135,6 @@ public class HouseEnemy : Enemy
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
         compareRoom = _player.actualRoom == actualRoom;
         canAttackPlayer = enemyVisible && actualTimeToLost > 0;
-
     }
 
     private void ShowEnemy()
@@ -142,7 +144,7 @@ public class HouseEnemy : Enemy
         if (_player.actualRoom != actualRoom)
         {
             actualTime = 0;
-            if (!_corroutineActivate && _enemyVisibility < 10)
+            if (!_corroutineActivate && _enemyVisibility > 0)
             {
                 StartCoroutine(HideEnemy());
             }
@@ -165,7 +167,7 @@ public class HouseEnemy : Enemy
 
             }
 
-            if (!_corroutineActivate && _enemyVisibility > 0) StartCoroutine(ShowEnemyLerp());
+            if (!_corroutineActivate && _enemyVisibility < 8) StartCoroutine(ShowEnemyLerp());
         }
     }
 
@@ -180,9 +182,9 @@ public class HouseEnemy : Enemy
     IEnumerator ShowEnemyLerp()
     {
         _corroutineActivate = true;
-        while (_enemyVisibility > 0)
+        while (_enemyVisibility < 8)
         {
-            _enemyVisibility -= .5f;
+            _enemyVisibility += .1f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
@@ -198,19 +200,18 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnRitual()
     {
-        while (_enemyVisibility > 0)
+        while (_enemyVisibility < 8)
         {
-            lavaMaterial.SetFloat("_Alpha", 0);
-            if (_enemyVisibility >= 0.2f)
+            _enemyVisibility += .1f;
+            if (_enemyVisibility >= 7.8f)
             {
                 _enemyAnimator.animator.applyRootMotion = true;
                 _enemyAnimator.ChangeStateAnimation("Exorcism", true);
             }
-            _enemyVisibility -= .5f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
-            
+
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -228,13 +229,14 @@ public class HouseEnemy : Enemy
         
         yield return new WaitForSeconds(4.8f);
         
-        while (_enemyVisibility < 10)
+        while (_enemyVisibility > 0)
         {
-            _enemyVisibility += .5f;
+            lavaMaterial.SetFloat("_Alpha", 0);
+            _enemyVisibility -= .1f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
-
+            
             yield return new WaitForSeconds(0.1f);
         }
         
@@ -246,16 +248,15 @@ public class HouseEnemy : Enemy
     IEnumerator HideEnemy()
     {
         _corroutineActivate = true;
-        enemyVisible = false;
-        while (_enemyVisibility < 10)
+        while (_enemyVisibility > 0)
         {
-            _enemyVisibility += .5f;
+            _enemyVisibility -= .1f;
             enemyMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Power", _enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", _enemyVisibility / 10);
-            if(_enemyVisibility > 5) trailPS.SetActive(false);
             yield return new WaitForSeconds(0.1f);
         }
+        enemyVisible = false;
         _corroutineActivate = false;
     }
 
@@ -303,7 +304,7 @@ public class HouseEnemy : Enemy
 
     public void CheckRoom()
     {
-        if (actualRoom != PlayerHandler.Instance.actualRoom) return;
+        if (actualRoom != PlayerHandler.Instance.actualRoom){ return;}
         crossUsed = true;
         _enemyAnimator.ChangeStateAnimation("CrossUsed", true);
     }

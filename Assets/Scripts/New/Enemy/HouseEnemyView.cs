@@ -5,7 +5,7 @@ using UnityEngine;
 public class HouseEnemyView : MonoBehaviour
 {
     public Animator animator;
-    public GameObject PS;
+    public GameObject PS, PSAppear;
 
     
     public void ChangeStateAnimation(string stateName, bool stateParameter)

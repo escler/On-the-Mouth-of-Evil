@@ -19,6 +19,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     public int[] enemyAction = { 0, 1, 2 }; //0 - Chase and Grab Head / 1 - Cordura Attack / 2 - Block Doors 
     private int _actualAction;
     private bool animationStarted;
+    private float waitingTime;
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -39,8 +40,9 @@ public class HouseEnemy_Attacks : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
-        print("Entre a Chase");
-        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        print("Entre a Attacks");
+        //_actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        _actualAction = 0;
         switch (_actualAction)
         {
             case 0:
@@ -98,15 +100,14 @@ public class HouseEnemy_Attacks : MonoBaseState
 
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 
-        if (!_ray)
-        {
-            MoveToPlayer();
-            owner.actualTimeToLost = timeToLostPlayer;
-            return;
-        }
 
         
         CalculatePath();
+
+        if (_ray) return;
+        
+        //MoveToPlayer();
+        owner.actualTimeToLost = timeToLostPlayer;
     }
 
     private void OnExitChase()
@@ -135,22 +136,28 @@ public class HouseEnemy_Attacks : MonoBaseState
     
     private void TravelPath()
     {
+        if (waitingTime > 0)
+        {
+            waitingTime -= Time.deltaTime;
+            return;
+        }
+        TriggerAnimation();
         Vector3 target = _path[0].position;
         target.y = owner.transform.position.y;
-        var dir = owner.MoveSmooth(target);
-        
-        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.obstaclePosRight.forward, owner.distanceObstacleRay,owner.obstacles);
-        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.obstaclePosLeft.forward,
-            owner.distanceObstacleRay, owner.obstacles);
 
-        if (ray1) dir -= transform.right;
-        else if (ray2) dir += transform.right;
-        
-        transform.LookAt(Vector3.SmoothDamp(transform.position, target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
-        transform.position += dir * Time.deltaTime * owner.speed;
-        
-        
-        if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null) _path.RemoveAt(0);
+        owner.transform.position = target;
+
+        if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null)
+        {
+            waitingTime = 2.1f;
+            _path.RemoveAt(0);
+        }
+    }
+
+    private void TriggerAnimation()
+    {
+        owner.EnemyAnimator.animator.SetTrigger("Appear");
+        owner.EnemyAnimator.PSAppear.SetActive(true);
     }
 
     public void MoveToPlayer()
@@ -219,6 +226,9 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookDirection, 10f * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
+
+        owner.playerGrabbedCount++;
+        if (owner.playerGrabbedCount > 2) GameManagerNew.Instance.LoadSceneWithDelay("Hub", 0.1f);
 
         _actualGrabCD = grabCD;
         owner.grabHead = false;
