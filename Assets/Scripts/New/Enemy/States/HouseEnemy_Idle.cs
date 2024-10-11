@@ -12,6 +12,7 @@ public class HouseEnemy_Idle : MonoBaseState
     public override void UpdateLoop()
     {
         _idleTime -= Time.deltaTime;
+        if(!owner.canAttackPlayer) owner.HideEnemy();
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -23,9 +24,12 @@ public class HouseEnemy_Idle : MonoBaseState
 
     public override IState ProcessInput()
     {
-        
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
+
+        if (owner.actualTime > owner.timeToShowMe && !owner.ritualDone &&
+            Transitions.ContainsKey(StateTransitions.ToSpawn))
+            return Transitions[StateTransitions.ToSpawn];
         
         if (_idleTime <= 0 && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];

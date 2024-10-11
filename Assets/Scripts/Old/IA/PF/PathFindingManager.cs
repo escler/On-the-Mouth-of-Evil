@@ -162,4 +162,25 @@ public class PathFindingManager : MonoBehaviour
 
         return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
     }
+
+    public Node CalculateNearnestNodeAndRoom(Vector3 position)
+    {
+
+        var closestNode = _nodes.Where(x => x.room == PlayerHandler.Instance.actualRoom && !x.doorNode);
+        Node[] nodes = closestNode.OrderBy(x => (position - x.transform.position).sqrMagnitude).ToArray();
+        
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (Vector3.Distance(position, nodes[i].transform.position) < 2)
+            {
+                print("Continuo");
+                continue;
+            }
+            
+            print("Retorne el nodo " + i);
+            return nodes[i];
+        }
+
+        return nodes.Length == 0 ? null : nodes.First();
+    }
 }

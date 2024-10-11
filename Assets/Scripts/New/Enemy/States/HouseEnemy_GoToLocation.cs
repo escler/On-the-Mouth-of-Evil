@@ -54,9 +54,13 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     {
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
-
+        
         if (owner.crossUsed && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
+
+        if (owner.actualTime > owner.timeToShowMe && !owner.ritualDone &&
+            Transitions.ContainsKey(StateTransitions.ToSpawn))
+            return Transitions[StateTransitions.ToSpawn];
         
         if (!owner.bibleBurning && _pathFinish && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];

@@ -4676,6 +4676,7 @@ GameObject:
   - component: {fileID: 258484488048164082}
   - component: {fileID: 9077910510145259794}
   - component: {fileID: 3234476839139166343}
+  - component: {fileID: 7320507398921388911}
   - component: {fileID: 8785165011350344749}
   - component: {fileID: 4098424891984333558}
   - component: {fileID: 2331161858086147234}
@@ -4764,6 +4765,7 @@ MonoBehaviour:
   mesh: {fileID: 638794724269363345}
   appear: 0
   lavaPrefab: {fileID: 0}
+  spawnState: {fileID: 7320507398921388911}
   idleState: {fileID: 8785165011350344749}
   patrolState: {fileID: 4098424891984333558}
   attacksState: {fileID: 2331161858086147234}
@@ -4774,6 +4776,7 @@ MonoBehaviour:
   nodeRitual: {fileID: 0}
   enemyMaterial: {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
   lavaMaterial: {fileID: 2100000, guid: 56efd39f57005244b88326c029321c5a, type: 2}
+  enemyVisibility: 0
   onRitual: 0
   grabHead: 0
   headPos: {fileID: 3075575447948344557}
@@ -4792,6 +4795,19 @@ MonoBehaviour:
   capsule: {fileID: 9077910510145259794}
   rotationSmoothTime: 2.5
   playerGrabbedCount: 0
+--- !u!114 &7320507398921388911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4720f2af3400ec14d81bb198ad1337fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 3234476839139166343}
 --- !u!114 &8785165011350344749
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private int _actualAction;
     private bool animationStarted;
     private float waitingTime;
+    private bool _corroutine;
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -41,8 +42,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Attacks");
-        //_actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
-        _actualAction = 0;
+        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
         switch (_actualAction)
         {
             case 0:
@@ -72,6 +72,8 @@ public class HouseEnemy_Attacks : MonoBaseState
                 break;
         }
         print("Sali de attack");
+        StopCoroutine(TeleportCor());
+        waitingTime = 0;
 
         owner.attackEnded = false;
 
@@ -84,29 +86,31 @@ public class HouseEnemy_Attacks : MonoBaseState
     void OnEnterChase()
     {
         owner.attackEnded = false;
-        owner.actualTimeToLost = timeToLostPlayer;
     }
     private void OnUpdateChase()
     {
         var playerPos = PlayerHandler.Instance.transform.position;
+        playerPos.y = owner.transform.position.y;
         var dir = playerPos - transform.position;
 
-        if (owner.actualTimeToLost <= 0) owner.attackEnded = true;
+        transform.LookAt(Vector3.SmoothDamp(transform.position,playerPos, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
+
+        if (owner.actualTimeToLost <= 0)
+        {
+            owner.attackEnded = true;
+            return;
+        }
         
         if (_actualGrabCD > 0)
         {
             _actualGrabCD -= Time.deltaTime;
         }
 
+        Teleport();
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
-
-
         
-        CalculatePath();
-
         if (_ray) return;
         
-        //MoveToPlayer();
         owner.actualTimeToLost = timeToLostPlayer;
     }
 
@@ -120,7 +124,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private void CalculatePath()
     {
         if(_path.Count > 0)
-            TravelPath();
+            Teleport();
         _path.Clear();
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         goal = PathFindingManager.instance.CalculateDistance(PlayerHandler.Instance.transform.position);
@@ -130,30 +134,59 @@ public class HouseEnemy_Attacks : MonoBaseState
         if (_path.Count > 0)
         {
             _path.Reverse();
-            TravelPath();
+            Teleport();
         }
     }
     
-    private void TravelPath()
+    private void Teleport()
     {
+        if (_corroutine) return;
         if (waitingTime > 0)
         {
             waitingTime -= Time.deltaTime;
             return;
         }
-        TriggerAnimation();
-        Vector3 target = _path[0].position;
-        target.y = owner.transform.position.y;
-
-        owner.transform.position = target;
-
-        if (Vector3.Distance(target, owner.transform.position) <= 0.3f || target == null)
+        var playerPos = PlayerHandler.Instance.transform.position;
+        playerPos.y = owner.transform.position.y;
+        if (goal == null)
         {
-            waitingTime = 2.1f;
-            _path.RemoveAt(0);
+            goal = PathFindingManager.instance.CalculateNearnestNodeAndRoom(playerPos);
         }
+
+        StartCoroutine(TeleportCor());
     }
 
+    IEnumerator TeleportCor()
+    {
+        _corroutine = true;
+        while (owner.enemyVisibility > 0)
+        {
+            owner.enemyVisibility -= .5f;
+            owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        if (goal != null)
+        {
+            TriggerAnimation();
+            Vector3 target = goal.transform.position;
+            target.y = owner.transform.position.y;
+            owner.transform.position = target;
+        }
+
+        while (owner.enemyVisibility < 8)
+        {
+            owner.enemyVisibility += .5f;
+            owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        waitingTime = 4f;
+        goal = null;
+        _corroutine = false;
+        owner.attackEnded = true;
+    }
+    
     private void TriggerAnimation()
     {
         owner.EnemyAnimator.animator.SetTrigger("Appear");
@@ -336,9 +369,11 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
-        
+
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
+        {
             return Transitions[StateTransitions.ToPatrol];
+        }
         
         if (owner.attackEnded && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];

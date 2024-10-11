@@ -22,6 +22,12 @@ public class HouseEnemy_Patrol : MonoBaseState
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
+        if (owner.crossUsed)
+        {
+            print("Entre al if");
+            CrossUsed();
+            return;
+        }
 
         if (goal == null)
         {
@@ -31,12 +37,38 @@ public class HouseEnemy_Patrol : MonoBaseState
         else GoToNode();
     }
 
+    private void CrossUsed()
+    {
+        print("Entre al metodo");
+        StartCoroutine(HideEnemy());
+    }
+
+    
+    IEnumerator HideEnemy()
+    {
+        while (owner.enemyVisibility > 0)
+        {
+            print("Entre a la cor");
+            owner.enemyVisibility -= .3f;
+            owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+        owner.crossUsed = false;
+        owner.enemyVisible = false;
+        owner.actualTime = 0;
+        
+        if (goal == null)
+        {
+            print("Goal null");
+            _pathFinish = true;
+        }
+        else GoToNode();
+    }
     private void GoToNode()
     {
         Vector3 goalPos = goal.transform.position;
         goalPos.y = owner.transform.position.y;
         owner.transform.position = goalPos;
-        if (owner.crossUsed) owner.crossUsed = false;
         _pathFinish = true;
     }
 
