@@ -14,6 +14,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     public Node startNode, goal;
     public float timeToLostPlayer;
     private float _actualTime;
+    public float hipnosisTime;
     private float _actualGrabCD;
     public float grabCD;
     public int[] enemyAction = { 0, 1, 2 }; //0 - Chase and Grab Head / 1 - Cordura Attack / 2 - Block Doors 
@@ -140,7 +141,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     
     private void Teleport()
     {
-        if (_corroutine) return;
+        if (_corroutine || _headGrabbed) return;
         if (waitingTime > 0)
         {
             waitingTime -= Time.deltaTime;
@@ -184,13 +185,38 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 4f;
         goal = null;
         _corroutine = false;
-        owner.attackEnded = true;
+        StartCoroutine(Hipnosis());
     }
     
     private void TriggerAnimation()
     {
         owner.EnemyAnimator.animator.SetTrigger("Appear");
         owner.EnemyAnimator.PSAppear.SetActive(true);
+    }
+
+    private IEnumerator Hipnosis()
+    {
+        float time = hipnosisTime;
+        Transform player = PlayerHandler.Instance.transform;
+        while (time > 0)
+        {
+            Vector3 target = owner.transform.position;
+            target.y = player.position.y;
+            time -= 0.1f;
+            PlayerHandler.Instance.UnPossesPlayer();
+            player.LookAt(Vector3.SmoothDamp(transform.position, target, ref owner.reference, owner.rotationSmoothTime),
+                Vector3.up);
+            player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
+            if (Vector3.Distance(target, player.transform.position) < 1)
+            {
+                GrabHead();
+                StopCoroutine(Hipnosis());
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        PlayerHandler.Instance.PossesPlayer();
     }
 
     public void MoveToPlayer()
