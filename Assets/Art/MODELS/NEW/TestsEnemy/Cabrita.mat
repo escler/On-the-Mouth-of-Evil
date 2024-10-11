@@ -36,6 +36,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 5d53b61f85689144ba3d61e486731903, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _CabritaSubgraph_194c2210ee0745e0ac460370d035197b_Emission_2042557040_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -102,28 +106,36 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
+    - _CutOffHeight: 0.07
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Dissolve: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Edge: -1.01
     - _EmisionF: 3
     - _EnemyOff: 0
-    - _EnemyOn: 0
+    - _EnemyOn: 1
     - _EnvironmentReflections: 1
+    - _FSmooth1: 0.18
+    - _FSmooth2: 0.95
     - _Float: 2.67
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _Noise: 3.31
+    - _Noise_1: 236.3
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Power: 0
+    - _Position: -0.42
+    - _Power: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Smooth1: 0.92
+    - _Smooth2: 0.42
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -133,11 +145,15 @@ Material:
     - _Voronoi: 1.06
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _intensity: 0.01
+    - _noiseStrength: -2.32
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 23.300463, g: 2.7238305, b: 1.2089864, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Velocity: {r: 0.15, g: 0.12, b: 0, a: 0}
+    - _color: {r: 3.0442255, g: 0.1330768, b: 0.043078583, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4805419781614055130
 MonoBehaviour:
