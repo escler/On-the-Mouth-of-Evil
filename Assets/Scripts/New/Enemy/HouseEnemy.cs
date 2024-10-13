@@ -172,7 +172,7 @@ public class HouseEnemy : Enemy
     {
         while (enemyVisibility < 8)
         {
-            enemyVisibility += .1f;
+            enemyVisibility += .3f;
             if (enemyVisibility >= 7.8f)
             {
                 _enemyAnimator.animator.applyRootMotion = true;
@@ -202,7 +202,7 @@ public class HouseEnemy : Enemy
         while (enemyVisibility > 0)
         {
             lavaMaterial.SetFloat("_Alpha", 0);
-            enemyVisibility -= .1f;
+            enemyVisibility -= .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             lavaMaterial.SetFloat("_Power", enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", enemyVisibility / 10);
@@ -220,7 +220,7 @@ public class HouseEnemy : Enemy
         _corroutineActivate = true;
         while (enemyVisibility > 0)
         {
-            enemyVisibility -= .1f;
+            enemyVisibility -= .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             lavaMaterial.SetFloat("_Power", enemyVisibility);
             lavaMaterial.SetFloat("_Alpha", enemyVisibility / 10);

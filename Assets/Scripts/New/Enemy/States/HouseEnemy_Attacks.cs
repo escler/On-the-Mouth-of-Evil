@@ -151,7 +151,14 @@ public class HouseEnemy_Attacks : MonoBaseState
         playerPos.y = owner.transform.position.y;
         if (goal == null)
         {
+            startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
             goal = PathFindingManager.instance.CalculateNearnestNodeAndRoom(playerPos);
+        }
+
+        if (startNode == goal)
+        {
+            StartCoroutine(Hipnosis());
+            return;
         }
 
         StartCoroutine(TeleportCor());
@@ -160,6 +167,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     IEnumerator TeleportCor()
     {
         _corroutine = true;
+        TriggerDissapear();
         while (owner.enemyVisibility > 0)
         {
             owner.enemyVisibility -= .5f;
@@ -169,7 +177,7 @@ public class HouseEnemy_Attacks : MonoBaseState
 
         if (goal != null)
         {
-            TriggerAnimation();
+            TriggerAppear();
             Vector3 target = goal.transform.position;
             target.y = owner.transform.position.y;
             owner.transform.position = target;
@@ -188,14 +196,20 @@ public class HouseEnemy_Attacks : MonoBaseState
         StartCoroutine(Hipnosis());
     }
     
-    private void TriggerAnimation()
+    private void TriggerAppear()
     {
         owner.EnemyAnimator.animator.SetTrigger("Appear");
         owner.EnemyAnimator.PSAppear.SetActive(true);
     }
 
+    private void TriggerDissapear()
+    {
+        owner.EnemyAnimator.animator.SetTrigger("Dissapear");
+    }
+
     private IEnumerator Hipnosis()
     {
+        _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
         while (time > 0)
@@ -207,7 +221,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             player.LookAt(Vector3.SmoothDamp(transform.position, target, ref owner.reference, owner.rotationSmoothTime),
                 Vector3.up);
             player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
-            if (Vector3.Distance(target, player.transform.position) < 1)
+            if (Vector3.Distance(target, player.transform.position) < .7)
             {
                 GrabHead();
                 StopCoroutine(Hipnosis());
@@ -217,6 +231,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         
         PlayerHandler.Instance.PossesPlayer();
+        _corroutine = false;
     }
 
     public void MoveToPlayer()

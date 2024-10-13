@@ -16,17 +16,8 @@ public class HouseEnemy_Ritual : MonoBaseState
     {
         if(owner.activateExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
         
-        if (!_pathCalculated) return;
-
-        if (_path.Count > 0)
-        {
-            TravelPath();
-        }
-        else
-        {
-            if (!ritualReached) GoToNodeGoal();
-            else StartRitualSequence();
-        }
+        if (!ritualReached) GoToNodeGoal();
+        else StartRitualSequence();
 
         if (_pathFinish && owner.ritualDone)
         {
@@ -53,7 +44,7 @@ public class HouseEnemy_Ritual : MonoBaseState
             target.y = owner.transform.position.y;
             Vector3 dir = target - owner.transform.position;
             owner.transform.rotation = Quaternion.LookRotation(dir);
-            owner.transform.position += dir.normalized * owner.speed / 2 * Time.deltaTime;
+            owner.transform.position += dir.normalized * owner.speed * Time.deltaTime;
             timer += 0.01f;
             yield return new WaitForSeconds(0.01f);
         }
@@ -107,9 +98,7 @@ public class HouseEnemy_Ritual : MonoBaseState
         if (_pathFinish) return;
         Vector3 target = _goalNode.transform.position;
         target.y = owner.transform.position.y;
-        Vector3 dir = target - owner.transform.position;
-        owner.transform.rotation = Quaternion.LookRotation(dir);
-        owner.transform.position += dir.normalized * (owner.speed * Time.deltaTime);
+        owner.transform.position = target;
         if (Vector3.Distance(target, owner.transform.position) <= 0.1f) _pathFinish = true;
     }
 
