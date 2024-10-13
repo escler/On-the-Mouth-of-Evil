@@ -200,6 +200,7 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
         
+        TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         RitualManager.Instance.RitualFinish();
         gameObject.SetActive(false);

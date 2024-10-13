@@ -235,4 +235,9 @@ public class TarotCardPuzzle : MonoBehaviour
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), _player.GetComponent<Collider>(), true);
         }
     }
+
+    public void PathTaked()
+    {
+        TropiesManager.Instance.ChangePrefs(_badPathTaked ? "BadPath" : "GoodPath");
+    }
 }
