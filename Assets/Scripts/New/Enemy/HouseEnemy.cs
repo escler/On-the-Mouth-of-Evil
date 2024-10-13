@@ -38,7 +38,6 @@ public class HouseEnemy : Enemy
     public Node nodeRitual;
 
     public Material enemyMaterial;
-    public Material lavaMaterial;
     public float enemyVisibility;
     private bool _corroutineActivate;
 
@@ -56,7 +55,6 @@ public class HouseEnemy : Enemy
 
     public bool attackEnded;
 
-    public GameObject trailPS;
     public bool enemyVisible, canAttackPlayer, compareRoom;
     public float actualTimeToLost;
     public bool activateExorcism;
@@ -69,6 +67,7 @@ public class HouseEnemy : Enemy
     public float rotationSmoothTime;
 
     public int playerGrabbedCount;
+    public ParticleSystem[] smokePS;
     
     private void Awake()
     {
@@ -82,8 +81,6 @@ public class HouseEnemy : Enemy
         _corduraHandler = CorduraHandler.Instance;
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 0);
-        lavaMaterial.SetFloat("_Power", 10);
-        lavaMaterial.SetFloat("_Alpha", 1);
         enemyVisibility = enemyMaterial.GetFloat("_Power");
 
 
@@ -179,13 +176,10 @@ public class HouseEnemy : Enemy
                 _enemyAnimator.ChangeStateAnimation("Exorcism", true);
             }
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Alpha", enemyVisibility / 10);
 
             yield return new WaitForSeconds(0.1f);
         }
 
-        trailPS.SetActive(false);
 
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateExorcism = true;
@@ -193,7 +187,6 @@ public class HouseEnemy : Enemy
         RitualManager.Instance.ritualFloor.SetActive(false);
 
         RitualManager.Instance.ActivateCraterFloor();
-        trailPS.SetActive(false);
         yield return new WaitUntil(
             () => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("RitualExorcism"));
         
@@ -201,11 +194,8 @@ public class HouseEnemy : Enemy
         
         while (enemyVisibility > 0)
         {
-            lavaMaterial.SetFloat("_Alpha", 0);
             enemyVisibility -= .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Alpha", enemyVisibility / 10);
             
             yield return new WaitForSeconds(0.1f);
         }
@@ -218,12 +208,14 @@ public class HouseEnemy : Enemy
     IEnumerator HideEnemyLerp()
     {
         _corroutineActivate = true;
+        foreach (var ps in smokePS)
+        {
+            ps.Stop();
+        }
         while (enemyVisibility > 0)
         {
             enemyVisibility -= .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Power", enemyVisibility);
-            lavaMaterial.SetFloat("_Alpha", enemyVisibility / 10);
             yield return new WaitForSeconds(0.1f);
         }
         enemyVisible = false;

@@ -29,6 +29,10 @@ public class HouseEnemy_Spawn : MonoBaseState
     IEnumerator ShowEnemyLerp()
     {
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", true);
+        foreach (var ps in owner.smokePS)
+        {
+            ps.Play();
+        }
         while (owner.enemyVisibility < 8)
         {
             owner.enemyVisibility += .2f;
@@ -40,7 +44,6 @@ public class HouseEnemy_Spawn : MonoBaseState
 
         owner.actualTimeToLost = 4;
 
-        owner.trailPS.SetActive(true);
         owner.enemyVisible = true;
         stateEnd = true;
     }

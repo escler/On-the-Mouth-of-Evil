@@ -209,6 +209,11 @@ public class HouseEnemy_Attacks : MonoBaseState
 
     private IEnumerator Hipnosis()
     {
+        if (_ray)
+        {
+            owner.attackEnded = true;
+            yield break;
+        }
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
