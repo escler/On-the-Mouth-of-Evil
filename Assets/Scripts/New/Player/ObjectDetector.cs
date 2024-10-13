@@ -8,7 +8,7 @@ public class ObjectDetector : MonoBehaviour
     public int distance;
     public GameObject ui, ui2;
     private CrosshairUI _crosshairUI;
-    private RaycastHit _hit;
+    private RaycastHit _hit, _hitDoors;
     private GameObject descriptionItem;
 
     private void Update()
@@ -26,6 +26,7 @@ public class ObjectDetector : MonoBehaviour
 
         CheckInteractText();
         InputCheck();
+        CheckDoors();
         CrossHair();
         DescriptionChecker();
     }
@@ -36,11 +37,30 @@ public class ObjectDetector : MonoBehaviour
         return ray;
     }
 
+    private bool CheckDoorsRayCast()
+    {
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, distance / 2, layer);
+        return ray;
+    }
+
+    private void CheckDoors()
+    {
+        if (!CheckDoorsRayCast()) return;
+
+        if (!_hitDoors.transform.TryGetComponent(out Door doorC)) return;
+        
+        if(Input.GetButtonDown("Interact")) doorC.InteractDoor();
+    }
+
     private void CheckInteractText()
     {
         var raycast = CheckRayCast();
+        var raycastDoor = CheckDoorsRayCast();
+
+        if (!raycast) return;
         
-        ui.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText());
+        
+        ui.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText() || raycastDoor && _hitDoors.transform.TryGetComponent(out Door door));
         ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
     }
 

@@ -22,8 +22,7 @@ public class Door : MonoBehaviour, IInteractable
 
     public void OnInteractItem()
     {
-        open = !open;
-        SetDoor(open);
+
     }
 
     public void OnInteract(bool hit, RaycastHit i)
@@ -36,6 +35,12 @@ public class Door : MonoBehaviour, IInteractable
         
     }
 
+    public void InteractDoor()
+    {
+        open = !open;
+        SetDoor(open);
+    }
+
     public string ShowText()
     {
         return open ? interactTextOpen : interactTextClose;
@@ -43,7 +48,7 @@ public class Door : MonoBehaviour, IInteractable
 
     public bool CanShowText()
     {
-        return true;
+        return false;
     }
 
     public void BlockDoor()
