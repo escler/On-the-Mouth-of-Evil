@@ -7,10 +7,31 @@ public class Salt : Item
 {
     private Animator _animator;
     public ParticleSystem ps;
+    private SaltUI saltUI;
+    public int maxUses;
+    private int _uses;
+    
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _uses = maxUses;
+    }
+
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        var inventory = Inventory.Instance.hubInventory;
+
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if(inventory[i] == null) continue;
+            if (inventory[i] != this) continue;
+            print("Llegue");
+            saltUI = InventoryUI.Instance.hubInventoryUI.transform.GetChild(i).transform.GetChild(0).GetComponent<SaltUI>();
+            saltUI.SetUses(_uses, maxUses);
+            break;
+        }
     }
 
     public override void OnInteract(bool hit, RaycastHit i)
@@ -20,12 +41,20 @@ public class Salt : Item
 
         if (i.transform.TryGetComponent(out Door door))
         {
-            door.BlockDoor();
+            if (_uses <= 0) return;
+            var  blockingDoor = door.BlockDoor();
+            if(blockingDoor) ChangeUI();
             //Inventory.Instance.DropItem();
             //Destroy(gameObject);
         }
     }
 
+    private void ChangeUI()
+    {
+        _uses--;
+        _uses = Mathf.Clamp(_uses, 0, maxUses);
+        saltUI.SaltUsed(_uses);
+    }
     public override void OnSelectItem()
     {
         if (!SaltPuzzleTable.Instance) return;

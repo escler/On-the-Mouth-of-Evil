@@ -51,9 +51,11 @@ public class Door : MonoBehaviour, IInteractable
         return false;
     }
 
-    public void BlockDoor()
+    public bool BlockDoor()
     {
+        if(saltBlock) return false;
         StartCoroutine(BlockDoorCor());
+        return true;
     }
 
     private IEnumerator BlockDoorCor()

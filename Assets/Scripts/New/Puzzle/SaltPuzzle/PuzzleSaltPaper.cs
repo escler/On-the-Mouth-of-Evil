@@ -15,7 +15,7 @@ public class PuzzleSaltPaper : Item, IInteractable
     private void Start()
     {
         active = false;
-        focusPos = PlayerHandler.Instance.closeFocusPos;
+        focusPos = PlayerHandler.Instance.farFocusPos;
         handPos = PlayerHandler.Instance.handPivot;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
         _sensY = PlayerHandler.Instance.playerCam.sensY;
@@ -40,11 +40,13 @@ public class PuzzleSaltPaper : Item, IInteractable
     {
         return "Press E To Grab Paper";
     }
-    
+
+
     IEnumerator FocusObject()
     {
         canInteract = true;
         transform.SetParent(null);
+        transform.localScale = Vector3.one;
         PlayerHandler.Instance.UnPossesPlayer();
         while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
         {

@@ -7,6 +7,7 @@ public class SkullPuzzle : MonoBehaviour
 {
     public SkullPuzzleSlot[] slots;
     private int count;
+    public GameObject ps;
     public static SkullPuzzle Instance { get; private set; }
 
     private void Awake()
@@ -31,6 +32,13 @@ public class SkullPuzzle : MonoBehaviour
             count++;
         }
         
-        if(count >= slots.Length) print("Puzzle Resuelto");
+        if(count < slots.Length) return;
+
+        foreach (var slot in slots)
+        {
+            slot.DisableSlot();
+        }
+
+        ps.SetActive(true);
     }
 }

@@ -94,6 +94,12 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
         return "";
     }
 
+    public void DisableSlot()
+    {
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;
+    }
+
     public bool CanShowText()
     {
         return false;
