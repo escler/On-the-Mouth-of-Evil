@@ -39,7 +39,7 @@ public class ObjectDetector : MonoBehaviour
 
     private bool CheckDoorsRayCast()
     {
-        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, distance / 2, layer);
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, 1.7f, layer);
         return ray;
     }
 

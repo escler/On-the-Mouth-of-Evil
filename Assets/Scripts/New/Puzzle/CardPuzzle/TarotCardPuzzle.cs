@@ -238,6 +238,6 @@ public class TarotCardPuzzle : MonoBehaviour
 
     public void PathTaked()
     {
-        TropiesManager.Instance.ChangePrefs(_badPathTaked ? "BadPath" : "GoodPath");
+        TrophiesManager.Instance.ChangePrefs(_badPathTaked ? "BadPath" : "GoodPath");
     }
 }
