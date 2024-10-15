@@ -10,6 +10,7 @@ public class PieceTarotCard : Item, IInteractable
     public bool onHand;
     private MaterialPropertyBlock _alpha;
     private MeshRenderer _mesh;
+    public float offset;
 
     private void Awake()
     {

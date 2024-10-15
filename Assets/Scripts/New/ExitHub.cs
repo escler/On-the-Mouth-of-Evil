@@ -9,6 +9,7 @@ public class ExitHub : MonoBehaviour, IInteractable
     public string interactDescription;
     private int _count;
     private int _itemNeeded = 4;
+    private List<string> checkedItems = new List<string>();
 
     public void OnInteractItem()
     {
@@ -20,8 +21,10 @@ public class ExitHub : MonoBehaviour, IInteractable
 
         for (int i = 0; i < playerInventory.Length; i++)
         {
-            if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName))
+            if (playerInventory[i] == null) return;
+            if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName) && !checkedItems.Contains(playerInventory[i].itemName))
             {
+                checkedItems.Add(playerInventory[i].itemName);
                 _count++;
                 continue;
             }
@@ -29,7 +32,13 @@ public class ExitHub : MonoBehaviour, IInteractable
             break;
         }
         
-        if (_count != _itemNeeded) return;
+        print(_count);
+
+        if (_count < _itemNeeded)
+        {
+            checkedItems.Clear();
+            return;
+        }
 
         SceneManager.LoadScene(PlayerHandler.Instance.actualMission.misionName);
 

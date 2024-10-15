@@ -8,16 +8,17 @@ public class Skull : Item
     private bool _onHand, canInteract, _active;
     public Vector3[] rotPos;
     private int _actualCount;
-    public Transform focusPos, handPos;
+    public Transform cameraPos, handPos;
     private Vector3 reference = Vector3.zero;
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
     public Mark mark;
+    public float offset;
 
 
     private void Start()
     {
-        focusPos = PlayerHandler.Instance.closeFocusPos;
+        cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
         _sensY = PlayerHandler.Instance.playerCam.sensY;
@@ -85,13 +86,13 @@ public class Skull : Item
     {
         canInteract = true;
         PlayerHandler.Instance.UnPossesPlayer();
-        while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
+        while (Vector3.Distance(transform.position, cameraPos.position + cameraPos.forward * offset) > 0.1f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, focusPos.position, ref reference, .1f);
+            transform.position = Vector3.SmoothDamp(transform.position, cameraPos.position + cameraPos.forward * offset, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
 
-        transform.position = focusPos.position;
+        transform.position = cameraPos.position + cameraPos.transform.forward * offset;
         canInteract = false;
     }
 

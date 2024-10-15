@@ -52,7 +52,7 @@ public class TarotCardPuzzle : MonoBehaviour
         if (heldObj == null) return;
         if (!heldObj.GetComponent<PieceTarotCard>().onHand) heldObj = null;
         
-        MoveObject(_rotating ? PlayerHandler.Instance.farthestFocusPos.position : PlayerHandler.Instance.handPivot.position);
+        MoveObject(_rotating ? PlayerHandler.Instance.cameraPos.position + PlayerHandler.Instance.cameraPos.forward * heldObj.GetComponent<PieceTarotCard>().offset: PlayerHandler.Instance.handPivot.position);
         
         CompareOrientationGoodCard();
         CompareOrientationBadCard();

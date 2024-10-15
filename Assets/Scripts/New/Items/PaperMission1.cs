@@ -7,16 +7,17 @@ public class PaperMission1 : Mission
 {
     public string interactableText;
     private bool active;
-    public Transform focusPos, handPos;
+    public Transform cameraPos, handPos;
     private Vector3 reference = Vector3.zero;
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
     private bool canInteract;
+    public float offset;
 
     private void Start()
     {
         active = false;
-        focusPos = PlayerHandler.Instance.closeFocusPos;
+        cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
         _sensY = PlayerHandler.Instance.playerCam.sensY;
@@ -53,13 +54,13 @@ public class PaperMission1 : Mission
         canInteract = true;
         transform.SetParent(null);
         PlayerHandler.Instance.UnPossesPlayer();
-        while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
+        while (Vector3.Distance(transform.position, cameraPos.position + cameraPos.forward * offset) > 0.1f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, focusPos.position, ref reference, .1f);
+            transform.position = Vector3.SmoothDamp(transform.position, cameraPos.position + cameraPos.forward * offset, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
 
-        transform.position = focusPos.position;
+        transform.position = cameraPos.position + cameraPos.forward * offset;
         canInteract = false;
     }
 

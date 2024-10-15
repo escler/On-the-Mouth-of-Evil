@@ -64,13 +64,18 @@ public class TrophiesManager : MonoBehaviour
             if (i >= badObjects.Length) break;
             badObjects[i].SetActive(true);
         }
-        
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O)) ResetPrefs();
     }
 
     void ResetPrefs()
     {
         if (PlayerPrefs.HasKey("GoodPath")) PlayerPrefs.SetInt("GoodPath", 0);
         if (PlayerPrefs.HasKey("BadPath")) PlayerPrefs.SetInt("BadPath", 0);
+        PlayerPrefs.Save();
     }
 
     public void ChangePrefs(string pref)
@@ -86,5 +91,7 @@ public class TrophiesManager : MonoBehaviour
                 PlayerPrefs.SetInt(pref, _badPath);
                 break;
         }
+        
+        PlayerPrefs.Save();
     }
 }
