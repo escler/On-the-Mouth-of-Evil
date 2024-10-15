@@ -87,6 +87,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     void OnEnterChase()
     {
         owner.attackEnded = false;
+        Teleport();
     }
     private void OnUpdateChase()
     {
@@ -106,8 +107,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         {
             _actualGrabCD -= Time.deltaTime;
         }
-
-        Teleport();
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
         
         if (_ray) return;
@@ -124,24 +123,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         StopCoroutine(WaitAnimState());
         PlayerHandler.Instance.PossesPlayer();
         owner.grabHead = false;
+        _corroutine = false;
+        _headGrabbed = false;
     }
-    private void CalculatePath()
-    {
-        if(_path.Count > 0)
-            Teleport();
-        _path.Clear();
-        startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
-        goal = PathFindingManager.instance.CalculateDistance(PlayerHandler.Instance.transform.position);
-        
-        _path = owner.pf.ThetaStar(startNode,goal, owner.obstacles);
-
-        if (_path.Count > 0)
-        {
-            _path.Reverse();
-            Teleport();
-        }
-    }
-    
     private void Teleport()
     {
         if (_corroutine || _headGrabbed) return;
@@ -158,7 +142,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             goal = PathFindingManager.instance.CalculateNearnestNodeAndRoom(playerPos);
         }
 
-        if (startNode == goal)
+        if (startNode == goal && _actualGrabCD <= 0)
         {
             StartCoroutine(Hipnosis());
             return;
@@ -196,7 +180,8 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 4f;
         goal = null;
         _corroutine = false;
-        StartCoroutine(Hipnosis());
+        
+        if(_actualGrabCD <= 0) StartCoroutine(Hipnosis());
     }
     
     private void TriggerAppear()
@@ -222,7 +207,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         Transform player = PlayerHandler.Instance.transform;
         while (time > 0 && !_ray)
         {
-            
+            if (owner.crossUsed) break;
             Vector3 target = owner.transform.position;
             target.y = player.position.y;
             time -= 0.1f;
@@ -243,42 +228,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         _corroutine = false;
         owner.attackEnded = true;
     }
-
-    public void MoveToPlayer()
-    {
-        Vector3 target = PlayerHandler.Instance.transform.position;
-        target.y = owner.transform.position.y;
-        var dir = (target - owner.transform.position).normalized;
-
-        var ray1 = Physics.Raycast(owner.obstaclePosRight.position, owner.transform.forward,
-            owner.distanceObstacleRay, owner.obstacles);
-        var ray2 = Physics.Raycast(owner.obstaclePosLeft.position, owner.transform.forward,
-            owner.distanceObstacleRay, owner.obstacles);
-
-
-        if (ray1)
-        {
-            print("Ray1");
-            dir -= owner.transform.right;
-        }
-        else if (ray2)
-        {
-            print("Ray2");
-            dir += owner.transform.right;
-        }
-        
-
-        if (Vector3.Distance(target, owner.transform.position) < .75f) 
-        {
-            if(_actualGrabCD <= 0)GrabHead();
-            return;
-        }
-
-        transform.LookAt(Vector3.SmoothDamp(transform.position,target + dir, ref owner.reference, owner.rotationSmoothTime), Vector3.up);
-        owner.transform.position += dir * Time.deltaTime * owner.speed;
-        _headGrabbed = false;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(owner.obstaclePosRight.position, transform.forward);
