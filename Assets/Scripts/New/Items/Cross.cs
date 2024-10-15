@@ -37,6 +37,7 @@ public class Cross : Item
             foreach (var holdPS in holdingPS)
             {
                 holdPS.Stop();
+                holdPS.Clear();
             }
             holdingPSActive = false;
 
@@ -67,6 +68,7 @@ public class Cross : Item
             foreach (var holdPS in holdingPS)
             {
                 holdPS.Stop();
+                holdPS.Clear();
             }
             holdingPSActive = false;
             _currentTime = 0;
