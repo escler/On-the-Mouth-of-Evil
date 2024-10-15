@@ -6,17 +6,18 @@ using UnityEngine;
 public class Trophy : Item
 {
     private bool active, canInteract, canRotate;
-    public Transform focusPos;
+    public Transform cameraPos;
     public Quaternion startRot;
     private Vector3 startPos;
     private Vector3 reference = Vector3.zero;
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
+    public float offset;
     
     private void Start()
     {
         active = false;
-        focusPos = PlayerHandler.Instance.farFocusPos;
+        cameraPos = PlayerHandler.Instance.cameraPos;
         startPos = transform.position;
         startRot = transform.rotation;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
@@ -64,14 +65,14 @@ public class Trophy : Item
     {
         canInteract = true;
         PlayerHandler.Instance.UnPossesPlayer();
-        while (Vector3.Distance(transform.position, focusPos.position) > 0.1f)
+        while (Vector3.Distance(transform.position, cameraPos.position + cameraPos.forward * offset) > 0.1f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, focusPos.position, ref reference, .1f);
+            transform.position = Vector3.SmoothDamp(transform.position, cameraPos.position + cameraPos.forward * offset, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
 
         canRotate = true;
-        transform.position = focusPos.position;
+        transform.position = cameraPos.position + cameraPos.forward * offset;
         canInteract = false;
     }
 
