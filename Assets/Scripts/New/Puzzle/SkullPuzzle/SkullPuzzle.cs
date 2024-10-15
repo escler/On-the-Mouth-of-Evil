@@ -40,5 +40,6 @@ public class SkullPuzzle : MonoBehaviour
         }
 
         ps.SetActive(true);
+        RitualManager.Instance.AltarCompleted();
     }
 }

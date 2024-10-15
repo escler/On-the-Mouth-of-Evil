@@ -120,6 +120,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         _path.Clear();
         startNode = null;
         goal = null;
+        StopCoroutine(Hipnosis());
+        StopCoroutine(WaitAnimState());
+        PlayerHandler.Instance.PossesPlayer();
         owner.grabHead = false;
     }
     private void CalculatePath()
@@ -217,8 +220,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
-        while (time > 0)
+        while (time > 0 && !_ray)
         {
+            
             Vector3 target = owner.transform.position;
             target.y = player.position.y;
             time -= 0.1f;
@@ -237,6 +241,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         
         PlayerHandler.Instance.PossesPlayer();
         _corroutine = false;
+        owner.attackEnded = true;
     }
 
     public void MoveToPlayer()
@@ -307,6 +312,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
 
         owner.playerGrabbedCount++;
+        PlayerLifeHandlerNew.Instance.DamageTaked(1);
         if (owner.playerGrabbedCount > 2) GameManagerNew.Instance.LoadSceneWithDelay("Hub", 0.1f);
 
         _actualGrabCD = grabCD;
