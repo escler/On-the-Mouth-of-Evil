@@ -5,19 +5,22 @@ using UnityEngine.Rendering.HighDefinition;
 public class HypnosisEffectControllerHDRP : MonoBehaviour
 {
     public static HypnosisEffectControllerHDRP Instance { get; private set; }
-    public Material hypnosisMaterial;
+    public Material hypnosisMaterialK; // Material para blink con K
+
+    private Material originalSkybox;
 
     public float lerpDuration = 1.0f;
-    private float currentLerpTime = 0.0f;
-    private bool isLerping = false;
+    private float currentLerpTimeK = 0.0f; // Lerp para K
+    private bool isLerpingK = false;
 
     private float startValue = 1.0f;
     private float endValue = 0.2f;
-    private bool hasCompletedCycle = false;
+    private bool hasCompletedCycleK = false;
 
     private GameObject[] pointLights;
     private GameObject spotLight;
 
+    private bool skyboxIsOn = true; // Indica el estado actual del Skybox
 
     private void Awake()
     {
@@ -29,57 +32,47 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(this);
-        hypnosisMaterial.SetFloat("_Blink", startValue);
-        isLerping = false;
-        // Descomenta la siguiente línea si quieres activar las luces en el inicio
-         pointLights = GameObject.FindGameObjectsWithTag("PointLight");
-         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
+
+        hypnosisMaterialK.SetFloat("_Blink", startValue);
+
+        pointLights = GameObject.FindGameObjectsWithTag("PointLight");
+        spotLight = GameObject.FindGameObjectWithTag("DemonLight");
+
         DeactivateDemonLight();
-
-
+        originalSkybox = RenderSettings.skybox;
     }
 
     private void Update()
     {
+        
+
         if (Input.GetKeyDown(KeyCode.K))
         {
-            if (hasCompletedCycle)
+            if (!isLerpingK)
             {
-                ResetCycle();
-            }
-
-            if (!isLerping)
-            {
-                isLerping = true;
-                currentLerpTime = 0.0f;
+                isLerpingK = true;
+                currentLerpTimeK = 0.0f;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        
+        if (isLerpingK)
         {
-            ActivateLights();
-            DeactivateDemonLight();
-
-        }
-
-        if (isLerping)
-        {
-            PerformLerp();
+            PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK);
         }
     }
 
-    private void PerformLerp()
+    private void PerformLerp(ref bool isLerping, ref float currentLerpTime, Material material, ref bool hasCompletedCycle)
     {
         currentLerpTime += Time.deltaTime;
-
         float t = currentLerpTime / lerpDuration;
         float blinkValue = Mathf.Lerp(startValue, endValue, t);
-        hypnosisMaterial.SetFloat("_Blink", blinkValue);
+        material.SetFloat("_Blink", blinkValue);
 
         if (blinkValue <= 0.5f && !hasCompletedCycle)
         {
-            DeactivateLights();
-            ActivateDemonLight();
+            ToggleLights();
+            hasCompletedCycle = true;
         }
 
         // Si hemos alcanzado el tiempo de duración, reiniciamos el ciclo
@@ -95,27 +88,43 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             }
             else
             {
-                // Restablecer el ciclo
                 startValue = 1.0f;
                 endValue = 0.2f;
                 isLerping = false;
-                hasCompletedCycle = true;
+                hasCompletedCycle = false;
             }
         }
     }
 
-    private void DeactivateLights()
+    private void ToggleLights()
     {
-        if (pointLights == null)
+        if (skyboxIsOn)
         {
-            pointLights = GameObject.FindGameObjectsWithTag("PointLight");
+            // Apaga Skybox, apaga PointLights, enciende DemonLight
+            ApagarSkybox();
+            DeactivateLights();
+            ActivateDemonLight();
+        }
+        else
+        {
+            // Enciende Skybox, enciende PointLights, apaga DemonLight
+            EncenderSkybox();
+            ActivateLights();
+            DeactivateDemonLight();
         }
 
+        // Cambia el estado del Skybox
+        skyboxIsOn = !skyboxIsOn;
+    }
+
+    private void DeactivateLights()
+    {
         foreach (var light in pointLights)
         {
             light.SetActive(false);
         }
     }
+
     private void DeactivateDemonLight()
     {
         if (spotLight == null)
@@ -123,23 +132,17 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         }
 
-
         spotLight.SetActive(false);
-
     }
 
     private void ActivateLights()
     {
-        if (pointLights == null)
-        {
-            pointLights = GameObject.FindGameObjectsWithTag("PointLight");
-        }
-
         foreach (var light in pointLights)
         {
             light.SetActive(true);
         }
     }
+
     private void ActivateDemonLight()
     {
         if (spotLight == null)
@@ -147,16 +150,21 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         }
 
-    
         spotLight.SetActive(true);
-        
     }
 
-    public void ResetCycle()
+    public void ApagarSkybox()
     {
-        hasCompletedCycle = false;
-        startValue = 1.0f;
-        endValue = 0.2f;
+        RenderSettings.skybox = null;
+        DynamicGI.UpdateEnvironment();
+    }
+
+    public void EncenderSkybox()
+    {
+        if (originalSkybox != null)
+        {
+            RenderSettings.skybox = originalSkybox;
+        }
+        DynamicGI.UpdateEnvironment();
     }
 }
-
