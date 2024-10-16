@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
+using System.Collections;
 
 public class HypnosisEffectControllerHDRP : MonoBehaviour
 {
@@ -44,8 +45,6 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
     private void Update()
     {
-        
-
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (!isLerpingK)
@@ -55,7 +54,6 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             }
         }
 
-        
         if (isLerpingK)
         {
             PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK);
@@ -69,9 +67,9 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         float blinkValue = Mathf.Lerp(startValue, endValue, t);
         material.SetFloat("_Blink", blinkValue);
 
-        if (blinkValue <= 0.5f && !hasCompletedCycle)
+        if (blinkValue <= 0.2f && !hasCompletedCycle)
         {
-            ToggleLights();
+            StartCoroutine(ToggleLights());
             hasCompletedCycle = true;
         }
 
@@ -96,25 +94,41 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         }
     }
 
-    private void ToggleLights()
+    private IEnumerator ToggleLights()
     {
         if (skyboxIsOn)
         {
             // Apaga Skybox, apaga PointLights, enciende DemonLight
-            ApagarSkybox();
+            yield return StartCoroutine(TransitionSkybox(false));
             DeactivateLights();
             ActivateDemonLight();
         }
         else
         {
             // Enciende Skybox, enciende PointLights, apaga DemonLight
-            EncenderSkybox();
+            yield return StartCoroutine(TransitionSkybox(true));
             ActivateLights();
             DeactivateDemonLight();
         }
 
         // Cambia el estado del Skybox
         skyboxIsOn = !skyboxIsOn;
+    }
+
+    private IEnumerator TransitionSkybox(bool toOn)
+    {
+        if (toOn)
+        {
+            EncenderSkybox();
+        }
+        else
+        {
+            ApagarSkybox();
+        }
+
+        // Asegúrate de que los cambios de iluminación se apliquen
+        yield return new WaitForEndOfFrame(); // Espera un frame para permitir que se rendericen los cambios
+        DynamicGI.UpdateEnvironment(); // Actualiza la iluminación global
     }
 
     private void DeactivateLights()
