@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.HighDefinition;
 using System.Collections;
 
 public class HypnosisEffectControllerHDRP : MonoBehaviour
@@ -8,9 +7,9 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     public static HypnosisEffectControllerHDRP Instance { get; private set; }
     public Material hypnosisMaterialK; // Material para blink con K
 
-    private Material originalSkybox;
-
     public float lerpDuration = 1.0f;
+    public float skyboxSpeedMultiplier = 1.0f; // Controla la velocidad desde el editor
+
     private float currentLerpTimeK = 0.0f; // Lerp para K
     private bool isLerpingK = false;
 
@@ -22,6 +21,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     private GameObject spotLight;
 
     private bool skyboxIsOn = true; // Indica el estado actual del Skybox
+    private float skyboxIntensityStart = 1.0f;
+    private float skyboxIntensityEnd = 0.0f;
 
     private void Awake()
     {
@@ -40,7 +41,9 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
 
         DeactivateDemonLight();
-        originalSkybox = RenderSettings.skybox;
+        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Asegúrate de usar "_Exposure" o el nombre correcto
+
+        // Originalmente la skybox debería estar visible.
     }
 
     private void Update()
@@ -73,12 +76,22 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             hasCompletedCycle = true;
         }
 
-        // Si hemos alcanzado el tiempo de duración, reiniciamos el ciclo
+        // Ajuste del multiplicador de intensidad
+        if (blinkValue <= 0.2f)
+        {
+            // Reducir multiplicador de intensidad a 0 al apagarse las luces
+            material.SetFloat("_IntensityMultiplier", 0.0f);
+        }
+        else if (blinkValue >= 1.0f)
+        {
+            // Restablecer multiplicador de intensidad a 1 al encenderse las luces
+            material.SetFloat("_IntensityMultiplier", 1.0f);
+        }
+
         if (currentLerpTime >= lerpDuration)
         {
             currentLerpTime = 0.0f;
 
-            // Intercambiamos los valores de startValue y endValue para invertir el lerp
             if (startValue == 1.0f && endValue == 0.2f)
             {
                 startValue = 0.2f;
@@ -98,37 +111,32 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     {
         if (skyboxIsOn)
         {
-            // Apaga Skybox, apaga PointLights, enciende DemonLight
-            yield return StartCoroutine(TransitionSkybox(false));
+            yield return StartCoroutine(ChangeSkyboxIntensity(1.0f, 0.0f));
             DeactivateLights();
             ActivateDemonLight();
         }
         else
         {
-            // Enciende Skybox, enciende PointLights, apaga DemonLight
-            yield return StartCoroutine(TransitionSkybox(true));
+            yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, 1.0f));
             ActivateLights();
             DeactivateDemonLight();
         }
-
-        // Cambia el estado del Skybox
         skyboxIsOn = !skyboxIsOn;
     }
 
-    private IEnumerator TransitionSkybox(bool toOn)
+    private IEnumerator ChangeSkyboxIntensity(float startIntensity, float endIntensity)
     {
-        if (toOn)
+        float elapsedTime = 0.0f;
+        while (elapsedTime < lerpDuration)
         {
-            EncenderSkybox();
-        }
-        else
-        {
-            ApagarSkybox();
-        }
+            elapsedTime += Time.deltaTime * skyboxSpeedMultiplier; // Ajusta la velocidad con el multiplicador
+            float t = Mathf.Clamp01(elapsedTime / lerpDuration);
+            float currentIntensity = Mathf.Lerp(startIntensity, endIntensity, t);
 
-        // Asegúrate de que los cambios de iluminación se apliquen
-        yield return new WaitForEndOfFrame(); // Espera un frame para permitir que se rendericen los cambios
-        DynamicGI.UpdateEnvironment(); // Actualiza la iluminación global
+            RenderSettings.skybox.SetFloat("_Exposure", currentIntensity); // Cambia el multiplicador de intensidad
+            DynamicGI.UpdateEnvironment();
+            yield return null;
+        }
     }
 
     private void DeactivateLights()
@@ -165,20 +173,5 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         }
 
         spotLight.SetActive(true);
-    }
-
-    public void ApagarSkybox()
-    {
-        RenderSettings.skybox = null;
-        DynamicGI.UpdateEnvironment();
-    }
-
-    public void EncenderSkybox()
-    {
-        if (originalSkybox != null)
-        {
-            RenderSettings.skybox = originalSkybox;
-        }
-        DynamicGI.UpdateEnvironment();
     }
 }

@@ -77,6 +77,23 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+--- !u!114 &-1613238622671223388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: Hypnosis
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  passMaterial: {fileID: 2100000, guid: 2c01d85ec3d02e24fb7ae3609c20aa16, type: 2}
+  injectionPoint: 600
+  requirements: 4
+  passIndex: 0
 --- !u!114 &-977535599768538957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +134,8 @@ MonoBehaviour:
   - {fileID: -3202480075762680482}
   - {fileID: 8969631126692822378}
   - {fileID: 6493265745783685234}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed36afdcf90fc877a7c7200a601cbb61c5a
+  - {fileID: -1613238622671223388}
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed36afdcf90fc877a7c7200a601cbb61c5aa4c5bd1d05a09ce9
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -196,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445ec01bb9697d04bb45456e9ea061d2, type: 3}
   m_Name: BlackAndRed
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     renderPassEvent: 450
     blitMaterial: {fileID: 2100000, guid: 2c01d85ec3d02e24fb7ae3609c20aa16, type: 2}
