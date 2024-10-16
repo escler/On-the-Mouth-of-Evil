@@ -38,10 +38,13 @@ public class PaperMission1 : Mission
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (PlayerHandler.Instance.cantPressInventory) return;
-        active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
         Inventory.Instance.cantSwitch = active;
-        if(!canInteract) StartCoroutine(active ? FocusObject() : UnFocusObject());
+        if (!canInteract)
+        {
+            active = !active;
+            StartCoroutine(active ? FocusObject() : UnFocusObject());
+        }
     }
 
     public string ShowText()

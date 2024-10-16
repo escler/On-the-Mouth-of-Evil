@@ -60,6 +60,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     
     public override Dictionary<string, object> Exit(IState to)
     {
+        StopAllCoroutines();
         switch (_actualAction)
         {
             case 0:
@@ -73,7 +74,6 @@ public class HouseEnemy_Attacks : MonoBaseState
                 break;
         }
         print("Sali de attack");
-        StopCoroutine(TeleportCor());
         waitingTime = 0;
 
         owner.attackEnded = false;
@@ -91,6 +91,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     }
     private void OnUpdateChase()
     {
+        if (owner.attackEnded) return;
         var playerPos = PlayerHandler.Instance.transform.position;
         playerPos.y = owner.transform.position.y;
         var dir = playerPos - transform.position;
@@ -119,8 +120,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         _path.Clear();
         startNode = null;
         goal = null;
-        StopCoroutine(Hipnosis());
-        StopCoroutine(WaitAnimState());
         PlayerHandler.Instance.PossesPlayer();
         owner.grabHead = false;
         _corroutine = false;
@@ -219,7 +218,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             {
                 GrabHead();
                 StopCoroutine(Hipnosis());
-                break;
+                yield break;
             }
             yield return new WaitForSeconds(0.1f);
         }

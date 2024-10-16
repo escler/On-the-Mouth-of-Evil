@@ -14,7 +14,8 @@ public class LifeUI : MonoBehaviour
 
     private void Awake()
     {
-        StartCoroutine(WaitCor());
+        StartCoroutine(WaitCor()); 
+        EnableUI(SceneManager.GetActiveScene(),LoadSceneMode.Single);
     }
 
     IEnumerator WaitCor()
@@ -24,11 +25,13 @@ public class LifeUI : MonoBehaviour
         _lifeHandler.OnLifeChange += ChangeUI;
         actualLife = _lifeHandler.ActualLife;
         SceneManager.sceneLoaded += ResetUI;
+        SceneManager.sceneLoaded += EnableUI;
     }
 
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= ResetUI;
+        SceneManager.sceneLoaded -= EnableUI;
         if(_lifeHandler != null) _lifeHandler.OnLifeChange -= ChangeUI;
     }
 
@@ -47,6 +50,16 @@ public class LifeUI : MonoBehaviour
         for (int i = 0; i < lifeUI.Length; i++)
         {
             lifeUI[i].sprite = normalCoin;
+        }
+    }
+
+    private void EnableUI(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        var inHubScene = scene.name == "Hub";
+
+        foreach (var ui in lifeUI)
+        {
+            ui.enabled = !inHubScene;
         }
     }
 }
