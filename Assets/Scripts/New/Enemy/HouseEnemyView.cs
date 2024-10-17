@@ -64,5 +64,6 @@ public class HouseEnemyView : MonoBehaviour
         ChangeStateAnimation("CorduraAttack", false);
         ChangeStateAnimation("BlockDoor", false);
         ChangeStateAnimation("Exorcism", false);
+        ChangeStateAnimation("HypnosisAttack", false);
     }
 }
