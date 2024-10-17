@@ -43,7 +43,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         ActivateLights();
         DeactivateDemonLight();
         RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
-        //DynamicGI.UpdateEnvironment();
+        DynamicGI.UpdateEnvironment();
 
         // Originalmente la skybox deber�a estar visible.
     }
@@ -111,7 +111,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         ActivateLights();
         DeactivateDemonLight();
         RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
-        //DynamicGI.UpdateEnvironment();
+        DynamicGI.UpdateEnvironment();
     }
 
     private void OnDestroy()
