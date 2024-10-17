@@ -43,7 +43,8 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Attacks");
-        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        //_actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        _actualAction = 0;
         switch (_actualAction)
         {
             case 0:
@@ -77,6 +78,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 0;
 
         owner.attackEnded = false;
+        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.LerpShader();
 
         return base.Exit(to);
     }
@@ -179,8 +181,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 4f;
         goal = null;
         _corroutine = false;
-        
-        if(_actualGrabCD <= 0) StartCoroutine(Hipnosis());
+
+        if (_actualGrabCD <= 0) StartCoroutine(Hipnosis());
+        else owner.attackEnded = true;
     }
     
     private void TriggerAppear()
@@ -201,6 +204,8 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.attackEnded = true;
             yield break;
         }
+        owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", true);
+        HypnosisEffectControllerHDRP.Instance.LerpShader();
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
@@ -214,7 +219,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             player.LookAt(Vector3.SmoothDamp(transform.position, target, ref owner.reference, owner.rotationSmoothTime),
                 Vector3.up);
             player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
-            if (Vector3.Distance(target, player.transform.position) < .7)
+            if (Vector3.Distance(target, player.transform.position) < 1)
             {
                 GrabHead();
                 StopCoroutine(Hipnosis());
@@ -224,8 +229,10 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         
         PlayerHandler.Instance.PossesPlayer();
+        owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
         _corroutine = false;
         owner.attackEnded = true;
+        HypnosisEffectControllerHDRP.Instance.LerpShader();
     }
     private void OnDrawGizmos()
     {
@@ -247,6 +254,8 @@ public class HouseEnemy_Attacks : MonoBaseState
         yield return new WaitUntil(() =>
             owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Grabhead"));
         
+        owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
+        
         owner.grabHead = true;
         PlayerHandler.Instance.HeadGrabbed(owner.transform);
         while (owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Grabhead"))
@@ -258,9 +267,11 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, lookDirection, 10f * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
-
+        
+        HypnosisEffectControllerHDRP.Instance.LerpShader();
         owner.playerGrabbedCount++;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
+        
         if (owner.playerGrabbedCount > 2) GameManagerNew.Instance.LoadSceneWithDelay("Hub", 0.1f);
 
         _actualGrabCD = grabCD;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class HypnosisEffectControllerHDRP : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     public float lerpDuration = 1.0f;
     public float skyboxSpeedMultiplier = 1.0f; // Controla la velocidad desde el editor
 
-    private float currentLerpTimeK = 0.0f; // Lerp para K
-    private bool isLerpingK = false;
+    public float currentLerpTimeK = 0.0f; // Lerp para K
+    public bool isLerpingK = false;
 
     private float startValue = 1.0f;
     private float endValue = 0.2f;
@@ -20,7 +21,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     private GameObject[] pointLights;
     private GameObject spotLight;
 
-    private bool skyboxIsOn = true; // Indica el estado actual del Skybox
+    public bool skyboxIsOn = true; // Indica el estado actual del Skybox
     private float skyboxIntensityStart = 1.0f;
     private float skyboxIntensityEnd = 0.0f;
 
@@ -32,35 +33,30 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             return;
         }
 
-        Instance = this;
         DontDestroyOnLoad(this);
+        Instance = this;
 
         hypnosisMaterialK.SetFloat("_Blink", startValue);
+        SceneManager.sceneLoaded += GetLights;
 
-        pointLights = GameObject.FindGameObjectsWithTag("PointLight");
-        spotLight = GameObject.FindGameObjectWithTag("DemonLight");
-
+        GetLights(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Asegúrate de usar "_Exposure" o el nombre correcto
+        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Asegï¿½rate de usar "_Exposure" o el nombre correcto
+        //DynamicGI.UpdateEnvironment();
 
-        // Originalmente la skybox debería estar visible.
+        // Originalmente la skybox deberï¿½a estar visible.
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (!isLerpingK)
-            {
-                isLerpingK = true;
-                currentLerpTimeK = 0.0f;
-            }
-        }
+        if(isLerpingK) PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK);
+    }
 
-        if (isLerpingK)
-        {
-            PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK);
-        }
+    public void LerpShader()
+    {
+        isLerpingK = true;
+        currentLerpTimeK = 0.0f;
     }
 
     private void PerformLerp(ref bool isLerping, ref float currentLerpTime, Material material, ref bool hasCompletedCycle)
@@ -107,6 +103,22 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         }
     }
 
+    private void GetLights(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        print("Hice esto");
+        pointLights = GameObject.FindGameObjectsWithTag("PointLight");
+        spotLight = GameObject.FindGameObjectWithTag("DemonLight");
+        ActivateLights();
+        DeactivateDemonLight();
+        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Asegï¿½rate de usar "_Exposure" o el nombre correcto
+        //DynamicGI.UpdateEnvironment();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= GetLights;
+    }
+    
     private IEnumerator ToggleLights()
     {
         if (skyboxIsOn)
@@ -154,6 +166,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         }
 
+        if (spotLight == null) return;
         spotLight.SetActive(false);
     }
 
@@ -171,6 +184,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         {
             spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         }
+
+        if (spotLight == null) return;
 
         spotLight.SetActive(true);
     }
