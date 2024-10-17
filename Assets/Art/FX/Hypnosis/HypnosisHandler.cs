@@ -42,7 +42,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         GetLights(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
+        RenderSettings.ambientIntensity = 1;
+        //RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
         DynamicGI.UpdateEnvironment();
 
         // Originalmente la skybox deber�a estar visible.
@@ -110,7 +111,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
+        RenderSettings.ambientIntensity = 1;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -144,8 +145,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             elapsedTime += Time.deltaTime * skyboxSpeedMultiplier; // Ajusta la velocidad con el multiplicador
             float t = Mathf.Clamp01(elapsedTime / lerpDuration);
             float currentIntensity = Mathf.Lerp(startIntensity, endIntensity, t);
-
-            RenderSettings.skybox.SetFloat("_Exposure", currentIntensity); // Cambia el multiplicador de intensidad
+            
+            RenderSettings.ambientIntensity = currentIntensity;
             DynamicGI.UpdateEnvironment();
             yield return null;
         }
