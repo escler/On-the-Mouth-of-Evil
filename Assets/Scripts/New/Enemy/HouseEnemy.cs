@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FSM;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -199,6 +200,8 @@ public class HouseEnemy : Enemy
             
             yield return new WaitForSeconds(0.1f);
         }
+
+        RitualManager.Instance.CloseCrater();
         
         TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);

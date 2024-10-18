@@ -17,6 +17,7 @@ public class RitualManager : MonoBehaviour
     public LayerMask layermask;
     public Node ritualNode;
     public GameObject floor, craterFloor;
+    public GameObject stencilCrater;
     
     public static RitualManager Instance { get; private set; }
 
@@ -68,8 +69,13 @@ public class RitualManager : MonoBehaviour
 
     public void ActivateCraterFloor()
     {
-        floor.SetActive(false);
-        craterFloor.SetActive(true);
+        ritualFloor.SetActive(false);
+        stencilCrater.SetActive(true);
+    }
+
+    public void CloseCrater()
+    {
+        stencilCrater.GetComponent<Animator>().SetBool("Close", true);
     }
 
     public void CandlesBurned()
@@ -83,8 +89,8 @@ public class RitualManager : MonoBehaviour
 
     public void RitualFinish()
     {
-        floor.SetActive(true);
-        craterFloor.SetActive(false);
+        //floor.SetActive(true);
+        //craterFloor.SetActive(false);
         ritualFloor.SetActive(false);
         stampRelease.SetActive(false);
 
