@@ -20,6 +20,7 @@ public class Cross : Item
     {
         base.OnInteract(hit, i);
 
+        if (hit) return;
         if (_crossCd.cantUse) return;
         _currentTime += Time.deltaTime;
         if (!holdingPSActive)

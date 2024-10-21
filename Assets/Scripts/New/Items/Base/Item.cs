@@ -36,12 +36,12 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnSelectItem()
     {
-
+        CanInspectItem();
     }
 
     public virtual void OnDeselectItem()
     {
-
+        CanvasManager.Instance.inspectImage.SetActive(!canInspectItem);
     }
 
     public virtual void OnDropItem()
@@ -78,6 +78,11 @@ public class Item : MonoBehaviour, IInteractable
     public virtual bool CanInteractWithItem()
     {
         return canInteractWithItem;
+    }
+
+    protected void CanInspectItem()
+    {
+        CanvasManager.Instance.inspectImage.SetActive(canInspectItem);
     }
 
     public virtual void ChangeCrossHair()
