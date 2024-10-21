@@ -11,12 +11,22 @@ public class Item : MonoBehaviour, IInteractable
     protected bool canUse;
     public string uiText;
     public ItemCategory category;
-    public bool canShowText;
+    public bool canShowText, canInspectItem, canInteractWithItem;
     
     public virtual void OnGrabItem()
     {
         Inventory.Instance.AddItem(this, category);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;
+    }
+
+    public virtual void OnUpdate()
+    {
+        
+    }
+
+    public virtual void FocusObject()
+    {
+        
     }
 
     public virtual void OnInteractItem()
@@ -26,10 +36,13 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnSelectItem()
     {
-        
+
     }
-    
-    public virtual void OnDeselectItem(){}
+
+    public virtual void OnDeselectItem()
+    {
+
+    }
 
     public virtual void OnDropItem()
     {
@@ -55,5 +68,21 @@ public class Item : MonoBehaviour, IInteractable
     public virtual bool CanShowText()
     {
         return canShowText;
+    }
+
+    public virtual bool CanInpectItem()
+    {
+        return canInspectItem;
+    }
+
+    public virtual bool CanInteractWithItem()
+    {
+        return canInteractWithItem;
+    }
+
+    public virtual void ChangeCrossHair()
+    {
+        if(canInteractWithItem) CanvasManager.Instance.crossHairUI.IncreaseUI();
+        else CanvasManager.Instance.crossHairUI.DecreaseUI();
     }
 }

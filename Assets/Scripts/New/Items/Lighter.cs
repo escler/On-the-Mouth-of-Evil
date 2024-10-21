@@ -21,6 +21,27 @@ public class Lighter : Item
         base.OnInteract(hit,i);
     }
 
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
+        if(Input.GetMouseButtonDown(0)) OnInteract(rayConnected, ray);
+    }
+
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        if (ray.transform.TryGetComponent(out IBurneable item)) return true;
+
+        return false;
+    }
+
     public override void OnSelectItem()
     {
         base.OnSelectItem();

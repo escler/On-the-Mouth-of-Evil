@@ -53,8 +53,11 @@ public class Bible : Item
         }
     }
 
-    private void Update()
+    public override void OnUpdate()
     {
+        base.OnUpdate();
         ray = Physics.Raycast(PlayerHandler.Instance.cameraPos.position, PlayerHandler.Instance.cameraPos.forward, out _hit, distance, layer);
+        ChangeCrossHair();
+        if (Input.GetMouseButtonDown(0)) OnInteract(ray, _hit);
     }
 }

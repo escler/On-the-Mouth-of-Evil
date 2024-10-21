@@ -35,16 +35,26 @@ public class PaperMission1 : Mission
         //CanvasManager.Instance.missionLevelHouse.SetActive(true);
     }
 
-    public override void OnInteract(bool hit, RaycastHit i)
+    public override void FocusObject()
     {
-        if (PlayerHandler.Instance.cantPressInventory) return;
+        if (canInteract) return;
+        active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
         Inventory.Instance.cantSwitch = active;
-        if (!canInteract)
-        {
-            active = !active;
-            StartCoroutine(active ? FocusObject() : UnFocusObject());
-        }
+        StartCoroutine(active ? FocusObjectCor() : UnFocusObject());
+        transform.localScale = Vector3.one;
+    }
+
+    public override void OnDeselectItem()
+    {
+        base.OnDeselectItem();
+        active = false;
+    }
+
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        active = false;
     }
 
     public string ShowText()
@@ -52,7 +62,7 @@ public class PaperMission1 : Mission
         return interactableText;
     }
 
-    IEnumerator FocusObject()
+    IEnumerator FocusObjectCor()
     {
         canInteract = true;
         transform.SetParent(null);
@@ -89,6 +99,12 @@ public class PaperMission1 : Mission
         if (!active) return;
         RotateObject();
         
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        if(Input.GetButtonDown("Focus"))FocusObject();
     }
 
     void RotateObject()

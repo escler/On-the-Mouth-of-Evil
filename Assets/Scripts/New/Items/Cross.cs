@@ -45,6 +45,16 @@ public class Cross : Item
         }
     }
 
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (Input.GetMouseButton(0)) OnInteract(rayConnected, ray);
+        if(Input.GetMouseButtonUp(0)) OnUpCross();
+    }
+
     public void CheckRoom()
     {
         var playerRoom = PlayerHandler.Instance.actualRoom;
@@ -63,15 +73,12 @@ public class Cross : Item
 
     public void OnUpCross()
     {
-        if (Input.GetMouseButtonUp(0))
+        foreach (var holdPS in holdingPS)
         {
-            foreach (var holdPS in holdingPS)
-            {
-                holdPS.Stop();
-                holdPS.Clear();
-            }
-            holdingPSActive = false;
-            _currentTime = 0;
+            holdPS.Stop();
+            holdPS.Clear();
         }
+        holdingPSActive = false;
+        _currentTime = 0;
     }
 }

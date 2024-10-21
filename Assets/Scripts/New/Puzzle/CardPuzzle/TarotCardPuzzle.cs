@@ -130,7 +130,6 @@ public class TarotCardPuzzle : MonoBehaviour
     private void CompareOrientationGoodCard()
     {
         if (_badPath) return;
-        print("LLego?");
         var actualCardPiece = piecesCardGood[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);

@@ -32,14 +32,21 @@ public class PieceTarotCard : Item, IInteractable
         onHand = true;
     }
 
-    public override void OnInteract(bool hit, RaycastHit i)
+    public override void FocusObject()
     {
         TarotCardPuzzle.Instance.PressButton();
     }
 
     public override void OnSelectItem()
     {
+        base.OnSelectItem();
         onHand = true;
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        if(Input.GetButtonDown("Focus")) FocusObject();
     }
 
     private void Update()
@@ -77,6 +84,7 @@ public class PieceTarotCard : Item, IInteractable
 
     public override void OnDeselectItem()
     {
+        base.OnDeselectItem();
         TarotCardPuzzle.Instance.DeactivateMesh();
         TarotCardPuzzle.Instance.heldObj = null;
         _alpha.SetFloat("_Alpha",0);

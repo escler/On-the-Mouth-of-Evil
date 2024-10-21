@@ -1,37 +1,79 @@
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObjectDetector : MonoBehaviour
 {
+    public static ObjectDetector Instance { get; private set; }
+    
     public LayerMask layer;
     public Transform cameraPos;
     public int distance;
     public GameObject ui, ui2;
     private CrosshairUI _crosshairUI;
-    private RaycastHit _hit, _hitDoors;
+    public RaycastHit _hit, _hitDoors;
     private GameObject descriptionItem;
+    public Item selectedItem;
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        
+        SceneManager.sceneLoaded += StartParameters;
+
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded += StartParameters;
+    }
 
     private void Update()
     {
+        if (Inventory.Instance == null || cameraPos == null) return;
+        selectedItem = Inventory.Instance.selectedItem == null ? null : Inventory.Instance.selectedItem;
+        if (selectedItem != null) selectedItem.OnUpdate();
+        else OnUpdateWithoutItem();
+        
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
+        ui.SetActive(ray && !_hit.transform.TryGetComponent(out MovableItem movablei));
+        ui2.SetActive(ray && _hit.transform.TryGetComponent(out MovableItem movable2));
+
+
+        CheckInteractText();
+        GrabCheck();
+        CheckDoors();
+        DescriptionChecker();
+        EmptyHandCheck();
+    }
+
+    void OnUpdateWithoutItem()
+    {
+    }
+
+    void StartParameters(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        StartCoroutine(StartParametersCor());
+    }
+    
+    IEnumerator StartParametersCor()
+    {
+        yield return new WaitForSeconds(0.1f);
         if (cameraPos == null) cameraPos = PlayerHandler.Instance.cameraPos;
         if (ui == null) ui = CanvasManager.Instance.InteractionText;
         if (ui2 == null) ui2 = CanvasManager.Instance.moveObjectUI;
         if (_crosshairUI == null) _crosshairUI = CanvasManager.Instance.crossHairUI;
-        if (Inventory.Instance == null) return;
-
-        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
-        ui.SetActive(ray && !_hit.transform.TryGetComponent(out MovableItem movablei));
-        ui2.SetActive(ray && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
-
-
-        CheckInteractText();
-        InputCheck();
-        CheckDoors();
-        CrossHair();
-        DescriptionChecker();
     }
 
-    private bool CheckRayCast()
+    public bool CheckRayCast()
     {
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
         return ray;
@@ -71,7 +113,7 @@ public class ObjectDetector : MonoBehaviour
         else _crosshairUI.DecreaseUI();
     }
 
-    private void InputCheck()
+    private void GrabCheck()
     {
         var raycast = CheckRayCast();
         
@@ -79,43 +121,29 @@ public class ObjectDetector : MonoBehaviour
         {
             _hit.transform.GetComponent<IInteractable>().OnInteractItem();
         }
+        
+        //if(Input.GetButtonDown("Focus") && selectedItem != null) selectedItem.FocusObject();
 
         
-        if (Inventory.Instance.selectedItem == null)
+        if (raycast && Input.GetMouseButton(0))
         {
-            if (raycast && Input.GetMouseButton(0))
+            if (_hit.transform.TryGetComponent(out MovableItem movable))
             {
-                if (_hit.transform.TryGetComponent(out MovableItem movable))
-                {
-                    movable.RelocateItem();
-                    return;
-                }
+                movable.RelocateItem();
             }
         }
+    }
 
-        if (Inventory.Instance.selectedItem != null)
-        {
-            if (Inventory.Instance.selectedItem.itemName == "Cross")
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    Inventory.Instance.selectedItem.OnInteract(raycast,_hit);
-                }
-                
-                if(Input.GetMouseButtonUp(0))
-                    Inventory.Instance.selectedItem.GetComponent<Cross>().OnUpCross();
-            }
-            else
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Inventory.Instance.selectedItem.OnInteract(raycast,_hit);
-                }
-            }
-        }
+    public void EmptyHandCheck()
+    {
+        var raycast = CheckRayCast();
+
         if (raycast && Input.GetMouseButtonDown(0))
         {
-            _hit.transform.GetComponent<IInteractable>().OnInteractWithObject();
+            if (_hit.transform.TryGetComponent(out SkullPuzzleSlot puzzleSlot))
+            {
+                puzzleSlot.OnInteractWithObject();
+            }
         }
     }
 

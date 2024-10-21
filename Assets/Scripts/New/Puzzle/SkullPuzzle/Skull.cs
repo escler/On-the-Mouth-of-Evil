@@ -27,6 +27,7 @@ public class Skull : Item
 
     public override void OnSelectItem()
     {
+        base.OnSelectItem();
         _onHand = true;
     }
 
@@ -50,20 +51,44 @@ public class Skull : Item
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
-        if (!hit || !i.transform.TryGetComponent(out SkullPuzzleSlot puzzleSlot))
-        {
-            if (canInteract) return;
-            _active = !_active;
-            CanvasManager.Instance.rotateInfo.SetActive(_active);
-            Inventory.Instance.cantSwitch = _active;
-            StartCoroutine(_active ? FocusObject() : UnFocusObject());
-            transform.localScale = Vector3.one;
-            return;
-        }
-        
-        puzzleSlot.PlaceSkull(this);
+        if (canInteract) return;
+        _active = !_active;
+        CanvasManager.Instance.rotateInfo.SetActive(_active);
+        Inventory.Instance.cantSwitch = _active;
+        StartCoroutine(_active ? FocusObject() : UnFocusObject());
+        transform.localScale = Vector3.one;
     }
 
+    private void PlaceSkull(bool hit, RaycastHit i)
+    {
+        if (!hit || !i.transform.TryGetComponent(out SkullPuzzleSlot puzzleSlot)) return;
+        
+        puzzleSlot.InteractWithSkull(this);
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
+        
+        if(Input.GetButtonDown("Focus")) OnInteract(rayConnected,ray);
+        if(Input.GetButtonDown("Interact")) PlaceSkull(rayConnected, ray);
+    }
+
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        if (ray.transform.TryGetComponent(out SkullPuzzleSlot item)) return true;
+
+        return false;
+    }
+    
     private void Update()
     {
         if (!_active) return;

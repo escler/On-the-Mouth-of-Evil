@@ -56,17 +56,13 @@ public class MovableItem : MonoBehaviour, IInteractable
         }
 
         Vector3 dir = target - _rb.position;
-        // Get the velocity required to reach the target in the next frame
         dir /= Time.fixedDeltaTime;
-        // Clamp that to the max speed
         dir = Vector3.ClampMagnitude(dir, _actualSpeed);
-        // Apply that to the rigidbody
         _rb.velocity = dir;
     }
 
     public void LockDoor()
     {
-        print("ASd");
         actualTarget = finalPos;
         relocated = false;
         gameObject.layer = 9;

@@ -75,6 +75,8 @@ MonoBehaviour:
   uiText: Mission House
   category: 1
   canShowText: 1
+  canInspectItem: 0
+  canInteractWithItem: 0
   misionName: HouseLevel
   itemsNeededs:
   - {fileID: 151943284489282019, guid: 247eaa79fe140c841b5e079d4e52911e, type: 3}
@@ -84,7 +86,7 @@ MonoBehaviour:
   interactableText: Press E to Grab Paper
   cameraPos: {fileID: 0}
   handPos: {fileID: 0}
-  offset: 0.15
+  offset: 0.3
 --- !u!54 &4436639889158385660
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
     public float speedRotation;
     public Mark mark;
     private float offset;
+    private bool _cantGrab;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
     public void PlaceSkull(Skull skull)
     {
         if (currentSkull != null) return;
+        StartCoroutine(WaitToGrab());
         _cantRotate = true;
         StartCoroutine(WaitCor());
         currentSkull = skull;
@@ -37,6 +39,12 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
         SkullPuzzle.Instance.CheckPuzzleState();
     }
 
+    public void InteractWithSkull(Skull skull)
+    {
+        if(currentSkull == null) PlaceSkull(skull);
+        else GrabSkull();
+    }
+    
     IEnumerator WaitCor()
     {
         yield return new WaitForEndOfFrame();
@@ -45,7 +53,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
 
     public void GrabSkull()
     {
-        if (currentSkull == null) return;
+        if (currentSkull == null || _cantGrab) return;
         currentSkull.GetComponent<Rigidbody>().isKinematic = false;
         currentSkull.GetComponent<BoxCollider>().enabled = true;
         currentSkull.OnGrabItem();
@@ -59,7 +67,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
 
     public void OnInteract(bool hit, RaycastHit i)
     {
-
+        
     }
 
     public void OnInteractWithObject()
@@ -103,5 +111,12 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
     public bool CanShowText()
     {
         return false;
+    }
+
+    IEnumerator WaitToGrab()
+    {
+        _cantGrab = true;
+        yield return new WaitForSeconds(0.1f);
+        _cantGrab = false;
     }
 }

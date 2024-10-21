@@ -23,13 +23,14 @@ public class PuzzleSaltPaper : Item, IInteractable
         _playerCam = PlayerHandler.Instance.playerCam;
     }
 
-    public override void OnInteract(bool hit, RaycastHit i)
+    public override void FocusObject()
     {
-        if (PlayerHandler.Instance.cantPressInventory) return;
+        if (canInteract) return;
         active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
         Inventory.Instance.cantSwitch = active;
-        if(!canInteract) StartCoroutine(active ? FocusObject() : UnFocusObject());
+        StartCoroutine(active ? FocusObjectCor() : UnFocusObject());
+        transform.localScale = Vector3.one;
     }
 
     public override void OnInteractItem()
@@ -43,7 +44,7 @@ public class PuzzleSaltPaper : Item, IInteractable
     }
 
 
-    IEnumerator FocusObject()
+    IEnumerator FocusObjectCor()
     {
         canInteract = true;
         transform.SetParent(null);
@@ -81,6 +82,12 @@ public class PuzzleSaltPaper : Item, IInteractable
         if (!active) return;
         
         RotateObject();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        if(Input.GetButtonDown("Focus")) FocusObject();
     }
 
     void RotateObject()
