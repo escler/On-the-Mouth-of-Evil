@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1107303604647326687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5428106692831954107}
+  - component: {fileID: 848119274363592057}
+  - component: {fileID: 4281730045342527586}
+  - component: {fileID: 4378085271861560931}
+  - component: {fileID: 1662734030019010027}
+  m_Layer: 0
+  m_Name: Exorcism
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5428106692831954107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107303604647326687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.99402213, z: -0, w: -0.10917899}
+  m_LocalPosition: {x: 32.64, y: -0.33, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 192.536, z: 0}
+--- !u!95 &848119274363592057
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107303604647326687}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 08445d209fffc6d48802596c6fba8552, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &4281730045342527586
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107303604647326687}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 848119274363592057}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 5688337036000151749, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5069511689541240838, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4496001479554856811, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5938171674400171765, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 7724366400208926671, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6210076959728204943, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 6713604021144176542, guid: 5ca651e9057e54549ae8bc91e38b3232, type: 2}
+    value: {fileID: 1662734030019010027}
+  m_ExposedReferences:
+    m_References:
+    - 96cb01aaf218773408a12d6ef140bbdd: {fileID: 0}
+    - 873ce9068d8d7704a951a617c015029b: {fileID: 0}
+    - 2eff3c9a968ad934e86d8815e7a84a9b: {fileID: 0}
+--- !u!114 &4378085271861560931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107303604647326687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51977f08163f9c441aa935403c4f4682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1662734030019010027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107303604647326687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 47443d083c15fe048a2a2ba83261a3b5, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4281730045342527586}
+          m_TargetAssemblyTypeName: UnityEngine.Playables.PlayableDirector, UnityEngine
+          m_MethodName: Play
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 5ca651e9057e54549ae8bc91e38b3232,
+              type: 2}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Playables.PlayableAsset,
+              UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
