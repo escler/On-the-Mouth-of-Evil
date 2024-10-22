@@ -7,6 +7,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
     public float timeToBurn;
     public GameObject firePS;
     private MaterialPropertyBlock _burning;
+    private float _valueBurn;
     public MeshRenderer[] meshesh;
     public bool paperOnRitual;
     
@@ -17,7 +18,8 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
         {
             mesh.SetPropertyBlock(_burning);
         }
-        _burning.SetInt("_BurningON", 0);
+        _burning.SetFloat("_Edge2", 1);
+        _valueBurn = _burning.GetFloat("_Edge2");
     }
     
     public void OnBurn()
@@ -26,14 +28,27 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
         if(Enemy.Instance != null && !paperOnRitual) Enemy.Instance.SetGoalPos(transform.position);
         if (HouseEnemy.Instance != null && paperOnRitual) HouseEnemy.Instance.RitualReady(RitualManager.Instance.ritualNode);
         StartCoroutine(BibleBurning());        
-        _burning.SetInt("_BurningON", 1);
+        StartCoroutine(BurnPaper());
         foreach (var mesh in meshesh)
         {
             mesh.SetPropertyBlock(_burning);
         }
     }
-    
-    
+
+    IEnumerator BurnPaper()
+    {
+        while (timeToBurn > 0)
+        {
+            _valueBurn -= 0.2f / 10;
+            foreach (var mesh in meshesh)
+            {
+                _burning.SetFloat("_Edge2", _valueBurn);
+                mesh.SetPropertyBlock(_burning);
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
     IEnumerator BibleBurning()
     {
         firePS.SetActive(true);

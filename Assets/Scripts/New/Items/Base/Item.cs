@@ -41,7 +41,7 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnDeselectItem()
     {
-        CanvasManager.Instance.inspectImage.SetActive(!canInspectItem);
+        CanvasManager.Instance.inspectImage.SetActive(false);
     }
 
     public virtual void OnDropItem()
