@@ -106,7 +106,6 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
     private void GetLights(Scene scene, LoadSceneMode loadSceneMode)
     {
-        print("Hice esto");
         pointLights = GameObject.FindGameObjectsWithTag("PointLight");
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         ActivateLights();

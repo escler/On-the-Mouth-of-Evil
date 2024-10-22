@@ -50,7 +50,6 @@ public class Inventory : MonoBehaviour
     private void ClearInventories(Scene scene, LoadSceneMode loadSceneMode)
     {
         if (SceneManager.GetActiveScene().name != "Hub") return;
-        print("ALo");
         
         foreach (var inv in inventories)
         {
