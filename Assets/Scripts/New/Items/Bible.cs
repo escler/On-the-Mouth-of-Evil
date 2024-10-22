@@ -52,11 +52,21 @@ public class Bible : Item
             print("Instancie papel");
         }
     }
+    
+    public override bool CanInteractWithItem()
+    {
+        if (!ray || _bibleCD.Cooldown > 0) return false;
+        
+        if (_hit.transform.gameObject.layer == 19 || _hit.transform.TryGetComponent(out RitualFloor ritualFloor)) return true;
+
+        return false;
+    }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         ray = Physics.Raycast(PlayerHandler.Instance.cameraPos.position, PlayerHandler.Instance.cameraPos.forward, out _hit, distance, layer);
+        canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
         if (Input.GetMouseButtonDown(0)) OnInteract(ray, _hit);
     }

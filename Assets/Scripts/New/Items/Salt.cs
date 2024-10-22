@@ -94,13 +94,13 @@ public class Salt : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
         if (!rayConnected) return false;
-        if (rayConnected)
+        if (ray.transform.TryGetComponent(out Door door))
         {
-            if (ray.transform.TryGetComponent(out Door door) ||
-                ray.transform.TryGetComponent(out SaltRecipient saltRecipient))
-            {
-                return true;
-            }
+            if (door.saltBlock) return false;
+        }
+        if (ray.transform.TryGetComponent(out SaltRecipient saltRecipient) || ray.transform.TryGetComponent(out Door door2))
+        {
+            return true;
         }
 
         return false;

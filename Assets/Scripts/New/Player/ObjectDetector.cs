@@ -57,6 +57,22 @@ public class ObjectDetector : MonoBehaviour
 
     void OnUpdateWithoutItem()
     {
+        CrossHairCheck();
+        if (CanvasManager.Instance.inspectImage.activeInHierarchy) CanvasManager.Instance.inspectImage.SetActive(false);
+    }
+
+    private void CrossHairCheck()
+    {
+        var ray = CheckRayCast();
+
+        if (!ray)
+        {
+            _crosshairUI.DecreaseUI();
+            return;
+        }
+        
+        if(_hit.transform.TryGetComponent(out SkullPuzzleSlot slot)) _crosshairUI.IncreaseUI();
+        else _crosshairUI.DecreaseUI();
     }
 
     void StartParameters(Scene scene, LoadSceneMode loadSceneMode)

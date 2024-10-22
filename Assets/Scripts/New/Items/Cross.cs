@@ -51,6 +51,7 @@ public class Cross : Item
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        ChangeCrossHair();
 
         if (Input.GetMouseButton(0)) OnInteract(rayConnected, ray);
         if(Input.GetMouseButtonUp(0)) OnUpCross();
