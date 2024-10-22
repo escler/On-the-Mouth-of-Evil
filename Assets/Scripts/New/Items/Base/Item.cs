@@ -12,8 +12,10 @@ public class Item : MonoBehaviour, IInteractable
     public string uiText;
     public ItemCategory category;
     public bool canShowText, canInspectItem, canInteractWithItem;
-    
-    public virtual void OnGrabItem()
+
+    public Vector3
+
+        angleHand; public virtual void OnGrabItem()
     {
         Inventory.Instance.AddItem(this, category);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;

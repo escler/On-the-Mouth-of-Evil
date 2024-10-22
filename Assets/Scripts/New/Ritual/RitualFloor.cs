@@ -19,6 +19,16 @@ public class RitualFloor : MonoBehaviour, IInteractable
         _ritualManager.CheckCandleFloor();
     }
 
+    private void Update()
+    {
+        if (Inventory.Instance.selectedItem == null)
+        {
+            canShowText = false;
+            return;
+        }
+        canShowText = Inventory.Instance.selectedItem.itemName == "Candle";
+    }
+
     public void OnInteract(bool hit, RaycastHit i)
     {
 

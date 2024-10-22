@@ -16,6 +16,12 @@ public class Candle : Item, IInteractable
         _player = PlayerHandler.Instance;
     }
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        transform.localEulerAngles = angleHand;
+    }
+
     public override void OnSelectItem()
     {
         base.OnSelectItem();
@@ -57,7 +63,7 @@ public class Candle : Item, IInteractable
         canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
         
-        if(Input.GetMouseButtonDown(0)) OnInteract(rayConnected,ray);
+        if(Input.GetButtonDown("Interact")) OnInteract(rayConnected,ray);
     }
     
     public override bool CanInteractWithItem()

@@ -21,6 +21,7 @@ public class Salt : Item
     public override void OnGrabItem()
     {
         base.OnGrabItem();
+        transform.localEulerAngles = angleHand;
         var inventory = Inventory.Instance.hubInventory;
 
         for (int i = 0; i < inventory.Length; i++)

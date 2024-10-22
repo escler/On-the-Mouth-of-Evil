@@ -23,6 +23,12 @@ public class Bible : Item
         _bibleCD = PlayerHandler.Instance.GetComponent<BibleCD>();
     }
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        transform.localEulerAngles = angleHand;
+    }
+
     private void Awake()
     {
         _burning = new MaterialPropertyBlock();

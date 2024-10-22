@@ -11,7 +11,7 @@ public class ObjectDetector : MonoBehaviour
     public LayerMask layer;
     public Transform cameraPos;
     public int distance;
-    public GameObject ui, ui2;
+    public GameObject uiInteractionText, ui2;
     private CrosshairUI _crosshairUI;
     public RaycastHit _hit, _hitDoors;
     private GameObject descriptionItem;
@@ -42,10 +42,6 @@ public class ObjectDetector : MonoBehaviour
         selectedItem = Inventory.Instance.selectedItem == null ? null : Inventory.Instance.selectedItem;
         if (selectedItem != null) selectedItem.OnUpdate();
         else OnUpdateWithoutItem();
-        
-        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hit, distance, layer);
-        ui.SetActive(ray && !_hit.transform.TryGetComponent(out MovableItem movablei));
-        ui2.SetActive(ray && _hit.transform.TryGetComponent(out MovableItem movable2));
 
 
         CheckInteractText();
@@ -53,6 +49,28 @@ public class ObjectDetector : MonoBehaviour
         CheckDoors();
         DescriptionChecker();
         EmptyHandCheck();
+    }
+
+    bool GrabText()
+    {
+        var ray = CheckRayCast();
+        var rayDoor = CheckDoorsRayCast();
+        
+        if (!ray && !rayDoor)
+        {
+            return false;
+        }
+
+        if (_hit.transform.TryGetComponent(out SkullPuzzleSlot socket))
+        {
+            if (socket.currentSkull != null) return true;
+        }
+
+        if (!_hit.transform.TryGetComponent(out MovableItem movableItem) && _hit.transform.GetComponent<IInteractable>().CanShowText()) return true;
+
+        if (rayDoor && _hitDoors.transform.TryGetComponent(out Door door)) return true;
+
+        return false;
     }
 
     void OnUpdateWithoutItem()
@@ -84,7 +102,7 @@ public class ObjectDetector : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         if (cameraPos == null) cameraPos = PlayerHandler.Instance.cameraPos;
-        if (ui == null) ui = CanvasManager.Instance.InteractionText;
+        if (uiInteractionText == null) uiInteractionText = CanvasManager.Instance.InteractionText;
         if (ui2 == null) ui2 = CanvasManager.Instance.moveObjectUI;
         if (_crosshairUI == null) _crosshairUI = CanvasManager.Instance.crossHairUI;
     }
@@ -115,10 +133,10 @@ public class ObjectDetector : MonoBehaviour
         var raycast = CheckRayCast();
         var raycastDoor = CheckDoorsRayCast();
 
+
+        uiInteractionText.SetActive(GrabText());
+        //uiInteractionText.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText() || raycastDoor && _hitDoors.transform.TryGetComponent(out Door door));
         if (!raycast) return;
-        
-        
-        ui.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText() || raycastDoor && _hitDoors.transform.TryGetComponent(out Door door));
         ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
     }
 

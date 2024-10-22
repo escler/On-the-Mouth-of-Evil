@@ -16,6 +16,12 @@ public class Cross : Item
         _crossCd = PlayerHandler.Instance.GetComponent<CrossCD>();
     }
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        transform.localEulerAngles = angleHand;
+    }
+
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit, i);

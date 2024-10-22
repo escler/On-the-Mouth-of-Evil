@@ -42,6 +42,12 @@ public class Lighter : Item
         return false;
     }
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        transform.localEulerAngles = angleHand;
+    }
+
     public override void OnSelectItem()
     {
         base.OnSelectItem();
