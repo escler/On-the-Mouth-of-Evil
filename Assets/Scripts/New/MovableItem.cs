@@ -30,6 +30,7 @@ public class MovableItem : MonoBehaviour, IInteractable
             onHand = false;
             actualTarget = finalPos;
             _actualSpeed = normalSpeed;
+            PlayerHandler.Instance.PossesPlayer();
         }
     }
 
@@ -51,6 +52,7 @@ public class MovableItem : MonoBehaviour, IInteractable
             {
                 relocated = true;
                 gameObject.layer = 8;
+                PlayerHandler.Instance.PossesPlayer();
             }
             return;
         }

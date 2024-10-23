@@ -131,13 +131,9 @@ public class ObjectDetector : MonoBehaviour
     private void CheckInteractText()
     {
         var raycast = CheckRayCast();
-        var raycastDoor = CheckDoorsRayCast();
-
 
         uiInteractionText.SetActive(GrabText());
-        //uiInteractionText.SetActive(raycast && !_hit.transform.TryGetComponent(out MovableItem movablei) && _hit.transform.GetComponent<IInteractable>().CanShowText() || raycastDoor && _hitDoors.transform.TryGetComponent(out Door door));
-        if (!raycast) return;
-        ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2) && Inventory.Instance.selectedItem == null);
+        ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2));
     }
 
     private void CrossHair()
@@ -164,6 +160,7 @@ public class ObjectDetector : MonoBehaviour
             if (_hit.transform.TryGetComponent(out MovableItem movable))
             {
                 movable.RelocateItem();
+                PlayerHandler.Instance.UnPossesPlayer();
             }
         }
     }
