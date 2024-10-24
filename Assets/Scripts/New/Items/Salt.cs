@@ -10,10 +10,12 @@ public class Salt : Item
     private SaltUI saltUI;
     public int maxUses;
     private int _uses;
-    
+    private bool cantUseItem;
+    private SaltView saltView;
 
     private void Awake()
     {
+        saltView = GetComponentInChildren<SaltView>();
         _animator = GetComponent<Animator>();
         _uses = maxUses;
     }
@@ -42,8 +44,12 @@ public class Salt : Item
         if (i.transform.TryGetComponent(out Door door))
         {
             if (_uses <= 0) return;
-            var  blockingDoor = door.BlockDoor();
-            if(blockingDoor) ChangeUI();
+            if (door.saltBlock) return;
+            if (cantUseItem) return;
+            saltView.animator.SetTrigger("PutSalt");
+            cantUseItem = true;
+            StartCoroutine(WaitForUseAgain(door));
+            
             //Inventory.Instance.DropItem();
             //Destroy(gameObject);
         }
@@ -130,5 +136,17 @@ public class Salt : Item
     public void ParticleStop()
     {
         ps.Stop();
+    }
+    
+    IEnumerator WaitForUseAgain(Door door)
+    {
+        yield return new WaitUntil(() => !saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
+        yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltToss"));
+        door.BlockDoor();
+        if(door.BlockDoor()) ChangeUI();
+        yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
+        cantUseItem = false;
+        Inventory.Instance.cantSwitch = false;
+        print("Lo puedo usar devuelta");
     }
 }

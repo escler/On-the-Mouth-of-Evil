@@ -13,12 +13,17 @@ public class Item : MonoBehaviour, IInteractable
     public ItemCategory category;
     public bool canShowText, canInspectItem, canInteractWithItem;
 
-    public Vector3
-
-        angleHand; public virtual void OnGrabItem()
+    public Vector3 angleHand; 
+    
+    public virtual void OnGrabItem()
     {
         Inventory.Instance.AddItem(this, category);
-        GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;
+        if (GetComponentInChildren<SkinnedMeshRenderer>() == null)
+        {
+            GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;
+            return;
+        }
+        GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
     }
 
     public virtual void OnUpdate()
