@@ -12,12 +12,18 @@ public class Salt : Item
     private int _uses;
     private bool cantUseItem;
     private SaltView saltView;
-
+    private MaterialPropertyBlock _saltFill;
+    public MeshRenderer fill;
+    private float currentSalt;
     private void Awake()
     {
         saltView = GetComponentInChildren<SaltView>();
         _animator = GetComponent<Animator>();
         _uses = maxUses;
+        _saltFill = new MaterialPropertyBlock();
+        fill.SetPropertyBlock(_saltFill);
+        currentSalt = 2.5f;
+        _saltFill.SetFloat("_Fill",currentSalt);
     }
 
     public override void OnGrabItem()
@@ -143,11 +149,24 @@ public class Salt : Item
     {
         yield return new WaitUntil(() => !saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
         yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltToss"));
-        door.BlockDoor();
-        if(door.BlockDoor()) ChangeUI();
+        StartCoroutine(FillSalt());
+        var blockDoor = door.BlockDoor();
+        if(blockDoor) ChangeUI();
         yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
         cantUseItem = false;
         Inventory.Instance.cantSwitch = false;
         print("Lo puedo usar devuelta");
+    }
+
+    IEnumerator FillSalt()
+    {
+        float target = currentSalt + 2.1f / 6;
+        while (currentSalt < target)
+        {
+            currentSalt += 0.1f;
+            _saltFill.SetFloat("_Fill", currentSalt);
+            fill.SetPropertyBlock(_saltFill);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }
