@@ -47,6 +47,7 @@ public class Salt : Item
             if (door.saltBlock) return;
             if (cantUseItem) return;
             saltView.animator.SetTrigger("PutSalt");
+            Inventory.Instance.cantSwitch = true;
             cantUseItem = true;
             StartCoroutine(WaitForUseAgain(door));
             
