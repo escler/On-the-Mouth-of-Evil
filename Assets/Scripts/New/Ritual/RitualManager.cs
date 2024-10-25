@@ -16,8 +16,9 @@ public class RitualManager : MonoBehaviour
     private RaycastHit _hit;
     public LayerMask layermask;
     public Node ritualNode;
-    public GameObject floor, craterFloor;
-    public GameObject stencilCrater;
+    public GameObject floor;
+    public List<ParticleSystem> psCrater;
+    public GameObject floorCrater;
     
     public static RitualManager Instance { get; private set; }
 
@@ -70,12 +71,20 @@ public class RitualManager : MonoBehaviour
     public void ActivateCraterFloor()
     {
         ritualFloor.SetActive(false);
-        stencilCrater.SetActive(true);
+        floorCrater.GetComponent<Animator>().SetBool("Fall", true);
+        foreach (var crater in psCrater)
+        {
+            crater.Play();
+        }
     }
 
     public void CloseCrater()
     {
-        stencilCrater.GetComponent<Animator>().SetBool("Close", true);
+        floorCrater.GetComponent<Animator>().SetBool("Fall", false);
+        foreach (var crater in psCrater)
+        {
+            crater.Stop();
+        }
     }
 
     public void CandlesBurned()
