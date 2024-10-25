@@ -122,12 +122,12 @@ public class Salt : Item
 
     public void PlacingBool()
     {
-        _animator.SetBool("PutSalt", true);
+        saltView.animator.SetBool("PuzzleSalt", true);
     }
 
     public void DisableBool()
     {
-        _animator.SetBool("PutSalt", false);
+        _animator.SetBool("PuzzleSalt", false);
     }
 
     public void ParticlePlay()
