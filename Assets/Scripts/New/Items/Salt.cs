@@ -31,6 +31,7 @@ public class Salt : Item
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
         var inventory = Inventory.Instance.hubInventory;
+        fill.gameObject.layer = 18;
 
         for (int i = 0; i < inventory.Length; i++)
         {
@@ -61,7 +62,7 @@ public class Salt : Item
             //Destroy(gameObject);
         }
     }
-
+    
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -96,7 +97,8 @@ public class Salt : Item
     public override void OnDropItem()
     {
         gameObject.SetActive(true);
-        GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
+        GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 1;
+        fill.gameObject.layer = 17;
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
     }
