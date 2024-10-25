@@ -10,6 +10,7 @@ public class Cross : Item
     private bool crossUsed, holdingPSActive;
     public ParticleSystem[] crossExplosion, holdingPS;
     private CrossCD _crossCd;
+    public GameObject CrossLight;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class Cross : Item
             foreach (var holdPS in holdingPS)
             {
                 holdPS.Play();
+                CrossLight.SetActive(true);
             }
             holdingPSActive = true;
         }
@@ -45,6 +47,7 @@ public class Cross : Item
             {
                 holdPS.Stop();
                 holdPS.Clear();
+                CrossLight.SetActive(false);
             }
             holdingPSActive = false;
 
@@ -87,6 +90,7 @@ public class Cross : Item
             holdPS.Clear();
         }
         holdingPSActive = false;
+        CrossLight.SetActive(false);
         _currentTime = 0;
     }
 }
