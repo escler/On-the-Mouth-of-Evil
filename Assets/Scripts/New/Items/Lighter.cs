@@ -74,7 +74,7 @@ public class Lighter : Item
 
     public override void OnDropItem()
     {
-        GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
+        GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 1;
         PSIdle.SetActive(false);
         gameObject.SetActive(true);
     }
