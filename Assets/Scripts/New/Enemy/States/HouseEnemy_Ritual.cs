@@ -14,7 +14,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     
     public override void UpdateLoop()
     {
-        if(owner.activateExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
+        if(owner.activateGoodExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
         
         if (!ritualReached) GoToNodeGoal();
         else StartRitualSequence();
@@ -36,18 +36,11 @@ public class HouseEnemy_Ritual : MonoBaseState
 
     IEnumerator RitualBadSequenceCor()
     {
-        yield return null;
         yield return new WaitForSeconds(0.7f);
-
-        float timer = 0;
-
-        while (timer < 1)
-        {
-            Vector3 target = PlayerHandler.Instance.transform.position;
-            target.y = owner.transform.position.y;
-            Vector3 dir = target - owner.transform.position;
-            owner.transform.rotation = Quaternion.LookRotation(dir);
-        }
+        
+        if (CorduraHandler.Instance.CorduraOn > 0) CorduraHandler.Instance.CorduraOn = 0;
+        yield return new WaitUntil(() => owner.activateBadExorcism);
+        yield return new WaitUntil(() => owner.enemyVisibility <= 0);
     }
 
     IEnumerator RitualGoodSequenceCor()

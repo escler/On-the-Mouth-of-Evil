@@ -58,7 +58,7 @@ public class HouseEnemy : Enemy
 
     public bool enemyVisible, canAttackPlayer, compareRoom;
     public float actualTimeToLost;
-    public bool activateExorcism;
+    public bool activateGoodExorcism, activateBadExorcism;
 
     public Transform obstaclePosRight, obstaclePosLeft;
     public float distanceObstacleRay;
@@ -69,6 +69,8 @@ public class HouseEnemy : Enemy
 
     public int playerGrabbedCount;
     public ParticleSystem[] smokePS;
+
+    public GameObject absorbVFX, magnetVFX;
     
     private void Awake()
     {
@@ -175,7 +177,37 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnBadRitual()
     {
-        yield return null;
+        while (enemyVisibility < 8)
+        {
+            enemyVisibility += .3f;
+            enemyMaterial.SetFloat("_Power", enemyVisibility);
+
+            yield return new WaitForSeconds(0.1f);
+
+        }
+        
+        _enemyAnimator.ChangeStateAnimation("Absorb", true);
+
+        yield return new WaitUntil(() => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
+        absorbVFX.SetActive(true);
+        magnetVFX.SetActive(true);
+        activateBadExorcism = true;
+
+        var duration = _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).length;
+
+        while (enemyVisibility > 0)
+        {
+            enemyVisibility -= (8 / duration) * 0.01f;
+            enemyMaterial.SetFloat("_Power", enemyVisibility);
+            yield return new WaitForSeconds(0.01f);
+        }
+        
+        absorbVFX.SetActive(false);
+        magnetVFX.SetActive(false);
+        
+        TarotCardPuzzle.Instance.PathTaked();
+        GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
+        gameObject.SetActive(false);
     }
     
     IEnumerator ShowEnemyOnGoodRitual()
@@ -195,7 +227,7 @@ public class HouseEnemy : Enemy
 
 
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
-        activateExorcism = true;
+        activateGoodExorcism = true;
 
         RitualManager.Instance.ritualFloor.SetActive(false);
 
