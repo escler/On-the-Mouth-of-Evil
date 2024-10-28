@@ -197,17 +197,17 @@ public class HouseEnemy : Enemy
 
         while (enemyVisibility > 0)
         {
-            enemyVisibility -= (8 / duration) * 0.01f;
+            enemyVisibility -= (8 / duration) * 0.03f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }
         
-        absorbVFX.SetActive(false);
-        magnetVFX.SetActive(false);
         
         TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         gameObject.SetActive(false);
+        absorbVFX.SetActive(false);
+        magnetVFX.SetActive(false);
     }
     
     IEnumerator ShowEnemyOnGoodRitual()
