@@ -29,7 +29,6 @@ public class Salt : Item
     public override void OnGrabItem()
     {
         base.OnGrabItem();
-        transform.localEulerAngles = angleHand;
         var inventory = Inventory.Instance.hubInventory;
         fill.gameObject.layer = 18;
 
@@ -83,6 +82,7 @@ public class Salt : Item
     public override void OnSelectItem()
     {
         base.OnSelectItem();
+        print("Ola");
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = true;
     }

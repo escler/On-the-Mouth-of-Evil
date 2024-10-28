@@ -16,6 +16,9 @@ public class Bible : Item
     public float distance;
     private bool ray;
     private BibleCD _bibleCD;
+    private BibleView _bibleView;
+    private bool _cantUse;
+    public SkinnedMeshRenderer[] meshes;
 
     
     private void Start()
@@ -25,8 +28,21 @@ public class Bible : Item
 
     public override void OnGrabItem()
     {
-        base.OnGrabItem();
+        Inventory.Instance.AddItem(this, category);
         transform.localEulerAngles = angleHand;
+        foreach (var mesh in meshes)
+        {
+            mesh.gameObject.layer = 18;
+        }
+    }
+
+    public override void OnDropItem()
+    {
+        gameObject.SetActive(true);
+        foreach (var mesh in meshes)
+        {
+            mesh.gameObject.layer = 1;
+        }
     }
 
     private void Awake()
@@ -35,27 +51,27 @@ public class Bible : Item
         _mesh = GetComponentInChildren<MeshRenderer>();
         _mesh.SetPropertyBlock(_burning);
         _burning.SetInt("_BurningON", 0);
+        _bibleView = GetComponentInChildren<BibleView>();
     }
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit,i);
         if (_bibleCD.Cooldown > 0) return;
+        if (_cantUse) return;
         if (ray)
         {
             if (_hit.transform.TryGetComponent(out RitualFloor ritual))
             {
-                var paperRitual = Instantiate(paperBible);
-                paperRitual.transform.position = RitualManager.Instance.ritualFloor.transform.position;
-                paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
-                _bibleCD.SetCooldown(10);
+                Inventory.Instance.cantSwitch = true;
+                _bibleView.animator.SetTrigger("OpenTrigger");
+                StartCoroutine(WaitForAnimRitual());
                 return;
             }
             if (_hit.transform.gameObject.layer != 19) return;
-            var paper = Instantiate(paperBible);
-            paper.transform.position = _hit.point + Vector3.up * 0.01f;
-            _bibleCD.SetCooldown(10);
-            print("Instancie papel");
+            Inventory.Instance.cantSwitch = true;
+            _bibleView.animator.SetTrigger("OpenTrigger");
+            StartCoroutine(WaitForAnim(_hit.point));
         }
     }
     
@@ -75,5 +91,33 @@ public class Bible : Item
         canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
         if (Input.GetMouseButtonDown(0)) OnInteract(ray, _hit);
+    }
+
+    IEnumerator WaitForAnim(Vector3 hitPoint)
+    {
+        _cantUse = true;
+        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
+        yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
+
+        var paper = Instantiate(paperBible);
+        paper.transform.position = hitPoint + Vector3.up * 0.01f;
+        _bibleCD.SetCooldown(10);
+        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
+        _cantUse = false;
+        Inventory.Instance.cantSwitch = false;
+    }
+    
+    IEnumerator WaitForAnimRitual()
+    {
+        _cantUse = true;
+        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
+        yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
+        var paperRitual = Instantiate(paperBible);
+        paperRitual.transform.position = RitualManager.Instance.ritualFloor.transform.position;
+        paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
+        _bibleCD.SetCooldown(10);
+        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
+        _cantUse = false;
+        Inventory.Instance.cantSwitch = false;
     }
 }

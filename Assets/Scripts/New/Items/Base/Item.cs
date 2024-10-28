@@ -21,9 +21,12 @@ public class Item : MonoBehaviour, IInteractable
         if (GetComponentInChildren<SkinnedMeshRenderer>() == null)
         {
             GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;
-            return;
         }
-        GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
+        else
+        {
+            GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
+        }
+            
     }
 
     public virtual void OnUpdate()

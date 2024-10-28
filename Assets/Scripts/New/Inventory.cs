@@ -120,6 +120,7 @@ public class Inventory : MonoBehaviour
         
         i.transform.SetParent(PlayerHandler.Instance.handPivot);
         i.transform.localPosition = Vector3.zero;
+        i.transform.localEulerAngles = i.angleHand;
         i.GetComponent<BoxCollider>().enabled = false;
         i.GetComponent<Rigidbody>().isKinematic = true;
         ChangeSelectedItem(countSelected);
