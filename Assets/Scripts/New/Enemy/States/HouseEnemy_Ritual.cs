@@ -30,10 +30,27 @@ public class HouseEnemy_Ritual : MonoBaseState
     {
         if (startRitualCor) return;
         startRitualCor = true;
-        StartCoroutine(RitualSequenceCor());
+        if(TarotCardPuzzle.Instance.BadPathTaked) StartCoroutine(RitualBadSequenceCor());
+        else StartCoroutine(RitualGoodSequenceCor());
     }
 
-    IEnumerator RitualSequenceCor()
+    IEnumerator RitualBadSequenceCor()
+    {
+        yield return null;
+        yield return new WaitForSeconds(0.7f);
+
+        float timer = 0;
+
+        while (timer < 1)
+        {
+            Vector3 target = PlayerHandler.Instance.transform.position;
+            target.y = owner.transform.position.y;
+            Vector3 dir = target - owner.transform.position;
+            owner.transform.rotation = Quaternion.LookRotation(dir);
+        }
+    }
+
+    IEnumerator RitualGoodSequenceCor()
     {
         yield return new WaitForSeconds(0.7f);
         float timer = 0;

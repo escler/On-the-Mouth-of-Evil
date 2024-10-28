@@ -11,10 +11,8 @@ GameObject:
   - component: {fileID: 6486898227906561062}
   - component: {fileID: 783477694376870787}
   - component: {fileID: 3645488371170319028}
-  - component: {fileID: 4494576738163469985}
-  - component: {fileID: 828596021563821927}
-  - component: {fileID: 1999888577805143039}
-  m_Layer: 0
+  - component: {fileID: 8925936791303097132}
+  m_Layer: 1
   m_Name: Absorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +127,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4494576738163469985
+--- !u!114 &8925936791303097132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,41 +136,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8045418216205179994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 678a5e2d583206f48bf12ebb3f4251fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ExecuteInEditor: 1
-  m_Bindings:
-  - {fileID: 828596021563821927}
-  - {fileID: 1999888577805143039}
-  m_VisualEffect: {fileID: 783477694376870787}
---- !u!114 &828596021563821927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8045418216205179994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: Transform
-  Target: {fileID: 0}
---- !u!114 &1999888577805143039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8045418216205179994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24279ee835d6c4c48ae512c6e29b9808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: AtractTarget
-  Target: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  targetPlayer: {fileID: 0}

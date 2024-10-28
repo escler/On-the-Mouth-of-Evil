@@ -19,6 +19,7 @@ public class Bible : Item
     private BibleView _bibleView;
     private bool _cantUse;
     public SkinnedMeshRenderer[] meshes;
+    public MeshRenderer[] paperMesh;
 
     
     private void Start()
@@ -34,6 +35,11 @@ public class Bible : Item
         {
             mesh.gameObject.layer = 18;
         }
+        
+        foreach (var mesh in paperMesh)
+        {
+            mesh.gameObject.layer = 18;
+        }
     }
 
     public override void OnDropItem()
@@ -43,7 +49,12 @@ public class Bible : Item
         {
             mesh.gameObject.layer = 1;
         }
-    }
+
+        foreach (var mesh in paperMesh)
+        {
+            mesh.gameObject.layer = 1;
+        }    }
+    
 
     private void Awake()
     {

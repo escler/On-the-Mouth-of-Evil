@@ -161,12 +161,24 @@ public class HouseEnemy : Enemy
 
     public void ShowEnemyRitual()
     {
-        if(!onRitual)StartCoroutine(ShowEnemyOnRitual());
-        onRitual = true;
+        if (!onRitual) Ritual();
         StopCoroutine(HideEnemyLerp());
     }
 
-    IEnumerator ShowEnemyOnRitual()
+    void Ritual()
+    {
+        if (TarotCardPuzzle.Instance.BadPathTaked) StartCoroutine(ShowEnemyOnBadRitual());
+        else StartCoroutine(ShowEnemyOnGoodRitual());
+        onRitual = true;
+
+    }
+
+    IEnumerator ShowEnemyOnBadRitual()
+    {
+        yield return null;
+    }
+    
+    IEnumerator ShowEnemyOnGoodRitual()
     {
         while (enemyVisibility < 8)
         {

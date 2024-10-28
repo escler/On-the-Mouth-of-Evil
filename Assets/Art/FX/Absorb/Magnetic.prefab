@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 2963250650073538247}
   - component: {fileID: 3874213720481270459}
   - component: {fileID: 5361403542853644450}
-  - component: {fileID: 3152067542165812773}
-  - component: {fileID: 3862534652094870680}
-  - component: {fileID: 1420950774399106026}
+  - component: {fileID: 7934184770491525554}
   m_Layer: 0
   m_Name: Magnetic
   m_TagString: Untagged
@@ -135,7 +133,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3152067542165812773
+--- !u!114 &7934184770491525554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,41 +142,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6461805076323779671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 678a5e2d583206f48bf12ebb3f4251fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ExecuteInEditor: 1
-  m_Bindings:
-  - {fileID: 3862534652094870680}
-  - {fileID: 1420950774399106026}
-  m_VisualEffect: {fileID: 3874213720481270459}
---- !u!114 &3862534652094870680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461805076323779671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24279ee835d6c4c48ae512c6e29b9808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: AtractTarget
-  Target: {fileID: 0}
---- !u!114 &1420950774399106026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461805076323779671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fdfea1f838247c40921a07afedde962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Property:
-    m_Name: Transform
-  Target: {fileID: 0}
+  targetEnemy: {fileID: 0}
+  targetPlayer: {fileID: 0}

@@ -23,6 +23,8 @@ public class TarotCardPuzzle : MonoBehaviour
     private bool _rotating;
     private bool _badPath, _goodPath, _badPathTaked;
 
+    public bool BadPathTaked => _badPathTaked;
+
     public bool CanPlace => _canPlace;
     public bool CanPlaceInverse => _canPlaceInverse;
 
