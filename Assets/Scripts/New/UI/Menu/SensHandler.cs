@@ -14,7 +14,7 @@ public class SensHandler : MonoBehaviour
     private void Awake()
     {
         _slider = GetComponent<Slider>();
-        _slider.maxValue = 2;
+        _slider.maxValue = 5;
         TakePrefsValue();
         _slider.onValueChanged.AddListener(delegate {SetValue();});
     }

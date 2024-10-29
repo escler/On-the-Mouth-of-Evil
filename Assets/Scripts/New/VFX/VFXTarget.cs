@@ -12,7 +12,6 @@ public class VFXTarget : MonoBehaviour
 
     private void Awake()
     {
-        if (Enemy.Instance != null) targetEnemy = Enemy.Instance.transform;
         if (PlayerHandler.Instance != null) targetPlayer = PlayerHandler.Instance.transform;
         _vfx = GetComponent<VisualEffect>();
     }
@@ -25,8 +24,6 @@ public class VFXTarget : MonoBehaviour
 
     void UpdateEnemyPos()
     {
-        if (targetEnemy == null) return;
-        _vfx.SetVector3("Transform", targetEnemy.position);
     }
     
     void UpdatePlayerPos()
