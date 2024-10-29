@@ -6,6 +6,7 @@ using FSM;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class HouseEnemy : Enemy
@@ -181,12 +182,14 @@ public class HouseEnemy : Enemy
         {
             enemyVisibility += .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-
+            
+            if (enemyVisibility >= 2f)
+            {
+                _enemyAnimator.ChangeStateAnimation("Absorb", true);
+            }
             yield return new WaitForSeconds(0.1f);
 
         }
-        
-        _enemyAnimator.ChangeStateAnimation("Absorb", true);
 
         yield return new WaitUntil(() => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
         absorbVFX.SetActive(true);
@@ -201,13 +204,15 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }
-        
+        absorbVFX.GetComponent<VisualEffect>().Stop();
+        magnetVFX.GetComponent<VisualEffect>().Stop();
+
+        yield return new WaitForSeconds(3f);
         
         TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         gameObject.SetActive(false);
-        absorbVFX.SetActive(false);
-        magnetVFX.SetActive(false);
+
     }
     
     IEnumerator ShowEnemyOnGoodRitual()
