@@ -22,10 +22,9 @@ public class Lighter : Item
         
         if (i.transform.TryGetComponent(out IBurneable item))
         {
-            cantUseItem = true;
-            Inventory.Instance.cantSwitch = true;
-            StartCoroutine(WaitForUseAgain());
-            lighterView.animator.SetBool("Open", true);
+            //cantUseItem = true;
+            //Inventory.Instance.cantSwitch = true;
+            //StartCoroutine(WaitForUseAgain());
             item.OnBurn();
             canUse = true;
         }
@@ -64,12 +63,21 @@ public class Lighter : Item
     {
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
+        lighterView.animator.SetBool("Open", true);
     }
 
     public override void OnSelectItem()
     {
         base.OnSelectItem();
+        lighterView.animator.SetBool("Open", true);
         //PSIdle.SetActive(true);
+    }
+
+    public override void OnDeselectItem()
+    {
+        base.OnDeselectItem();
+        PSIdle.SetActive(false);
+        lighterView.animator.SetBool("Open", false);
     }
 
     public override void OnDropItem()
@@ -77,6 +85,7 @@ public class Lighter : Item
         GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 1;
         PSIdle.SetActive(false);
         gameObject.SetActive(true);
+        lighterView.animator.SetBool("Open", false);
     }
 
     IEnumerator WaitForUseAgain()

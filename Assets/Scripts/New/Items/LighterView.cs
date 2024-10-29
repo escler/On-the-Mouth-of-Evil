@@ -17,7 +17,6 @@ public class LighterView : MonoBehaviour
     public void PlayPS()
     {
         owner.PSIdle.SetActive(!owner.PSIdle.activeInHierarchy);
-        StartCoroutine(WaitTime());
 
     }
 
@@ -26,9 +25,4 @@ public class LighterView : MonoBehaviour
         owner.PSIdle.SetActive(false);
     }
 
-    IEnumerator WaitTime()
-    {
-        yield return new WaitForSeconds(0.25f);
-        animator.SetBool("Open",false);
-    }
 }

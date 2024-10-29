@@ -156,6 +156,7 @@ public class Inventory : MonoBehaviour
 
         countSelected = index;
         InventorySelectorUI.Instance.OnChangeSelection();
+        if (selectedItem == inventory[index]) return;
         if(selectedItem != null) selectedItem.OnDeselectItem();
         ChangeItemState(selectedItem, false);
         selectedItem = inventory[index];
