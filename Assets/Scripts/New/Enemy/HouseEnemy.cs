@@ -197,7 +197,7 @@ public class HouseEnemy : Enemy
 
         while (enemyVisibility > 0)
         {
-            enemyVisibility -= (8 / duration) * 0.01f;
+            enemyVisibility -= (8 / duration) * 0.02f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }

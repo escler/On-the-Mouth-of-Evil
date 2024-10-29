@@ -33,7 +33,7 @@ public class ObjectDetector : MonoBehaviour
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded += StartParameters;
+        SceneManager.sceneLoaded -= StartParameters;
     }
 
     private void Update()
