@@ -64,6 +64,7 @@ public class ObjectDetector : MonoBehaviour
         if (_hit.transform.TryGetComponent(out SkullPuzzleSlot socket))
         {
             if (socket.currentSkull != null) return true;
+            if (Inventory.Instance.selectedItem == null) return false;
             if (socket.currentSkull == null && Inventory.Instance.selectedItem.itemName == "Skull") return true;
         }
 
