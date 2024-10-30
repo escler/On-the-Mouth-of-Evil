@@ -72,6 +72,8 @@ public class HouseEnemy : Enemy
     public ParticleSystem[] smokePS;
 
     public GameObject absorbVFX, magnetVFX;
+
+    public GameObject normalMesh, ritualMesh;
     
     private void Awake()
     {
@@ -229,8 +231,7 @@ public class HouseEnemy : Enemy
 
             yield return new WaitForSeconds(0.1f);
         }
-
-
+        
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateGoodExorcism = true;
 
@@ -238,7 +239,7 @@ public class HouseEnemy : Enemy
 
         RitualManager.Instance.ActivateCraterFloor();
         yield return new WaitUntil(
-            () => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("RitualExorcism"));
+            () => ritualMesh.activeInHierarchy);
         
         yield return new WaitForSeconds(4.8f);
         

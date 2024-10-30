@@ -75,6 +75,9 @@ public class HouseEnemy_Ritual : MonoBaseState
             owner.transform.position += dir.normalized * owner.speed / 3 * Time.deltaTime;
             yield return new WaitForSeconds(0.01f);
         }
+
+        owner.normalMesh.SetActive(false);
+        owner.ritualMesh.SetActive(true);
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
