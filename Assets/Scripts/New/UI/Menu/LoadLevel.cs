@@ -11,5 +11,6 @@ public class LoadLevel : MonoBehaviour
     {
         SceneManager.LoadScene(nameLevel);
         CanvasManager.Instance.menu.SetActive(false);
+        PlayerHandler.Instance.playerCam.CameraLock = false;
     }
 }

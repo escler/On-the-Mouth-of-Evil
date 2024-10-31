@@ -61,6 +61,7 @@ public class Skull : Item
 
     private void PlaceSkull(bool hit, RaycastHit i)
     {
+        if (canInteract) return;
         if (_active) return;
         if (!hit || !i.transform.TryGetComponent(out SkullPuzzleSlot puzzleSlot)) return;
         
