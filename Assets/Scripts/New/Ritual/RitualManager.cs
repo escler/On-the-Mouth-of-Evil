@@ -20,6 +20,8 @@ public class RitualManager : MonoBehaviour
     public GameObject floor;
     public List<ParticleSystem> psCrater;
     public GameObject floorCrater;
+    public Color candleColorBadPath;
+    public Material candleMat;
     
     public static RitualManager Instance { get; private set; }
 
@@ -37,7 +39,11 @@ public class RitualManager : MonoBehaviour
 
     public void AltarCompleted()
     {
-        if(TarotCardPuzzle.Instance.BadPathTaked) ritualBadFloor.SetActive(true);
+        if (TarotCardPuzzle.Instance.BadPathTaked)
+        {
+            ritualBadFloor.SetActive(true);
+            candleMat.color = candleColorBadPath;
+        }
         else ritualFloor.SetActive(true);
         stampBlock.SetActive(false);
         stampRelease.SetActive(true);
