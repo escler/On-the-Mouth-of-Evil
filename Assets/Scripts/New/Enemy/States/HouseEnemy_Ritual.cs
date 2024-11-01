@@ -36,6 +36,10 @@ public class HouseEnemy_Ritual : MonoBaseState
 
     IEnumerator RitualBadSequenceCor()
     {
+        Vector3 target = PlayerHandler.Instance.transform.position;
+        target.y = owner.transform.position.y;
+        Vector3 dir = target - owner.transform.position;
+        owner.transform.rotation = Quaternion.LookRotation(dir);
         yield return new WaitForSeconds(0.7f);
         
         if (CorduraHandler.Instance.CorduraOn > 0) CorduraHandler.Instance.CorduraOn = 0;

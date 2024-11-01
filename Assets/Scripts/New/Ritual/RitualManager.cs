@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 
 public class RitualManager : MonoBehaviour
 {
-    public GameObject ritualFloor, stampBlock, stampRelease, psRitual;
+    public GameObject ritualFloor, ritualBadFloor, stampBlock, stampRelease, psRitual;
     public Candle[] candles;
     public GameObject[] candlesInRitual;
     private int _candlesPlaced, _candlesBurning;
@@ -37,7 +37,8 @@ public class RitualManager : MonoBehaviour
 
     public void AltarCompleted()
     {
-        ritualFloor.SetActive(true);
+        if(TarotCardPuzzle.Instance.BadPathTaked) ritualBadFloor.SetActive(true);
+        else ritualFloor.SetActive(true);
         stampBlock.SetActive(false);
         stampRelease.SetActive(true);
         foreach (var candle in candles)
@@ -101,8 +102,10 @@ public class RitualManager : MonoBehaviour
     {
         //floor.SetActive(true);
         //craterFloor.SetActive(false);
+        ritualBadFloor.SetActive(false);
         ritualFloor.SetActive(false);
         stampRelease.SetActive(false);
+
 
     }
 }

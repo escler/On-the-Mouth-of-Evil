@@ -74,6 +74,8 @@ public class HouseEnemy : Enemy
     public GameObject absorbVFX, magnetVFX;
 
     public GameObject normalMesh, ritualMesh;
+
+    private float _position;
     
     private void Awake()
     {
@@ -88,6 +90,9 @@ public class HouseEnemy : Enemy
         _enemyAnimator = GetComponentInChildren<HouseEnemyView>();
         enemyMaterial.SetFloat("_Power", 0);
         enemyVisibility = enemyMaterial.GetFloat("_Power");
+        
+        enemyMaterial.SetFloat("_Position", -0.63f);
+        enemyVisibility = enemyMaterial.GetFloat("_Position");
 
 
         objects = new List<IInteractableEnemy>();
@@ -172,10 +177,25 @@ public class HouseEnemy : Enemy
 
     void Ritual()
     {
-        if (TarotCardPuzzle.Instance.BadPathTaked) StartCoroutine(ShowEnemyOnBadRitual());
+        if (TarotCardPuzzle.Instance.BadPathTaked)
+        {
+            StartCoroutine(ShowEnemyOnBadRitual());
+            StartCoroutine(MovePositionVariable());
+        }
         else StartCoroutine(ShowEnemyOnGoodRitual());
         onRitual = true;
 
+    }
+
+    IEnumerator MovePositionVariable()
+    {
+        while (_position > -2.5f)
+        {
+            print("ASd");
+            _position -= 0.005f;
+            enemyMaterial.SetFloat("_Position", _position);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     IEnumerator ShowEnemyOnBadRitual()
@@ -202,12 +222,13 @@ public class HouseEnemy : Enemy
 
         while (enemyVisibility > 0)
         {
-            enemyVisibility -= (8 / duration) * 0.02f;
+            enemyVisibility -= (8 / duration) * 0.015f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }
         absorbVFX.GetComponent<VisualEffect>().Stop();
         magnetVFX.GetComponent<VisualEffect>().Stop();
+        RitualManager.Instance.RitualFinish();
 
         yield return new WaitForSeconds(3f);
         
