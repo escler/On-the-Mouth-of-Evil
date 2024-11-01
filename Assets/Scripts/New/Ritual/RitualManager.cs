@@ -74,6 +74,10 @@ public class RitualManager : MonoBehaviour
     {
         ritualFloor.SetActive(false);
         floorCrater.GetComponent<Animator>().SetBool("Fall", true);
+        foreach (var candle in candlesInRitual)
+        {
+            candle.SetActive(false);
+        }
         foreach (var crater in psCrater)
         {
             crater.Play();
