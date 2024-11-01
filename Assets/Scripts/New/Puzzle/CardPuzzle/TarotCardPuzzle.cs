@@ -99,8 +99,16 @@ public class TarotCardPuzzle : MonoBehaviour
 
     IEnumerator MoveDrawer()
     {
-        if(_goodPath) paperPuzzleSalt.SetActive(true);
-        else skull.SetActive(true);
+        if (_goodPath)
+        {
+            DecisionsHandler.Instance.GoodChoiceTaked();
+            paperPuzzleSalt.SetActive(true);
+        }
+        else
+        {
+            DecisionsHandler.Instance.BadChoiceTaked();
+            skull.SetActive(true);
+        }
         while (_angleX < 50f)
         {
             drawer.Rotate(1, 0, 0);

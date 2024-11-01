@@ -177,7 +177,7 @@ public class HouseEnemy : Enemy
 
     void Ritual()
     {
-        if (TarotCardPuzzle.Instance.BadPathTaked)
+        if (DecisionsHandler.Instance.badPath)
         {
             StartCoroutine(ShowEnemyOnBadRitual());
             StartCoroutine(MovePositionVariable());

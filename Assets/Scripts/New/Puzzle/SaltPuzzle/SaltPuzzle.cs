@@ -60,6 +60,7 @@ public class SaltPuzzle : MonoBehaviour
 
         if (count >= 4)
         {
+            DecisionsHandler.Instance.GoodChoiceTaked();
             foreach (var recipient in recipients)
             {
                 recipient.finish = true;

@@ -30,7 +30,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     {
         if (startRitualCor) return;
         startRitualCor = true;
-        if(TarotCardPuzzle.Instance.BadPathTaked) StartCoroutine(RitualBadSequenceCor());
+        if(DecisionsHandler.Instance.badPath) StartCoroutine(RitualBadSequenceCor());
         else StartCoroutine(RitualGoodSequenceCor());
     }
 

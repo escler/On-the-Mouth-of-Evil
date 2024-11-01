@@ -10,7 +10,8 @@ public class RitualManager : MonoBehaviour
     public GameObject ritualFloor, ritualBadFloor, stampBlock, stampRelease, psRitual;
     public Candle[] candles;
     public GameObject[] candlesInRitual;
-    private int _candlesPlaced, _candlesBurning;
+    private int _candlesBurning;
+    public int candlesPlaced;
     public bool candleTaked;
     private Candle _actualCandleTaked;
     private Transform cameraPos;
@@ -20,9 +21,8 @@ public class RitualManager : MonoBehaviour
     public GameObject floor;
     public List<ParticleSystem> psCrater;
     public GameObject floorCrater;
-    public Color candleColorBadPath;
+    public Color candleColorGoodPath, candleColorBadPath;
     public Material candleMat;
-    public GameObject aurora1, aurora2;
     
     public static RitualManager Instance { get; private set; }
 
@@ -36,16 +36,23 @@ public class RitualManager : MonoBehaviour
 
         Instance = this;
         cameraPos = PlayerHandler.Instance.cameraPos;
+        candleMat.color = candleColorGoodPath;
     }
 
     public void AltarCompleted()
     {
-        if (TarotCardPuzzle.Instance.BadPathTaked)
+        if (DecisionsHandler.Instance.badPath)
         {
             ritualBadFloor.SetActive(true);
+            ritualFloor.SetActive(false);
             candleMat.color = candleColorBadPath;
         }
-        else ritualFloor.SetActive(true);
+        else
+        {
+            candleMat.color = candleColorGoodPath;
+            ritualFloor.SetActive(true);
+            ritualBadFloor.SetActive(false);
+        }
         stampBlock.SetActive(false);
         stampRelease.SetActive(true);
         foreach (var candle in candles)
@@ -70,9 +77,9 @@ public class RitualManager : MonoBehaviour
         if (_actualCandleTaked == null) return;
         var candle = _actualCandleTaked;
         _actualCandleTaked = null;
-        candlesInRitual[_candlesPlaced].SetActive(true);
+        candlesInRitual[candlesPlaced].SetActive(true);
         candleTaked = false;
-        _candlesPlaced++;
+        candlesPlaced++;
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
         Destroy(candle.gameObject);
     }
@@ -80,8 +87,6 @@ public class RitualManager : MonoBehaviour
     public void ActivateCraterFloor()
     {
         ritualFloor.SetActive(false);
-        aurora1.SetActive(true);
-        aurora2.SetActive(true);
         floorCrater.GetComponent<Animator>().SetBool("Fall", true);
         foreach (var candle in candlesInRitual)
         {
@@ -95,8 +100,6 @@ public class RitualManager : MonoBehaviour
 
     public void CloseCrater()
     {
-        aurora1.SetActive(false);
-        aurora2.SetActive(false);
         floorCrater.GetComponent<Animator>().SetBool("Fall", false);
         foreach (var crater in psCrater)
         {

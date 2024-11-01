@@ -33,6 +33,8 @@ public class SkullPuzzle : MonoBehaviour
         }
         
         if(count < slots.Length) return;
+        
+        DecisionsHandler.Instance.BadChoiceTaked();
 
         foreach (var slot in slots)
         {
