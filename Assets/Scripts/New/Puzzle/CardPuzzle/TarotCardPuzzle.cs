@@ -109,6 +109,7 @@ public class TarotCardPuzzle : MonoBehaviour
             DecisionsHandler.Instance.BadChoiceTaked();
             skull.SetActive(true);
         }
+        if(RitualManager.Instance.altarCompleted) RitualManager.Instance.AltarCompleted();
         while (_angleX < 50f)
         {
             drawer.Rotate(1, 0, 0);

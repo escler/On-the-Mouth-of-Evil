@@ -23,6 +23,7 @@ public class RitualManager : MonoBehaviour
     public GameObject floorCrater;
     public Color candleColorGoodPath, candleColorBadPath;
     public Material candleMat;
+    public bool altarCompleted;
     
     public static RitualManager Instance { get; private set; }
 
@@ -41,6 +42,7 @@ public class RitualManager : MonoBehaviour
 
     public void AltarCompleted()
     {
+        altarCompleted = true;
         if (DecisionsHandler.Instance.badPath)
         {
             ritualBadFloor.SetActive(true);
