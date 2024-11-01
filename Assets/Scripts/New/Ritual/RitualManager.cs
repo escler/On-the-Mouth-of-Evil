@@ -22,6 +22,7 @@ public class RitualManager : MonoBehaviour
     public GameObject floorCrater;
     public Color candleColorBadPath;
     public Material candleMat;
+    public GameObject aurora1, aurora2;
     
     public static RitualManager Instance { get; private set; }
 
@@ -79,6 +80,8 @@ public class RitualManager : MonoBehaviour
     public void ActivateCraterFloor()
     {
         ritualFloor.SetActive(false);
+        aurora1.SetActive(true);
+        aurora2.SetActive(true);
         floorCrater.GetComponent<Animator>().SetBool("Fall", true);
         foreach (var candle in candlesInRitual)
         {
@@ -92,6 +95,8 @@ public class RitualManager : MonoBehaviour
 
     public void CloseCrater()
     {
+        aurora1.SetActive(false);
+        aurora2.SetActive(false);
         floorCrater.GetComponent<Animator>().SetBool("Fall", false);
         foreach (var crater in psCrater)
         {
