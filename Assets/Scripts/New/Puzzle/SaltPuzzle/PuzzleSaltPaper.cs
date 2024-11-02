@@ -46,6 +46,7 @@ public class PuzzleSaltPaper : Item, IInteractable
 
     IEnumerator FocusObjectCor()
     {
+        cantBobbing = true;
         canInteract = true;
         transform.SetParent(null);
         transform.localScale = Vector3.one;
@@ -75,6 +76,7 @@ public class PuzzleSaltPaper : Item, IInteractable
         transform.position = handPos.position;
         canInteract = false;
         Inventory.Instance.cantSwitch = false;
+        cantBobbing = false;
     }
 
     private void Update()

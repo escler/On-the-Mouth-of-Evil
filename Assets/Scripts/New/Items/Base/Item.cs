@@ -13,7 +13,17 @@ public class Item : MonoBehaviour, IInteractable
     public ItemCategory category;
     public bool canShowText, canInspectItem, canInteractWithItem;
 
-    public Vector3 angleHand; 
+    public Vector3 angleHand;
+
+    protected bool cantBobbing;
+    public bool CantBobbing
+    {
+        set => cantBobbing = value;
+    }
+    
+    private float _timer;
+    private float bobbingSpeed = 5;
+    private float bobbingAmount = .25f;
     
     public virtual void OnGrabItem()
     {
@@ -31,7 +41,7 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnUpdate()
     {
-        
+        if(!cantBobbing) BobbingItem();
     }
 
     public virtual void FocusObject()
@@ -99,5 +109,13 @@ public class Item : MonoBehaviour, IInteractable
     {
         if(canInteractWithItem) CanvasManager.Instance.crossHairUI.IncreaseUI();
         else CanvasManager.Instance.crossHairUI.DecreaseUI();
+    }
+
+    void BobbingItem()
+    {
+        _timer += Time.deltaTime * bobbingSpeed / 4;
+        transform.localPosition = new Vector3(transform.localPosition.x,
+            transform.localPosition.y + Mathf.Cos(_timer) * bobbingAmount / 8 * Time.deltaTime,
+            transform.localPosition.z);
     }
 }

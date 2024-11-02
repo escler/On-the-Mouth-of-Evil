@@ -5087,6 +5087,8 @@ MonoBehaviour:
   canInspectItem: 0
   canInteractWithItem: 0
   angleHand: {x: 0, y: 40, z: 0}
+  bobbingSpeed: 5
+  bobbingAmount: 0.25
   _itemsInteractables: []
   PSIdle: {fileID: 8589725457046247454}
 --- !u!54 &-8253912469436683685
@@ -9991,7 +9993,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 2
+  m_RenderAlignment: 3
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0

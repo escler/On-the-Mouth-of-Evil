@@ -64,6 +64,7 @@ public class PaperMission1 : Mission
 
     IEnumerator FocusObjectCor()
     {
+        cantBobbing = true;
         canInteract = true;
         transform.SetParent(null);
         PlayerHandler.Instance.UnPossesPlayer();
@@ -79,6 +80,7 @@ public class PaperMission1 : Mission
 
     IEnumerator UnFocusObject()
     {
+        cantBobbing = false;
         canInteract = true;
         Inventory.Instance.cantSwitch = true;
         transform.SetParent(handPos);
@@ -92,6 +94,7 @@ public class PaperMission1 : Mission
         transform.position = handPos.position;
         canInteract = false;
         Inventory.Instance.cantSwitch = false;
+        cantBobbing = false;
     }
 
     private void Update()

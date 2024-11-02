@@ -31,16 +31,14 @@ public class PlayerCam : MonoBehaviour
                 }
                 _mouseX = Input.GetAxis("Mouse X") * sensX * sens * Time.deltaTime;
                 _mouseY = Input.GetAxis("Mouse Y") * sensY * sens * Time.deltaTime;
-
-                _xRotation += _mouseX;
+                _xRotation = Mathf.Lerp(_xRotation, _mouseX, .5f);
                 _yRotation += _mouseY;
                 _yRotation = Mathf.Clamp(_yRotation, -limitAngleY, limitAngleY);
-        }
+                cameraPos.localRotation =
+                        Quaternion.Slerp(cameraPos.localRotation, Quaternion.Euler(-_yRotation, 0, 0), .5f);
+                //cameraPos.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
+                transform.Rotate(Vector3.up * _xRotation);
 
-        private void LateUpdate()
-        {
-                cameraPos.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
-                transform.Rotate(Vector3.up * _mouseX);
         }
 
         private void GetValueSens()

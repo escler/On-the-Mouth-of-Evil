@@ -72,6 +72,7 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         _rotating = !_rotating;
         CanvasManager.Instance.rotateInfo.SetActive(_rotating);
+        heldObj.GetComponent<Item>().CantBobbing = _rotating;
         ChangePlayerLockState();
     }
     private void PlaceObject()
