@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PuzzleSaltPaper : Item, IInteractable
@@ -12,9 +13,14 @@ public class PuzzleSaltPaper : Item, IInteractable
     private bool active;
     private bool canInteract;
     public float offset;
+    public bool canDescriptionContent;
+    private string descriptionContent;
+    private bool contentActive;
 
     private void Start()
     {
+        descriptionContent =
+            "Cuando los cielos se oscurezcan, y sea observado por las personas y la iglesia.\nLos demonios recorreran la tierra, ante la mirada preocupante del cielo.";
         active = false;
         cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
@@ -65,6 +71,7 @@ public class PuzzleSaltPaper : Item, IInteractable
     {
         Inventory.Instance.cantSwitch = true;
         canInteract = true;
+        DisableContent();
         transform.SetParent(handPos);
         PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
@@ -90,6 +97,30 @@ public class PuzzleSaltPaper : Item, IInteractable
     {
         base.OnUpdate();
         if(Input.GetButtonDown("Focus")) FocusObject();
+        if (Input.GetMouseButtonDown(0)) GetDescriptionContent();
+    }
+
+    void GetDescriptionContent()
+    {
+        if (CanvasManager.Instance.menu.activeInHierarchy) return;
+        if (!active) return;
+        if (contentActive)
+        {
+            DisableContent();
+            return;
+        }
+        
+        var content = CanvasManager.Instance.descriptionTextContent;
+        content.SetActive(true);
+        content.GetComponentInChildren<TextMeshProUGUI>().text = descriptionContent;
+        contentActive = true;
+
+    }
+
+    private void DisableContent()
+    {
+        CanvasManager.Instance.descriptionTextContent.SetActive(false);
+        contentActive = false;
     }
 
     void RotateObject()

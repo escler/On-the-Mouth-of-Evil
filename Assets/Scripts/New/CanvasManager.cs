@@ -10,7 +10,7 @@ public class CanvasManager : MonoBehaviour
 
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
-        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, puzzleSaltPaper, rotateInfo, moveObjectUI, inspectImage, menu;
+        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, puzzleSaltPaper, rotateInfo, moveObjectUI, inspectImage, menu, descriptionTextContent, fps;
     public CrosshairUI crossHairUI;
 
     private void Awake()
@@ -36,6 +36,7 @@ public class CanvasManager : MonoBehaviour
         rotateInfo.SetActive(false);
         moveObjectUI.SetActive(false);
         InteractionText.SetActive(false);
+        descriptionTextContent.SetActive(false);
     }
 
     private void OnDestroy()

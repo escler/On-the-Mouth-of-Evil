@@ -10,6 +10,12 @@ public class FpsCount : MonoBehaviour
     private float updateTimer = 0;
     [SerializeField] private TextMeshProUGUI fpsTitle;
 
+
+    private void Awake()
+    {
+        fpsTitle = GetComponent<TextMeshProUGUI>();
+    }
+    
     private void Update()
     {
         UpdateFPSDisplay();

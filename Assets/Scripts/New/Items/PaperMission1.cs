@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PaperMission1 : Mission
 {
@@ -13,9 +15,13 @@ public class PaperMission1 : Mission
     private PlayerCam _playerCam;
     private bool canInteract;
     public float offset;
+    private string descriptionContent;
+    private bool contentActive;
 
     private void Start()
     {
+        descriptionContent =
+            "<style=\"Title\">Mission 1</style>\n\nNombre del Demonio: Ignis\nUbicación: Casa Abandonada\nObjetos Necesarios: Encendedor - Biblia - Cruz - Salero";
         active = false;
         cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
@@ -82,6 +88,7 @@ public class PaperMission1 : Mission
     {
         cantBobbing = false;
         canInteract = true;
+        DisableContent();
         Inventory.Instance.cantSwitch = true;
         transform.SetParent(handPos);
         PlayerHandler.Instance.PossesPlayer();
@@ -108,6 +115,29 @@ public class PaperMission1 : Mission
     {
         base.OnUpdate();
         if(Input.GetButtonDown("Focus"))FocusObject();
+        if (Input.GetMouseButtonDown(0)) GetDescriptionContent();
+    }
+
+    private void GetDescriptionContent()
+    {
+        if (CanvasManager.Instance.menu.activeInHierarchy) return;
+        if (!active) return;
+
+        if (contentActive)
+        {
+            DisableContent();
+            return;
+        }
+        var content = CanvasManager.Instance.descriptionTextContent;
+        content.SetActive(true);
+        content.GetComponentInChildren<TextMeshProUGUI>().text = descriptionContent;
+        contentActive = true;
+    }
+
+    private void DisableContent()
+    {
+        CanvasManager.Instance.descriptionTextContent.SetActive(false);
+        contentActive = false;
     }
 
     void RotateObject()
