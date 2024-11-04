@@ -232,6 +232,7 @@ public class HouseEnemy : Enemy
 
         yield return new WaitForSeconds(3f);
         
+        FadeOutHandler.Instance.FaceOut(1.5f);
         TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         gameObject.SetActive(false);
@@ -255,6 +256,9 @@ public class HouseEnemy : Enemy
         
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateGoodExorcism = true;
+        CameraFollow.Instance.inRitual = true;
+        CameraFollow.Instance.SetNewCameraPos(CameraCinematicHandler.Instance.transform);
+        PlayerHandler.Instance.UnPossesPlayer();
 
         RitualManager.Instance.ritualFloor.SetActive(false);
 
@@ -272,9 +276,15 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
 
+        CameraFollow.Instance.SetNewCameraPos(PlayerHandler.Instance.cameraPos);
+        yield return new WaitForSeconds(2f);
+        CameraFollow.Instance.inRitual = false;
+        PlayerHandler.Instance.PossesPlayer();
         RitualManager.Instance.CloseCrater();
         
+        
         TarotCardPuzzle.Instance.PathTaked();
+        FadeOutHandler.Instance.FaceOut(1.5f);
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         RitualManager.Instance.RitualFinish();
         gameObject.SetActive(false);
