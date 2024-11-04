@@ -43,7 +43,8 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Attacks");
-        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        //_actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        _actualAction = 0;
         switch (_actualAction)
         {
             case 0:
@@ -77,7 +78,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 0;
 
         owner.attackEnded = false;
-        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.LerpShader();
+        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader();
 
         return base.Exit(to);
     }
@@ -204,12 +205,13 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield break;
         }
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", true);
-        HypnosisEffectControllerHDRP.Instance.LerpShader();
+        HypnosisEffectControllerHDRP.Instance.StartLerpShader();
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
         while (time > 0 && !_ray)
         {
+            if (!owner.compareRoom) break;
             if (owner.crossUsed) break;
             Vector3 target = owner.transform.position;
             target.y = player.position.y;
@@ -231,7 +233,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
         _corroutine = false;
         owner.attackEnded = true;
-        HypnosisEffectControllerHDRP.Instance.LerpShader();
+        HypnosisEffectControllerHDRP.Instance.EndLerpShader();
     }
     private void OnDrawGizmos()
     {
@@ -267,7 +269,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.01f);
         }
         
-        HypnosisEffectControllerHDRP.Instance.LerpShader();
+        HypnosisEffectControllerHDRP.Instance.StartLerpShader();
         owner.playerGrabbedCount++;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
         

@@ -25,6 +25,8 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
     private float skyboxIntensityStart = 1.0f;
     private float skyboxIntensityEnd = 0.0f;
 
+    private bool skyboxNextState;
+
     private void Awake()
     {
         if (Instance)
@@ -51,16 +53,26 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
     private void Update()
     {
-        if(isLerpingK) PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK);
+        if(isLerpingK) PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK, skyboxNextState);
     }
 
-    public void LerpShader()
+    public void StartLerpShader()
     {
+        skyboxNextState = false;
+        hasCompletedCycleK = false;
         isLerpingK = true;
         currentLerpTimeK = 0.0f;
     }
 
-    private void PerformLerp(ref bool isLerping, ref float currentLerpTime, Material material, ref bool hasCompletedCycle)
+    public void EndLerpShader()
+    {
+        skyboxNextState = true;
+        isLerpingK = true;
+        hasCompletedCycleK = false;
+        StartCoroutine(ToggleLights(true));
+    }
+
+    private void PerformLerp(ref bool isLerping, ref float currentLerpTime, Material material, ref bool hasCompletedCycle, bool skyBox)
     {
         currentLerpTime += Time.deltaTime;
         float t = currentLerpTime / lerpDuration;
@@ -69,7 +81,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
         if (blinkValue <= 0.2f && !hasCompletedCycle)
         {
-            StartCoroutine(ToggleLights());
+            StartCoroutine(ToggleLights(skyboxNextState));
             hasCompletedCycle = true;
         }
 
@@ -119,9 +131,9 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         SceneManager.sceneLoaded -= GetLights;
     }
     
-    private IEnumerator ToggleLights()
+    private IEnumerator ToggleLights(bool skyBoxState)
     {
-        if (skyboxIsOn)
+        if (!skyBoxState)
         {
             yield return StartCoroutine(ChangeSkyboxIntensity(1.0f, 0.0f));
             DeactivateLights();
@@ -133,7 +145,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
             ActivateLights();
             DeactivateDemonLight();
         }
-        skyboxIsOn = !skyboxIsOn;
+        skyboxIsOn = skyBoxState;
     }
 
     private IEnumerator ChangeSkyboxIntensity(float startIntensity, float endIntensity)

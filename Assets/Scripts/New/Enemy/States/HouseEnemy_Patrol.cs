@@ -24,6 +24,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
         if (owner.crossUsed)
         {
+            if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader();
             print("Entre al if");
             CrossUsed();
             return;
