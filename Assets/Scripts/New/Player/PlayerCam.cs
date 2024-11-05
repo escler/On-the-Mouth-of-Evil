@@ -56,6 +56,7 @@ public class PlayerCam : MonoBehaviour
                 var target = transform.localRotation;
                 target.x = Quaternion.identity.x;
                 cameraPos.localRotation = Quaternion.Slerp(cameraPos.localRotation, Quaternion.identity, .7f * Time.deltaTime);
+                _yRotation = 0;
         }
         
         private void GetValueSens()

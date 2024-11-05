@@ -70,8 +70,10 @@ public class PlayerMovement : MonoBehaviour
         if (!ritualCinematic) return;
         if (inSpot)
         {
-            transform.LookAt(Vector3.SmoothDamp(transform.position, CameraCinematicHandler.Instance.ritual.position,
-                ref reference, 2f));
+            var ritualPos = CameraCinematicHandler.Instance.ritual.position;
+            ritualPos.y = transform.position.y;
+            transform.LookAt(Vector3.SmoothDamp(transform.position, ritualPos,
+                ref reference, 5f));
             return;
         }
         var target = CameraCinematicHandler.Instance.transform.position;
@@ -84,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         PlayerHandler.Instance.bobbingCamera.DoBobbing();
-        transform.LookAt(Vector3.SmoothDamp(transform.position, target, ref reference, 3f));
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target, ref reference, 5f));
         Vector3 velocity = transform.forward * .5f;
         velocity.Normalize();
         _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);

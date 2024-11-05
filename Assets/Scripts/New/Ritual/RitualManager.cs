@@ -24,6 +24,7 @@ public class RitualManager : MonoBehaviour
     public Color candleColorGoodPath, candleColorBadPath;
     public Material candleMat;
     public bool altarCompleted;
+    public bool candlesBurned;
     
     public static RitualManager Instance { get; private set; }
 
@@ -112,10 +113,7 @@ public class RitualManager : MonoBehaviour
     public void CandlesBurned()
     {
         _candlesBurning++;
-        if (_candlesBurning >= candlesInRitual.Length)
-        {
-            psRitual.SetActive(true);
-        }
+        candlesBurned = _candlesBurning >= 3;
     }
 
     public void RitualFinish()
