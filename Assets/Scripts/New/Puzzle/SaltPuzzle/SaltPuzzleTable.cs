@@ -17,6 +17,7 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
     private float distance = 3;
     public LayerMask layer;
     public bool canInteractWithSalt;
+    public GameObject recipient;
 
     private void Awake()
     {
@@ -66,14 +67,11 @@ public class SaltPuzzleTable : MonoBehaviour, IInteractable
 
     public void OnInteractItem()
     {
-        playerInTable = !playerInTable;
-        CanvasManager.Instance.crossHairUI.gameObject.SetActive(!playerInTable);
-        PlayerHandler.Instance.playerCam.CameraLock = playerInTable;
-        PlayerHandler.Instance.cantPressInventory = playerInTable;
-        PlayerHandler.Instance.ChangePlayerPosses(!playerInTable);
-        Cursor.visible = playerInTable;
-        Cursor.lockState = CursorLockMode.Confined;
-        CameraFollow.Instance.SetNewCameraPos(playerInTable ? cameraPosPuzzle : PlayerHandler.Instance.cameraPos);
+    }
+
+    public void PlaceRecipient()
+    {
+        recipient.gameObject.SetActive(true);
     }
 
     public void OnInteract(bool hit, RaycastHit i)

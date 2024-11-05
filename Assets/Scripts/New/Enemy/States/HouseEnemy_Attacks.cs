@@ -284,8 +284,12 @@ public class HouseEnemy_Attacks : MonoBaseState
         HypnosisEffectControllerHDRP.Instance.StartLerpShader();
         owner.playerGrabbedCount++;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
-        
-        if (owner.playerGrabbedCount > 2) GameManagerNew.Instance.LoadSceneWithDelay("Hub", 0.1f);
+
+        if (owner.playerGrabbedCount > 2)
+        {
+            FadeOutHandler.Instance.FaceOut(1f);
+            GameManagerNew.Instance.LoadSceneWithDelay("Hub", 1.5f);
+        }
 
         _actualGrabCD = grabCD;
         owner.grabHead = false;

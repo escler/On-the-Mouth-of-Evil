@@ -193,7 +193,7 @@ public class HouseEnemy : Enemy
         while (_position > -2.5f)
         {
             print("ASd");
-            _position -= 0.005f;
+            _position -= 0.0075f;
             enemyMaterial.SetFloat("_Position", _position);
             yield return new WaitForSeconds(0.01f);
         }
@@ -203,7 +203,7 @@ public class HouseEnemy : Enemy
     {
         while (enemyVisibility < 8)
         {
-            enemyVisibility += .3f;
+            enemyVisibility += .45f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             
             if (enemyVisibility >= 2f)
@@ -223,7 +223,7 @@ public class HouseEnemy : Enemy
 
         while (enemyVisibility > 0)
         {
-            enemyVisibility -= (8 / duration) * 0.015f;
+            enemyVisibility -= (8 / duration) * 0.0225f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }

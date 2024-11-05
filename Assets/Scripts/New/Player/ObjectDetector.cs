@@ -68,6 +68,12 @@ public class ObjectDetector : MonoBehaviour
             if (socket.currentSkull == null && Inventory.Instance.selectedItem.itemName == "Skull") return true;
         }
 
+        if (_hit.transform.TryGetComponent(out SaltPuzzleTable table))
+        {
+            if (Inventory.Instance.selectedItem == null) return false;
+            if (Inventory.Instance.selectedItem.itemName == "Salt Recipient") return true;
+        }
+
         if (!_hit.transform.TryGetComponent(out MovableItem movableItem) && _hit.transform.GetComponent<IInteractable>().CanShowText()) return true;
 
         if (rayDoor && _hitDoors.transform.TryGetComponent(out Door door)) return true;
