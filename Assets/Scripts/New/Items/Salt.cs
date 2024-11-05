@@ -36,7 +36,7 @@ public class Salt : Item
         {
             if(inventory[i] == null) continue;
             if (inventory[i] != this) continue;
-            saltUI = InventoryUI.Instance.hubInventoryUI.transform.GetChild(i).transform.GetChild(0).GetComponent<SaltUI>();
+            saltUI = InventoryUI.Instance.hubInventoryUI.transform.GetChild(i + 2).transform.GetChild(0).GetComponent<SaltUI>();
             saltUI.SetUses(_uses, maxUses);
             break;
         }

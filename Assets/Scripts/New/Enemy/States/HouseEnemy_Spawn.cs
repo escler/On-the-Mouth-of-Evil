@@ -7,6 +7,7 @@ public class HouseEnemy_Spawn : MonoBaseState
 {
     [SerializeField] private HouseEnemy owner;
     private bool stateEnd;
+    private bool dontAttack;
     public override void UpdateLoop()
     {
     }
@@ -14,16 +15,31 @@ public class HouseEnemy_Spawn : MonoBaseState
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         print("Entre a Spawn");
+        if (owner.actualTime < owner.timeToShowMe)
+        {
+            dontAttack = true;
+            return;
+        }
         stateEnd = false;
         StartCoroutine(ShowEnemyLerp());
     }
 
     public override IState ProcessInput()
     {
+        if (dontAttack && Transitions.ContainsKey(StateTransitions.ToIdle))
+            return Transitions[StateTransitions.ToIdle];
+        
         if (stateEnd && Transitions.ContainsKey(StateTransitions.ToAttacks))
             return Transitions[StateTransitions.ToAttacks];
 
         return this;
+    }
+
+    public override Dictionary<string, object> Exit(IState to)
+    {
+        dontAttack = false;
+        stateEnd = false;
+        return base.Exit(to);
     }
     
     IEnumerator ShowEnemyLerp()

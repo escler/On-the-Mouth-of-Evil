@@ -20,6 +20,7 @@ public class Bible : Item
     private bool _cantUse;
     public SkinnedMeshRenderer[] meshes;
     public MeshRenderer[] paperMesh;
+    private int index;
 
     
     private void Start()
@@ -40,6 +41,18 @@ public class Bible : Item
         {
             mesh.gameObject.layer = 18;
         }
+        
+        var inventoryHub = Inventory.Instance.hubInventory;
+        for (int i = 0; i < inventoryHub.Length; i++)
+        {
+            if(inventoryHub[i] == null) continue;
+            if (inventoryHub[i] == this)
+            {
+                InventoryUI.Instance.fillGO.transform.GetChild(i).GetComponent<SliderUI>().SubscribeToBibleEvent();
+                index = i;
+                break;
+            }
+        }
     }
 
     public override void OnDropItem()
@@ -53,7 +66,9 @@ public class Bible : Item
         foreach (var mesh in paperMesh)
         {
             mesh.gameObject.layer = 1;
-        }    }
+        } 
+        InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToBibleEvent();
+    }
     
 
     private void Awake()
@@ -68,7 +83,7 @@ public class Bible : Item
     public override void OnInteract(bool hit, RaycastHit i)
     {
         base.OnInteract(hit,i);
-        if (_bibleCD.Cooldown > 0) return;
+        if (_bibleCD.cantUse) return;
         if (_cantUse) return;
         if (ray)
         {
@@ -88,7 +103,7 @@ public class Bible : Item
     
     public override bool CanInteractWithItem()
     {
-        if (!ray || _bibleCD.Cooldown > 0) return false;
+        if (!ray || _bibleCD.Cooldown < 10) return false;
         
         if (_hit.transform.gameObject.layer == 19 || _hit.transform.TryGetComponent(out RitualFloor ritualFloor)) return true;
 
@@ -112,7 +127,7 @@ public class Bible : Item
 
         var paper = Instantiate(paperBible);
         paper.transform.position = hitPoint + Vector3.up * 0.01f;
-        _bibleCD.SetCooldown(10);
+        _bibleCD.SetCooldown(0);
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
         _cantUse = false;
         Inventory.Instance.cantSwitch = false;
@@ -126,7 +141,7 @@ public class Bible : Item
         var paperRitual = Instantiate(paperBible);
         paperRitual.transform.position = RitualManager.Instance.ritualFloor.transform.position;
         paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
-        _bibleCD.SetCooldown(10);
+        _bibleCD.SetCooldown(0);
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
         _cantUse = false;
         Inventory.Instance.cantSwitch = false;

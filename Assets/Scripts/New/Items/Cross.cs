@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cross : Item
@@ -11,6 +12,7 @@ public class Cross : Item
     public ParticleSystem[] crossExplosion, holdingPS;
     private CrossCD _crossCd;
     public GameObject CrossLight;
+    private int index;
 
     private void Start()
     {
@@ -20,7 +22,24 @@ public class Cross : Item
     public override void OnGrabItem()
     {
         base.OnGrabItem();
+        var inventoryHub = Inventory.Instance.hubInventory;
+        for (int i = 0; i < inventoryHub.Length; i++)
+        {
+            if(inventoryHub[i] == null) continue;
+            if (inventoryHub[i] == this)
+            {
+                InventoryUI.Instance.fillGO.transform.GetChild(i).GetComponent<SliderUI>().SubscribeToCrossEvent();
+                index = i;
+                break;
+            }
+        }
         transform.localEulerAngles = angleHand;
+    }
+
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToCrossEvent();
     }
 
     public override void OnInteract(bool hit, RaycastHit i)
@@ -76,7 +95,7 @@ public class Cross : Item
             explosionPS.Play();
         }
         _crossCd.cantUse = true;
-        _crossCd.SetCooldown(coolDown);
+        _crossCd.SetCooldown(0);
         
         HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
         HouseEnemy.Instance.CheckRoom();

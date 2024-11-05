@@ -21,14 +21,14 @@ public class BibleCD : MonoBehaviour
     {
         if (!cantUse) return;
 
-        if (_cooldown <= 0)
+        if (_cooldown >= 10)
         {
-            _cooldown = 0;
+            _cooldown = 10;
             OnBibleTimerChange?.Invoke();
             cantUse = false;
             return;
         }
         OnBibleTimerChange?.Invoke();
-        _cooldown -= Time.deltaTime;
+        _cooldown += Time.deltaTime;
     }
 }

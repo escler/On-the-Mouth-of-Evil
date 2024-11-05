@@ -102,6 +102,7 @@ public class HouseEnemy : Enemy
 
         //Spawn
         _fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
+        _fsm.AddTransition(StateTransitions.ToIdle, spawnState, idleState);
         
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
@@ -149,6 +150,8 @@ public class HouseEnemy : Enemy
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
         compareRoom = _player.actualRoom == actualRoom;
         canAttackPlayer = enemyVisible && actualTimeToLost > 0;
+        
+        print(actualTime);
     }
 
     private void TimeToShow()

@@ -13,6 +13,7 @@ public class InventoryUI : MonoBehaviour
     private int _indexSelectedItem;
     [SerializeField] private TextMeshProUGUI nameItemSelected;
     public Transform activePos, deactivePos;
+    public GameObject fillGO;
     
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class InventoryUI : MonoBehaviour
     public void ChangeItemUI(Item i, int index, ItemCategory category)
     {
         var actualElement = category == ItemCategory.hubItem ? 
-            hubInventoryUI.transform.GetChild(index) : enviromentInventoryUI.transform.GetChild(index);
+            hubInventoryUI.transform.GetChild(index + 2) : enviromentInventoryUI.transform.GetChild(index);
         
         GameObject uiElement = Instantiate(i.uiElement);
         uiElement.transform.SetParent(actualElement);
@@ -52,6 +53,7 @@ public class InventoryUI : MonoBehaviour
     {
         var inventory = category == ItemCategory.hubItem ? hubInventoryUI : enviromentInventoryUI;
 
+        index = category == ItemCategory.hubItem ? index + 2 : index;
         var ui = inventory.transform.GetChild(index).GetChild(0);
         ui.SetParent(null);
         Destroy(ui.gameObject);

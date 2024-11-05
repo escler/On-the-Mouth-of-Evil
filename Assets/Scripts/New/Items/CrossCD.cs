@@ -22,14 +22,14 @@ public class CrossCD : MonoBehaviour
     {
         if (!cantUse) return;
 
-        if (_cooldown <= 0)
+        if (_cooldown >= 30)
         {
-            _cooldown = 0;
+            _cooldown = 30;
             OnCrossTimerChange?.Invoke();
             cantUse = false;
             return;
         }
         OnCrossTimerChange?.Invoke();
-        _cooldown -= Time.deltaTime;
+        _cooldown += Time.deltaTime;
     }
 }
