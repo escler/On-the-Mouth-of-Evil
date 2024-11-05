@@ -150,8 +150,6 @@ public class HouseEnemy : Enemy
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
         compareRoom = _player.actualRoom == actualRoom;
         canAttackPlayer = enemyVisible && actualTimeToLost > 0;
-        
-        print(actualTime);
     }
 
     private void TimeToShow()
@@ -244,6 +242,8 @@ public class HouseEnemy : Enemy
     
     IEnumerator ShowEnemyOnGoodRitual()
     {
+        PlayerHandler.Instance.movement.ritualCinematic = true;
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         while (enemyVisibility < 8)
         {
             enemyVisibility += .3f;
@@ -260,8 +260,6 @@ public class HouseEnemy : Enemy
         if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateGoodExorcism = true;
         CameraFollow.Instance.inRitual = true;
-        CameraFollow.Instance.SetNewCameraPos(CameraCinematicHandler.Instance.transform);
-        PlayerHandler.Instance.UnPossesPlayer();
 
         RitualManager.Instance.ritualFloor.SetActive(false);
 
@@ -279,10 +277,9 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
 
-        CameraFollow.Instance.SetNewCameraPos(PlayerHandler.Instance.cameraPos);
         yield return new WaitForSeconds(2f);
         CameraFollow.Instance.inRitual = false;
-        PlayerHandler.Instance.PossesPlayer();
+        PlayerHandler.Instance.movement.ritualCinematic = false;
         RitualManager.Instance.CloseCrater();
         
         

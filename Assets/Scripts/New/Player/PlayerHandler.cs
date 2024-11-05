@@ -38,6 +38,8 @@ public class PlayerHandler : MonoBehaviour
     private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)
     {
         PossesPlayer();
+        movement.inSpot = false;
+        movement.ritualCinematic = false;
     }
 
     public void PossesPlayer()

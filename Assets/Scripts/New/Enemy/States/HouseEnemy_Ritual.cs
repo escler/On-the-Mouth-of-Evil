@@ -49,6 +49,7 @@ public class HouseEnemy_Ritual : MonoBaseState
 
     IEnumerator RitualGoodSequenceCor()
     {
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitForSeconds(0.7f);
         float timer = 0;
 

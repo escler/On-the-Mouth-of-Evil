@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class BibleCD : MonoBehaviour
     public event UpdateBibleCD OnBibleTimerChange;
 
     public float Cooldown => _cooldown;
+
+    private void Awake()
+    {
+        _cooldown = 10;
+    }
 
     public void SetCooldown(float time)
     {

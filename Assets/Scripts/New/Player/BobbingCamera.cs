@@ -47,6 +47,10 @@ public class BobbingCamera : MonoBehaviour
         MakeBobbing();
     }
 
+    public void DoBobbing()
+    {
+        MakeBobbing();
+    }
     void MakeBobbing()
     {
         _timer += Time.deltaTime * _actualBobbingSpeed;

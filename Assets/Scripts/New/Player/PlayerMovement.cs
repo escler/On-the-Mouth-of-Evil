@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rb;
     private bool _run;
     private AudioSource _walkAudioSource;
+    public bool ritualCinematic;
+    public bool inSpot;
+    private Vector3 reference = Vector3.zero;
     public bool Run => _run;
 
     private void Awake()
@@ -28,10 +31,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+        MoveToRitualSpot();
     }
 
     private void Movement()
     {
+        if (ritualCinematic) return;
         _actualSpeed = _run ? runSpeed : walkSpeed;
 
         var inputVector = new Vector2(_inputX, _inputY);
@@ -57,6 +62,33 @@ public class PlayerMovement : MonoBehaviour
             MusicManager.Instance.StopSound(_walkAudioSource);
             _walkAudioSource = null;
         }
+    }
+
+
+    private void MoveToRitualSpot()
+    {
+        if (!ritualCinematic) return;
+        if (inSpot)
+        {
+            transform.LookAt(Vector3.SmoothDamp(transform.position, CameraCinematicHandler.Instance.ritual.position,
+                ref reference, 2f));
+            return;
+        }
+        var target = CameraCinematicHandler.Instance.transform.position;
+        target.y = transform.position.y;
+
+        if (Vector3.Distance(transform.position, target) < 0.1f)
+        {
+            inSpot = true;
+            return;
+        }
+        
+        PlayerHandler.Instance.bobbingCamera.DoBobbing();
+        transform.LookAt(Vector3.SmoothDamp(transform.position, target, ref reference, 3f));
+        Vector3 velocity = transform.forward * .5f;
+        velocity.Normalize();
+        _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);
+
     }
 
 }

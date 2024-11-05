@@ -9,6 +9,8 @@ public class PlayerCam : MonoBehaviour
         float _xRotation, _yRotation, newPosX, newPosY;
         private Quaternion _newRotation;
         private bool _cameraLock;
+        private bool _ritualCinematic;
+        private bool _inSpot;
 
         private void Awake()
         {
@@ -23,6 +25,14 @@ public class PlayerCam : MonoBehaviour
 
         void Update()
         {
+                _ritualCinematic = PlayerHandler.Instance.movement.ritualCinematic;
+                RotatePlayer();
+                LookRitual();
+        }
+
+        void RotatePlayer()
+        {
+                if (_ritualCinematic) return;
                 if (_cameraLock)
                 {
                         _mouseX = 0;
@@ -38,9 +48,16 @@ public class PlayerCam : MonoBehaviour
                         Quaternion.Slerp(cameraPos.localRotation, Quaternion.Euler(-_yRotation, 0, 0), .5f);
                 //cameraPos.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
                 transform.Rotate(Vector3.up * _xRotation);
-
         }
 
+        void LookRitual()
+        {
+                if (!_ritualCinematic) return;
+                var target = transform.localRotation;
+                target.x = Quaternion.identity.x;
+                cameraPos.localRotation = Quaternion.Slerp(cameraPos.localRotation, Quaternion.identity, .7f * Time.deltaTime);
+        }
+        
         private void GetValueSens()
         {
                 if (PlayerPrefs.HasKey("Sens"))
