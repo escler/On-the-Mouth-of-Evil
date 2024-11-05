@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FSM;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using Random = UnityEngine.Random;
 
 public class HouseEnemy_Attacks : MonoBaseState
@@ -22,7 +23,6 @@ public class HouseEnemy_Attacks : MonoBaseState
     private bool animationStarted;
     private float waitingTime;
     private bool _corroutine;
-    private List<MovableItem> _movableItems = new List<MovableItem>();
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -45,7 +45,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         base.Enter(from, transitionParameters);
         print("Entre a Attacks");
         _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
-        _actualAction = 0;
         switch (_actualAction)
         {
             case 0:
@@ -121,6 +120,12 @@ public class HouseEnemy_Attacks : MonoBaseState
     private void OnExitChase()
     {
         _path.Clear();
+        var movable = MovableHandler.Instance.movablesItems;
+        foreach (var mov in movable)
+        {
+            mov.GetComponent<Rigidbody>().isKinematic = false;
+            mov.GetComponent<BoxCollider>().enabled = true;
+        }
         startNode = null;
         goal = null;
         PlayerHandler.Instance.PossesPlayer();
@@ -212,7 +217,12 @@ public class HouseEnemy_Attacks : MonoBaseState
         Transform player = PlayerHandler.Instance.transform;
         while (time > 0 && !_ray)
         {
-            var movable = GameObject.FindObjectsByType(typeof(MovableItem));
+            var movable = MovableHandler.Instance.movablesItems;
+            foreach (var mov in movable)
+            {
+                mov.GetComponent<Rigidbody>().isKinematic = true;
+                mov.GetComponent<BoxCollider>().enabled = false;
+            }
             if (!owner.compareRoom) break;
             if (owner.crossUsed) break;
             Vector3 target = owner.transform.position;
