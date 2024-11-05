@@ -112,6 +112,7 @@ public class Skull : Item
     IEnumerator FocusObject()
     {
         canInteract = true;
+        cantBobbing = true;
         PlayerHandler.Instance.UnPossesPlayer();
         while (Vector3.Distance(transform.position, cameraPos.position + cameraPos.forward * offset) > 0.1f)
         {
@@ -135,6 +136,7 @@ public class Skull : Item
         }
 
         transform.position = handPos.position;
+        cantBobbing = false;
         canInteract = false;
         Inventory.Instance.cantSwitch = false;
     }

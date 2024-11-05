@@ -22,6 +22,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private bool animationStarted;
     private float waitingTime;
     private bool _corroutine;
+    private List<MovableItem> _movableItems = new List<MovableItem>();
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -43,7 +44,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         base.Enter(from, transitionParameters);
         print("Entre a Attacks");
-        //_actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
+        _actualAction = owner.compareRoom ? Random.Range(0, enemyAction.Length) : 0;
         _actualAction = 0;
         switch (_actualAction)
         {
@@ -211,6 +212,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         Transform player = PlayerHandler.Instance.transform;
         while (time > 0 && !_ray)
         {
+            var movable = GameObject.FindObjectsByType(typeof(MovableItem));
             if (!owner.compareRoom) break;
             if (owner.crossUsed) break;
             Vector3 target = owner.transform.position;
