@@ -62,6 +62,13 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        var slidersUI = InventoryUI.Instance.fillGO.transform;
+
+        for (int i = 0; i < slidersUI.childCount; i++)
+        {
+            slidersUI.GetChild(i).GetComponent<SliderUI>().ClearSubscripcion();
+        }
+
         countEnviroment = 0;
         countHub = 0;
         cantSwitch = false;

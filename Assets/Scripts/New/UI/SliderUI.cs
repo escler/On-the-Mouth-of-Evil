@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SliderUI : MonoBehaviour
 {
     private Image _image;
     private CrossCD _crossCd;
     private BibleCD _bibleCd;
+    private bool crossSubscriber, bibleSubscriber;
 
     private void Awake()
     {
@@ -19,12 +21,15 @@ public class SliderUI : MonoBehaviour
     {
         _crossCd = PlayerHandler.Instance.GetComponent<CrossCD>();
         _crossCd.OnCrossTimerChange += UpdateSliderCrossValue;
+        crossSubscriber = true;
     }
 
     public void UnSubscribeToCrossEvent()
     {
+        if (!crossSubscriber) return;
         _crossCd.OnCrossTimerChange -= UpdateSliderCrossValue;
         _image.fillAmount = 1;
+        crossSubscriber = false;
     }
 
     void UpdateSliderCrossValue()
@@ -42,12 +47,20 @@ public class SliderUI : MonoBehaviour
     {
         _bibleCd = PlayerHandler.Instance.GetComponent<BibleCD>();
         _bibleCd.OnBibleTimerChange += UpdateSliderBibleValue;
+        bibleSubscriber = true;
     }
 
     public void UnSubscribeToBibleEvent()
     {
+        if (!bibleSubscriber) return;
         _bibleCd.OnBibleTimerChange -= UpdateSliderBibleValue;
         _image.fillAmount = 1;
+        bibleSubscriber = false;
     }
 
+    public void ClearSubscripcion()
+    {
+        UnSubscribeToBibleEvent();
+        UnSubscribeToCrossEvent();
+    }
 }
