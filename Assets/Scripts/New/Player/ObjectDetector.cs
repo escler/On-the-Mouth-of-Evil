@@ -49,6 +49,21 @@ public class ObjectDetector : MonoBehaviour
         CheckDoors();
         DescriptionChecker();
         EmptyHandCheck();
+        //CheckEnviromentObjects();
+    }
+
+    private void CheckEnviromentObjects()
+    {
+        var ray = CheckRayCast();
+        if (!ray) return;
+
+        if (Input.GetButtonDown("Interact"))
+        {
+            if (_hit.transform.TryGetComponent(out EnviromentObjects obj))
+            {
+                obj.Interact();
+            }
+        }
     }
 
     bool GrabText()
@@ -60,6 +75,8 @@ public class ObjectDetector : MonoBehaviour
         {
             return false;
         }
+
+        //if (_hit.transform.TryGetComponent(out EnviromentObjects obj)) return true;
 
         if (_hit.transform.TryGetComponent(out SkullPuzzleSlot socket))
         {
