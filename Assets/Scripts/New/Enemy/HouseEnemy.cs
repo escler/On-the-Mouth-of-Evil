@@ -233,10 +233,10 @@ public class HouseEnemy : Enemy
 
         yield return new WaitForSeconds(3f);
         
-        FadeOutHandler.Instance.FaceOut(1.5f);
+        FadeOutHandler.Instance.FaceOut(3.5f);
         TarotCardPuzzle.Instance.PathTaked();
-        GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
-        gameObject.SetActive(false);
+        GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+        //gameObject.SetActive(false);
 
     }
     

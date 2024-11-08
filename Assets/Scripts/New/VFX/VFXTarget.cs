@@ -12,7 +12,7 @@ public class VFXTarget : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerHandler.Instance != null) targetPlayer = PlayerHandler.Instance.transform;
+        if (PlayerHandler.Instance != null) targetPlayer = PlayerHandler.Instance.particlePivot;
         _vfx = GetComponent<VisualEffect>();
     }
 
