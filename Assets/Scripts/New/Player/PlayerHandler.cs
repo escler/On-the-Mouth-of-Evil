@@ -16,6 +16,7 @@ public class PlayerHandler : MonoBehaviour
     public Room actualRoom;
     public bool cantPressInventory;
     public Transform particlePivot;
+    public Animator animator;
 
 
     private void Awake()

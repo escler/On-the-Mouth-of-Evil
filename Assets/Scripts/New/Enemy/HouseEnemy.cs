@@ -201,6 +201,8 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnBadRitual()
     {
+        PlayerHandler.Instance.movement.ritualCinematic = true;
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         while (enemyVisibility < 8)
         {
             enemyVisibility += .45f;
@@ -220,9 +222,16 @@ public class HouseEnemy : Enemy
         activateBadExorcism = true;
 
         var duration = _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).length;
+        bool animPlayer = false;
 
         while (enemyVisibility > 0)
         {
+            if (enemyVisibility < 6f && !animPlayer)
+            {
+                PlayerHandler.Instance.animator.enabled = true;
+                PlayerHandler.Instance.animator.SetTrigger("LookAround");
+                animPlayer = true;
+            }
             enemyVisibility -= (8 / duration) * 0.0225f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
@@ -232,8 +241,9 @@ public class HouseEnemy : Enemy
         RitualManager.Instance.RitualFinish();
 
         yield return new WaitForSeconds(3f);
-        
-        FadeOutHandler.Instance.FaceOut(3.5f);
+        PlayerHandler.Instance.movement.ritualCinematic = false;
+        PlayerHandler.Instance.animator.enabled = false;
+        FadeOutHandler.Instance.FaceOut(2.5f);
         TarotCardPuzzle.Instance.PathTaked();
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
         //gameObject.SetActive(false);

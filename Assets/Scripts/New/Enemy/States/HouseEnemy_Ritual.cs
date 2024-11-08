@@ -36,6 +36,7 @@ public class HouseEnemy_Ritual : MonoBaseState
 
     IEnumerator RitualBadSequenceCor()
     {
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         Vector3 target = PlayerHandler.Instance.transform.position;
         target.y = owner.transform.position.y;
         Vector3 dir = target - owner.transform.position;

@@ -144,8 +144,8 @@ public class TarotCardPuzzle : MonoBehaviour
         if (_badPath) return;
         var actualCardPiece = piecesCardGood[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
-        var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > 1.8f && distance < 1f)
+        var distance = Vector3.Distance(PlayerHandler.Instance.transform.position, actualCardPiece.position);
+        if (orientation > 1.8f && distance < 2f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _badPathTaked = false;
@@ -163,8 +163,8 @@ public class TarotCardPuzzle : MonoBehaviour
         if (_goodPath) return;
         var actualCardPiece = piecesCardBad[_actualPiece].transform;
         var orientation = Vector3.Dot(-heldObj.transform.forward, -actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
-        var distance = Vector3.Distance(heldObj.transform.position, actualCardPiece.position);
-        if (orientation > 1.8f && distance < 1f)
+        var distance = Vector3.Distance(PlayerHandler.Instance.transform.position, actualCardPiece.position);
+        if (orientation > 1.8f && distance < 2f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
             _canPlaceInverse = true;

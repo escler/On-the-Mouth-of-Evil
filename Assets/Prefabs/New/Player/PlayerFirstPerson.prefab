@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 2127087547482838779}
   - component: {fileID: 968480274134681069}
   - component: {fileID: 920988769678525306}
+  - component: {fileID: 894888750474411413}
   m_Layer: 2
   m_Name: PlayerFirstPerson
   m_TagString: Player
@@ -238,6 +239,7 @@ MonoBehaviour:
   actualRoom: {fileID: 0}
   cantPressInventory: 0
   particlePivot: {fileID: 3941799298484805484}
+  animator: {fileID: 894888750474411413}
 --- !u!114 &7472100395739103076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +492,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startLife: 3
+--- !u!95 &894888750474411413
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413281698991192845}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9fd7fdbdfac52734b8d5e4f704429478, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5645166079778183386
 GameObject:
   m_ObjectHideFlags: 0
