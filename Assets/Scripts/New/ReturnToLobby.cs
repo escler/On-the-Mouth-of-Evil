@@ -8,7 +8,7 @@ public class ReturnToLobby : MonoBehaviour, IInteractable
 
     public void OnInteractItem()
     {
-        GameManagerNew.Instance.LoadSceneWithDelay("Hub", 0);
+        GameManagerNew.Instance.LoadSceneWithDelay("Hub", 3);
     }
 
     public void OnInteract(bool hit, RaycastHit i)

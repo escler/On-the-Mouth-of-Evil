@@ -10,7 +10,8 @@ public class CanvasManager : MonoBehaviour
 
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
-        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, puzzleSaltPaper, rotateInfo, moveObjectUI, inspectImage, menu, descriptionTextContent, fps;
+        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, puzzleSaltPaper,
+        rotateInfo, moveObjectUI, inspectImage, menu, descriptionTextContent, fps, loadingScreen;
     public CrosshairUI crossHairUI;
 
     private void Awake()

@@ -9,7 +9,7 @@ public class LoadLevel : MonoBehaviour
     public string nameLevel;
     public void LoadScene()
     {
-        SceneManager.LoadScene(nameLevel);
+        GameManagerNew.Instance.LoadSceneWithDelay(nameLevel, 2f);
         CanvasManager.Instance.menu.SetActive(false);
         PlayerHandler.Instance.playerCam.CameraLock = false;
     }

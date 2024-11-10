@@ -12,6 +12,7 @@ public class FadeOutHandler : MonoBehaviour
     private Image _image;
     private float interval;
     private Color imageColor;
+    public bool fadeOut;
 
     private void Awake()
     {
@@ -42,7 +43,6 @@ public class FadeOutHandler : MonoBehaviour
         interval = (1 - _image.color.a) / duration;
         while (_image.color.a < 1)
         {
-            print("Entre aca");
             imageColor.a += interval * 0.01f;
             print(_image.color.a);
             _image.color = imageColor;
@@ -51,13 +51,16 @@ public class FadeOutHandler : MonoBehaviour
 
         imageColor.a = 1;
         _image.color = imageColor;
+        fadeOut = true;
     }
 
     private void ResetAlpha(Scene scene, LoadSceneMode loadSceneMode)
     {
         StopAllCoroutines();
-        imageColor.a = 0;
+        imageColor.a = 1;
         _image.color = imageColor;
+        fadeOut = true;
+        StartCoroutine(FadeIn(1f));
     }
 
     IEnumerator FadeIn(float duration)
@@ -72,5 +75,6 @@ public class FadeOutHandler : MonoBehaviour
 
         imageColor.a = 0;
         _image.color = imageColor;
+        fadeOut = false;
     }
 }

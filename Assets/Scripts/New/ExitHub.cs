@@ -40,8 +40,7 @@ public class ExitHub : MonoBehaviour, IInteractable
             return;
         }
 
-        SceneManager.LoadScene(PlayerHandler.Instance.actualMission.misionName);
-
+        GameManagerNew.Instance.LoadSceneWithDelay(PlayerHandler.Instance.actualMission.misionName, 3f);
     }
 
     public void OnInteract(bool hit, RaycastHit i)

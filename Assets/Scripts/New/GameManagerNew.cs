@@ -28,7 +28,16 @@ public class GameManagerNew : MonoBehaviour
 
     IEnumerator LoadSceneCor(string sceneName, float seconds)
     {
-        yield return new WaitForSeconds(seconds);
-        SceneManager.LoadScene(sceneName);
+        print("Entre a cor");
+        FadeOutHandler.Instance.FaceOut(1);
+        yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
+        CanvasManager.Instance.loadingScreen.SetActive(true);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        CanvasManager.Instance.loadingScreen.SetActive(false);
     }
 }

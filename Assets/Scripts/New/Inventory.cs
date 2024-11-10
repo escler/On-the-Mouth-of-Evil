@@ -132,7 +132,6 @@ public class Inventory : MonoBehaviour
         i.GetComponent<Rigidbody>().isKinematic = true;
         ChangeSelectedItem(countSelected);
 
-        print(countInventoryAssigned);
         if (category == ItemCategory.hubItem) countHub = countInventoryAssigned;
         else countEnviroment = countInventoryAssigned;
     }
