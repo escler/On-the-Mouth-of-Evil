@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
     private float _valueBurn;
     public MeshRenderer[] meshesh;
     public bool paperOnRitual;
+    public Transform lighterPos;
     
     private void Awake()
     {
@@ -21,7 +23,14 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
         _burning.SetFloat("_Edge2", 1);
         _valueBurn = _burning.GetFloat("_Edge2");
     }
-    
+
+    private void Update()
+    {
+        Position = lighterPos.position;
+    }
+
+    public Vector3 Position { get; set; }
+
     public void OnBurn()
     {
         GetComponent<BoxCollider>().enabled = false;

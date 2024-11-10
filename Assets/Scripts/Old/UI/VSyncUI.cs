@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class VSyncUI : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         QualitySettings.vSyncCount = 1;
+        print("Vsync");
     }
 }

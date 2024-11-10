@@ -9,6 +9,7 @@ public class Lighter : Item
     public GameObject PSIdle;
     private LighterView lighterView;
     private bool cantUseItem;
+    private Vector3 reference = Vector3.zero;
 
     private void Awake()
     {
@@ -22,10 +23,9 @@ public class Lighter : Item
         
         if (i.transform.TryGetComponent(out IBurneable item))
         {
-            //cantUseItem = true;
-            //Inventory.Instance.cantSwitch = true;
-            //StartCoroutine(WaitForUseAgain());
-            item.OnBurn();
+            cantUseItem = true;
+            Inventory.Instance.cantSwitch = true;
+            StartCoroutine(WaitForUseAgain(item));
             canUse = true;
         }
         else
@@ -88,10 +88,35 @@ public class Lighter : Item
         lighterView.animator.SetBool("Open", false);
     }
 
-    IEnumerator WaitForUseAgain()
+    IEnumerator WaitForUseAgain(IBurneable item)
     {
-        yield return new WaitUntil(() => !lighterView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
-        yield return new WaitUntil(() => lighterView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
+        transform.SetParent(null);
+        cantBobbing = true;
+        while (Vector3.Distance(transform.position, item.Position) > 0.2f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, item.Position, ref reference, .25f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        item.OnBurn();
+        yield return new WaitForSeconds(0.1f);
+        while (Vector3.Distance(transform.position, PlayerHandler.Instance.handPivot.position) > 0.01f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, PlayerHandler.Instance.handPivot.position, ref reference, .25f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        transform.position = PlayerHandler.Instance.handPivot.position;
+
+        transform.SetParent(PlayerHandler.Instance.handPivot);
+        while (Vector3.Distance(transform.localEulerAngles, angleHand) > 0.01f)
+        {
+            transform.localEulerAngles = Vector3.SmoothDamp(transform.localEulerAngles, angleHand, ref reference, .25f);
+            yield return new WaitForSeconds(0.01f);
+        }
+        transform.localEulerAngles = angleHand;
+        cantBobbing = false;
         cantUseItem = false;
         Inventory.Instance.cantSwitch = false;
         print("Lo puedo usar devuelta");

@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IBurneable 
 {
+    Vector3 Position { get; set; }
     public void OnBurn();
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,14 @@ public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
 {
     public GameObject psFire;
     private bool burning;
+    public Transform lighterPos;
+    public Vector3 Position { get; set; }
+
+    private void Update()
+    {
+        Position = lighterPos.position;
+    }
+
     public void OnBurn()
     {
         if (burning) return;
