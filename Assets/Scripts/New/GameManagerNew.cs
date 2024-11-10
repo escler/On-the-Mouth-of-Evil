@@ -28,6 +28,7 @@ public class GameManagerNew : MonoBehaviour
 
     IEnumerator LoadSceneCor(string sceneName, float seconds)
     {
+        PlayerHandler.Instance.UnPossesPlayer();
         print("Entre a cor");
         FadeOutHandler.Instance.FaceOut(1);
         yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
@@ -39,5 +40,6 @@ public class GameManagerNew : MonoBehaviour
             yield return null;
         }
         CanvasManager.Instance.loadingScreen.SetActive(false);
+        PlayerHandler.Instance.PossesPlayer();
     }
 }

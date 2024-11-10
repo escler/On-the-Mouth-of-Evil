@@ -110,11 +110,6 @@ public class Lighter : Item
         transform.position = PlayerHandler.Instance.handPivot.position;
 
         transform.SetParent(PlayerHandler.Instance.handPivot);
-        while (Vector3.Distance(transform.localEulerAngles, angleHand) > 0.01f)
-        {
-            transform.localEulerAngles = Vector3.SmoothDamp(transform.localEulerAngles, angleHand, ref reference, .25f);
-            yield return new WaitForSeconds(0.01f);
-        }
         transform.localEulerAngles = angleHand;
         cantBobbing = false;
         cantUseItem = false;

@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         var target = CameraCinematicHandler.Instance.transform.position;
         target.y = transform.position.y;
 
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+        if (Vector3.Distance(transform.position, target) < 0.3f)
         {
             inSpot = true;
             return;
