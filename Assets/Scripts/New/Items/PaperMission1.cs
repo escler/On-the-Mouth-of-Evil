@@ -15,13 +15,10 @@ public class PaperMission1 : Mission
     private PlayerCam _playerCam;
     private bool canInteract;
     public float offset;
-    private string descriptionContent;
     private bool contentActive;
 
     private void Start()
     {
-        descriptionContent =
-            "<style=\"Title\">Mission 1</style>\n\nNombre del Demonio: Ignis\nUbicación: Casa Abandonada\nObjetos Necesarios: Encendedor - Biblia - Cruz - Salero";
         active = false;
         cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
@@ -128,15 +125,14 @@ public class PaperMission1 : Mission
             DisableContent();
             return;
         }
-        var content = CanvasManager.Instance.descriptionTextContent;
+        var content = CanvasManager.Instance.descriptionMissionContent;
         content.SetActive(true);
-        content.GetComponentInChildren<TextMeshProUGUI>().text = descriptionContent;
         contentActive = true;
     }
 
     private void DisableContent()
     {
-        CanvasManager.Instance.descriptionTextContent.SetActive(false);
+        CanvasManager.Instance.descriptionMissionContent.SetActive(false);
         contentActive = false;
     }
 

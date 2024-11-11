@@ -14,13 +14,10 @@ public class PuzzleSaltPaper : Item, IInteractable
     private bool canInteract;
     public float offset;
     public bool canDescriptionContent;
-    private string descriptionContent;
     private bool contentActive;
 
     private void Start()
     {
-        descriptionContent =
-            "Cuando los cielos se oscurezcan, y sea observado por las personas y la iglesia.\nLos demonios recorreran la tierra, ante la mirada preocupante del cielo.";
         active = false;
         cameraPos = PlayerHandler.Instance.cameraPos;
         handPos = PlayerHandler.Instance.handPivot;
@@ -102,6 +99,7 @@ public class PuzzleSaltPaper : Item, IInteractable
 
     void GetDescriptionContent()
     {
+        if (!canDescriptionContent) return;
         if (CanvasManager.Instance.menu.activeInHierarchy) return;
         if (!active) return;
         if (contentActive)
@@ -110,16 +108,15 @@ public class PuzzleSaltPaper : Item, IInteractable
             return;
         }
         
-        var content = CanvasManager.Instance.descriptionTextContent;
+        var content = CanvasManager.Instance.descriptionPuzzleContent;
         content.SetActive(true);
-        content.GetComponentInChildren<TextMeshProUGUI>().text = descriptionContent;
         contentActive = true;
 
     }
 
     private void DisableContent()
     {
-        CanvasManager.Instance.descriptionTextContent.SetActive(false);
+        CanvasManager.Instance.descriptionPuzzleContent.SetActive(false);
         contentActive = false;
     }
 
