@@ -9,7 +9,7 @@ using Image = UnityEngine.UI.Image;
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; }
-    public GameObject hubInventoryUI, enviromentInventoryUI, actualInventoryUI, blurHub, blurEnviroment;
+    public GameObject hubInventoryUI, enviromentInventoryUI, actualInventoryUI, specialInventoryUI, blurHub, blurEnviroment, blurSpecial;
     private int _indexSelectedItem;
     [SerializeField] private TextMeshProUGUI nameItemSelected;
     public Transform activePos, deactivePos;
@@ -40,6 +40,15 @@ public class InventoryUI : MonoBehaviour
 
     public void ChangeItemUI(Item i, int index, ItemCategory category)
     {
+        if (index == 4)
+        {
+            var uiSpecial = specialInventoryUI.transform.GetChild(0);
+            GameObject uiSpecialElement = Instantiate(i.uiElement);
+            uiSpecialElement.transform.SetParent(uiSpecial);
+            uiSpecialElement.transform.localPosition = Vector3.zero;
+            uiSpecialElement.transform.localScale = Vector3.one;
+            return;
+        }
         var actualElement = category == ItemCategory.hubItem ? 
             hubInventoryUI.transform.GetChild(index + 2) : enviromentInventoryUI.transform.GetChild(index);
         
@@ -51,6 +60,14 @@ public class InventoryUI : MonoBehaviour
 
     public void DeleteUI(int index, ItemCategory category)
     {
+        if (index == 4)
+        {
+            
+            var uiSpecial = specialInventoryUI.transform.GetChild(0).GetChild(0);
+            uiSpecial.SetParent(null);
+            Destroy(uiSpecial.gameObject);
+            return;
+        }
         var inventory = category == ItemCategory.hubItem ? hubInventoryUI : enviromentInventoryUI;
 
         index = category == ItemCategory.hubItem ? index + 2 : index;
@@ -75,19 +92,25 @@ public class InventoryUI : MonoBehaviour
             case 0:
                 hubInventoryUI.transform.localPosition = activePos.localPosition;
                 hubInventoryUI.transform.localScale = activePos.localScale;
+                specialInventoryUI.transform.localPosition = activePos.localPosition;
+                specialInventoryUI.transform.localScale = new Vector3(2.3f, 2.3f, 2.3f);
                 enviromentInventoryUI.transform.localPosition = deactivePos.localPosition;
                 enviromentInventoryUI.transform.localScale = deactivePos.localScale;
                 actualInventoryUI = hubInventoryUI;
                 blurHub.SetActive(false);
+                blurSpecial.SetActive(false);
                 blurEnviroment.SetActive(true);
                 break;
             case 1:
                 hubInventoryUI.transform.localPosition = deactivePos.localPosition;
                 hubInventoryUI.transform.localScale = deactivePos.localScale;
+                specialInventoryUI.transform.localPosition = deactivePos.localPosition;
+                specialInventoryUI.transform.localScale = deactivePos.localScale;
                 enviromentInventoryUI.transform.localPosition = activePos.localPosition;
                 enviromentInventoryUI.transform.localScale = activePos.localScale;
                 actualInventoryUI = enviromentInventoryUI;
                 blurHub.SetActive(true);
+                blurSpecial.SetActive(true);
                 blurEnviroment.SetActive(false);
                 break;
         }

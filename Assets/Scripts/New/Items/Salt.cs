@@ -60,6 +60,14 @@ public class Salt : Item
             //Inventory.Instance.DropItem();
             //Destroy(gameObject);
         }
+
+        if (i.transform.TryGetComponent(out VodooDoll vodooDoll))
+        {
+            if (_uses <= 0) return;
+            print("funciona");
+            _uses--;
+            StartCoroutine(FillSalt());
+        }
     }
     
     public override void OnUpdate()
@@ -114,7 +122,7 @@ public class Salt : Item
         {
             if (door.saltBlock) return false;
         }
-        if (ray.transform.TryGetComponent(out SaltRecipient saltRecipient) || ray.transform.TryGetComponent(out Door door2))
+        if (ray.transform.TryGetComponent(out SaltRecipient saltRecipient) || ray.transform.TryGetComponent(out Door door2) || ray.transform.TryGetComponent(out VodooDoll vodoo))
         {
             return true;
         }
