@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FSM;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -23,6 +24,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private bool animationStarted;
     private float waitingTime;
     private bool _corroutine;
+    public LayerMask interactLayerMask;
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -215,6 +217,14 @@ public class HouseEnemy_Attacks : MonoBaseState
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
+        var sphere = Physics.OverlapSphere(PlayerHandler.Instance.transform.position, 10, interactLayerMask);
+        var doors = sphere.Where(x => x.TryGetComponent(out Door door));
+        foreach (var door in doors)
+        {
+            if(!door.GetComponent<Door>().open) continue;
+            
+            door.GetComponent<Door>().InteractDoor();
+        }
         while (time > 0 && !_ray)
         {
             var movable = MovableHandler.Instance.movablesItems;
