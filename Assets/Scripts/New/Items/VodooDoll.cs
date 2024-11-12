@@ -67,7 +67,6 @@ public class VodooDoll : Item
     {
         _cantUse = true;
         transform.SetParent(null);
-        transform.eulerAngles = angleHand;
         var hitPointWithAltitude = hitPoint + Vector3.up * 0.01f;
         while (Vector3.Distance(transform.position, hitPointWithAltitude) > 0.05f)
         {

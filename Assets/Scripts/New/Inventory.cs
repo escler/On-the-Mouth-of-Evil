@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
 
     public void AddSpecialItem(Item i)
     {
+        i.gameObject.SetActive(false);
         if (hubInventory[4] == null)
         {
             hubInventory[4] = i;

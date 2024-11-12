@@ -19,7 +19,7 @@ public class ExitHub : MonoBehaviour, IInteractable
         var actualMissionItemsNeededs = PlayerHandler.Instance.actualMission.
             itemsNeededs.Select(item => item.name);
 
-        for (int i = 0; i < playerInventory.Length; i++)
+        for (int i = 0; i < Inventory.Instance.capacity; i++)
         {
             if (playerInventory[i] == null) return;
             if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName) && !checkedItems.Contains(playerInventory[i].itemName))

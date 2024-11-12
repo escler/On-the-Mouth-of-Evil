@@ -17,6 +17,7 @@ public class PlayerHandler : MonoBehaviour
     public bool cantPressInventory;
     public Transform particlePivot;
     public Animator animator;
+    public bool cantInteract;
 
 
     private void Awake()
@@ -30,6 +31,7 @@ public class PlayerHandler : MonoBehaviour
         Instance = this;
         movement = GetComponent<PlayerMovement>();
         SceneManager.sceneLoaded += UnlockPlayer;
+        cantInteract = false;
     }
 
     private void OnDestroy()
@@ -49,6 +51,7 @@ public class PlayerHandler : MonoBehaviour
         movement.enabled = true;
         playerCam.enabled = true;
         bobbingCamera.enabled = true;
+        cantInteract = false;
     }
 
     public void ChangePlayerPosses(bool state)
@@ -63,6 +66,7 @@ public class PlayerHandler : MonoBehaviour
         movement.enabled = false;
         playerCam.enabled = false;
         bobbingCamera.enabled = false;
+        cantInteract = true;
     }
     
     private void OnTriggerEnter(Collider other)

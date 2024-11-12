@@ -170,6 +170,7 @@ public class ObjectDetector : MonoBehaviour
 
     private void GrabCheck()
     {
+        if (PlayerHandler.Instance.cantInteract) return;
         var raycast = CheckRayCast();
         
         if (raycast && Input.GetButtonDown("Interact"))
