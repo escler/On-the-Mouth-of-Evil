@@ -7,14 +7,18 @@ public class Salt : Item
 {
     private Animator _animator;
     public ParticleSystem ps;
-    private SaltUI saltUI;
-    public int maxUses;
-    private int _uses;
+    public float maxUses;
+    public float _uses;
     private bool cantUseItem;
     private SaltView saltView;
     private MaterialPropertyBlock _saltFill;
     public MeshRenderer fill;
     private float currentSalt;
+    private int index;
+    public delegate void UpdateSaltUI();
+    public event UpdateSaltUI OnSaltChange;
+
+    
     private void Awake()
     {
         saltView = GetComponentInChildren<SaltView>();
@@ -29,16 +33,18 @@ public class Salt : Item
     public override void OnGrabItem()
     {
         base.OnGrabItem();
-        var inventory = Inventory.Instance.hubInventory;
         fill.gameObject.layer = 18;
 
-        for (int i = 0; i < inventory.Length; i++)
+        var inventoryHub = Inventory.Instance.hubInventory;
+        for (int i = 0; i < inventoryHub.Length; i++)
         {
-            if(inventory[i] == null) continue;
-            if (inventory[i] != this) continue;
-            saltUI = InventoryUI.Instance.hubInventoryUI.transform.GetChild(i + 2).transform.GetChild(0).GetComponent<SaltUI>();
-            saltUI.SetUses(_uses, maxUses);
-            break;
+            if(inventoryHub[i] == null) continue;
+            if (inventoryHub[i] == this)
+            {
+                InventoryUI.Instance.fillGO.transform.GetChild(i).GetComponent<SliderUI>().SubscribeToSaltEvent(this);
+                index = i;
+                break;
+            }
         }
     }
 
@@ -66,6 +72,7 @@ public class Salt : Item
             if (_uses <= 0) return;
             vodooDoll.InSalt();
             _uses--;
+            OnSaltChange?.Invoke();
             StartCoroutine(FillSalt());
         }
     }
@@ -79,13 +86,6 @@ public class Salt : Item
         ChangeCrossHair();
 
         if (Input.GetMouseButtonDown(0)) OnInteract(rayConnected, ray);
-    }
-
-    private void ChangeUI()
-    {
-        _uses--;
-        _uses = Mathf.Clamp(_uses, 0, maxUses);
-        saltUI.SaltUsed(_uses);
     }
     public override void OnSelectItem()
     {
@@ -109,6 +109,8 @@ public class Salt : Item
         fill.gameObject.layer = 17;
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = false;
+        InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToSaltEvent();
+
     }
 
     public override bool CanInteractWithItem()
@@ -161,11 +163,15 @@ public class Salt : Item
         yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltToss"));
         StartCoroutine(FillSalt());
         var blockDoor = door.BlockDoor();
-        if(blockDoor) ChangeUI();
+        if (blockDoor)
+        {
+            _uses--;
+            OnSaltChange?.Invoke();
+            print(_uses);
+        }
         yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
         cantUseItem = false;
         Inventory.Instance.cantSwitch = false;
-        print("Lo puedo usar devuelta");
     }
 
     IEnumerator FillSalt()

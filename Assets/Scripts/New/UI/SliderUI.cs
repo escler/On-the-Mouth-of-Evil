@@ -10,9 +10,10 @@ public class SliderUI : MonoBehaviour
     private Image _image;
     private CrossCD _crossCd;
     private BibleCD _bibleCd;
-    private bool crossSubscriber, bibleSubscriber;
+    private bool crossSubscriber, bibleSubscriber, saltSubscriber;
     public Color flashColor;
     public float interval;
+    private Salt currentSalt;
 
     private void Awake()
     {
@@ -32,6 +33,27 @@ public class SliderUI : MonoBehaviour
         _crossCd.OnCrossTimerChange -= UpdateSliderCrossValue;
         _image.fillAmount = 1;
         crossSubscriber = false;
+    }
+    
+    public void SubscribeToSaltEvent(Salt salt)
+    {
+        currentSalt = salt;
+        currentSalt.OnSaltChange += UpdateSliderSaltValue;
+        _image.fillAmount = currentSalt._uses / currentSalt.maxUses;
+        saltSubscriber = true;
+    }
+
+    public void UnSubscribeToSaltEvent()
+    {
+        if (!saltSubscriber) return;
+        currentSalt.OnSaltChange -= UpdateSliderSaltValue;
+        _image.fillAmount = 1;
+        saltSubscriber = false;
+    }
+
+    void UpdateSliderSaltValue()
+    {
+        _image.fillAmount = currentSalt._uses / currentSalt.maxUses;
     }
 
     void UpdateSliderCrossValue()
@@ -68,6 +90,7 @@ public class SliderUI : MonoBehaviour
     {
         UnSubscribeToBibleEvent();
         UnSubscribeToCrossEvent();
+        UnSubscribeToSaltEvent();
     }
 
     public void DoFlash()
