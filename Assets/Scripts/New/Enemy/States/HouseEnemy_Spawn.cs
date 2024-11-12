@@ -26,6 +26,9 @@ public class HouseEnemy_Spawn : MonoBaseState
 
     public override IState ProcessInput()
     {
+        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
+        
         if (dontAttack && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         

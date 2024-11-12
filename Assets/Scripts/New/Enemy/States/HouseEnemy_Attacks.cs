@@ -398,6 +398,9 @@ public class HouseEnemy_Attacks : MonoBaseState
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
 
+        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
+        
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
         {
             return Transitions[StateTransitions.ToPatrol];

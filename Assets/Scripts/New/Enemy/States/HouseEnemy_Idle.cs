@@ -26,6 +26,9 @@ public class HouseEnemy_Idle : MonoBaseState
     {
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
+        
+        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
 
         if (owner.actualTime > owner.timeToShowMe && !owner.ritualDone &&
             Transitions.ContainsKey(StateTransitions.ToSpawn))

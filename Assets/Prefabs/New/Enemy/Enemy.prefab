@@ -9831,6 +9831,7 @@ GameObject:
   - component: {fileID: 8921149377614665347}
   - component: {fileID: 4825668535195307386}
   - component: {fileID: 6156259946163895236}
+  - component: {fileID: 1910910025162058478}
   - component: {fileID: 3433673491691955081}
   - component: {fileID: 8136380155633983683}
   m_Layer: 7
@@ -9922,6 +9923,7 @@ MonoBehaviour:
   goToLocationState: {fileID: 8921149377614665347}
   ritualState: {fileID: 4825668535195307386}
   grabHeadState: {fileID: 6156259946163895236}
+  voodooState: {fileID: 1910910025162058478}
   ritualDone: 0
   nodeRitual: {fileID: 0}
   enemyMaterial: {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
@@ -9951,6 +9953,8 @@ MonoBehaviour:
   magnetVFX: {fileID: 7673711894439977928}
   normalMesh: {fileID: 441891469106003476}
   ritualMesh: {fileID: 4756366117540921628}
+  voodooActivate: 0
+  voodooPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7320507398921388911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10055,6 +10059,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 3234476839139166343}
+--- !u!114 &1910910025162058478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf52e41b0f0b2c4687717d324431211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 3234476839139166343}
+  timeStunned: 15
 --- !u!54 &3433673491691955081
 Rigidbody:
   m_ObjectHideFlags: 0

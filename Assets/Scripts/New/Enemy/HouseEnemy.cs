@@ -35,6 +35,7 @@ public class HouseEnemy : Enemy
     [SerializeField] private HouseEnemy_GoToLocation goToLocationState;
     [SerializeField] private HouseEnemy_Ritual ritualState;
     [SerializeField] private HouseEnemy_GrabHead grabHeadState;
+    [SerializeField] private HouseEnemy_Voodoo voodooState;
     private bool hasPlayedFire;
     public bool ritualDone;
     public Node nodeRitual;
@@ -76,6 +77,9 @@ public class HouseEnemy : Enemy
     public GameObject normalMesh, ritualMesh;
 
     private float _position;
+
+    public bool voodooActivate;
+    public Vector3 voodooPosition;
     
     private void Awake()
     {
@@ -103,6 +107,8 @@ public class HouseEnemy : Enemy
         //Spawn
         _fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
         _fsm.AddTransition(StateTransitions.ToIdle, spawnState, idleState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, spawnState, voodooState);
+        
         
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
@@ -110,6 +116,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, idleState, ritualState);
         _fsm.AddTransition(StateTransitions.ToSpawn, idleState, spawnState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, idleState, voodooState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
@@ -117,6 +124,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, patrolState, ritualState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, patrolState, voodooState);
         
         //Attack
         _fsm.AddTransition(StateTransitions.ToIdle, attacksState, idleState);
@@ -124,17 +132,23 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, attacksState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, attacksState, ritualState);
         _fsm.AddTransition(StateTransitions.ToAttacks, attacksState, attacksState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, attacksState, voodooState);
 
         
         //GoToLocation
-        _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, spawnState);
+        _fsm.AddTransition(StateTransitions.ToSpawn, goToLocationState, spawnState);
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, goToLocationState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, ritualState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, goToLocationState, voodooState);
 
         //GoToGrabHead
         _fsm.AddTransition(StateTransitions.ToIdle, grabHeadState, idleState);
+        
+        //Voodoo
+        _fsm.AddTransition(StateTransitions.ToIdle, voodooState, idleState);
+        _fsm.AddTransition(StateTransitions.ToRitual, voodooState, ritualState);
         
         _fsm.Active = true;
         OnAwake();
@@ -244,7 +258,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.animator.enabled = false;
         FadeOutHandler.Instance.FaceOut(2.5f);
-        TarotCardPuzzle.Instance.PathTaked();
+        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
         //gameObject.SetActive(false);
 
@@ -292,8 +306,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = false;
         RitualManager.Instance.CloseCrater();
         
-        
-        TarotCardPuzzle.Instance.PathTaked();
+        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
         FadeOutHandler.Instance.FaceOut(1.5f);
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         RitualManager.Instance.RitualFinish();

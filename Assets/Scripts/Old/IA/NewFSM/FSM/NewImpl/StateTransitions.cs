@@ -19,4 +19,5 @@ public class StateTransitions
     public const string ToDeath = "ToDeath";
     public const string ToRitual = "ToRitual";
     public const string ToSpawn = "ToSpawn";
+    public const string ToVoodoo = "ToVoodoo";
 }
