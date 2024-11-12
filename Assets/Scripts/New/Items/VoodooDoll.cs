@@ -12,6 +12,7 @@ public class VoodooDoll : Item
     private bool _cantUse;
     public LayerMask layer;
     private Vector3 reference = Vector3.zero;
+    private Vector3 referenceRot = Vector3.zero;
     public float timeActive;
     private float _actualTime;
 
@@ -68,6 +69,7 @@ public class VoodooDoll : Item
     {
         _cantUse = true;
         transform.SetParent(null);
+        StartCoroutine(AdjustRot());
         var hitPointWithAltitude = hitPoint + Vector3.up * 0.01f;
         while (Vector3.Distance(transform.position, hitPointWithAltitude) > 0.05f)
         {
@@ -78,6 +80,21 @@ public class VoodooDoll : Item
         transform.position = hitPointWithAltitude;
         _cantUse = false;
         Inventory.Instance.cantSwitch = false;
+    }
+
+    IEnumerator AdjustRot()
+    {
+        var idealEuler = Vector3.zero;
+        idealEuler.x = 0;
+        idealEuler.z = 0;
+        idealEuler.y = transform.eulerAngles.y;
+        var qr = Quaternion.Euler(idealEuler);
+        float time = 0;
+        while (Vector3.Distance(transform.eulerAngles, idealEuler) > 0.1f)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, qr, Time.deltaTime*5);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     public void InSalt()

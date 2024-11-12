@@ -257,7 +257,6 @@ public class HouseEnemy : Enemy
         yield return new WaitForSeconds(3f);
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.animator.enabled = false;
-        FadeOutHandler.Instance.FaceOut(2.5f);
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
         //gameObject.SetActive(false);
@@ -268,6 +267,7 @@ public class HouseEnemy : Enemy
     {
         PlayerHandler.Instance.movement.ritualCinematic = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
+        yield return new WaitUntil(() => enemyVisibility <= 0);
         while (enemyVisibility < 8)
         {
             enemyVisibility += .3f;
@@ -307,7 +307,6 @@ public class HouseEnemy : Enemy
         RitualManager.Instance.CloseCrater();
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-        FadeOutHandler.Instance.FaceOut(1.5f);
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
         RitualManager.Instance.RitualFinish();
         gameObject.SetActive(false);

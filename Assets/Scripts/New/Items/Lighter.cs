@@ -100,6 +100,7 @@ public class Lighter : Item
 
         yield return new WaitForSeconds(0.1f);
         item.OnBurn();
+        StartCoroutine(AdjustRot());
         yield return new WaitForSeconds(0.1f);
         while (Vector3.Distance(transform.position, PlayerHandler.Instance.handPivot.position) > 0.01f)
         {
@@ -110,10 +111,23 @@ public class Lighter : Item
         transform.position = PlayerHandler.Instance.handPivot.position;
 
         transform.SetParent(PlayerHandler.Instance.handPivot);
-        transform.localEulerAngles = angleHand;
         cantBobbing = false;
         cantUseItem = false;
         Inventory.Instance.cantSwitch = false;
         print("Lo puedo usar devuelta");
+    }
+    
+    IEnumerator AdjustRot()
+    {
+        var idealEuler = angleHand;
+        var qr = Quaternion.Euler(idealEuler);
+        float time = 0;
+        while (Vector3.Distance(transform.localPosition, idealEuler) > 0.1f)
+        {
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, qr, Time.deltaTime*5);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        transform.localEulerAngles = angleHand;
     }
 }

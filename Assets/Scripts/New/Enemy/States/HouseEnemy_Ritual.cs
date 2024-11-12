@@ -9,14 +9,14 @@ public class HouseEnemy_Ritual : MonoBaseState
     [SerializeField] private HouseEnemy owner;
     private List<Transform> _path;
     private Node _startNode, _goalNode;
-    private bool _pathCalculated, _pathFinish, bibleBurning, ritualReached, startRitualCor;
+    private bool _pathCalculated, _pathFinish, bibleBurning, ritualReached, startRitualCor, corActivate;
     
     
     public override void UpdateLoop()
     {
         if(owner.activateGoodExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
-        
-        if (!ritualReached) GoToNodeGoal();
+
+        if (!ritualReached) Startcort();
         else StartRitualSequence();
 
         if (_pathFinish && owner.ritualDone)
@@ -32,6 +32,21 @@ public class HouseEnemy_Ritual : MonoBaseState
         startRitualCor = true;
         if(DecisionsHandler.Instance.badPath) StartCoroutine(RitualBadSequenceCor());
         else StartCoroutine(RitualGoodSequenceCor());
+    }
+
+    void Startcort()
+    {
+        if (corActivate) return;
+        StartCoroutine(Startcor());
+    }
+
+    IEnumerator Startcor()
+    {
+        while (owner.enemyVisibility > 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
+        GoToNodeGoal();
     }
 
     IEnumerator RitualBadSequenceCor()
@@ -51,6 +66,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     IEnumerator RitualGoodSequenceCor()
     {
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
+        yield return new WaitUntil(() => owner.enemyVisibility <= 0);
         yield return new WaitForSeconds(0.7f);
         float timer = 0;
 
