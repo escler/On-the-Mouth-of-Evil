@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
         countSelected = 0;
         StartCoroutine(DelayFunction());
         SceneManager.sceneLoaded += ClearInventories;
+        print(inventory.Length);
     }
     
     private void OnDestroy()
@@ -176,14 +177,14 @@ public class Inventory : MonoBehaviour
             i.GetComponent<Rigidbody>().isKinematic = false;
             i.transform.localScale = Vector3.one;
             i.OnDropItem();
-            hubInventory[countSelected] = null;
-            selectedItem = null;
+            hubInventory[index] = null;
+            if(countSelected == 4) selectedItem = null;
             InventoryUI.Instance.DeleteUI(index,i.category);
             return;
         }
         var count = i.category == ItemCategory.hubItem ? countHub : countEnviroment;
         var categoryInventory = i.category == ItemCategory.hubItem ? inventories[0] : inventories[1];
-        count--;
+        if(index != 4) count--;
         if (i.category == ItemCategory.hubItem) countHub = count;
         else countEnviroment = count;
         i.transform.parent = null;
@@ -201,7 +202,6 @@ public class Inventory : MonoBehaviour
         if (index >= inventory.Length) index = 0;
         else if (index < 0) index = inventory.Length - 1;
 
-        print(index);
         countSelected = index;
         InventorySelectorUI.Instance.OnChangeSelection();
         if (selectedItem == inventory[index]) return;
