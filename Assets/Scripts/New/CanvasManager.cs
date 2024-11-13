@@ -10,7 +10,7 @@ public class CanvasManager : MonoBehaviour
 
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
-        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, puzzleSaltPaper,
+        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, descriptionVoodoo, puzzleSaltPaper,
         rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descriptionPuzzleContent, fps, loadingScreen;
     public CrosshairUI crossHairUI;
 
@@ -29,6 +29,7 @@ public class CanvasManager : MonoBehaviour
         descriptions.Add("Cross", descriptionCross);
         descriptions.Add("Bible", descriptionBible);
         descriptions.Add("Salt", descriptionSalt);
+        descriptions.Add("Voodoo Doll", descriptionVoodoo);
         SceneManager.sceneLoaded += DisableInfo;
     }
 
