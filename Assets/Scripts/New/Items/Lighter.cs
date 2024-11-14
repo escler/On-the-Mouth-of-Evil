@@ -91,21 +91,27 @@ public class Lighter : Item
     IEnumerator WaitForUseAgain(IBurneable item)
     {
         transform.SetParent(null);
+        float ticks = 0;
+        Vector3 originalPos = transform.position;
         cantBobbing = true;
-        while (Vector3.Distance(transform.position, item.Position) > 0.2f)
+        while (ticks < 1)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, item.Position, ref reference, .25f);
-            yield return new WaitForSeconds(0.01f);
+            ticks += Time.deltaTime * 2;
+            transform.position = Vector3.Lerp(originalPos, item.Position, ticks);
+            yield return null;
         }
 
         yield return new WaitForSeconds(0.1f);
         item.OnBurn();
         StartCoroutine(AdjustRot());
         yield return new WaitForSeconds(0.1f);
-        while (Vector3.Distance(transform.position, PlayerHandler.Instance.handPivot.position) > 0.01f)
+        originalPos = transform.position;
+        ticks = 0;
+        while (ticks < 1)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, PlayerHandler.Instance.handPivot.position, ref reference, .25f);
-            yield return new WaitForSeconds(0.01f);
+            ticks += Time.deltaTime * 2;
+            transform.position = Vector3.Lerp(originalPos, PlayerHandler.Instance.handPivot.position, ticks);
+            yield return null;
         }
 
         transform.position = PlayerHandler.Instance.handPivot.position;

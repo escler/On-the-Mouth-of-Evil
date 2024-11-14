@@ -71,10 +71,13 @@ public class VoodooDoll : Item
         transform.SetParent(null);
         StartCoroutine(AdjustRot());
         var hitPointWithAltitude = hitPoint + Vector3.up * 0.01f;
-        while (Vector3.Distance(transform.position, hitPointWithAltitude) > 0.05f)
+        float ticks = 0;
+        Vector3 originalPos = transform.position;
+        while (ticks < 1)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, hitPointWithAltitude, ref reference, .25f);
-            yield return new WaitForSeconds(0.01f);
+            ticks += Time.deltaTime * 2;
+            transform.position = Vector3.Lerp(originalPos, hitPointWithAltitude, ticks);
+            yield return null;
         }
         Inventory.Instance.DropItem(this, 4);
         transform.position = hitPointWithAltitude;
