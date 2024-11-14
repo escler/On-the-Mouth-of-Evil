@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public bool ritualCinematic;
     public bool inSpot;
     private Vector3 reference = Vector3.zero;
+    public bool absorbEnd;
+    public bool inVoodooPos;
+    public bool voodooMovement;
     public bool Run => _run;
 
     private void Awake()
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
         MoveToRitualSpot();
+        MoveToDoll();
     }
 
     private void Movement()
@@ -64,10 +68,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void GoToVoodoo()
+    {
+        StartCoroutine(MoveToDoll());
+    }
 
     private void MoveToRitualSpot()
     {
         if (!ritualCinematic) return;
+        if (absorbEnd) return;
         if (inSpot)
         {
             var ritualPos = CameraCinematicHandler.Instance.ritual.position;
@@ -90,7 +99,28 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = transform.forward * .5f;
         velocity.Normalize();
         _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);
+    }
 
+    IEnumerator MoveToDoll()
+    {
+        voodooMovement = true;
+        Vector3 target = RitualManager.Instance.levitatingDoll.transform.position;
+        target.y = transform.position.y;
+        Vector3 originalEuler = transform.position;
+        float ticks = 0;
+        while (Vector3.Distance(transform.position, target) > 1f)
+        {
+            PlayerHandler.Instance.bobbingCamera.DoBobbing();
+            ticks += Time.deltaTime;
+            //transform.LookAt(Vector3.Lerp(originalEuler, target, ticks));
+            Vector3 velocity = transform.forward;
+            velocity.Normalize();
+            _rb.velocity = velocity * (_actualSpeed * .5f * Time.fixedDeltaTime);
+            yield return null;
+        }
+        
+        inVoodooPos = true;
+        
     }
 
 }

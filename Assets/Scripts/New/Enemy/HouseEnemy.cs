@@ -206,7 +206,6 @@ public class HouseEnemy : Enemy
     {
         while (_position > -2.5f)
         {
-            print("ASd");
             _position -= 0.0075f;
             enemyMaterial.SetFloat("_Position", _position);
             yield return new WaitForSeconds(0.01f);
@@ -254,13 +253,33 @@ public class HouseEnemy : Enemy
         magnetVFX.GetComponent<VisualEffect>().Stop();
         RitualManager.Instance.RitualFinish();
 
+        if (PathManager.Instance.BadPath <= 0) RitualManager.Instance.levitatingDoll.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
+        StartCoroutine(GoToVoodooDoll());
+        //gameObject.SetActive(false);
+    }
+
+    IEnumerator GoToVoodooDoll()
+    {
+        if (PathManager.Instance.BadPath > 0)
+        {
+            PlayerHandler.Instance.movement.ritualCinematic = false;
+            PlayerHandler.Instance.animator.enabled = false;
+            PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
+            GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+            yield return null;
+        }
+        PlayerHandler.Instance.movement.absorbEnd = true;
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.animator.enabled = false;
+        PlayerHandler.Instance.movement.GoToVoodoo();
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
+        yield return new WaitForSeconds(2f);
+        PlayerHandler.Instance.movement.absorbEnd = false;
+        
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
         GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
-        //gameObject.SetActive(false);
-
+        
     }
     
     IEnumerator ShowEnemyOnGoodRitual()

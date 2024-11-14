@@ -26,6 +26,7 @@ public class RitualManager : MonoBehaviour
     public bool altarCompleted;
     public bool candlesBurned;
     public GameObject crater;
+    public GameObject levitatingDoll;
     
     public static RitualManager Instance { get; private set; }
 

@@ -21,7 +21,6 @@ public class PathManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(this);
         SearchPrefs();
         
         SceneManager.sceneLoaded += CheckThropies;

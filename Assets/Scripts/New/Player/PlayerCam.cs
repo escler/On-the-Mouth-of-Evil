@@ -10,7 +10,9 @@ public class PlayerCam : MonoBehaviour
         private Quaternion _newRotation;
         private bool _cameraLock;
         private bool _ritualCinematic;
+        private bool _lookVoodoDoll;
         private bool _inSpot;
+        public float ticks;
 
         private void Awake()
         {
@@ -26,13 +28,15 @@ public class PlayerCam : MonoBehaviour
         void Update()
         {
                 _ritualCinematic = PlayerHandler.Instance.movement.ritualCinematic;
+                _lookVoodoDoll = PlayerHandler.Instance.movement.voodooMovement;
                 RotatePlayer();
                 LookRitual();
+                LookVoodoo();
         }
 
         void RotatePlayer()
         {
-                if (_ritualCinematic) return;
+                if (_ritualCinematic || _lookVoodoDoll) return;
                 if (_cameraLock)
                 {
                         _mouseX = 0;
@@ -53,11 +57,20 @@ public class PlayerCam : MonoBehaviour
         void LookRitual()
         {
                 if (!_ritualCinematic) return;
+                if (_lookVoodoDoll) return;
                 var target = transform.localRotation;
                 target.x = Quaternion.identity.x;
                 cameraPos.localRotation = Quaternion.Slerp(cameraPos.localRotation, Quaternion.identity, .7f * Time.deltaTime);
                 _yRotation = 0;
         }
+
+        void LookVoodoo()
+        {
+                if (!_lookVoodoDoll) return;
+                
+
+        }
+        
         
         private void GetValueSens()
         {

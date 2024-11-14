@@ -44,6 +44,10 @@ public class PlayerHandler : MonoBehaviour
         PossesPlayer();
         movement.inSpot = false;
         movement.ritualCinematic = false;
+        movement.voodooMovement = false;
+        movement.absorbEnd = false;
+        movement.inVoodooPos = false;
+        playerCam.ticks = 0;
     }
 
     public void PossesPlayer()
