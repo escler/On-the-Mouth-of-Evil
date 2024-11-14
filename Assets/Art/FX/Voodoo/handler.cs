@@ -27,8 +27,8 @@ public class handler : MonoBehaviour
     public float targetTopHeight;
 
     // Objetivos de escala para los objetos en la escena
-    private Vector3 initialScale = new Vector3(0.14f, 0, 0.14f);
-    private Vector3 targetScale = new Vector3(0.14f, 0.1f, 0.14f);
+    private Vector3 initialScale = new Vector3(0.3f, 0, 0.3f);
+    private Vector3 targetScale = new Vector3(0.3f, 0.1f, 0.3f);
 
     // Duración de la interpolación
     public float lerpDuration;
