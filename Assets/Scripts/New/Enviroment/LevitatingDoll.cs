@@ -13,7 +13,9 @@ public class LevitatingDoll : MonoBehaviour
     private float _timer, _timerRot, _rotationSpeed, _levitatingSpeed, _levitatingAmount;
     private Vector3 initialPos, _endPos, _actualPos;
     private Vector3 reference = Vector3.zero;
-    private bool interactOn;
+    public bool grabbed;
+    private float ticks;
+    private Vector3 originalPos, originalForward;
 
 
     private void Awake()
@@ -22,15 +24,18 @@ public class LevitatingDoll : MonoBehaviour
         _levitatingSpeed = Random.Range(levitatingSpeedMin, levitatingSpeedMax);
         _levitatingAmount = Random.Range(levitatingAmountMin, levitatingAmountMax);
         _rotationSpeed = Random.Range(rotationSpeedMin, rotationSpeedMax);
+        ticks = 0;
     }
 
     private void Update()
     {
         Levitate();
+        GoToHand();
     }
 
     private void Levitate()
     {
+        if (grabbed) return;
         _timer += Time.deltaTime * _levitatingSpeed;
 
         transform.position = initialPos + new Vector3(0, 
@@ -38,6 +43,23 @@ public class LevitatingDoll : MonoBehaviour
 
         _timerRot += Time.deltaTime * _rotationSpeed;
         transform.localRotation = Quaternion.Euler(0, _timerRot,0);
+    }
+
+    private void GoToHand()
+    {
+        if (!grabbed)
+        {
+            originalPos = transform.position;
+            originalForward = transform.forward;
+            
+            return;
+        }
+
+        Vector3 dir = PlayerHandler.Instance.cameraPos.position - transform.position;
+
+        ticks += Time.deltaTime;
+        transform.position = Vector3.Lerp(originalPos, PlayerHandler.Instance.handPivot.position, ticks);
+        transform.forward = Vector3.Lerp(originalForward, dir, ticks);
     }
 
 }

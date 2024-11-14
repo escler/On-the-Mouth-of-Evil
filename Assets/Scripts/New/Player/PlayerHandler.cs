@@ -56,6 +56,7 @@ public class PlayerHandler : MonoBehaviour
         playerCam.enabled = true;
         bobbingCamera.enabled = true;
         cantInteract = false;
+        playerCam.CameraLock = false;
     }
 
     public void ChangePlayerPosses(bool state)

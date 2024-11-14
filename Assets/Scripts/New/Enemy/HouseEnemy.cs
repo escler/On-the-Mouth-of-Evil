@@ -267,14 +267,18 @@ public class HouseEnemy : Enemy
             PlayerHandler.Instance.animator.enabled = false;
             PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
             GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
-            yield return null;
+            yield break;
         }
         PlayerHandler.Instance.movement.absorbEnd = true;
-        PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.animator.enabled = false;
         PlayerHandler.Instance.movement.GoToVoodoo();
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
         yield return new WaitForSeconds(2f);
+        PlayerHandler.Instance.playerCam.CameraLock = true;
+        RitualManager.Instance.levitatingDoll.GetComponent<LevitatingDoll>().grabbed = true;
+        Inventory.Instance.selectedItem.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.movement.absorbEnd = false;
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");

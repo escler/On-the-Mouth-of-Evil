@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        if (ritualCinematic) return;
+        if (ritualCinematic || absorbEnd) return;
         _actualSpeed = _run ? runSpeed : walkSpeed;
 
         var inputVector = new Vector2(_inputX, _inputY);
@@ -112,12 +112,14 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerHandler.Instance.bobbingCamera.DoBobbing();
             ticks += Time.deltaTime;
-            //transform.LookAt(Vector3.Lerp(originalEuler, target, ticks));
+            transform.LookAt(Vector3.Lerp(originalEuler, target, ticks));
             Vector3 velocity = transform.forward;
             velocity.Normalize();
             _rb.velocity = velocity * (_actualSpeed * .5f * Time.fixedDeltaTime);
             yield return null;
         }
+
+        voodooMovement = false;
         
         inVoodooPos = true;
         

@@ -13,6 +13,7 @@ public class PlayerCam : MonoBehaviour
         private bool _lookVoodoDoll;
         private bool _inSpot;
         public float ticks;
+        private Vector3 cameraForward;
 
         private void Awake()
         {
@@ -66,8 +67,16 @@ public class PlayerCam : MonoBehaviour
 
         void LookVoodoo()
         {
-                if (!_lookVoodoDoll) return;
-                
+                if (!_lookVoodoDoll)
+                {
+                        cameraForward = cameraPos.forward;
+                        return;
+                }
+                ticks += Time.deltaTime;
+
+                Vector3 dir = RitualManager.Instance.levitatingDoll.transform.position - cameraPos.position;
+
+                cameraPos.forward = Vector3.Lerp(cameraForward, dir, ticks);
 
         }
         
