@@ -39,6 +39,8 @@ public class AbsorbsionShaderHandler : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= ResetParameters;
+        StopAllCoroutines();
+        count = 0;
     }
 
     private void Update()

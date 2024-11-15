@@ -215,6 +215,7 @@ public class HouseEnemy : Enemy
     IEnumerator ShowEnemyOnBadRitual()
     {
         PlayerHandler.Instance.movement.ritualCinematic = true;
+        Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         while (enemyVisibility < 8)
         {
@@ -289,6 +290,7 @@ public class HouseEnemy : Enemy
     
     IEnumerator ShowEnemyOnGoodRitual()
     {
+        Inventory.Instance.cantSwitch = true;
         PlayerHandler.Instance.movement.ritualCinematic = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => enemyVisibility <= 0);

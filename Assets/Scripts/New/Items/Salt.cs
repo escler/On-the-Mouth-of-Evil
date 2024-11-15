@@ -17,6 +17,7 @@ public class Salt : Item
     private int index;
     public delegate void UpdateSaltUI();
     public event UpdateSaltUI OnSaltChange;
+    private RaycastHit _hit;
 
     
     private void Awake()
@@ -62,35 +63,66 @@ public class Salt : Item
             Inventory.Instance.cantSwitch = true;
             cantUseItem = true;
             StartCoroutine(WaitForUseAgain(door));
-            
-            //Inventory.Instance.DropItem();
-            //Destroy(gameObject);
         }
 
         if (i.transform.TryGetComponent(out VoodooDoll vodooDoll))
         {
             if (_uses <= 0) return;
-            vodooDoll.InSalt();
-            _uses--;
-            OnSaltChange?.Invoke();
-            StartCoroutine(FillSalt());
+            StartCoroutine(WaitForUseVoodoo(vodooDoll, _hit.point));
         }
+    }
+
+    IEnumerator WaitForUseVoodoo(VoodooDoll voodooDoll, Vector3 position)
+    {
+        Inventory.Instance.cantSwitch = true;
+        transform.SetParent(null);
+        position += PlayerHandler.Instance.transform.right * -0.25f;
+        Vector3 originalPos = transform.position;
+
+        float ticks = 0;
+        while (ticks < 1)
+        {
+            ticks += Time.deltaTime * 2f;
+            transform.position = Vector3.Lerp(originalPos, position, ticks);
+            yield return null;
+        }
+        _animator.SetBool("PutSalt", true);
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("PutSalt"));
+        print("Llegue aca wey");
+        _animator.SetBool("PutSalt", false);
+        yield return new WaitUntil(() => !_animator.GetCurrentAnimatorStateInfo(0).IsName("PutSalt"));
+        _uses--;
+        OnSaltChange?.Invoke();
+        StartCoroutine(FillSalt());
+        voodooDoll.InSalt();
+
+        ticks = 0;
+        originalPos = transform.position;
+        while (ticks < 1)
+        {
+            ticks += Time.deltaTime * 2;
+            transform.position = Vector3.Lerp(originalPos, PlayerHandler.Instance.handPivot.position, ticks);
+            yield return null;
+        }
+        transform.SetParent(PlayerHandler.Instance.handPivot);
+        transform.localEulerAngles = angleHand;
+        Inventory.Instance.cantSwitch = true;
+
     }
     
     public override void OnUpdate()
     {
         base.OnUpdate();
-        var ray = ObjectDetector.Instance._hit;
+        _hit = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
 
-        if (Input.GetMouseButtonDown(0)) OnInteract(rayConnected, ray);
+        if (Input.GetMouseButtonDown(0)) OnInteract(rayConnected, _hit);
     }
     public override void OnSelectItem()
     {
         base.OnSelectItem();
-        print("Ola");
         if (!SaltPuzzleTable.Instance) return;
         SaltPuzzleTable.Instance.playerInTable = true;
     }
