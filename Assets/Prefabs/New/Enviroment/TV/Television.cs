@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Television : MonoBehaviour
+public class Television : MonoBehaviour, IInteractable
 {
     public Material[] originalMaterial, onMaterial;
     private bool on;
@@ -20,5 +20,28 @@ public class Television : MonoBehaviour
         on = !on;
         print(on);
         mesh.materials = on ? onMaterial : originalMaterial;
+    }
+
+    public void OnInteractItem()
+    {
+        ChangeMaterial();
+    }
+
+    public void OnInteract(bool hit, RaycastHit i)
+    {
+    }
+
+    public void OnInteractWithObject()
+    {
+    }
+
+    public string ShowText()
+    {
+        return "";
+    }
+
+    public bool CanShowText()
+    {
+        return true;
     }
 }

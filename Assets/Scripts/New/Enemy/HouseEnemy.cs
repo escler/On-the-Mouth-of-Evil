@@ -147,7 +147,7 @@ public class HouseEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToIdle, grabHeadState, idleState);
         
         //Voodoo
-        _fsm.AddTransition(StateTransitions.ToIdle, voodooState, idleState);
+        _fsm.AddTransition(StateTransitions.ToPatrol, voodooState, patrolState);
         _fsm.AddTransition(StateTransitions.ToRitual, voodooState, ritualState);
         
         _fsm.Active = true;
