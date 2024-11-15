@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class handler : MonoBehaviour
+public class VoodooVFXHandler : MonoBehaviour
 {
     // Asigna el VisualEffect en el Inspector de Unity
     public VisualEffect vfx;
@@ -28,15 +29,17 @@ public class handler : MonoBehaviour
 
     // Objetivos de escala para los objetos en la escena
     private Vector3 initialScale = new Vector3(0.3f, 0, 0.3f);
-    private Vector3 targetScale = new Vector3(0.3f, 0.1f, 0.3f);
+    private Vector3 targetScale = new Vector3(0.5f, 0.4f, 0.5f);
 
-    // Duración de la interpolación
+    // Duraciï¿½n de la interpolaciï¿½n
     public float lerpDuration;
 
     private bool isLerpingSizeSeal = false;
     private bool isLerpingSizeAndHeight = false;
-    private bool isOpening = true; // Estado que indica si está "abriendo" o "cerrando"
+    private bool isOpening = true; // Estado que indica si estï¿½ "abriendo" o "cerrando"
     private float lerpTime = 0f;
+
+    private bool closed;
 
     void Start()
     {
@@ -44,53 +47,71 @@ public class handler : MonoBehaviour
         ResetToInitialValues();
     }
 
+    public void ClosePrison()
+    {
+        isLerpingSizeSeal = false;
+        isLerpingSizeAndHeight = true;
+        isOpening = false; // Configura el efecto para cerrarse
+        lerpTime = 0f;
+    }
+
+    public void OpenPrison()
+    {
+        ResetToInitialValues();
+        closed = false;
+        isLerpingSizeSeal = true; // Aseguramos que sizeSeal empiece inmediatamente
+        isLerpingSizeAndHeight = false;
+        isOpening = true; // Configura el efecto para abrirse
+        lerpTime = 0f;
+    }
+    
     void Update()
     {
-        // Inicia el proceso de apertura al presionar la barra espaciadora
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ResetToInitialValues();
-            isLerpingSizeSeal = true; // Aseguramos que sizeSeal empiece inmediatamente
-            isLerpingSizeAndHeight = false;
-            isOpening = true; // Configura el efecto para abrirse
-            lerpTime = 0f;
-        }
-
-        // Inicia el proceso de cierre al presionar la tecla E, solo si el efecto está abierto
-        if (Input.GetKeyDown(KeyCode.E) && !isLerpingSizeSeal && !isLerpingSizeAndHeight)
-        {
-            isLerpingSizeSeal = false;
-            isLerpingSizeAndHeight = true;
-            isOpening = false; // Configura el efecto para cerrarse
-            lerpTime = 0f;
-        }
-
-        // Interpolación de sizeSeal durante la apertura
+        if (closed) return;
+        // Interpolaciï¿½n de sizeSeal durante la apertura
         if (isLerpingSizeSeal)
         {
             lerpTime += Time.deltaTime;
             float t = lerpTime / lerpDuration;
 
-            // Interpolación lineal para sizeSeal
+            // Interpolaciï¿½n lineal para sizeSeal
             float lerpedSizeSeal = Mathf.Lerp(initialSizeSeal, targetSizeSeal, t);
             SetFloatProperty(sizeSealPropertyName, lerpedSizeSeal);
 
-            // Finaliza la interpolación de sizeSeal y activa la de size y topHeight
-            if (lerpTime >= lerpDuration)
+            // Finaliza la interpolaciï¿½n de sizeSeal y activa la de size y topHeight
+            if (lerpTime > lerpDuration)
             {
                 isLerpingSizeSeal = false;
                 isLerpingSizeAndHeight = true;
-                lerpTime = 0f; // Reinicia el tiempo para la segunda interpolación
+                lerpTime = 0f; // Reinicia el tiempo para la segunda interpolaciï¿½n
+            }
+
+            if (!isOpening)
+            {
+                lerpTime += Time.deltaTime;
+                t = lerpTime / lerpDuration;
+
+                // Interpolaciï¿½n lineal para sizeSeal
+                lerpedSizeSeal = Mathf.Lerp(targetSizeSeal, initialSizeSeal, t);
+                SetFloatProperty(sizeSealPropertyName, lerpedSizeSeal);
+
+                // Finaliza la interpolaciï¿½n de sizeSeal
+                if (lerpTime > lerpDuration)
+                {
+                    isLerpingSizeSeal = false;
+                    closed = true;
+                }
+                return;
             }
         }
 
-        // Interpolación de size y topHeight, ya sea para abrir o cerrar
+        // Interpolaciï¿½n de size y topHeight, ya sea para abrir o cerrar
         if (isLerpingSizeAndHeight)
         {
             lerpTime += Time.deltaTime;
             float t = lerpTime / lerpDuration;
 
-            // Interpolación lineal para size y topHeight
+            // Interpolaciï¿½n lineal para size y topHeight
             float lerpedSize = Mathf.Lerp(
                 isOpening ? initialSize : targetSize,
                 isOpening ? targetSize : initialSize,
@@ -105,7 +126,7 @@ public class handler : MonoBehaviour
             SetFloatProperty(sizePropertyName, lerpedSize);
             SetFloatProperty(topHeightPropertyName, lerpedTopHeight);
 
-            // Interpolación para la escala de los objetos en Y
+            // Interpolaciï¿½n para la escala de los objetos en Y
             Vector3 lerpedScale = Vector3.Lerp(
                 isOpening ? initialScale : targetScale,
                 isOpening ? targetScale : initialScale,
@@ -115,39 +136,30 @@ public class handler : MonoBehaviour
             object2.localScale = lerpedScale;
             object3.localScale = lerpedScale;
 
-            // Finaliza la interpolación de size y topHeight
-            if (lerpTime >= lerpDuration)
+            // Finaliza la interpolaciï¿½n de size y topHeight
+            if (lerpTime > lerpDuration)
             {
                 isLerpingSizeAndHeight = false;
 
                 if (!isOpening)
                 {
-                    // Después de terminar con size y topHeight, activa la interpolación de sizeSeal
+                    // Despuï¿½s de terminar con size y topHeight, activa la interpolaciï¿½n de sizeSeal
                     isLerpingSizeSeal = true;
-                    lerpTime = 0f; // Reinicia el tiempo para la interpolación de sizeSeal
+                    lerpTime = 0f; // Reinicia el tiempo para la interpolaciï¿½n de sizeSeal
                 }
             }
         }
 
-        // Interpolación de sizeSeal durante el cierre
+        // Interpolaciï¿½n de sizeSeal durante el cierre
         if (isLerpingSizeSeal && !isOpening)
         {
-            lerpTime += Time.deltaTime;
-            float t = lerpTime / lerpDuration;
 
-            // Interpolación lineal para sizeSeal
-            float lerpedSizeSeal = Mathf.Lerp(targetSizeSeal, initialSizeSeal, t);
-            SetFloatProperty(sizeSealPropertyName, lerpedSizeSeal);
-
-            // Finaliza la interpolación de sizeSeal
-            if (lerpTime >= lerpDuration)
-            {
-                isLerpingSizeSeal = false;
-            }
         }
     }
+    
+    
 
-    // Método para modificar una propiedad de tipo float en el VFX
+    // Mï¿½todo para modificar una propiedad de tipo float en el VFX
     private void SetFloatProperty(string propertyName, float value)
     {
         if (vfx.HasFloat(propertyName))
@@ -156,11 +168,11 @@ public class handler : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"La propiedad {propertyName} no se encontró en el VFX.");
+            Debug.LogWarning($"La propiedad {propertyName} no se encontrï¿½ en el VFX.");
         }
     }
 
-    // Método para restablecer los valores iniciales del VFX y de la escala de los objetos
+    // Mï¿½todo para restablecer los valores iniciales del VFX y de la escala de los objetos
     private void ResetToInitialValues()
     {
         SetFloatProperty(sizePropertyName, initialSize);

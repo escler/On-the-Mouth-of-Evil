@@ -23,7 +23,13 @@ public class HouseEnemy_Voodoo : MonoBaseState
 
     public override Dictionary<string, object> Exit(IState to)
     {
-        owner.HideEnemy();
+        if (!owner.ritualDone) owner.HideEnemy();
+        else
+        {
+            owner.enemyVisibility = 0;
+            owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
+            owner.appear = false;
+        }
         owner.EnemyAnimator.ChangeStateAnimation("Voodoo", false);
         owner.voodooActivate = false;
         return base.Exit(to);
