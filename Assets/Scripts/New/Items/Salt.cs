@@ -106,7 +106,7 @@ public class Salt : Item
         }
         transform.SetParent(PlayerHandler.Instance.handPivot);
         transform.localEulerAngles = angleHand;
-        Inventory.Instance.cantSwitch = true;
+        Inventory.Instance.cantSwitch = false;
 
     }
     
