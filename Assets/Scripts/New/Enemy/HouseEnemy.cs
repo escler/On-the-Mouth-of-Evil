@@ -232,6 +232,7 @@ public class HouseEnemy : Enemy
         yield return new WaitUntil(() => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
         absorbVFX.SetActive(true);
         magnetVFX.SetActive(true);
+        AbsorbsionShaderHandler.Instance.MakeShaderEffect();
         activateBadExorcism = true;
 
         var duration = _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).length;

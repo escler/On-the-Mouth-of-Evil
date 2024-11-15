@@ -1,43 +1,78 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class ModifyMaterialProperties : MonoBehaviour
+public class AbsorbsionShaderHandler : MonoBehaviour
 {
-    public Material material; // Asigna el material aquÌ en el inspector
+    public static AbsorbsionShaderHandler Instance { get; private set; }
+    
+    public Material material; // Asigna el material aqu√≠ en el inspector
 
-    // Rango de interpolaciÛn para Lerp
+    // Rango de interpolaci√≥n para Lerp
     public float startLerpValue = 0f;
     public float endLerpValue = 1f;
-    public float lerpDuration = 2f; // DuraciÛn total de ida y vuelta para Lerp en segundos
+    public float lerpDuration = 2f; // Duraci√≥n total de ida y vuelta para Lerp en segundos
 
-    // Rango de interpolaciÛn para Intensity
+    // Rango de interpolaci√≥n para Intensity
     public float startIntensityValue = 0f;
     public float endIntensityValue = 5f;
-    public float intensityDuration = 3f; // DuraciÛn total de ida y vuelta para Intensity en segundos
+    public float intensityDuration = 3f; // Duraci√≥n total de ida y vuelta para Intensity en segundos
 
     private bool isLerping = false;
 
+    private int count;
+
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        count = 0;
+        SceneManager.sceneLoaded += ResetParameters;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ResetParameters;
+    }
+
     private void Update()
     {
-        // Detecta si se presionÛ la barra espaciadora y no est· en proceso de interpolaciÛn
+        // Detecta si se presion√≥ la barra espaciadora y no est√° en proceso de interpolaci√≥n
         if (Input.GetKeyDown(KeyCode.Space) && !isLerping)
         {
-            StartCoroutine(LerpMaterialProperties());
+            
         }
+    }
+
+    public void MakeShaderEffect()
+    {
+        StartCoroutine(LerpMaterialProperties());
+    }
+
+    void ResetParameters(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        material.SetFloat("_Lerp", 0f);
+        material.SetFloat("_Intensity", 100f);
     }
 
     private IEnumerator LerpMaterialProperties()
     {
         isLerping = true;
 
-        // DuraciÛn para ida y vuelta de cada propiedad
+        // Duraci√≥n para ida y vuelta de cada propiedad
         float halfLerpDuration = lerpDuration / 2f;
         float halfIntensityDuration = intensityDuration / 2f;
 
         float elapsedLerpTime = 0f;
         float elapsedIntensityTime = 0f;
 
-        // InterpolaciÛn de ida
+        // Interpolaci√≥n de ida
         while (elapsedLerpTime < halfLerpDuration || elapsedIntensityTime < halfIntensityDuration)
         {
             if (elapsedLerpTime < halfLerpDuration)
@@ -65,7 +100,7 @@ public class ModifyMaterialProperties : MonoBehaviour
         elapsedLerpTime = 0f;
         elapsedIntensityTime = 0f;
 
-        // InterpolaciÛn de vuelta
+        // Interpolaci√≥n de vuelta
         while (elapsedLerpTime < halfLerpDuration || elapsedIntensityTime < halfIntensityDuration)
         {
             if (elapsedLerpTime < halfLerpDuration)
@@ -90,5 +125,11 @@ public class ModifyMaterialProperties : MonoBehaviour
         material.SetFloat("_Intensity", 100f);
 
         isLerping = false;
+
+        count++;
+        if (count < 3)
+        {
+            StartCoroutine(LerpMaterialProperties());
+        }
     }
 }
