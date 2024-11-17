@@ -244,18 +244,26 @@ public class HouseEnemy_Attacks : MonoBaseState
             player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
             if (Vector3.Distance(target, player.transform.position) < 1)
             {
-                GrabHead();
                 StopCoroutine(Hipnosis());
                 yield break;
             }
             yield return new WaitForSeconds(0.1f);
         }
+
+        if (!owner.crossUsed)
+        {
+            owner.transform.position = player.position + player.forward;
+            GrabHead();
+        }
+        else
+        {
+            PlayerHandler.Instance.PossesPlayer();
+            owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
+            _corroutine = false;
+            owner.attackEnded = true;
+            HypnosisEffectControllerHDRP.Instance.EndLerpShader();
+        }
         
-        PlayerHandler.Instance.PossesPlayer();
-        owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
-        _corroutine = false;
-        owner.attackEnded = true;
-        HypnosisEffectControllerHDRP.Instance.EndLerpShader();
     }
     private void OnDrawGizmos()
     {

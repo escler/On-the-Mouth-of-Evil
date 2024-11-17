@@ -18,15 +18,6 @@ public class MenuHandler : MonoBehaviour
     {
         menu.SetActive(!menu.activeInHierarchy);
         Cursor.visible = menu.activeInHierarchy;
-        if (Cursor.visible)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            PlayerHandler.Instance.UnPossesPlayer();
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            PlayerHandler.Instance.PossesPlayer();
-        }
+        Time.timeScale = Cursor.visible ? 0 : 1;
     }
 }
