@@ -33,6 +33,7 @@ public class GameManagerNew : MonoBehaviour
         FadeOutHandler.Instance.FaceOut(1);
         yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
         CanvasManager.Instance.loadingScreen.SetActive(true);
+        yield return new WaitForSeconds(2f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
