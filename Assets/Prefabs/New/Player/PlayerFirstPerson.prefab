@@ -240,6 +240,7 @@ MonoBehaviour:
   cantPressInventory: 0
   particlePivot: {fileID: 3941799298484805484}
   animator: {fileID: 894888750474411413}
+  cantInteract: 0
 --- !u!114 &7472100395739103076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +274,9 @@ MonoBehaviour:
   runSpeed: 200
   ritualCinematic: 0
   inSpot: 0
+  absorbEnd: 0
+  inVoodooPos: 0
+  voodooMovement: 0
 --- !u!114 &4868285171184840852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +294,7 @@ MonoBehaviour:
   limitAngleY: 60
   sens: 0
   cameraPos: {fileID: 2372193262579360146}
+  ticks: 0
 --- !u!114 &9129648739902172827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +314,7 @@ MonoBehaviour:
   inventory: []
   hubInventory: []
   enviromentInventory: []
+  specialItem: {fileID: 0}
 --- !u!114 &7818526098622801878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675bce42d56e4642ac2d55191790665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLife: 3
+  startLife: 1
 --- !u!95 &894888750474411413
 Animator:
   serializedVersion: 5

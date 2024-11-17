@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class LifeUI : MonoBehaviour
 {
     private PlayerLifeHandlerNew _lifeHandler;
-    public Image[] lifeUI;
+    public Image lifeUI;
     public Sprite normalCoin, brokedCoin;
     private int actualLife;
 
@@ -38,28 +38,19 @@ public class LifeUI : MonoBehaviour
     private void ChangeUI()
     {
         actualLife = _lifeHandler.ActualLife;
-
-        for (int i = 0; i < _lifeHandler.startLife - actualLife; i++)
-        {
-            lifeUI[i].sprite = brokedCoin;
-        }
+        
+        lifeUI.sprite = brokedCoin;
     }
 
     private void ResetUI(Scene scene, LoadSceneMode loadSceneMode)
     {
-        for (int i = 0; i < lifeUI.Length; i++)
-        {
-            lifeUI[i].sprite = normalCoin;
-        }
+        lifeUI.sprite = normalCoin;
     }
 
     private void EnableUI(Scene scene, LoadSceneMode loadSceneMode)
     {
         var inHubScene = scene.name == "Hub";
 
-        foreach (var ui in lifeUI)
-        {
-            ui.enabled = !inHubScene;
-        }
+        lifeUI.enabled = !inHubScene;
     }
 }

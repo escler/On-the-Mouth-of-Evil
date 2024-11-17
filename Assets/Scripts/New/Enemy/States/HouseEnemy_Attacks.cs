@@ -295,7 +295,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         owner.playerGrabbedCount++;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
 
-        if (owner.playerGrabbedCount > 2)
+        if (owner.playerGrabbedCount > 0)
         {
             FadeOutHandler.Instance.FaceOut(1f);
             GameManagerNew.Instance.LoadSceneWithDelay("Hub", 1.5f);
