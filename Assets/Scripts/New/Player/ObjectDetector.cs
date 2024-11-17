@@ -76,8 +76,6 @@ public class ObjectDetector : MonoBehaviour
             return false;
         }
 
-        if (_hit.transform.TryGetComponent(out EnviromentObjects obj)) return true;
-
         if (_hit.transform.TryGetComponent(out SkullPuzzleSlot socket))
         {
             if (socket.currentSkull != null) return true;
