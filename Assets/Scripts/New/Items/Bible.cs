@@ -126,7 +126,15 @@ public class Bible : Item
         yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
 
         var paper = Instantiate(paperBible);
-        paper.transform.position = hitPoint + Vector3.up * 0.01f;
+        paper.transform.position = transform.position;
+        float ticks = 0;
+        Vector3 originalPos = paper.transform.position;
+        while (ticks < 1)
+        {
+            ticks += Time.deltaTime;
+            paper.transform.position = Vector3.Lerp(originalPos, hitPoint + Vector3.up * 0.01f, ticks);
+            yield return null;
+        }
         _bibleCD.SetCooldown(0);
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
         _cantUse = false;

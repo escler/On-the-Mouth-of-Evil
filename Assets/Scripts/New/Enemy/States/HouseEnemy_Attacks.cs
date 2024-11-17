@@ -207,13 +207,13 @@ public class HouseEnemy_Attacks : MonoBaseState
 
     private IEnumerator Hipnosis()
     {
+        bool closeEyes = false;
         if (_ray)
         {
             owner.attackEnded = true;
             yield break;
         }
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", true);
-        HypnosisEffectControllerHDRP.Instance.StartLerpShader();
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
@@ -227,6 +227,11 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         while (time > 0 && !_ray)
         {
+            if (!closeEyes)
+            {
+                HypnosisEffectControllerHDRP.Instance.StartLerpShader();
+                closeEyes = true;
+            }
             var movable = MovableHandler.Instance.movablesItems;
             foreach (var mov in movable)
             {
@@ -299,7 +304,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.01f);
         }
         
-        HypnosisEffectControllerHDRP.Instance.StartLerpShader();
+        HypnosisEffectControllerHDRP.Instance.EndLerpShader();
         owner.playerGrabbedCount++;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
 
