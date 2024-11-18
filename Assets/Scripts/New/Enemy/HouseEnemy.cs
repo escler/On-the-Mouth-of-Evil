@@ -294,30 +294,20 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => enemyVisibility <= 0);
+        
         while (enemyVisibility < 8)
         {
             enemyVisibility += .3f;
-            if (enemyVisibility >= 7.8f)
-            {
-                _enemyAnimator.animator.applyRootMotion = true;
-                _enemyAnimator.ChangeStateAnimation("Exorcism", true);
-            }
             enemyMaterial.SetFloat("_Power", enemyVisibility);
 
             yield return new WaitForSeconds(0.1f);
         }
-        
-        if(!_enemyAnimator.animator.hasRootMotion)_enemyAnimator.animator.applyRootMotion = true;
         activateGoodExorcism = true;
         CameraFollow.Instance.inRitual = true;
-
         RitualManager.Instance.ritualFloor.SetActive(false);
-
         RitualManager.Instance.ActivateCraterFloor();
-        yield return new WaitUntil(
-            () => ritualMesh.activeInHierarchy);
-        
-        yield return new WaitForSeconds(4.8f);
+
+        yield return new WaitForSeconds(10f);
         
         while (enemyVisibility > 0)
         {
@@ -327,7 +317,6 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
         }
 
-        yield return new WaitForSeconds(2f);
         CameraFollow.Instance.inRitual = false;
         PlayerHandler.Instance.movement.ritualCinematic = false;
         RitualManager.Instance.CloseCrater();

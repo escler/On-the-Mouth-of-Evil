@@ -68,7 +68,13 @@ public class HouseEnemy_Ritual : MonoBaseState
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => owner.enemyVisibility <= 0);
         yield return new WaitForSeconds(0.7f);
-        float timer = 0;
+        Vector3 target = PlayerHandler.Instance.transform.position;
+        target.y = owner.transform.position.y;
+        Vector3 dir = target - owner.transform.position;
+        owner.transform.rotation = Quaternion.LookRotation(dir);
+        owner.normalMesh.SetActive(false);
+        owner.ritualMesh.SetActive(true);
+        /*float timer = 0;
 
         while (timer < 1)
         {
@@ -96,10 +102,9 @@ public class HouseEnemy_Ritual : MonoBaseState
             owner.transform.rotation = Quaternion.LookRotation(dirPlayer);
             owner.transform.position += dir.normalized * owner.speed / 3 * Time.deltaTime;
             yield return new WaitForSeconds(0.01f);
-        }
+        }*/
 
-        owner.normalMesh.SetActive(false);
-        owner.ritualMesh.SetActive(true);
+
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
