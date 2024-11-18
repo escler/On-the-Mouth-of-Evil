@@ -31,12 +31,22 @@ public class PlayerHandler : MonoBehaviour
         Instance = this;
         movement = GetComponent<PlayerMovement>();
         SceneManager.sceneLoaded += UnlockPlayer;
+        SceneManager.sceneLoaded += DestroyPlayer;
         cantInteract = false;
+    }
+
+    private void DestroyPlayer(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Menu") return;
+        
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= UnlockPlayer;
+        SceneManager.sceneLoaded -= DestroyPlayer;
+
     }
 
     private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)

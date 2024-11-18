@@ -14,10 +14,11 @@ public class MenuHandler : MonoBehaviour
         }
     }
 
-    private void SwitchMenu()
+    public void SwitchMenu()
     {
         menu.SetActive(!menu.activeInHierarchy);
         Cursor.visible = menu.activeInHierarchy;
+        Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
         Time.timeScale = Cursor.visible ? 0 : 1;
     }
 }

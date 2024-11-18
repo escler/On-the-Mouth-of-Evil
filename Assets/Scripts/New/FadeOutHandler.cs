@@ -13,6 +13,7 @@ public class FadeOutHandler : MonoBehaviour
     private float interval;
     private Color imageColor;
     public bool fadeOut;
+    public GameObject loadingScreen;
 
     private void Awake()
     {
@@ -22,8 +23,9 @@ public class FadeOutHandler : MonoBehaviour
             return;
         }
 
+        DontDestroyOnLoad(this);
         Instance = this;
-        _image = GetComponent<Image>();
+        _image = GetComponentInChildren<Image>();
         imageColor = _image.color;
         SceneManager.sceneLoaded += ResetAlpha;
     }

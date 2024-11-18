@@ -28,11 +28,11 @@ public class GameManagerNew : MonoBehaviour
 
     IEnumerator LoadSceneCor(string sceneName, float seconds)
     {
-        PlayerHandler.Instance.UnPossesPlayer();
+        if(PlayerHandler.Instance != null) PlayerHandler.Instance.UnPossesPlayer();
         print("Entre a cor");
         FadeOutHandler.Instance.FaceOut(1);
         yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
-        CanvasManager.Instance.loadingScreen.SetActive(true);
+        FadeOutHandler.Instance.loadingScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
@@ -40,7 +40,7 @@ public class GameManagerNew : MonoBehaviour
         {
             yield return null;
         }
-        CanvasManager.Instance.loadingScreen.SetActive(false);
-        PlayerHandler.Instance.PossesPlayer();
+        FadeOutHandler.Instance.loadingScreen.SetActive(false);
+        if(PlayerHandler.Instance != null) PlayerHandler.Instance.PossesPlayer();
     }
 }

@@ -11,7 +11,7 @@ public class CanvasManager : MonoBehaviour
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
         descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, descriptionVoodoo, puzzleSaltPaper,
-        rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descriptionPuzzleContent, fps, loadingScreen;
+        rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descriptionPuzzleContent, fps;
     public CrosshairUI crossHairUI;
 
     private void Awake()
@@ -31,8 +31,14 @@ public class CanvasManager : MonoBehaviour
         descriptions.Add("Salt", descriptionSalt);
         descriptions.Add("Voodoo Doll", descriptionVoodoo);
         SceneManager.sceneLoaded += DisableInfo;
+        SceneManager.sceneLoaded += DestroyCanvas;
     }
 
+    private void DestroyCanvas(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Menu") return;
+        Destroy(gameObject);
+    }
     private void DisableInfo(Scene scene, LoadSceneMode loadSceneMode)
     {
         rotateInfo.SetActive(false);
@@ -44,6 +50,7 @@ public class CanvasManager : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= DisableInfo;
+        SceneManager.sceneLoaded -= DestroyCanvas;
     }
 
     public GameObject GetDescription(string nameItem)
