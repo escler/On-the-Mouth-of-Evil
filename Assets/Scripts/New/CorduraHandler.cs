@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CorduraHandler : MonoBehaviour
 {
@@ -34,10 +35,21 @@ public class CorduraHandler : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded += ResetParameters;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ResetParameters;
+    }
+
+    private void ResetParameters(Scene scene, LoadSceneMode loadSceneMode)
+    {
         corduraMaterial.SetFloat("_TwirlStrength", 0);
         corduraMaterial.SetFloat("_intensity", 0);
+        _corduraActivate = false;
     }
-    
+
 
     public void StartCordura()
     {

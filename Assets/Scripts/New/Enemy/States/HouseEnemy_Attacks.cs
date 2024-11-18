@@ -305,8 +305,14 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         
         HypnosisEffectControllerHDRP.Instance.EndLerpShader();
-        owner.playerGrabbedCount++;
-        PlayerLifeHandlerNew.Instance.DamageTaked(1);
+        var currentItem = Inventory.Instance.selectedItem;
+        bool success = false;
+        if (currentItem.itemName == "Rosary") success = currentItem.GetComponent<Rosary>().RosaryProtect();
+        if (!success)
+        {
+            owner.playerGrabbedCount++;
+            PlayerLifeHandlerNew.Instance.DamageTaked(1);
+        }
 
         if (owner.playerGrabbedCount > 0)
         {

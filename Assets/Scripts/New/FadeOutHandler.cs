@@ -44,7 +44,6 @@ public class FadeOutHandler : MonoBehaviour
         while (_image.color.a < 1)
         {
             imageColor.a += interval * 0.01f;
-            print(_image.color.a);
             _image.color = imageColor;
             yield return new WaitForSeconds(0.01f);
         }
