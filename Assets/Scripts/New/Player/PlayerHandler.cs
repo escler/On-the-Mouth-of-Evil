@@ -18,6 +18,7 @@ public class PlayerHandler : MonoBehaviour
     public Transform particlePivot;
     public Animator animator;
     public bool cantInteract;
+    public bool movingObject;
 
 
     private void Awake()

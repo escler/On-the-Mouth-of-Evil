@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerNew : MonoBehaviour
 {
     public static GameManagerNew Instance { get; private set; }
+    public bool cantPause;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class GameManagerNew : MonoBehaviour
 
     IEnumerator LoadSceneCor(string sceneName, float seconds)
     {
+        cantPause = true;
         if(PlayerHandler.Instance != null) PlayerHandler.Instance.UnPossesPlayer();
         print("Entre a cor");
         FadeOutHandler.Instance.FaceOut(1);
@@ -42,5 +44,6 @@ public class GameManagerNew : MonoBehaviour
         }
         FadeOutHandler.Instance.loadingScreen.SetActive(false);
         if(PlayerHandler.Instance != null) PlayerHandler.Instance.PossesPlayer();
+        cantPause = false;
     }
 }

@@ -25,8 +25,10 @@ public class MovableItem : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0) && !relocated)
+        if (Input.GetMouseButtonUp(0))
         {
+            PlayerHandler.Instance.movingObject = false;
+            if (relocated) return;
             onHand = false;
             actualTarget = finalPos;
             _actualSpeed = normalSpeed;
@@ -73,6 +75,7 @@ public class MovableItem : MonoBehaviour, IInteractable
     public void RelocateItem()
     {
         onHand = true;
+        PlayerHandler.Instance.movingObject = true;
         actualTarget = initialPos;
         _actualSpeed = _relocatedSpeed;
     }

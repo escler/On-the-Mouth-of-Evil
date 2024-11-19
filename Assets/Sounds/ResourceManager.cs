@@ -17,9 +17,5 @@ public class ResourceManager : Singleton<ResourceManager>
         {
             callback((T)request.asset);
         }
-        else
-        {
-            Debug.LogError($"Error loading resource at path: {path}");
-        }
     }
 }

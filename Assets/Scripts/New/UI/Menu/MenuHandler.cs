@@ -10,6 +10,7 @@ public class MenuHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (GameManagerNew.Instance.cantPause) return;
             SwitchMenu();
         }
     }

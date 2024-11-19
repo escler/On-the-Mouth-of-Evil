@@ -84,7 +84,6 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
         while (Mathf.Abs(slotTransform.localEulerAngles.y - rotations[actualRotation].y + offset) > 1)
         {
             slotTransform.Rotate(0,speedRotation,0,Space.Self);
-            print("Entre aca");
             //transform.eulerAngles = Vector3.SmoothDamp(transform.eulerAngles, rotations[actualRotation], ref reference, .5f);
             yield return new WaitForSeconds(0.01f);
         }
