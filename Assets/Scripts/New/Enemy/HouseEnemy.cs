@@ -255,14 +255,20 @@ public class HouseEnemy : Enemy
         magnetVFX.GetComponent<VisualEffect>().Stop();
         RitualManager.Instance.RitualFinish();
 
-        if (PathManager.Instance.BadPath <= 0) RitualManager.Instance.levitatingDoll.gameObject.SetActive(true);
+        if (PathManager.Instance.BadPath <= 0)
+        {
+            RitualManager.Instance.levitatingItems[1].gameObject.SetActive(true);
+            RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
+
+        }
         yield return new WaitForSeconds(3f);
-        StartCoroutine(GoToVoodooDoll());
+        StartCoroutine(GoToVoodo());
         //gameObject.SetActive(false);
     }
 
-    IEnumerator GoToVoodooDoll()
+    IEnumerator GoToVoodo()
     {
+        GameObject item = RitualManager.Instance.levitatingItems[1].gameObject;
         if (PathManager.Instance.BadPath > 0)
         {
             PlayerHandler.Instance.movement.ritualCinematic = false;
@@ -273,11 +279,11 @@ public class HouseEnemy : Enemy
         }
         PlayerHandler.Instance.movement.absorbEnd = true;
         PlayerHandler.Instance.animator.enabled = false;
-        PlayerHandler.Instance.movement.GoToVoodoo();
+        PlayerHandler.Instance.movement.GoToVoodoo(item.transform.position);
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.playerCam.CameraLock = true;
-        RitualManager.Instance.levitatingDoll.GetComponent<LevitatingDoll>().grabbed = true;
+        item.GetComponent<LevitatingItem>().grabbed = true;
         Inventory.Instance.selectedItem.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.movement.ritualCinematic = false;
@@ -290,8 +296,9 @@ public class HouseEnemy : Enemy
     
     IEnumerator ShowEnemyOnGoodRitual()
     {
-        Inventory.Instance.cantSwitch = true;
+        print("Entre a la cor Good Ritual");
         PlayerHandler.Instance.movement.ritualCinematic = true;
+        Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => enemyVisibility <= 0);
         
@@ -302,8 +309,6 @@ public class HouseEnemy : Enemy
 
             yield return new WaitForSeconds(0.1f);
         }
-        activateGoodExorcism = true;
-        CameraFollow.Instance.inRitual = true;
         RitualManager.Instance.ritualFloor.SetActive(false);
         RitualManager.Instance.ActivateCraterFloor();
 
@@ -316,15 +321,42 @@ public class HouseEnemy : Enemy
             
             yield return new WaitForSeconds(0.1f);
         }
-
-        CameraFollow.Instance.inRitual = false;
-        PlayerHandler.Instance.movement.ritualCinematic = false;
         RitualManager.Instance.CloseCrater();
+
+        if (PathManager.Instance.GoodPath <= 0)
+        {
+            RitualManager.Instance.levitatingItems[0].gameObject.SetActive(true);
+            RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[0].gameObject;
+        }
+        yield return new WaitForSeconds(3f);
+        StartCoroutine(GoToRosary());
+    }
+    
+    IEnumerator GoToRosary()
+    {
+        print("Entre a la cor GoToRosary");
+        GameObject item = RitualManager.Instance.levitatingItems[0].gameObject;
+        if (PathManager.Instance.GoodPath > 0)
+        {
+            PlayerHandler.Instance.movement.ritualCinematic = false;
+            PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
+            GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+            yield break;
+        }
+        PlayerHandler.Instance.movement.absorbEnd = true;
+        PlayerHandler.Instance.movement.GoToVoodoo(item.transform.position);
+        yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
+        yield return new WaitForSeconds(2f);
+        PlayerHandler.Instance.playerCam.CameraLock = true;
+        item.GetComponent<LevitatingItem>().grabbed = true;
+        Inventory.Instance.selectedItem.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        PlayerHandler.Instance.movement.ritualCinematic = false;
+        PlayerHandler.Instance.movement.absorbEnd = false;
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-        GameManagerNew.Instance.LoadSceneWithDelay("Hub",3);
-        RitualManager.Instance.RitualFinish();
-        gameObject.SetActive(false);
+        GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+        
     }
     
     IEnumerator HideEnemyLerp()

@@ -46,8 +46,6 @@ public class PathManager : MonoBehaviour
 
     IEnumerator CheckThropiesCor()
     {
-        print(_goodPath);
-        print(_badPath);
         yield return new WaitForSeconds(.1f);
         if (TrophiesHandler.Instance == null) yield break;
         var goodObjects = TrophiesHandler.Instance.goodThropies;

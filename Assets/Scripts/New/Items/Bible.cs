@@ -147,6 +147,7 @@ public class Bible : Item
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
         yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
         var paperRitual = Instantiate(paperBible);
+        paperRitual.transform.position = transform.position;
         float ticks = 0;
         Vector3 originalPos = paperRitual.transform.position;
         while (ticks < 1)

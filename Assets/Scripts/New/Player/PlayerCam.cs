@@ -74,7 +74,7 @@ public class PlayerCam : MonoBehaviour
                 }
                 ticks += Time.deltaTime;
 
-                Vector3 dir = RitualManager.Instance.levitatingDoll.transform.position - cameraPos.position;
+                Vector3 dir = RitualManager.Instance.actualItemActive.transform.position - cameraPos.position;
 
                 cameraPos.forward = Vector3.Lerp(cameraForward, dir, ticks);
 

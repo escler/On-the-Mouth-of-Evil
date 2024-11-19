@@ -14,7 +14,7 @@ public class HouseEnemy_Ritual : MonoBaseState
     
     public override void UpdateLoop()
     {
-        if(owner.activateGoodExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
+        //if(owner.activateGoodExorcism) owner.EnemyAnimator.ChangeStateAnimation("Exorcism", true);
 
         if (!ritualReached) Startcort();
         else StartRitualSequence();
@@ -74,37 +74,6 @@ public class HouseEnemy_Ritual : MonoBaseState
         owner.transform.rotation = Quaternion.LookRotation(dir);
         owner.normalMesh.SetActive(false);
         owner.ritualMesh.SetActive(true);
-        /*float timer = 0;
-
-        while (timer < 1)
-        {
-            Vector3 target = PlayerHandler.Instance.transform.position;
-            target.y = owner.transform.position.y;
-            Vector3 dir = target - owner.transform.position;
-            owner.transform.rotation = Quaternion.LookRotation(dir);
-            owner.transform.position += dir.normalized * owner.speed * Time.deltaTime;
-            timer += 0.01f;
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        yield return new WaitForSeconds(0.3f);
-        bool inNode = false;
-        if (CorduraHandler.Instance.CorduraOn > 0) CorduraHandler.Instance.CorduraOn = 0;
-        while (!inNode)
-        {
-            Vector3 target = RitualManager.Instance.ritualNode.transform.position;
-            target.y = owner.transform.position.y;
-            Vector3 dir = target - owner.transform.position;
-            Vector3 targetPlayer = PlayerHandler.Instance.transform.position;
-            targetPlayer.y = owner.transform.position.y;
-            Vector3 dirPlayer = targetPlayer - owner.transform.position;
-            inNode = Vector3.Distance(owner.transform.position, target) <= 0.1f;
-            owner.transform.rotation = Quaternion.LookRotation(dirPlayer);
-            owner.transform.position += dir.normalized * owner.speed / 3 * Time.deltaTime;
-            yield return new WaitForSeconds(0.01f);
-        }*/
-
-
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)

@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Movement();
         MoveToRitualSpot();
-        MoveToDoll();
     }
 
     private void Movement()
@@ -68,9 +67,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void GoToVoodoo()
+    public void GoToVoodoo(Vector3 item)
     {
-        StartCoroutine(MoveToDoll());
+        StartCoroutine(MoveToDoll(item));
     }
 
     private void MoveToRitualSpot()
@@ -101,10 +100,10 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);
     }
 
-    IEnumerator MoveToDoll()
+    IEnumerator MoveToDoll(Vector3 item)
     {
         voodooMovement = true;
-        Vector3 target = RitualManager.Instance.levitatingDoll.transform.position;
+        Vector3 target = item;
         target.y = transform.position.y;
         Vector3 originalEuler = transform.position;
         float ticks = 0;

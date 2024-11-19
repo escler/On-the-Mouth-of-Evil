@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using UnityEngine;
 
-public class LevitatingDoll : MonoBehaviour
+public class LevitatingItem : MonoBehaviour
 {
     public float levitatingSpeedMin, levitatingSpeedMax, levitatingAmountMin, levitatingAmountMax,
         rotationSpeedMin, rotationSpeedMax;
     public float maxHeight;
     public float velocityLevitation;
-    private float _timer, _timerRot, _rotationSpeed, _levitatingSpeed, _levitatingAmount;
+    private float _timerRot, _rotationSpeed, _levitatingSpeed, _levitatingAmount;
     private Vector3 initialPos, _endPos, _actualPos;
-    private Vector3 reference = Vector3.zero;
     public bool grabbed;
     private float ticks;
     private Vector3 originalPos, originalForward;
@@ -36,7 +35,6 @@ public class LevitatingDoll : MonoBehaviour
     private void Levitate()
     {
         if (grabbed) return;
-        _timer += Time.deltaTime * _levitatingSpeed;
 
         transform.position = initialPos + new Vector3(0, 
             Mathf.Sin(Time.time * velocityLevitation) * maxHeight, 0);
