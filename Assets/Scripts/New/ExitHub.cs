@@ -10,7 +10,8 @@ public class ExitHub : MonoBehaviour, IInteractable
     private int _count;
     private int _itemNeeded = 4;
     private List<string> checkedItems = new List<string>();
-
+    private AudioSource audioSource;
+    public string soundName;
     public void OnInteractItem()
     {
         _count = 0;
@@ -39,7 +40,7 @@ public class ExitHub : MonoBehaviour, IInteractable
             checkedItems.Clear();
             return;
         }
-
+        MusicManager.Instance.PlaySound(soundName, false);
         GameManagerNew.Instance.LoadSceneWithDelay(PlayerHandler.Instance.actualMission.misionName, 3f);
     }
 

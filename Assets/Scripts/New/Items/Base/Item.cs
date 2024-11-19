@@ -16,6 +16,8 @@ public class Item : MonoBehaviour, IInteractable
     public Vector3 angleHand;
 
     protected bool cantBobbing;
+    private AudioSource audioSource;
+    public string soundName;
     public bool CantBobbing
     {
         set => cantBobbing = value;
@@ -51,6 +53,7 @@ public class Item : MonoBehaviour, IInteractable
 
     public virtual void OnInteractItem()
     {
+        MusicManager.Instance.PlaySound(soundName, false);
         OnGrabItem();
     }
 
