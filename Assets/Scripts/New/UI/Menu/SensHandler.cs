@@ -27,7 +27,7 @@ public class SensHandler : MonoBehaviour
     private void SetValue()
     {
         print("Me llame");
-        PlayerHandler.Instance.playerCam.sens = _slider.value;
+        if(PlayerHandler.Instance != null) PlayerHandler.Instance.playerCam.sens = _slider.value;
         sensValueText.text = _slider.value.ToString("0.00");
         PlayerPrefs.SetFloat("Sens", _slider.value);
         PlayerPrefs.Save();
