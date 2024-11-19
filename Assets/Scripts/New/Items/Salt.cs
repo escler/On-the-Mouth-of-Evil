@@ -88,7 +88,6 @@ public class Salt : Item
         }
         _animator.SetBool("PutSalt", true);
         yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("PutSalt"));
-        print("Llegue aca wey");
         _animator.SetBool("PutSalt", false);
         yield return new WaitUntil(() => !_animator.GetCurrentAnimatorStateInfo(0).IsName("PutSalt"));
         _uses--;
@@ -208,7 +207,7 @@ public class Salt : Item
 
     IEnumerator FillSalt()
     {
-        float target = currentSalt + 2.1f / 6;
+        float target = currentSalt + 2.1f / (maxUses + 2);
         while (currentSalt < target)
         {
             currentSalt += 0.1f;

@@ -23,8 +23,7 @@ public class HouseEnemy_Voodoo : MonoBaseState
 
     public override Dictionary<string, object> Exit(IState to)
     {
-        if (!owner.ritualDone) owner.HideEnemy();
-        else
+        if (owner.ritualDone)
         {
             owner.enemyVisibility = 0;
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
@@ -40,6 +39,13 @@ public class HouseEnemy_Voodoo : MonoBaseState
     {
         _actualTime -= Time.deltaTime;
         owner.actualTime = 0;
+
+        if (_actualTime > 0) return;
+        
+        if (!owner.ritualDone)
+        {
+            owner.HideEnemy();
+        }
     }
 
     public override IState ProcessInput()
@@ -47,7 +53,7 @@ public class HouseEnemy_Voodoo : MonoBaseState
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
         
-        if (_actualTime <= 0 && Transitions.ContainsKey(StateTransitions.ToPatrol))
+        if (_actualTime <= 0 && owner.enemyVisibility <= 0 && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
         
         return this;
