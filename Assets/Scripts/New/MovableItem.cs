@@ -77,7 +77,7 @@ public class MovableItem : MonoBehaviour, IInteractable
     public void RelocateItem()
     {
         onHand = true;
-        PlayerHandler.Instance.movingObject = true;
+        if (!relocated) PlayerHandler.Instance.movingObject = true;
         actualTarget = initialPos;
         _actualSpeed = _relocatedSpeed;
     }

@@ -185,7 +185,7 @@ public class ObjectDetector : MonoBehaviour
         
         if (raycast && Input.GetMouseButton(0))
         {
-            if (_hit.transform.TryGetComponent(out MovableItem movable))
+            if (_hit.transform.TryGetComponent(out MovableItem movable) && !movable.relocated)
             {
                 movable.RelocateItem();
                 PlayerHandler.Instance.UnPossesPlayer();
