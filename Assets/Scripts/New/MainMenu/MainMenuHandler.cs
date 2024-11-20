@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class MainMenuHandler : MonoBehaviour
 {
-    public Button playBTN, quitBTN, optionsBTN, backOptionsBTN;
-    public GameObject mainButtons, options;
+    public Button playBTN, quitBTN, optionsBTN, backOptionsBTN, deleteProgressBTN, yesProgressBTN, noProgressBTN;
+    public GameObject mainButtons, options, progressConfirm;
 
     private void Awake()
     {
@@ -17,6 +17,9 @@ public class MainMenuHandler : MonoBehaviour
         quitBTN.onClick.AddListener(QuitGame);
         optionsBTN.onClick.AddListener(OpenOptions);
         backOptionsBTN.onClick.AddListener(CloseOptions);
+        deleteProgressBTN.onClick.AddListener(OpenConfirmProgress);
+        yesProgressBTN.onClick.AddListener(ClearProgress);
+        noProgressBTN.onClick.AddListener(CloseConfirmProgress);
     }
 
     private void OnDestroy()
@@ -24,6 +27,10 @@ public class MainMenuHandler : MonoBehaviour
         playBTN.onClick.RemoveAllListeners();
         quitBTN.onClick.RemoveAllListeners();
         optionsBTN.onClick.RemoveAllListeners();
+        backOptionsBTN.onClick.RemoveAllListeners();
+        deleteProgressBTN.onClick.RemoveAllListeners();
+        yesProgressBTN.onClick.RemoveAllListeners();
+        noProgressBTN.onClick.RemoveAllListeners();
     }
 
     private void LoadHubScene()
@@ -41,11 +48,28 @@ public class MainMenuHandler : MonoBehaviour
     {
         options.SetActive(false);
         mainButtons.SetActive(true);
+        progressConfirm.SetActive(false);
     }
 
     private void QuitGame()
     {
         PlayerPrefs.Save();
         Application.Quit();
+    }
+
+    private void OpenConfirmProgress()
+    {
+        progressConfirm.SetActive(true);
+    }
+
+    private void CloseConfirmProgress()
+    {
+        progressConfirm.SetActive(false);
+    }
+
+    private void ClearProgress()
+    {
+        PathManager.Instance.ResetPrefs();
+        CloseConfirmProgress();
     }
 }

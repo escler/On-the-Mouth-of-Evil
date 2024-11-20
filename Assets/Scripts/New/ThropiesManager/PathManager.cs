@@ -79,7 +79,7 @@ public class PathManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.O)) ResetPrefs();
     }
 
-    void ResetPrefs()
+    public void ResetPrefs()
     {
         if (PlayerPrefs.HasKey("GoodPath")) PlayerPrefs.SetInt("GoodPath", 0);
         if (PlayerPrefs.HasKey("BadPath")) PlayerPrefs.SetInt("BadPath", 0);
