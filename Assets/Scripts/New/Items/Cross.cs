@@ -46,7 +46,7 @@ public class Cross : Item
     {
         base.OnInteract(hit, i);
 
-        if (PlayerHandler.Instance.movingObject) return;
+        if(PlayerHandler.Instance.movingObject) OnUpCross();
         if (hit && i.transform.TryGetComponent(out SkullPuzzleSlot socket)) return;
         if (_crossCd.cantUse) return;
         _currentTime += Time.deltaTime;

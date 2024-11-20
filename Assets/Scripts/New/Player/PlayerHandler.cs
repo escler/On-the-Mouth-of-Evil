@@ -34,6 +34,7 @@ public class PlayerHandler : MonoBehaviour
         SceneManager.sceneLoaded += UnlockPlayer;
         SceneManager.sceneLoaded += DestroyPlayer;
         cantInteract = false;
+        StartCoroutine(WaitForLock());
     }
 
     private void DestroyPlayer(Scene scene, LoadSceneMode loadSceneMode)
@@ -52,6 +53,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)
     {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.None;
         PossesPlayer();
         movement.inSpot = false;
         movement.ritualCinematic = false;
@@ -59,6 +61,13 @@ public class PlayerHandler : MonoBehaviour
         movement.absorbEnd = false;
         movement.inVoodooPos = false;
         playerCam.ticks = 0;
+        StartCoroutine(WaitForLock());
+    }
+
+    IEnumerator WaitForLock()
+    {
+        yield return new WaitForSeconds(0.01f);
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
     public void PossesPlayer()
