@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Item : MonoBehaviour, IInteractable
 {
@@ -26,7 +27,17 @@ public class Item : MonoBehaviour, IInteractable
     private float _timer;
     private float bobbingSpeed = 5;
     private float bobbingAmount = .25f;
-    
+
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += DestroyOnMenu;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DestroyOnMenu;
+    }
+
     public virtual void OnGrabItem()
     {
         Inventory.Instance.AddItem(this, category);
@@ -120,5 +131,10 @@ public class Item : MonoBehaviour, IInteractable
         transform.localPosition = new Vector3(transform.localPosition.x,
             transform.localPosition.y + Mathf.Cos(_timer) * bobbingAmount / 8 * Time.deltaTime,
             transform.localPosition.z);
+    }
+
+    void DestroyOnMenu(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if(scene.name == "Menu") Destroy(gameObject);
     }
 }

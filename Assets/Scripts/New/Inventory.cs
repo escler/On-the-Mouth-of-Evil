@@ -40,7 +40,6 @@ public class Inventory : MonoBehaviour
         countSelected = 0;
         StartCoroutine(DelayFunction());
         SceneManager.sceneLoaded += ClearInventories;
-        print(inventory.Length);
     }
     
     private void OnDestroy()
