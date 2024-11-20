@@ -81,7 +81,7 @@ public class HouseEnemy_Attacks : MonoBaseState
 
         owner.attackEnded = false;
         if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader();
-
+        
         return base.Exit(to);
     }
 
@@ -249,6 +249,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
             if (Vector3.Distance(target, player.transform.position) < 1)
             {
+                GrabHead();
                 StopCoroutine(Hipnosis());
                 yield break;
             }

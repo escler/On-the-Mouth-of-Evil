@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWalkSound()
     {
-        bool isWalking = _inputX != 0 || _inputY != 0;
+        bool isWalking = _rb.velocity != Vector3.zero;
 
         if (isWalking && _walkAudioSource == null)
         {

@@ -89,7 +89,10 @@ public class ObjectDetector : MonoBehaviour
             if (Inventory.Instance.selectedItem.itemName == "Salt Recipient") return true;
         }
 
-        if (!_hit.transform.TryGetComponent(out MovableItem movableItem) && _hit.transform.GetComponent<IInteractable>().CanShowText()) return true;
+        if (!_hit.transform.TryGetComponent(out MovableItem movableItem) && _hit.transform.TryGetComponent(out IInteractable interactable))
+        {
+            if (interactable.CanShowText()) return true;
+        }
 
         if (rayDoor && _hitDoors.transform.TryGetComponent(out Door door)) return true;
 
@@ -156,7 +159,7 @@ public class ObjectDetector : MonoBehaviour
         var raycast = CheckRayCast();
 
         uiInteractionText.SetActive(GrabText());
-        ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2));
+        ui2.SetActive(raycast && _hit.transform.TryGetComponent(out MovableItem movable2) && !movable2.relocated);
     }
 
     private void CrossHair()
@@ -173,7 +176,8 @@ public class ObjectDetector : MonoBehaviour
         
         if (raycast && Input.GetButtonDown("Interact"))
         {
-            _hit.transform.GetComponent<IInteractable>().OnInteractItem();
+            if (!_hit.transform.TryGetComponent(out IInteractable interactable)) return;
+            interactable.OnInteractItem();
         }
         
         //if(Input.GetButtonDown("Focus") && selectedItem != null) selectedItem.FocusObject();

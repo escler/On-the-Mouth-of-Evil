@@ -27,12 +27,14 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
         if (Input.GetMouseButtonUp(0))
         {
+            if (onHand)
+            {
+                PlayerHandler.Instance.PossesPlayer();
+            }
             PlayerHandler.Instance.movingObject = false;
-            if (relocated) return;
             onHand = false;
             actualTarget = finalPos;
             _actualSpeed = normalSpeed;
-            PlayerHandler.Instance.PossesPlayer();
         }
     }
 

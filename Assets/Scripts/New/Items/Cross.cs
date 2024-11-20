@@ -46,6 +46,7 @@ public class Cross : Item
     {
         base.OnInteract(hit, i);
 
+        if (PlayerHandler.Instance.movingObject) return;
         if (hit && i.transform.TryGetComponent(out SkullPuzzleSlot socket)) return;
         if (_crossCd.cantUse) return;
         _currentTime += Time.deltaTime;
@@ -82,7 +83,7 @@ public class Cross : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         ChangeCrossHair();
 
-        if (Input.GetMouseButton(0) && !PlayerHandler.Instance.movingObject) OnInteract(rayConnected, ray);
+        if (Input.GetMouseButton(0)) OnInteract(rayConnected, ray);
         if(Input.GetMouseButtonUp(0)) OnUpCross();
     }
 
