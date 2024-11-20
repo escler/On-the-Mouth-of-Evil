@@ -8,7 +8,7 @@ public class ObjectDetector : MonoBehaviour
 {
     public static ObjectDetector Instance { get; private set; }
     
-    public LayerMask layer;
+    public LayerMask layer, layerDoors;
     public Transform cameraPos;
     public int distance;
     public GameObject uiInteractionText, ui2;
@@ -141,7 +141,7 @@ public class ObjectDetector : MonoBehaviour
 
     private bool CheckDoorsRayCast()
     {
-        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, 1.7f, layer);
+        bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, 1.7f, layerDoors);
         return ray;
     }
 

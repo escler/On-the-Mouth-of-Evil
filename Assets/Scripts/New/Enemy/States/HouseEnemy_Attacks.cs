@@ -80,7 +80,6 @@ public class HouseEnemy_Attacks : MonoBaseState
         waitingTime = 0;
 
         owner.attackEnded = false;
-        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader();
         
         return base.Exit(to);
     }
@@ -125,7 +124,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         var movable = MovableHandler.Instance.movablesItems;
         foreach (var mov in movable)
         {
-            mov.GetComponent<Rigidbody>().isKinematic = false;
+            mov.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             mov.GetComponent<BoxCollider>().enabled = true;
         }
         startNode = null;
@@ -134,6 +133,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         owner.grabHead = false;
         _corroutine = false;
         _headGrabbed = false;
+        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader("OnExitChase");
     }
     private void Teleport()
     {
@@ -229,13 +229,13 @@ public class HouseEnemy_Attacks : MonoBaseState
         {
             if (!closeEyes)
             {
-                HypnosisEffectControllerHDRP.Instance.StartLerpShader();
+                HypnosisEffectControllerHDRP.Instance.StartLerpShader("Hipnosis");
                 closeEyes = true;
             }
             var movable = MovableHandler.Instance.movablesItems;
             foreach (var mov in movable)
             {
-                mov.GetComponent<Rigidbody>().isKinematic = true;
+                mov.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 mov.GetComponent<BoxCollider>().enabled = false;
             }
             if (!owner.compareRoom) break;
@@ -267,7 +267,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
             _corroutine = false;
             owner.attackEnded = true;
-            HypnosisEffectControllerHDRP.Instance.EndLerpShader();
+            HypnosisEffectControllerHDRP.Instance.EndLerpShader("Hipnosis");
         }
         
     }
@@ -305,7 +305,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.01f);
         }
         
-        HypnosisEffectControllerHDRP.Instance.EndLerpShader();
+        HypnosisEffectControllerHDRP.Instance.EndLerpShader("WaitAnimState");
         var currentItem = Inventory.Instance.selectedItem;
         bool success = false;
         if (currentItem.itemName == "Rosary") success = currentItem.GetComponent<Rosary>().RosaryProtect();

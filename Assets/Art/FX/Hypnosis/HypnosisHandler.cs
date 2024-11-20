@@ -56,16 +56,18 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         if(isLerpingK) PerformLerp(ref isLerpingK, ref currentLerpTimeK, hypnosisMaterialK, ref hasCompletedCycleK, skyboxNextState);
     }
 
-    public void StartLerpShader()
+    public void StartLerpShader(string name)
     {
+        print("Start " + name);
         skyboxNextState = false;
         hasCompletedCycleK = false;
         isLerpingK = true;
         currentLerpTimeK = 0.0f;
     }
 
-    public void EndLerpShader()
+    public void EndLerpShader(string name)
     {
+        print("End " + name);
         skyboxNextState = true;
         isLerpingK = true;
         hasCompletedCycleK = false;
