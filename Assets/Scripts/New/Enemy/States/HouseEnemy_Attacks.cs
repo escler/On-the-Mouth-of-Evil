@@ -151,6 +151,18 @@ public class HouseEnemy_Attacks : MonoBaseState
             goal = PathFindingManager.instance.CalculateNearnestNodeAndRoom(playerPos);
         }
 
+        if (startNode == null)
+        {
+            owner.attackEnded = true;
+            return;
+        }
+
+        if (startNode.room.roomBlocked)
+        {
+            owner.attackEnded = true;
+            return;
+        }
+
         if (startNode == goal && _actualGrabCD <= 0)
         {
             StartCoroutine(Hipnosis());

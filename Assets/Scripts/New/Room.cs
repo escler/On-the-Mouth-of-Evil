@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     public MovableItem[] movableItems;
     private int count;
     public bool cantBlock;
+    public bool roomBlocked;
     private void Awake()
     {
         count = doors.Length;
@@ -36,6 +37,7 @@ public class Room : MonoBehaviour
     
     public void DisableNodes()
     {
+        roomBlocked = true;
         foreach (var node in nodesRoom)
         {
             node.gameObject.SetActive(false);
@@ -57,6 +59,8 @@ public class Room : MonoBehaviour
         {
             node.gameObject.SetActive(true);
         }
+
+        roomBlocked = false;
     }
 
     public void BlockDoors()
