@@ -229,6 +229,7 @@ public class HouseEnemy : Enemy
             yield return new WaitForSeconds(0.1f);
 
         }
+        Inventory.Instance.cantSwitch = true;
 
         yield return new WaitUntil(() => _enemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
         absorbVFX.SetActive(true);
@@ -301,6 +302,8 @@ public class HouseEnemy : Enemy
         Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => enemyVisibility <= 0);
+        
+        Inventory.Instance.cantSwitch = true;
         
         while (enemyVisibility < 8)
         {

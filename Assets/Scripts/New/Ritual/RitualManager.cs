@@ -28,6 +28,7 @@ public class RitualManager : MonoBehaviour
     public GameObject crater;
     public GameObject[] levitatingItems;
     public GameObject actualItemActive;
+    public GameObject circles;
     
     public static RitualManager Instance { get; private set; }
 
@@ -47,6 +48,7 @@ public class RitualManager : MonoBehaviour
     public void AltarCompleted()
     {
         altarCompleted = true;
+        circles.SetActive(true);
         if (DecisionsHandler.Instance.badPath)
         {
             crater.SetActive(false);

@@ -38,6 +38,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
         if (HouseEnemy.Instance != null && paperOnRitual && RitualManager.Instance.candlesBurned)
         {
             HouseEnemy.Instance.RitualReady(RitualManager.Instance.ritualNode);
+            RitualManager.Instance.circles.SetActive(false);
         }
         StartCoroutine(BibleBurning());        
         StartCoroutine(BurnPaper());
