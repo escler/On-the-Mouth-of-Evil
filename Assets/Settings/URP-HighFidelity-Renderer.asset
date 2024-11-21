@@ -111,6 +111,31 @@ MonoBehaviour:
   injectionPoint: 450
   requirements: 6
   passIndex: 0
+--- !u!114 &-512485657470688675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445ec01bb9697d04bb45456e9ea061d2, type: 3}
+  m_Name: GoodEffect
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    renderPassEvent: 450
+    blitMaterial: {fileID: -876546973899608171, guid: f9291dc5c162b0b409f12fa66bb51076,
+      type: 3}
+    blitMaterialPassIndex: -1
+    sourceType: 0
+    destinationType: 0
+    sourceTextureId: _SourceTexture
+    destinationTextureId: _DestinationTexture
+    mask:
+      serializedVersion: 2
+      m_Bits: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +162,8 @@ MonoBehaviour:
   - {fileID: -1613238622671223388}
   - {fileID: 4471213749273351429}
   - {fileID: 1885489673879325374}
-  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed36afdcf90fc877a7c7200a601cbb61c5aa4c5bd1d05a09ce905d5472837f10c3ebe8a3e5fde9a2a1a
+  - {fileID: -512485657470688675}
+  m_RendererFeatureMap: adc0de57c6d2eee55dcc88ec011e714bb3707f1c8d186ff25e3de6ab56818ed36afdcf90fc877a7c7200a601cbb61c5aa4c5bd1d05a09ce905d5472837f10c3ebe8a3e5fde9a2a1a5d22fa810249e3f8
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
