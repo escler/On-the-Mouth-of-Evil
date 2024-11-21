@@ -8,8 +8,6 @@ using TMPro;
 public class SensHandler : MonoBehaviour
 {
     private Slider _slider;
-    public TextMeshProUGUI sensValueText;
-    private float _sensValue;
 
     private void Awake()
     {
@@ -28,7 +26,6 @@ public class SensHandler : MonoBehaviour
     {
         print("Me llame");
         if(PlayerHandler.Instance != null) PlayerHandler.Instance.playerCam.sens = _slider.value;
-        sensValueText.text = _slider.value.ToString("0.00");
         PlayerPrefs.SetFloat("Sens", _slider.value);
         PlayerPrefs.Save();
     }
@@ -37,14 +34,12 @@ public class SensHandler : MonoBehaviour
         if (PlayerPrefs.HasKey("Sens"))
         {
             _slider.value = PlayerPrefs.GetFloat("Sens");
-            sensValueText.text = _slider.value.ToString("0.00");
             PlayerPrefs.Save();
             return;
         }
 
         _slider.value = 1;
         PlayerPrefs.SetFloat("Sens", _slider.value);
-        sensValueText.text = _slider.value.ToString("0.00");
         PlayerPrefs.Save();
     }
 }

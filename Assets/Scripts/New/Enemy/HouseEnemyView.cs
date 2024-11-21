@@ -6,6 +6,7 @@ public class HouseEnemyView : MonoBehaviour
 {
     public Animator animator;
     public GameObject PS, PSAppear;
+    private bool success;
 
     
     public void ChangeStateAnimation(string stateName, bool stateParameter)
@@ -33,6 +34,8 @@ public class HouseEnemyView : MonoBehaviour
     public void DisableGrabHead()
     {
         ChangeStateAnimation("GrabHead", false);
+        var currentItem = Inventory.Instance.selectedItem;
+        if (currentItem.itemName == "Rosary") success = currentItem.GetComponent<Rosary>().RosaryProtect();
     }
 
     public void DisablePointAttack()
