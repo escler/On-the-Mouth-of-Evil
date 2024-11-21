@@ -17,28 +17,36 @@ public class AudioMixerHandler : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
         SearchPrefs();
     }
 
-    private void SearchPrefs()
+    void SearchPrefs()
     {
         if (PlayerPrefs.HasKey("FXVolume"))
         {
-            mixer.SetFloat("FXVolume", Mathf.Log10(PlayerPrefs.GetFloat("FXVolume") * 20));
+            float value = PlayerPrefs.GetFloat("FXVolume");
+            value = MathF.Log10(value) * 20;
+            mixer.SetFloat("FXVolume", value);
         }
         else
         {
-            mixer.SetFloat("FXVolume", Mathf.Log10(1 * 20));
+            mixer.SetFloat("FXVolume", 0);
         }
 
         
-        if (PlayerPrefs.HasKey("AmbientFX"))
+        if (PlayerPrefs.HasKey("AmbientVolume"))
         {
-            mixer.SetFloat("AmbientFX", Mathf.Log10(PlayerPrefs.GetFloat("AmbientFX") * 20));
+            float value = PlayerPrefs.GetFloat("AmbientVolume");
+            value = MathF.Log10(value) * 20;
+            mixer.SetFloat("AmbientVolume", value);
         }
         else
         {
-            mixer.SetFloat("AmbientFX", Mathf.Log10(1 * 20));
+            mixer.SetFloat("AmbientVolume", 0);
         }
 
     }
