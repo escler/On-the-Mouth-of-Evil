@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool absorbEnd;
     public bool inVoodooPos;
     public bool voodooMovement;
+    public AudioSource walking;
     public bool Run => _run;
 
     private void Awake()
@@ -28,6 +29,17 @@ public class PlayerMovement : MonoBehaviour
         _inputX = Input.GetAxisRaw("Horizontal");
         _inputY = Input.GetAxisRaw("Vertical");
         _run = Input.GetButton("Run");
+        HandleWalkSound();
+    }
+
+    private void OnEnable()
+    {
+        _rb.velocity = Vector3.zero;
+    }
+
+    private void OnDisable()
+    {
+        _rb.velocity = Vector3.zero;
         HandleWalkSound();
     }
 
@@ -52,8 +64,12 @@ public class PlayerMovement : MonoBehaviour
     private void HandleWalkSound()
     {
         bool isWalking = _rb.velocity != Vector3.zero;
+        
+        if(isWalking && !walking.isPlaying) walking.Play();
+        
+        if(!isWalking && walking.isPlaying) walking.Stop();
 
-        if (isWalking && _walkAudioSource == null)
+       /* if (isWalking && _walkAudioSource == null)
         {
             MusicManager.Instance.PlaySound("Footsteps-concrete", true, (source) =>
             {
@@ -62,9 +78,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!isWalking && _walkAudioSource != null)
         {
+            print("Entro aca");
             MusicManager.Instance.StopSound(_walkAudioSource);
             _walkAudioSource = null;
-        }
+        }*/
     }
 
     public void GoToVoodoo(Vector3 item)

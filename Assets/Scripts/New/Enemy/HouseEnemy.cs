@@ -80,6 +80,7 @@ public class HouseEnemy : Enemy
 
     public bool voodooActivate;
     public Vector3 voodooPosition;
+    public AudioSource ritualAudio;
     
     private void Awake()
     {
@@ -217,6 +218,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = true;
         Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
+        ritualAudio.Play();
         while (enemyVisibility < 8)
         {
             enemyVisibility += .45f;
@@ -252,6 +254,7 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }
+        ritualAudio.Stop();
         absorbVFX.GetComponent<VisualEffect>().Stop();
         magnetVFX.GetComponent<VisualEffect>().Stop();
         RitualManager.Instance.RitualFinish();

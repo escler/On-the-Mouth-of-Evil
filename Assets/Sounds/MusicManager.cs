@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Resources;
 using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : Singleton<MusicManager>
 {
@@ -11,7 +13,7 @@ public class MusicManager : Singleton<MusicManager>
     public AudioMixerGroup fxGroup;
     [SerializeField] private float bgValue = 1;
     private GameObject soundObj = null;
-    private List<AudioSource> soundList = new List<AudioSource>();
+    public List<AudioSource> soundList = new List<AudioSource>();
     [SerializeField] private float soundValue = 1;
     
     protected override void Awake()
@@ -25,9 +27,19 @@ public class MusicManager : Singleton<MusicManager>
         {
             Debug.Log("UpdateManager instance is null");
         }
+        SceneManager.sceneLoaded += ClearAudios;
+
     }
 
-   
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ClearAudios;
+    }
+
+    private void ClearAudios(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        soundList.Clear();
+    }
 
     private void MyUpdate()
     {

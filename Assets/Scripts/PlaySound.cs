@@ -10,4 +10,9 @@ public class PlaySound : MonoBehaviour
     {
         audioSource.Play();
     }
+
+    public void StopSoundEffect()
+    {
+        audioSource.Stop();
+    }
 }
