@@ -71,7 +71,6 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         skyboxNextState = true;
         isLerpingK = true;
         hasCompletedCycleK = false;
-        StartCoroutine(ToggleLights(true));
     }
 
     private void PerformLerp(ref bool isLerping, ref float currentLerpTime, Material material, ref bool hasCompletedCycle, bool skyBox)

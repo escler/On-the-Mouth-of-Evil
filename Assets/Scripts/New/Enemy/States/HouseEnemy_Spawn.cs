@@ -48,6 +48,8 @@ public class HouseEnemy_Spawn : MonoBaseState
     IEnumerator ShowEnemyLerp()
     {
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", true);
+        yield return new WaitForSeconds(0.01f);
+        owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
         foreach (var ps in owner.smokePS)
         {
             ps.Play();
@@ -58,8 +60,6 @@ public class HouseEnemy_Spawn : MonoBaseState
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
-        owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
-
 
         owner.actualTimeToLost = 4;
 

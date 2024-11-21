@@ -127,6 +127,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             mov.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             mov.GetComponent<BoxCollider>().enabled = true;
         }
+        owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
         startNode = null;
         goal = null;
         PlayerHandler.Instance.PossesPlayer();
@@ -226,6 +227,8 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield break;
         }
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", true);
+        yield return new WaitUntil(() =>
+            owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("HypnosisAttack"));
         _corroutine = true;
         float time = hipnosisTime;
         Transform player = PlayerHandler.Instance.transform;
@@ -251,7 +254,7 @@ public class HouseEnemy_Attacks : MonoBaseState
                 mov.GetComponent<BoxCollider>().enabled = false;
             }
             if (!owner.compareRoom) break;
-            if (owner.crossUsed) break;
+            if (owner.crossUsed || owner.voodooActivate) break;
             Vector3 target = owner.transform.position;
             target.y = player.position.y;
             time -= 0.1f;
@@ -268,18 +271,18 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.1f);
         }
 
-        if (!owner.crossUsed)
-        {
-            owner.transform.position = player.position + player.forward;
-            GrabHead();
-        }
-        else
+        if (owner.crossUsed || owner.voodooActivate)
         {
             PlayerHandler.Instance.PossesPlayer();
             owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
             _corroutine = false;
             owner.attackEnded = true;
             HypnosisEffectControllerHDRP.Instance.EndLerpShader("Hipnosis");
+        }
+        else
+        {
+            owner.transform.position = player.position + player.forward;
+            GrabHead();
         }
         
     }
@@ -345,12 +348,12 @@ public class HouseEnemy_Attacks : MonoBaseState
 
     void OnEnterCorduraAttack()
     {
+        print("Entre a Cordura Attack");
         owner.attackEnded = false;
         if(owner.compareRoom) owner.actualTimeToLost = timeToLostPlayer;
         if (!owner.compareRoom && owner.actualTimeToLost > 0)
         {
-            _actualAction = 0;
-            OnEnterChase();
+            owner.attackEnded = true;
             return;
         }
         if (CorduraHandler.Instance.CorduraOn > 0)
@@ -403,8 +406,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         if (owner.compareRoom) owner.actualTimeToLost = timeToLostPlayer;
         if (!owner.actualRoom.DoorsBlocked() || owner.actualRoom.movableItems.Length <= 0)
         {
-            OnEnterChase();
-            _actualAction = 0;
+            owner.attackEnded = true;
             return;
         }
         owner.attackEnded = false;
