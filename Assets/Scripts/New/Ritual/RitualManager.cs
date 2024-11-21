@@ -29,6 +29,7 @@ public class RitualManager : MonoBehaviour
     public GameObject[] levitatingItems;
     public GameObject actualItemActive;
     public GameObject circles;
+    public GameObject godRayVFX;
     
     public static RitualManager Instance { get; private set; }
 
