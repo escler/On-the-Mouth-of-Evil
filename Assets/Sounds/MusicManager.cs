@@ -2,10 +2,13 @@
 using System.Resources;
 using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MusicManager : Singleton<MusicManager>
 {
     private AudioSource bgMusic = null;
+    public AudioMixerGroup ambientGroup;
+    public AudioMixerGroup fxGroup;
     [SerializeField] private float bgValue = 1;
     private GameObject soundObj = null;
     private List<AudioSource> soundList = new List<AudioSource>();
@@ -44,6 +47,7 @@ public class MusicManager : Singleton<MusicManager>
         {
             GameObject obj = new GameObject("BgMusic");
             bgMusic = obj.AddComponent<AudioSource>();
+            bgMusic.outputAudioMixerGroup = ambientGroup;
         }
         ResourceManager.Instance.LoadAsync<AudioClip>("MusicPath/" + name, (clip) =>
         {
@@ -86,6 +90,7 @@ public class MusicManager : Singleton<MusicManager>
         {
             AudioSource source = soundObj.AddComponent<AudioSource>();
             source.clip = clip;
+            source.outputAudioMixerGroup = fxGroup;
             source.loop = isLoop;
             source.volume = soundValue;
             source.Play();

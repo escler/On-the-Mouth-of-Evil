@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,12 @@ public class ExitHub : MonoBehaviour, IInteractable
     private List<string> checkedItems = new List<string>();
     private AudioSource audioSource;
     public string soundName;
+
+    private void Awake()
+    {
+        print(gameObject.name);
+    }
+
     public void OnInteractItem()
     {
         _count = 0;
