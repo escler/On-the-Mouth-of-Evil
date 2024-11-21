@@ -135,6 +135,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         _corroutine = false;
         _headGrabbed = false;
         if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader("OnExitChase");
+        if(!GetComponentInChildren<Shackles>().toggleState) GetComponentInChildren<Shackles>().ChangeState();
     }
     private void Teleport()
     {

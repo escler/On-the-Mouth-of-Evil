@@ -26,10 +26,10 @@ public class HouseEnemy_Spawn : MonoBaseState
 
     public override IState ProcessInput()
     {
-        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+        if (owner.voodooActivate && stateEnd && Transitions.ContainsKey(StateTransitions.ToVoodoo))
             return Transitions[StateTransitions.ToVoodoo];
         
-        if (dontAttack && Transitions.ContainsKey(StateTransitions.ToIdle))
+        if (dontAttack && stateEnd && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         
         if (stateEnd && Transitions.ContainsKey(StateTransitions.ToAttacks))
@@ -42,11 +42,19 @@ public class HouseEnemy_Spawn : MonoBaseState
     {
         dontAttack = false;
         stateEnd = false;
+        StopAllCoroutines();    
+        owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
         return base.Exit(to);
     }
     
     IEnumerator ShowEnemyLerp()
     {
+        if (owner.enemyVisibility >= 8)
+        {
+            stateEnd = true;
+            yield break;
+        }
+        print("Coroutina");
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", true);
         yield return new WaitForSeconds(0.01f);
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);

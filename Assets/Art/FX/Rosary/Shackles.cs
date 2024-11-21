@@ -10,7 +10,7 @@ public class Shackles : MonoBehaviour
 
     private float lerpTime = 0f;
     private bool isScaling = false;
-    private bool toggleState = false; // Estado para alternar entre los valores
+    public bool toggleState = false; // Estado para alternar entre los valores
     private Vector3 initialScale;
     private Vector3 targetScale;
     private float initialEdgeControl;

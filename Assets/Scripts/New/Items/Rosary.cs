@@ -5,7 +5,6 @@ using UnityEngine;
 public class Rosary : Item
 {
     public float chanceToProtect;
-    public GameObject vfxSuccess;
     
     public override void OnGrabItem()
     {
@@ -29,9 +28,7 @@ public class Rosary : Item
     public bool RosaryProtect()
     {
         float random = Random.Range(0, 1);
-        print("Random " + random);
         bool success = random <= chanceToProtect;
-        vfxSuccess.SetActive(success);
         
         return success;
     }
