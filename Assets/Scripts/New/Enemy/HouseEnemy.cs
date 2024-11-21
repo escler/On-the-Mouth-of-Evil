@@ -324,6 +324,9 @@ public class HouseEnemy : Enemy
             
             yield return new WaitForSeconds(0.1f);
         }
+
+        RitualManager.Instance.godRayVFX.SetActive(true);
+        PostProcessHandler.Instance.IncreaseExposure();
         RitualManager.Instance.CloseCrater();
 
         if (PathManager.Instance.GoodPath <= 0)
