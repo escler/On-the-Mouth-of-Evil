@@ -60,11 +60,13 @@ public class MainMenuHandler : MonoBehaviour
     private void OpenConfirmProgress()
     {
         progressConfirm.SetActive(true);
+        deleteProgressBTN.gameObject.SetActive(false);
     }
 
     private void CloseConfirmProgress()
     {
         progressConfirm.SetActive(false);
+        deleteProgressBTN.gameObject.SetActive(true);
     }
 
     private void ClearProgress()
