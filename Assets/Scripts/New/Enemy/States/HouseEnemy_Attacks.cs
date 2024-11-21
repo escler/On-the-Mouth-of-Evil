@@ -322,7 +322,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         
         HypnosisEffectControllerHDRP.Instance.EndLerpShader("WaitAnimState");
 
-        bool success = false;
+        bool success = owner.EnemyAnimator.success;
         if (!success)
         {
             owner.playerGrabbedCount++;
@@ -330,7 +330,15 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         else
         {
+            PlayerHandler.Instance.PossesPlayer();
+            owner.grabHead = false;
             owner.EnemyAnimator.ChangeStateAnimation("RosaryTrigger", true);
+            yield return new WaitUntil(() => owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("DemonRosary"));
+            GetComponentInChildren<Shackles>().ChangeState();
+            owner.EnemyAnimator.ChangeStateAnimation("GrabHead", false);
+            owner.EnemyAnimator.ChangeStateAnimation("RosaryTrigger", false);
+            yield return new WaitUntil(() => !owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("DemonRosary"));
+            GetComponentInChildren<Shackles>().ChangeState();
         }
 
         if (owner.playerGrabbedCount > 0)

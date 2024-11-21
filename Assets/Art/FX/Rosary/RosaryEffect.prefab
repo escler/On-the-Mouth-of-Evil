@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6019347564956098003}
+  - component: {fileID: 460493670533197058}
   m_Layer: 0
   m_Name: RosaryEffect
   m_TagString: Untagged
@@ -36,6 +37,22 @@ Transform:
   - {fileID: 2726449025822137064}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &460493670533197058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2598819174476469125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd96c9af522bb04597fa1dd767872b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleRange: {x: 0.33, y: 1}
+  lerpDuration: 0.5
+  rosaryMaterial: {fileID: 2100000, guid: 968338156543a334ba480b3e802c2e89, type: 2}
+  edgeControlRange: {x: 0, y: 1}
 --- !u!1 &3901796027840979792
 GameObject:
   m_ObjectHideFlags: 0
