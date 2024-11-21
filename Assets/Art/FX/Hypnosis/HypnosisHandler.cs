@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
 public class HypnosisEffectControllerHDRP : MonoBehaviour
 {
     public static HypnosisEffectControllerHDRP Instance { get; private set; }
@@ -123,7 +122,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.ambientIntensity = .53f;
+        RenderSettings.ambientIntensity = scene.name == "Menu" ? 0.0f : 0.53f;
         DynamicGI.UpdateEnvironment();
     }
 
