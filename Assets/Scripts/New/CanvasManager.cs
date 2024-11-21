@@ -10,7 +10,7 @@ public class CanvasManager : MonoBehaviour
 
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
-        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, descriptionVoodoo, puzzleSaltPaper,
+        descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, descriptionVoodoo, descriptionRosary, puzzleSaltPaper,
         rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descriptionPuzzleContent, fps;
     public CrosshairUI crossHairUI;
 
@@ -30,6 +30,7 @@ public class CanvasManager : MonoBehaviour
         descriptions.Add("Bible", descriptionBible);
         descriptions.Add("Salt", descriptionSalt);
         descriptions.Add("Voodoo Doll", descriptionVoodoo);
+        descriptions.Add("Rosary", descriptionRosary);
         SceneManager.sceneLoaded += DisableInfo;
         SceneManager.sceneLoaded += DestroyCanvas;
     }
