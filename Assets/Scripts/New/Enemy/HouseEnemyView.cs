@@ -7,7 +7,7 @@ public class HouseEnemyView : MonoBehaviour
     public Animator animator;
     public GameObject PS, PSAppear;
     public bool success;
-
+    public AudioSource spawnAudio;
     
     public void ChangeStateAnimation(string stateName, bool stateParameter)
     {

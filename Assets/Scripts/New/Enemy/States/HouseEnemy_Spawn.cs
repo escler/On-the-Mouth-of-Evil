@@ -14,7 +14,7 @@ public class HouseEnemy_Spawn : MonoBaseState
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
-        print("Entre a Spawn");
+        owner.EnemyAnimator.spawnAudio.Play();
         if (owner.actualTime < owner.timeToShowMe)
         {
             dontAttack = true;
@@ -54,7 +54,6 @@ public class HouseEnemy_Spawn : MonoBaseState
             stateEnd = true;
             yield break;
         }
-        print("Coroutina");
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", true);
         yield return new WaitForSeconds(0.01f);
         owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
