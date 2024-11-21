@@ -30,7 +30,7 @@ public class AmbientHandler : MonoBehaviour
             return;
         }
 
-        _slider.value = 1;
+        _slider.value = .5f;
         PlayerPrefs.SetFloat("AmbientVolume", _slider.value);
         PlayerPrefs.Save();
     }

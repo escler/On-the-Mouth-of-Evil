@@ -14,7 +14,8 @@ public class HouseEnemy_Spawn : MonoBaseState
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
-        owner.EnemyAnimator.spawnAudio.Play();
+        if (owner.enemyVisible) stateEnd = true;
+        if(!owner.EnemyAnimator.spawnAudio.isPlaying)owner.EnemyAnimator.spawnAudio.Play();
         if (owner.actualTime < owner.timeToShowMe)
         {
             dontAttack = true;

@@ -34,7 +34,9 @@ public class AudioMixerHandler : MonoBehaviour
         }
         else
         {
-            mixer.SetFloat("FXVolume", 0);
+            float value = .5f;
+            value = Mathf.Log10(value) * 20;
+            mixer.SetFloat("FXVolume", value);
         }
 
         
@@ -46,7 +48,9 @@ public class AudioMixerHandler : MonoBehaviour
         }
         else
         {
-            mixer.SetFloat("AmbientVolume", 0);
+            float value = .5f;
+            value = Mathf.Log10(value) * 20;
+            mixer.SetFloat("AmbientVolume", value);
         }
 
     }

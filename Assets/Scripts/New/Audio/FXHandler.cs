@@ -31,7 +31,7 @@ public class FXHandler : MonoBehaviour
             return;
         }
 
-        _slider.value = 1;
+        _slider.value = .5f;
         PlayerPrefs.SetFloat("FXVolume", _slider.value);
         PlayerPrefs.Save();
     }
