@@ -25,6 +25,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private float waitingTime;
     private bool _corroutine;
     public LayerMask interactLayerMask;
+    public AudioSource hipnosis, grabHead, dead;
     public override void UpdateLoop()
     {
         switch (_actualAction)
@@ -134,6 +135,8 @@ public class HouseEnemy_Attacks : MonoBaseState
         owner.grabHead = false;
         _corroutine = false;
         _headGrabbed = false;
+        hipnosis.Stop();
+        grabHead.Stop();
         if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader("OnExitChase");
         if(!GetComponentInChildren<Shackles>().toggleState) GetComponentInChildren<Shackles>().ChangeState();
     }
@@ -241,6 +244,8 @@ public class HouseEnemy_Attacks : MonoBaseState
             
             door.GetComponent<Door>().InteractDoor();
         }
+
+        hipnosis.Play();
         while (time > 0 && !_ray)
         {
             if (!closeEyes)
@@ -265,6 +270,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             player.GetComponent<Rigidbody>().velocity = -transform.forward * 50 * Time.fixedDeltaTime;
             if (Vector3.Distance(target, player.transform.position) < 1)
             {
+                hipnosis.Stop();
                 GrabHead();
                 StopCoroutine(Hipnosis());
                 yield break;
@@ -272,6 +278,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.1f);
         }
 
+        hipnosis.Stop();
         if (owner.crossUsed || owner.voodooActivate)
         {
             PlayerHandler.Instance.PossesPlayer();
@@ -297,6 +304,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     private void GrabHead()
     {
         if (_headGrabbed) return;
+        grabHead.Play();
         _headGrabbed = true;
         StartCoroutine(WaitAnimState());
     }
@@ -344,6 +352,7 @@ public class HouseEnemy_Attacks : MonoBaseState
 
         if (owner.playerGrabbedCount > 0)
         {
+            dead.Play();
             FadeOutHandler.Instance.FaceOut(1f);
             GameManagerNew.Instance.LoadSceneWithDelay("Hub", 1.5f);
         }

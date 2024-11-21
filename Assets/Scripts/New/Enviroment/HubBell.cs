@@ -38,6 +38,7 @@ public class HubBell : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        paper.GetComponent<BoxCollider>().enabled = true;
         paper.GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = false;
         enabled = false;

@@ -9,7 +9,6 @@ public class Sound : MonoBehaviour
 
     void Awake()
     {
-        
         if (MusicManager.Instance == null)
         {
             Debug.Log("MusicManager instance is not initialized.");
