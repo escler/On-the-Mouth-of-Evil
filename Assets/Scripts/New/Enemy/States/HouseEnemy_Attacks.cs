@@ -289,8 +289,11 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         else
         {
-            owner.transform.position = player.position + player.forward;
-            GrabHead();
+            if (owner.compareRoom)
+            {
+                owner.transform.position = player.position + player.forward;
+                GrabHead();
+            }
         }
         
     }

@@ -45,6 +45,7 @@ public class CorduraHandler : MonoBehaviour
 
     private void ResetParameters(Scene scene, LoadSceneMode loadSceneMode)
     {
+        StopAllCoroutines();
         corduraMaterial.SetFloat("_TwirlStrength", 0);
         corduraMaterial.SetFloat("_intensity", 0);
         _corduraActivate = false;
