@@ -11,7 +11,10 @@ public class HouseEnemy_Patrol : MonoBaseState
     private bool _pathCalculated, _pathFinish;
     public override void UpdateLoop()
     {
-        
+        if (!HypnosisHandler.Instance.skyboxIsOn)
+        {
+            HypnosisHandler.Instance.EndLerpShader("GOTOloCation");
+        }
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -24,7 +27,7 @@ public class HouseEnemy_Patrol : MonoBaseState
         goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
         if (owner.crossUsed)
         {
-            if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader("Enter Patrol");
+            if(!HypnosisHandler.Instance.skyboxIsOn) HypnosisHandler.Instance.EndLerpShader("Enter Patrol");
             print("Entre al if");
             CrossUsed();
             return;

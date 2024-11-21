@@ -137,7 +137,8 @@ public class HouseEnemy_Attacks : MonoBaseState
         _headGrabbed = false;
         hipnosis.Stop();
         grabHead.Stop();
-        if(!HypnosisEffectControllerHDRP.Instance.skyboxIsOn) HypnosisEffectControllerHDRP.Instance.EndLerpShader("OnExitChase");
+        if(!HypnosisHandler.Instance.skyboxIsOn) HypnosisHandler.Instance.EndLerpShader("OnExitChase");
+
         if(!GetComponentInChildren<Shackles>().toggleState) GetComponentInChildren<Shackles>().ChangeState();
     }
     private void Teleport()
@@ -246,11 +247,11 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
 
         hipnosis.Play();
-        while (time > 0 && !_ray)
+        while (time > 0 && !_ray && owner.compareRoom)
         {
             if (!closeEyes)
             {
-                HypnosisEffectControllerHDRP.Instance.StartLerpShader("Hipnosis");
+                HypnosisHandler.Instance.StartLerpShader("Hipnosis");
                 closeEyes = true;
             }
             var movable = MovableHandler.Instance.movablesItems;
@@ -285,7 +286,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
             _corroutine = false;
             owner.attackEnded = true;
-            HypnosisEffectControllerHDRP.Instance.EndLerpShader("Hipnosis");
+            HypnosisHandler.Instance.EndLerpShader("Hipnosis");
         }
         else
         {
@@ -293,6 +294,10 @@ public class HouseEnemy_Attacks : MonoBaseState
             {
                 owner.transform.position = player.position + player.forward;
                 GrabHead();
+            }
+            else
+            {
+                owner.attackEnded = true;
             }
         }
         
@@ -332,7 +337,7 @@ public class HouseEnemy_Attacks : MonoBaseState
             yield return new WaitForSeconds(0.01f);
         }
         
-        HypnosisEffectControllerHDRP.Instance.EndLerpShader("WaitAnimState");
+        HypnosisHandler.Instance.EndLerpShader("WaitAnimState");
 
         bool success = owner.EnemyAnimator.success;
         if (!success)

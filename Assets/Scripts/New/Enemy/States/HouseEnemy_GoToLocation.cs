@@ -13,7 +13,6 @@ public class HouseEnemy_GoToLocation : MonoBaseState
     
     public override void UpdateLoop()
     {
-
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -23,6 +22,8 @@ public class HouseEnemy_GoToLocation : MonoBaseState
         _startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
         _goalNode = owner.ritualDone ? owner.nodeRitual : PathFindingManager.instance.CalculateDistance(owner.goalPosition);
 
+
+        
         if (_goalNode == null) _pathFinish = true;
         else GoToNode();
     }

@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
 using UnityEngine.SceneManagement;
-public class HypnosisEffectControllerHDRP : MonoBehaviour
+public class HypnosisHandler : MonoBehaviour
 {
-    public static HypnosisEffectControllerHDRP Instance { get; private set; }
+    public static HypnosisHandler Instance { get; private set; }
     public Material hypnosisMaterialK; // Material para blink con K
 
     public float lerpDuration = 1.0f;
@@ -57,6 +57,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
     public void StartLerpShader(string name)
     {
+        isLerpingK = true;
         print("Start " + name);
         skyboxNextState = false;
         hasCompletedCycleK = false;
@@ -66,6 +67,7 @@ public class HypnosisEffectControllerHDRP : MonoBehaviour
 
     public void EndLerpShader(string name)
     {
+        isLerpingK = true;
         print("End " + name);
         skyboxNextState = true;
         isLerpingK = true;
