@@ -326,7 +326,6 @@ public class HouseEnemy : Enemy
         }
 
         RitualManager.Instance.godRayVFX.SetActive(true);
-        PostProcessHandler.Instance.IncreaseExposure();
         RitualManager.Instance.CloseCrater();
 
         if (PathManager.Instance.GoodPath <= 0)
