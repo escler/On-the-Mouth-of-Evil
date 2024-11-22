@@ -147,11 +147,17 @@ public class Inventory : MonoBehaviour
         }
         else
         {
+            if (countSelected == 4)
+            {
+                ChangeSelectedItem(3);
+            }
             var actualItemInSlot = inventoryAssigned[countSelected];
             DropItem(actualItemInSlot, countSelected);
             inventoryAssigned[countSelected] = i;
             ChangeSelectedItem(countSelected);
             InventoryUI.Instance.ChangeItemUI(i,countSelected,category);
+            countSelected = 4;
+            ChangeSelectedItem(countSelected);
         }
         
         i.transform.SetParent(PlayerHandler.Instance.handPivot);

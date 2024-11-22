@@ -37,6 +37,11 @@ public class HouseEnemy_Voodoo : MonoBaseState
     
     public override void UpdateLoop()
     {
+        if (!HypnosisHandler.Instance.skyboxIsOn)
+        {
+            HypnosisHandler.Instance.EndLerpShader("GOTOloCation");
+        }
+        
         _actualTime -= Time.deltaTime;
         owner.actualTime = 0;
 
