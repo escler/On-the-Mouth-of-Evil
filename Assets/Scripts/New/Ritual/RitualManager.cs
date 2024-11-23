@@ -30,7 +30,7 @@ public class RitualManager : MonoBehaviour
     public GameObject actualItemActive;
     public GameObject circles;
     public GameObject godRayVFX;
-    
+   
     public static RitualManager Instance { get; private set; }
 
     private void Awake()
@@ -52,6 +52,7 @@ public class RitualManager : MonoBehaviour
         circles.SetActive(true);
         if (DecisionsHandler.Instance.badPath)
         {
+            //sonidoPuzzleSalt
             crater.SetActive(false);
             ritualBadFloor.SetActive(true);
             ritualFloor.SetActive(false);
@@ -59,6 +60,7 @@ public class RitualManager : MonoBehaviour
         }
         else
         {
+            //sonidoPuzzleSalt
             crater.SetActive(true);
             candleMat.color = candleColorGoodPath;
             ritualFloor.SetActive(true);

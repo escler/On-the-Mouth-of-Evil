@@ -80,8 +80,9 @@ public class HouseEnemy : Enemy
 
     public bool voodooActivate;
     public Vector3 voodooPosition;
-    public AudioSource ritualAudio;
-    
+    //public AudioSource ritualAudio;
+    AudioSource _audioSource;
+    public String[] ritualTexts;
     private void Awake()
     {
         if (Instance)
@@ -216,9 +217,10 @@ public class HouseEnemy : Enemy
     IEnumerator ShowEnemyOnBadRitual()
     {
         PlayerHandler.Instance.movement.ritualCinematic = true;
+        MusicManager.Instance.PlaySound("Absorcion", false);
         Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
-        ritualAudio.Play();
+        //ritualAudio.Play();
         while (enemyVisibility < 8)
         {
             enemyVisibility += .45f;
@@ -254,7 +256,7 @@ public class HouseEnemy : Enemy
             enemyMaterial.SetFloat("_Power", enemyVisibility);
             yield return new WaitForSeconds(0.01f);
         }
-        ritualAudio.Stop();
+        //ritualAudio.Stop();
         absorbVFX.GetComponent<VisualEffect>().Stop();
         magnetVFX.GetComponent<VisualEffect>().Stop();
         RitualManager.Instance.RitualFinish();
@@ -302,6 +304,8 @@ public class HouseEnemy : Enemy
     {
         print("Entre a la cor Good Ritual");
         PlayerHandler.Instance.movement.ritualCinematic = true;
+        MusicManager.Instance.PlaySound("Exorcismo", false);
+
         Inventory.Instance.cantSwitch = true;
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => enemyVisibility <= 0);
