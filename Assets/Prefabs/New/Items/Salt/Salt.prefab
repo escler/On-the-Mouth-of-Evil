@@ -177,7 +177,7 @@ MonoBehaviour:
   canInspectItem: 0
   canInteractWithItem: 0
   angleHand: {x: 0, y: -90, z: 0}
-  soundName: GlassGrab
+  soundName: GlassGrab2
   ps: {fileID: 2273940230246731518}
   maxUses: 10
   _uses: 0
@@ -239,9 +239,8 @@ AudioSource:
   m_GameObject: {fileID: 3078533772031451332}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 1698728116517991843, guid: 3063e9029bae8574b9df7c58baf1b27e,
-    type: 2}
-  m_audioClip: {fileID: 8300000, guid: a245ced4e3f9dad4aadb4d5160d1e49b, type: 3}
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e05074cec9cf0c849858c9a79601a333, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -249,7 +248,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

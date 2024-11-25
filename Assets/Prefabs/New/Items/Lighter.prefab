@@ -5088,7 +5088,7 @@ MonoBehaviour:
   canInspectItem: 0
   canInteractWithItem: 0
   angleHand: {x: 0, y: 40, z: 0}
-  soundName: LighterGrab
+  soundName: SteelGrab
   _itemsInteractables: []
   PSIdle: {fileID: 8589725457046247454}
 --- !u!54 &-8253912469436683685
@@ -5127,9 +5127,8 @@ AudioSource:
   m_GameObject: {fileID: 3078533772031451332}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 1698728116517991843, guid: 3063e9029bae8574b9df7c58baf1b27e,
-    type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0586adf3bded74e469ad585615fb9a35, type: 3}
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b02ed12f0dc66ae48b869face0aa1c0d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5137,7 +5136,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

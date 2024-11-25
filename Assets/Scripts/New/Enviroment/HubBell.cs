@@ -10,7 +10,7 @@ public class HubBell : MonoBehaviour, IInteractable
     private float _actualTime;
     public Transform paper, finalPos;
     private bool interactUsed;
-
+   
     private void Awake()
     {
         _actualTime = timeForBell / 2;
@@ -22,8 +22,9 @@ public class HubBell : MonoBehaviour, IInteractable
         _actualTime -= Time.deltaTime;
         if (_actualTime < 0)
         {
-            bell.Play();
+             bell.Play();
             _actualTime = timeForBell;
+           
         }
     }
 
