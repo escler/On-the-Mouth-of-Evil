@@ -39,6 +39,7 @@ public class MusicManager : Singleton<MusicManager>
     private void ClearAudios(Scene scene, LoadSceneMode loadSceneMode)
     {
         soundList.Clear();
+        StopSound(bgMusic);
     }
 
     private void MyUpdate()
