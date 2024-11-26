@@ -63,7 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWalkSound()
     {
-        bool isWalking = _rb.velocity != Vector3.zero;
+        float vel = _rb.velocity.x + _rb.velocity.z;
+        bool isWalking = vel > 0.1 || vel < -0.1;
         
         if(isWalking && !walking.isPlaying) walking.Play();
         

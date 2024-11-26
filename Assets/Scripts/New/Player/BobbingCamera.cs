@@ -25,7 +25,7 @@ public class BobbingCamera : MonoBehaviour
 
     void Update()
     {
-        
+        if (PlayerHandler.Instance.movement.ritualCinematic) return;
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
 
