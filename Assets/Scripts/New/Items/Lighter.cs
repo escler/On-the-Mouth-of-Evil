@@ -10,7 +10,8 @@ public class Lighter : Item
     private LighterView lighterView;
     private bool cantUseItem;
     private Vector3 reference = Vector3.zero;
-
+    public AudioSource _fire;
+    public AudioSource _open;
     private void Awake()
     {
         lighterView = GetComponentInChildren<LighterView>();
@@ -70,11 +71,14 @@ public class Lighter : Item
     {
         base.OnSelectItem();
         lighterView.animator.SetBool("Open", true);
+        _open.PlayOneShot(_open.clip);
+        _fire.Play();
         //PSIdle.SetActive(true);
     }
 
     public override void OnDeselectItem()
     {
+        _fire.Stop();
         base.OnDeselectItem();
         PSIdle.SetActive(false);
         lighterView.animator.SetBool("Open", false);
