@@ -32,8 +32,11 @@ public class Sound : MonoBehaviour
     {
         if (MusicManager.Instance != null)
         {
-            MusicManager.Instance.PlayBkMusic(soundName);
-            isPlayBackgroundMusic = true; // Ensure it doesn't play repeatedly
+            if (!isPlayBackgroundMusic)
+            {
+                MusicManager.Instance.PlayBkMusic(soundName);
+                isPlayBackgroundMusic = true;
+            }
         }
         else
         {

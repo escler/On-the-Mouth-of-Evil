@@ -62,6 +62,13 @@ public class MusicManager : Singleton<MusicManager>
             bgMusic = obj.AddComponent<AudioSource>();
             bgMusic.outputAudioMixerGroup = ambientGroup;
         }
+
+        if (bgMusic.clip != null && bgMusic.clip.name == name && bgMusic.isPlaying)
+        {
+            Debug.Log("El sonido de fondo ya está reproduciéndose.");
+            return;
+        }
+
         ResourceManager.Instance.LoadAsync<AudioClip>("MusicPath/" + name, (clip) =>
         {
             bgMusic.clip = clip;
