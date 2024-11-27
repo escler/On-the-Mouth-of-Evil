@@ -8,6 +8,7 @@ public class Oven : MonoBehaviour, IInteractable
     public ParticleSystem ps;
     public ParticleSystem.EmissionModule emission;
     private bool _on;
+    public AudioSource _hornilla;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class Oven : MonoBehaviour, IInteractable
     {
         _on = !_on;
         emission.enabled = _on;
+        _hornilla.Play();
     }
 
     public void OnInteract(bool hit, RaycastHit i)

@@ -11,6 +11,8 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
     private float minInt = 0.025f;
     private float maxInt = 0.5f;
     private float _interval;
+    public AudioSource _flickerSound;
+    public AudioSource _light;
 
     private void Awake()
     {
@@ -19,7 +21,9 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
 
     public void OnStartInteract()
     {
+        _light.Stop();
         _flicker = true;
+        _flickerSound.Play();
     }
 
     private void Update()
@@ -42,6 +46,8 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
     public void OnEndInteract()
     {
         _flicker = false;
+        _flickerSound.Stop();
+        _light.Play();
         foreach (var light in _lights)
         {
             light.enabled = true;

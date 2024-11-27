@@ -293,7 +293,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3514919650815996119}
-  - component: {fileID: 7689574860017208794}
   - component: {fileID: 6558776730436280837}
   - component: {fileID: 3508454791182131001}
   - component: {fileID: 2026608860855921936}
@@ -324,21 +323,6 @@ Transform:
   - {fileID: 2880270124041320289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7689574860017208794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5232250924810505755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc71a4e50e3e9849bd660303003e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: LuzNormal
-  loop: 1
-  _volume: 0.1
 --- !u!114 &6558776730436280837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea736f924ed850e488963644b5d59eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flickerSound: {fileID: 2026608860855921936}
+  _light: {fileID: 3508454791182131001}
 --- !u!82 &3508454791182131001
 AudioSource:
   m_ObjectHideFlags: 0
@@ -358,12 +344,13 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5232250924810505755}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3694623033944602229, guid: 3063e9029bae8574b9df7c58baf1b27e,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9ba88c4b2a3517d478e5143b608dea07, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -454,12 +441,13 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5232250924810505755}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3694623033944602229, guid: 3063e9029bae8574b9df7c58baf1b27e,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ae1beffd116ccd34baf661fea775b4de, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
