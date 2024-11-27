@@ -30,8 +30,16 @@ public class Canilla : MonoBehaviour, IInteractable
         _on = !_on;
         emission.enabled = _on;
         _animator.SetBool("Open", _on);
-        _open.PlayOneShot(_open.clip);
-        _water.Play();
+        if (_on)
+        {
+            _open.PlayOneShot(_open.clip);
+            _water.Play();
+        }
+        else
+        {
+            _close.PlayOneShot(_close.clip);
+            _water.Stop();
+        }
     }
 
     public void OnInteract(bool hit, RaycastHit i)

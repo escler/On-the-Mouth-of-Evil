@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Television : MonoBehaviour, IInteractable
@@ -20,7 +21,15 @@ public class Television : MonoBehaviour, IInteractable
     {
         on = !on;
         print(on);
-        _tv.Play();
+        if (on)
+        {
+            _tv.Play();
+
+        }
+        else
+        {
+           _tv.Stop();
+        }
         mesh.materials = on ? onMaterial : originalMaterial;
     }
 

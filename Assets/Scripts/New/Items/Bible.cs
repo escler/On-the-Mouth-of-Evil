@@ -21,7 +21,6 @@ public class Bible : Item
     public SkinnedMeshRenderer[] meshes;
     public MeshRenderer[] paperMesh;
     private int index;
-    public AudioSource _dropPaper;
     public AudioSource _paper;
 
     private void Start()
@@ -124,7 +123,6 @@ public class Bible : Item
     {
         _cantUse = true;
         _paper.Play();
-        _dropPaper.Play();
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
         yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
 
