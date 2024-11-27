@@ -13,6 +13,7 @@ public class Cross : Item
     private CrossCD _crossCd;
     public GameObject CrossLight;
     private int index;
+    public AudioSource _crossSound;
 
     private void Start()
     {
@@ -56,6 +57,7 @@ public class Cross : Item
             foreach (var holdPS in holdingPS)
             {
                 holdPS.Play();
+                _crossSound.Play();
                 CrossLight.SetActive(true);
             }
             holdingPSActive = true;

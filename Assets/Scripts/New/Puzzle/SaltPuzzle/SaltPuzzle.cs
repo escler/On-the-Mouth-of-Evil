@@ -16,7 +16,7 @@ public class SaltPuzzle : MonoBehaviour
     public GameObject playVFX;
     //public GameObject psAura;
     //public GameObject tree;
-
+    public AudioSource _good;
 
     private void Awake()
     {
@@ -68,6 +68,7 @@ public class SaltPuzzle : MonoBehaviour
             }
             //Aca se gana el puzzle y se activa el altar
             // psAura.SetActive(true);
+            _good.Play();
             playVFX.SetActive(true);
             //tree.SetActive(true);
         }

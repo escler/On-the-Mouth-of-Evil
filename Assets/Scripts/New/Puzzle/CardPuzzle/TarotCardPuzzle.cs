@@ -27,7 +27,8 @@ public class TarotCardPuzzle : MonoBehaviour
 
     public bool CanPlace => _canPlace;
     public bool CanPlaceInverse => _canPlaceInverse;
-
+    public AudioSource _good;
+    public AudioSource _bad;
 
     private void Awake()
     {
@@ -103,11 +104,13 @@ public class TarotCardPuzzle : MonoBehaviour
         if (_goodPath)
         {
             DecisionsHandler.Instance.GoodChoiceTaked();
+            _good.Play();
             paperPuzzleSalt.SetActive(true);
         }
         else
         {
             DecisionsHandler.Instance.BadChoiceTaked();
+            _bad.Play();
             skull.SetActive(true);
         }
         if(RitualManager.Instance.altarCompleted) RitualManager.Instance.AltarCompleted();
