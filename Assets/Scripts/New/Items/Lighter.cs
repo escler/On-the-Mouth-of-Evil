@@ -12,6 +12,7 @@ public class Lighter : Item
     private Vector3 reference = Vector3.zero;
     public AudioSource _fire;
     public AudioSource _open;
+    public AudioSource _onfire;
     private void Awake()
     {
         lighterView = GetComponentInChildren<LighterView>();
@@ -46,6 +47,7 @@ public class Lighter : Item
         if (Input.GetMouseButtonDown(0))
         {
             OnInteract(rayConnected, ray);
+            _onfire.PlayOneShot(_onfire.clip);
         }
     }
 
