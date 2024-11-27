@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnviromentObjects : MonoBehaviour, IInteractable
 {
     public Animator animator;
-
+    public AudioSource _openCabinet;
+    public AudioSource _closeCabinet;
     private bool _open;
 
     private bool cantInteract;
@@ -26,6 +27,14 @@ public class EnviromentObjects : MonoBehaviour, IInteractable
         if (cantInteract) return;
         _open = !_open;
         animator.SetBool("Open", _open);
+        if (_open)
+        {
+            _openCabinet.PlayOneShot(_openCabinet.clip);
+        }
+        else
+        {
+            _closeCabinet.PlayOneShot(_closeCabinet.clip);
+        }
         cantInteract = true;
         StartCoroutine(WaitToInteractAgaint(_open));
     }

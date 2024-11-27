@@ -14,7 +14,7 @@ public class Door : MonoBehaviour, IInteractable
     public float blockDuration;
     public Room[] rooms;
     public GameObject saltPS, triggerObstacle;
-
+    public AudioSource _saltBlock;
     private void Awake()
     {
         SetDoor(open);
@@ -61,6 +61,7 @@ public class Door : MonoBehaviour, IInteractable
     private IEnumerator BlockDoorCor()
     {
         saltPS.SetActive(true); //Aca prendo la sal
+        _saltBlock.PlayOneShot(_saltBlock.clip);
         doorNode.gameObject.SetActive(false);
         triggerObstacle.SetActive(true);
         DisableNodes();

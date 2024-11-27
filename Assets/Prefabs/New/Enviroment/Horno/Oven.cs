@@ -19,8 +19,16 @@ public class Oven : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         _on = !_on;
+        if (_on)
+        {
+            _hornilla.Play();
+
+        }
+        else
+        {
+            _hornilla.Stop();
+        }
         emission.enabled = _on;
-        _hornilla.Play();
     }
 
     public void OnInteract(bool hit, RaycastHit i)
