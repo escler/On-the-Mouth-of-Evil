@@ -17,7 +17,7 @@ public class SaltRecipient : MonoBehaviour, IInteractable
     private bool animationRunning, test;
     
     private List<MeshRenderer> meshes;
-
+    public AudioSource _fillingSalt;
     private void Awake()
     {
         meshes = new List<MeshRenderer>();
@@ -96,6 +96,7 @@ public class SaltRecipient : MonoBehaviour, IInteractable
         yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient"));
         Inventory.Instance.cantSwitch = true;
         animationRunning = true;
+        _fillingSalt.PlayOneShot(_fillingSalt.clip);
         yield return new WaitUntil(() => !_animator.GetCurrentAnimatorStateInfo(0).IsName("OpenRecipient"));
         SaltPuzzle.Instance.AddRecipient(this, buttonNumber);
         var selectedSalt = Inventory.Instance.selectedItem.GetComponent<Transform>();

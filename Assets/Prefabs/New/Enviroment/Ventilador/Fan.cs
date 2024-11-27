@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Fan : MonoBehaviour, IInteractable
@@ -10,7 +11,7 @@ public class Fan : MonoBehaviour, IInteractable
     private bool _animationRun;
     public GameObject aspas1, aspas2;
     public float speedFan;
-
+    public AudioSource _fan;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -28,6 +29,14 @@ public class Fan : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         _animationRun = !_animationRun;
+        if (_animationRun)
+        {
+            _fan.Play();
+        }
+        else
+        {
+            _fan.Stop();
+        }
         StopAllCoroutines();
         StartCoroutine(_animationRun ? SpeedUp() : SpeedSlow());
     }
