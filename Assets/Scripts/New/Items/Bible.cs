@@ -21,8 +21,9 @@ public class Bible : Item
     public SkinnedMeshRenderer[] meshes;
     public MeshRenderer[] paperMesh;
     private int index;
+    public AudioSource _dropPaper;
+    public AudioSource _paper;
 
-    
     private void Start()
     {
         _bibleCD = PlayerHandler.Instance.GetComponent<BibleCD>();
@@ -122,6 +123,8 @@ public class Bible : Item
     IEnumerator WaitForAnim(Vector3 hitPoint)
     {
         _cantUse = true;
+        _paper.Play();
+        _dropPaper.Play();
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
         yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
 

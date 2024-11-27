@@ -8,6 +8,7 @@ public class Television : MonoBehaviour, IInteractable
     public Material[] originalMaterial, onMaterial;
     private bool on;
     private Renderer mesh;
+    public AudioSource _tv;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class Television : MonoBehaviour, IInteractable
     {
         on = !on;
         print(on);
+        _tv.Play();
         mesh.materials = on ? onMaterial : originalMaterial;
     }
 

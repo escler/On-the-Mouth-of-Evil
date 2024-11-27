@@ -8,6 +8,9 @@ public class Canilla : MonoBehaviour, IInteractable
     public ParticleSystem.EmissionModule emission;
     private Animator _animator;
     private bool _on;
+    public AudioSource _open;
+    public AudioSource _close;
+    public AudioSource _water;
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,6 +30,8 @@ public class Canilla : MonoBehaviour, IInteractable
         _on = !_on;
         emission.enabled = _on;
         _animator.SetBool("Open", _on);
+        _open.PlayOneShot(_open.clip);
+        _water.Play();
     }
 
     public void OnInteract(bool hit, RaycastHit i)

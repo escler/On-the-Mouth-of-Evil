@@ -16,6 +16,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
     public Mark mark;
     private float offset;
     private bool _cantGrab;
+    public AudioSource _girar;
 
     private void Awake()
     {
