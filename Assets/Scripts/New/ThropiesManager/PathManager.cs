@@ -74,18 +74,6 @@ public class PathManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.O)) ResetPrefs();
-    }
-
-    public void ResetPrefs()
-    {
-        if (PlayerPrefs.HasKey("GoodPath")) PlayerPrefs.SetInt("GoodPath", 0);
-        if (PlayerPrefs.HasKey("BadPath")) PlayerPrefs.SetInt("BadPath", 0);
-        PlayerPrefs.Save();
-    }
-
     public void ChangePrefs(string pref)
     {
         switch (pref)

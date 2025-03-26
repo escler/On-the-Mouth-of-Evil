@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CanvasManager : MonoBehaviour
         rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descriptionPuzzleContent, fps;
     public CrosshairUI crossHairUI;
 
+    public Image crossHair;
+    
     private void Awake()
     {
         if (Instance)
@@ -42,6 +45,7 @@ public class CanvasManager : MonoBehaviour
     }
     private void DisableInfo(Scene scene, LoadSceneMode loadSceneMode)
     {
+        crossHair.enabled = true;
         rotateInfo.SetActive(false);
         moveObjectUI.SetActive(false);
         InteractionText.SetActive(false);
