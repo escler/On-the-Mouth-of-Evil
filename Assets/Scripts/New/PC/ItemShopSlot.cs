@@ -61,6 +61,6 @@ public class ItemShopSlot : MonoBehaviour
     private void BuyItem()
     {
         CurrencyHandler.Instance.SubtractCurrency(cost);
-        //Dar el item
+        SortInventoryBuyHandler.Instance.GetHandler(_item);
     }
 }
