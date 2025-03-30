@@ -8,7 +8,7 @@ public class LighterHandler : MonoBehaviour
     [SerializeField] private int countMax;
     private int _count;
 
-    public List<GameObject> lighters;
+    public List<GameObject> lighters = new List<GameObject>();
     public static LighterHandler Instance { get; private set; }
 
     private void Awake()
@@ -22,21 +22,21 @@ public class LighterHandler : MonoBehaviour
         Instance = this;
     }
 
-    public void AddLighter(GameObject lighter)
+    public void AddItem(GameObject itemObj)
     {
         if (lighters.Count >= countMax) return;
-        var go = Instantiate(lighter);
+        var go = Instantiate(itemObj);
         var pos = transform.GetChild(_count).transform;
         go.transform.position = pos.position;
         go.transform.rotation = pos.rotation;
-        lighters.Add(lighter);
+        lighters.Add(itemObj);
         _count++;
     }
 
-    public void RemoveLighter(GameObject lighter)
+    public void RemoveItem(GameObject itemObj)
     {
-        if (lighters.Contains(lighter)) return;
-        var go = lighters.Find(x => lighter);
+        if (lighters.Contains(itemObj)) return;
+        var go = lighters.Find(x => itemObj);
         lighters.Remove(go);
         Destroy(go);
         _count--;

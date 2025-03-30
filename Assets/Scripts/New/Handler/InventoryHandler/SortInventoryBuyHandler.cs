@@ -24,10 +24,22 @@ public class SortInventoryBuyHandler : MonoBehaviour
         switch (item.name)
         {
             case "Lighter":
-                LighterHandler.Instance.AddLighter(item.gameObject); 
+                LighterHandler.Instance.AddItem(item.gameObject); 
                 break;
             case "Bible":
-                BibleHandler.Instance.AddBible(item.gameObject);
+                BibleHandler.Instance.AddItem(item.gameObject);
+                break;
+            case "Cross":
+                CrossHandler.Instance.AddItem(item.gameObject);
+                break;
+            case "Salt":
+                SaltHandler.Instance.AddItem(item.gameObject);
+                break;
+            case "Voodoo Doll":
+                VoodooHandler.Instance.AddItem(item.gameObject);
+                break;
+            case "Rosary":
+                RosaryHandler.Instance.AddItem(item.gameObject);
                 break;
         }
         
