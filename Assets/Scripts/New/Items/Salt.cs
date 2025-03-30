@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Salt : Item
 {
@@ -47,6 +48,10 @@ public class Salt : Item
                 break;
             }
         }
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
     }
 
     public override void OnInteract(bool hit, RaycastHit i)
@@ -142,6 +147,9 @@ public class Salt : Item
         SaltPuzzleTable.Instance.playerInTable = false;
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToSaltEvent();
 
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
     }
 
     public override bool CanInteractWithItem()

@@ -19,7 +19,7 @@ public class SortInventoryBuyHandler : MonoBehaviour
         Instance = this;
     }
 
-    public void GetHandler(Item item)
+    public void AddItemToHandler(Item item)
     {
         switch (item.name)
         {
@@ -42,6 +42,51 @@ public class SortInventoryBuyHandler : MonoBehaviour
                 RosaryHandler.Instance.AddItem(item.gameObject);
                 break;
         }
+    }
+
+    public void RemoveItemFromHandler(Item item)
+    {
+        switch (item.name)
+        {
+            case "Lighter":
+                LighterHandler.Instance.RemoveItem(item.gameObject);
+                break;
+            case "Bible":
+                BibleHandler.Instance.RemoveItem(item.gameObject);
+                break;
+            case "Cross":
+                CrossHandler.Instance.RemoveItem(item.gameObject);
+                break;
+            case "Salt":
+                SaltHandler.Instance.RemoveItem(item.gameObject);
+                break;
+            case "Voodoo Doll":
+                VoodooHandler.Instance.RemoveItem(item.gameObject);
+                break;
+            case "Rosary":
+                RosaryHandler.Instance.RemoveItem(item.gameObject);
+                break;
+        }
+    }
+
+    public InventoryItemHandler GetHandler(Item item)
+    {
+        switch (item.name)
+        {
+            case "Lighter":
+                return LighterHandler.Instance;
+            case "Bible":
+                return BibleHandler.Instance;
+            case "Cross":
+                return CrossHandler.Instance;
+            case "Salt":
+                return SaltHandler.Instance;
+            case "Voodoo Doll":
+                return VoodooHandler.Instance;
+            case "Rosary":
+                return RosaryHandler.Instance;
+        }
         
+        return null;
     }
 }

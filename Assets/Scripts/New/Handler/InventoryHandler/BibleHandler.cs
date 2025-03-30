@@ -1,12 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class BibleHandler : MonoBehaviour
+public class BibleHandler : InventoryItemHandler
 {
-    [SerializeField] private int countMax;
-    private int _count;
-
     public List<GameObject> bibles = new List<GameObject>();
     public static BibleHandler Instance { get; private set; }
 
@@ -18,25 +17,48 @@ public class BibleHandler : MonoBehaviour
             return;
         }
         Instance = this;
+        SceneManager.sceneLoaded += CreateItems;
     }
 
-    public void AddItem(GameObject itemObj)
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= CreateItems;
+    }
+
+    private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if(SceneManager.GetActiveScene().name != "Hub") return;
+        bibles.Clear();
+
+        for (int i = 0; i < count; i++)
+        {
+            var go = Instantiate(handlerItem.gameObject);
+            bibles.Add(go);
+            if (SceneManager.GetActiveScene().name != "Hub") return;
+            var pos = transform.GetChild(i).transform;
+            go.transform.position = pos.position;
+            go.transform.rotation = pos.rotation;
+        }
+    }
+    
+    public override void AddItem(GameObject itemObj)
     {
         if (bibles.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        var pos = bibles[_count].transform;
+        bibles.Add(itemObj);
+        count++;
+        if (SceneManager.GetActiveScene().name != "Hub") return;
+        var pos = transform.GetChild(count - 1).transform;
         go.transform.position = pos.position;
         go.transform.rotation = pos.rotation;
-        bibles.Add(itemObj);
-        _count++;
     }
 
-    public void RemoveItem(GameObject itemObj)
+    public override void RemoveItem(GameObject itemObj)
     {
         if (!bibles.Contains(itemObj)) return;
         var go = bibles.Find(x => itemObj);
         bibles.Remove(go);
         Destroy(go);
-        _count--;
+        count--;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cross : Item
 {
@@ -35,12 +36,20 @@ public class Cross : Item
             }
         }
         transform.localEulerAngles = angleHand;
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
     }
 
     public override void OnDropItem()
     {
         base.OnDropItem();
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToCrossEvent();
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
     }
 
     public override void OnInteract(bool hit, RaycastHit i)

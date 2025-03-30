@@ -14,13 +14,17 @@ public class ItemShopSlot : MonoBehaviour
     [SerializeField] private Button purchaseBTN;
     [SerializeField] private Color canBuy, cantBuy;
 
+    private InventoryItemHandler handler;
+
     
     private void OnEnable()
     {
+        if (handler == null) handler = SortInventoryBuyHandler.Instance.GetHandler(_item);
         purchaseBTN.interactable = unlocked;
         CurrencyHandler.Instance.OnUpdateCurrency += CheckColor;
         CurrencyHandler.Instance.OnUpdateCurrency += CheckInteractable;
-        ShowCost();
+        CurrencyHandler.Instance.OnUpdateCurrency += ShowText;
+        ShowText();
         CheckColor();
         CheckInteractable();
         purchaseBTN.onClick.AddListener(BuyItem);
@@ -30,9 +34,9 @@ public class ItemShopSlot : MonoBehaviour
     {
         CurrencyHandler.Instance.OnUpdateCurrency -= CheckColor;
         CurrencyHandler.Instance.OnUpdateCurrency -= CheckInteractable;
+        CurrencyHandler.Instance.OnUpdateCurrency -= ShowText;
         purchaseBTN.onClick.RemoveAllListeners();
     }
-
     private void CheckInteractable()
     {
         purchaseBTN.interactable = CanInteract();
@@ -40,15 +44,16 @@ public class ItemShopSlot : MonoBehaviour
 
     private bool CanInteract()
     {
-        //Max Stock return false
+        if(handler.Count >= handler.countMax - 1) return false;
         if (cost > CurrencyHandler.Instance.CurrentAmount) return false;
         return true;
     }
 
-    private void ShowCost()
+    private void ShowText()
     {
         if (!unlocked) return;
-        purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = cost.ToString();
+        purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = 
+            handler.Count >= handler.countMax - 1 ? "Out of Stock" : cost.ToString();
     }
 
     private void CheckColor()
@@ -61,6 +66,6 @@ public class ItemShopSlot : MonoBehaviour
     private void BuyItem()
     {
         CurrencyHandler.Instance.SubtractCurrency(cost);
-        SortInventoryBuyHandler.Instance.GetHandler(_item);
+        SortInventoryBuyHandler.Instance.AddItemToHandler(_item);
     }
 }

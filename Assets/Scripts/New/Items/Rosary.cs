@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rosary : Item
 {
@@ -17,12 +18,20 @@ public class Rosary : Item
         {
             GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
         }
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
     }
     
     public override void OnDropItem()
     {
         gameObject.SetActive(true);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 1;
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
     }
 
     public bool RosaryProtect()

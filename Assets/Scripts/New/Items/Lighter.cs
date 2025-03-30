@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Lighter : Item
 {
@@ -67,6 +68,10 @@ public class Lighter : Item
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
         lighterView.animator.SetBool("Open", true);
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
     }
 
     public override void OnSelectItem()
@@ -92,6 +97,10 @@ public class Lighter : Item
         PSIdle.SetActive(false);
         gameObject.SetActive(true);
         lighterView.animator.SetBool("Open", false);
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
     }
 
     IEnumerator WaitForUseAgain(IBurneable item)

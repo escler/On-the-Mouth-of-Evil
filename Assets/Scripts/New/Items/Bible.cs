@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bible : Item
 {
@@ -53,6 +54,10 @@ public class Bible : Item
                 break;
             }
         }
+
+        if (SceneManager.GetActiveScene().name != "Hub") SortInventoryBuyHandler.Instance.AddItemToHandler(this);
+        
+        
     }
 
     public override void OnDropItem()
@@ -68,6 +73,10 @@ public class Bible : Item
             mesh.gameObject.layer = 1;
         } 
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToBibleEvent();
+        
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
     }
     
 
