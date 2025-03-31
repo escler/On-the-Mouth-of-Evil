@@ -41,7 +41,7 @@ public class HouseEnemy : Enemy
     public Node nodeRitual;
 
     public Material enemyMaterial;
-    public float enemyVisibility;
+    public float enemyVisibility, enemyInflate;
     private bool _corroutineActivate;
 
     public bool onRitual;
@@ -99,6 +99,9 @@ public class HouseEnemy : Enemy
         
         enemyMaterial.SetFloat("_Position", -0.63f);
         enemyVisibility = enemyMaterial.GetFloat("_Position");
+
+        enemyMaterial.SetFloat("_intensity", 0.01f);
+        enemyInflate = enemyMaterial.GetFloat("_intensity");
 
 
         objects = new List<IInteractableEnemy>();
@@ -216,6 +219,8 @@ public class HouseEnemy : Enemy
 
     IEnumerator ShowEnemyOnBadRitual()
     {
+        enemyMaterial.SetFloat("_intensity", 0.28f);
+
         PlayerHandler.Instance.movement.ritualCinematic = true;
         MusicManager.Instance.PlaySound("Absorcion", false);
         Inventory.Instance.cantSwitch = true;
@@ -225,7 +230,7 @@ public class HouseEnemy : Enemy
         {
             enemyVisibility += .45f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-            
+
             if (enemyVisibility >= 2f)
             {
                 _enemyAnimator.ChangeStateAnimation("Absorb", true);
@@ -254,6 +259,7 @@ public class HouseEnemy : Enemy
             }
             enemyVisibility -= (8 / duration) * 0.0225f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
+
             yield return new WaitForSeconds(0.01f);
         }
         //ritualAudio.Stop();
@@ -316,7 +322,7 @@ public class HouseEnemy : Enemy
         {
             enemyVisibility += .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-
+            RitualManager.Instance.heat.Play();
             yield return new WaitForSeconds(0.1f);
         }
         RitualManager.Instance.ritualFloor.SetActive(false);
@@ -328,11 +334,14 @@ public class HouseEnemy : Enemy
         {
             enemyVisibility -= .3f;
             enemyMaterial.SetFloat("_Power", enemyVisibility);
-            
+
+            RitualManager.Instance.heat.Stop();
+
             yield return new WaitForSeconds(0.1f);
         }
 
         RitualManager.Instance.godRayVFX.SetActive(true);
+
         RitualManager.Instance.CloseCrater();
 
         if (PathManager.Instance.GoodPath <= 0)

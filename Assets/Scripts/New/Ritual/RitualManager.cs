@@ -20,6 +20,7 @@ public class RitualManager : MonoBehaviour
     public Node ritualNode;
     public GameObject floor;
     public List<ParticleSystem> psCrater;
+    public VisualEffect heat;
     public GameObject floorCrater;
     public Color candleColorGoodPath, candleColorBadPath;
     public Material candleMat;
@@ -61,6 +62,7 @@ public class RitualManager : MonoBehaviour
         else
         {
             //sonidoPuzzleSalt
+            heat.Stop();
             crater.SetActive(true);
             candleMat.color = candleColorGoodPath;
             ritualFloor.SetActive(true);
