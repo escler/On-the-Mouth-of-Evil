@@ -27,6 +27,7 @@ public class SaltHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
+        count = PlayerPrefs.HasKey("SaltCount") ? PlayerPrefs.GetInt("SaltCount") : 0;
         salts.Clear();
 
         for (int i = 0; i < count; i++)
@@ -46,6 +47,7 @@ public class SaltHandler : InventoryItemHandler
         var go = Instantiate(itemObj);
         salts.Add(itemObj);
         count++;
+        SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
         go.transform.position = pos.position;
@@ -59,5 +61,6 @@ public class SaltHandler : InventoryItemHandler
         salts.Remove(go);
         Destroy(go);
         count--;
+        SaveCount(false);
     }
 }

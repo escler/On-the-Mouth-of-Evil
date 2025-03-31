@@ -15,7 +15,8 @@ public class SortInventoryBuyHandler : MonoBehaviour
             Destroy(Instance);
             return;
         }
-
+        
+        DontDestroyOnLoad(this);
         Instance = this;
     }
 
@@ -88,5 +89,41 @@ public class SortInventoryBuyHandler : MonoBehaviour
         }
         
         return null;
+    }
+
+    public void SaveCount(string itemName, bool sum)
+    {
+        var name = "";
+        
+        switch (itemName)
+        {
+            case "Lighter":
+                name = "Lighter";
+                break;
+            case "Bible":
+                name = "Bible";
+                break;
+            case "Cross":
+                name = "Cross";
+                break;
+            case "Salt":
+                name = "Salt";
+                break;
+            case "Voodoo Doll":
+                name = "Voodoo";
+                break;
+            case "Rosary":
+                name = "Rosary";
+                break;
+        }
+
+        name += "Count";
+        
+        var count = PlayerPrefs.GetInt(name);
+        
+        count = sum ? count + 1 : count - 1;
+        
+        PlayerPrefs.SetInt(name, count);
+        PlayerPrefs.Save();
     }
 }

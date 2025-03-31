@@ -28,6 +28,7 @@ public class BibleHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
+        count = PlayerPrefs.HasKey("BibleCount") ? PlayerPrefs.GetInt("BibleCount") : 0;
         bibles.Clear();
 
         for (int i = 0; i < count; i++)
@@ -47,10 +48,11 @@ public class BibleHandler : InventoryItemHandler
         var go = Instantiate(itemObj);
         bibles.Add(itemObj);
         count++;
+        SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
-        go.transform.position = pos.position;
-        go.transform.rotation = pos.rotation;
+        go.transform.position = pos.localPosition;
+        go.transform.rotation = pos.localRotation;
     }
 
     public override void RemoveItem(GameObject itemObj)
@@ -60,5 +62,6 @@ public class BibleHandler : InventoryItemHandler
         bibles.Remove(go);
         Destroy(go);
         count--;
+        SaveCount(false);
     }
 }

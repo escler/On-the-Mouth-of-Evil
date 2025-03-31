@@ -55,9 +55,9 @@ public class Bible : Item
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "Hub") SortInventoryBuyHandler.Instance.AddItemToHandler(this);
+        if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
     }
 
     public override void OnDropItem()
@@ -76,7 +76,7 @@ public class Bible : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
     }
     
 

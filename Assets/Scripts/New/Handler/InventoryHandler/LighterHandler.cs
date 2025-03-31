@@ -29,6 +29,7 @@ public class LighterHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
+        count = PlayerPrefs.HasKey("LighterCount") ? PlayerPrefs.GetInt("LighterCount") : 0;
         lighters.Clear();
 
         for (int i = 0; i < count; i++)
@@ -48,6 +49,7 @@ public class LighterHandler : InventoryItemHandler
         var go = Instantiate(itemObj);
         lighters.Add(itemObj);
         count++;
+        SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
         go.transform.position = pos.position;
@@ -61,5 +63,6 @@ public class LighterHandler : InventoryItemHandler
         lighters.Remove(go);
         Destroy(go);
         count--;
+        SaveCount(false);
     }
 }

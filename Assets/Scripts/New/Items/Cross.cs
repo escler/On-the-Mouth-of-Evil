@@ -39,7 +39,8 @@ public class Cross : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
+
     }
 
     public override void OnDropItem()
@@ -49,7 +50,8 @@ public class Cross : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
+
     }
 
     public override void OnInteract(bool hit, RaycastHit i)

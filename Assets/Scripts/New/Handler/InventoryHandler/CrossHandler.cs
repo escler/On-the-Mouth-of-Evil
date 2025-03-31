@@ -27,6 +27,7 @@ public class CrossHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
+        count = PlayerPrefs.HasKey("CrossCount") ? PlayerPrefs.GetInt("CrossCount") : 0;
         crosses.Clear();
 
         for (int i = 0; i < count; i++)
@@ -46,10 +47,12 @@ public class CrossHandler : InventoryItemHandler
         var go = Instantiate(itemObj);
         crosses.Add(itemObj);
         count++;
+        SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
         go.transform.position = pos.position;
         go.transform.rotation = pos.rotation;
+        print(count + "Cross");
     }
 
     public override void RemoveItem(GameObject itemObj)
@@ -59,5 +62,7 @@ public class CrossHandler : InventoryItemHandler
         crosses.Remove(go);
         Destroy(go);
         count--;
+        print(count + "Cross--");
+        SaveCount(false);
     }
 }

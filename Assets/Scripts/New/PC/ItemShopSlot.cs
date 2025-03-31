@@ -44,7 +44,7 @@ public class ItemShopSlot : MonoBehaviour
 
     private bool CanInteract()
     {
-        if(handler.Count >= handler.countMax - 1) return false;
+        if(handler.Count == handler.countMax) return false;
         if (cost > CurrencyHandler.Instance.CurrentAmount) return false;
         return true;
     }
@@ -53,7 +53,7 @@ public class ItemShopSlot : MonoBehaviour
     {
         if (!unlocked) return;
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = 
-            handler.Count >= handler.countMax - 1 ? "Out of Stock" : cost.ToString();
+            handler.Count == handler.countMax ? "Out of Stock" : cost.ToString();
     }
 
     private void CheckColor()

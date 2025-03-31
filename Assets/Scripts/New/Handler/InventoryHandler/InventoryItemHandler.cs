@@ -14,4 +14,8 @@ public class InventoryItemHandler : MonoBehaviour
     
     public virtual void RemoveItem(GameObject item){}
 
+    protected void SaveCount(bool sum)
+    {
+        SortInventoryBuyHandler.Instance.SaveCount(handlerItem.name, sum);
+    }
 }

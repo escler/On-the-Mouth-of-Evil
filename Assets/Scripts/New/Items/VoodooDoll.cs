@@ -38,7 +38,8 @@ public class VoodooDoll : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        SortInventoryBuyHandler.Instance.AddItemToHandler(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
+
         
     }
 
@@ -49,7 +50,8 @@ public class VoodooDoll : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
-        SortInventoryBuyHandler.Instance.RemoveItemFromHandler(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
+
     }
     
     public override void OnUpdate()

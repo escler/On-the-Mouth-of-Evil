@@ -27,6 +27,7 @@ public class RosaryHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
+        count = PlayerPrefs.HasKey("RosaryCount") ? PlayerPrefs.GetInt("RosaryCount") : 0;
         rosaries.Clear();
 
         for (int i = 0; i < count; i++)
@@ -46,6 +47,7 @@ public class RosaryHandler : InventoryItemHandler
         var go = Instantiate(itemObj);
         rosaries.Add(itemObj);
         count++;
+        SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
         go.transform.position = pos.position;
@@ -59,5 +61,7 @@ public class RosaryHandler : InventoryItemHandler
         rosaries.Remove(go);
         Destroy(go);
         count--;
+        SaveCount(false);
     }
+
 }
