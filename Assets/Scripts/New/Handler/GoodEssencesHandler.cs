@@ -1,12 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoodEssencesHandler : MonoBehaviour
 {
     private int _currentAmount;
+    public int CurrentAmount => _currentAmount;
     public static GoodEssencesHandler Instance { get; private set; }
 
+    public delegate void UpdateCurrency();
+
+    public event UpdateCurrency OnUpdateCurrency;
+
+    
     private void Awake()
     {
         if (Instance)
@@ -17,6 +25,20 @@ public class GoodEssencesHandler : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
         CheckPrefs();
+        SceneManager.sceneLoaded += DestroyInMenu;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DestroyInMenu;
+
+    }
+
+    private void DestroyInMenu(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Menu") return;
+        
+        Destroy(gameObject);
     }
 
     private void CheckPrefs()
@@ -31,13 +53,13 @@ public class GoodEssencesHandler : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void AddCurrency(int amount)
+    public void AddCurrency(int amount)
     {
         _currentAmount += amount;
         SaveEssences();
     }
 
-    private void SubtractCurrency(int amount)
+    public void SubtractCurrency(int amount)
     {
         _currentAmount -= amount;
         SaveEssences();
@@ -47,5 +69,6 @@ public class GoodEssencesHandler : MonoBehaviour
     {
         PlayerPrefs.SetInt("GoodEssencesAmount", _currentAmount);
         PlayerPrefs.Save();
+        OnUpdateCurrency?.Invoke();
     }
 }

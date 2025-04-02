@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BadEssencesAmount : MonoBehaviour
 {
@@ -17,8 +18,21 @@ public class BadEssencesAmount : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
         CheckPrefs();
+        SceneManager.sceneLoaded += DestroyInMenu;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DestroyInMenu;
+
+    }
+
+    private void DestroyInMenu(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "Menu") return;
+        
+        Destroy(gameObject);
+    }
     private void CheckPrefs()
     {
         if (PlayerPrefs.HasKey("BadEssencesAmount"))
@@ -31,13 +45,13 @@ public class BadEssencesAmount : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void AddCurrency(int amount)
+    public void AddCurrency(int amount)
     {
         _currentAmount += amount;
         SaveEssences();
     }
 
-    private void SubtractCurrency(int amount)
+    public void SubtractCurrency(int amount)
     {
         _currentAmount -= amount;
         SaveEssences();
