@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BadEssencesAmount : MonoBehaviour
+public class BadEssencesHandler : MonoBehaviour
 {
     private int _currentAmount;
-    public static BadEssencesAmount Instance { get; private set; }
+    public int CurrentAmount => _currentAmount;
+    public static BadEssencesHandler Instance { get; private set; }
+    
+    public delegate void UpdateCurrency();
+
+    public event UpdateCurrency OnUpdateCurrency;
 
     private void Awake()
     {
@@ -61,5 +66,6 @@ public class BadEssencesAmount : MonoBehaviour
     {
         PlayerPrefs.SetInt("BadEssencesAmount", _currentAmount);
         PlayerPrefs.Save();
+        OnUpdateCurrency?.Invoke();
     }
 }

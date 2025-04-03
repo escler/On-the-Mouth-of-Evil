@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PCHandler : MonoBehaviour
 {
-    public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2;
+    public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2, testBTN3;
     public GameObject goodShopGO, badShopGO; 
 
     private void Awake()
@@ -17,6 +17,7 @@ public class PCHandler : MonoBehaviour
         closeBadShop.onClick.AddListener(CloseBadShop);
         testBTN.onClick.AddListener(AddCurrency);
         testBTN2.onClick.AddListener(AddGoodCurrency);
+        testBTN3.onClick.AddListener(AddBadCurrency);
     }
 
     private void OnDestroy()
@@ -27,7 +28,7 @@ public class PCHandler : MonoBehaviour
         closeBadShop.onClick.RemoveAllListeners();
         testBTN.onClick.RemoveAllListeners();
         testBTN2.onClick.RemoveAllListeners();
-
+        testBTN3.onClick.RemoveAllListeners();
     }
 
     private void OpenGoodShop()
@@ -58,5 +59,10 @@ public class PCHandler : MonoBehaviour
     private void AddGoodCurrency()
     {
         GoodEssencesHandler.Instance.AddCurrency(50);
+    }
+    
+    private void AddBadCurrency()
+    {
+        BadEssencesHandler.Instance.AddCurrency(50);
     }
 }

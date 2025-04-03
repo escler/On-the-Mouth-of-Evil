@@ -22,7 +22,7 @@ public class SortInventoryBuyHandler : MonoBehaviour
 
     public void AddItemToHandler(Item item)
     {
-        switch (item.name)
+        switch (item.itemName)
         {
             case "Lighter":
                 LighterHandler.Instance.AddItem(item.gameObject); 
@@ -45,77 +45,32 @@ public class SortInventoryBuyHandler : MonoBehaviour
         }
     }
 
-    public void RemoveItemFromHandler(Item item)
-    {
-        switch (item.name)
-        {
-            case "Lighter":
-                LighterHandler.Instance.RemoveItem(item.gameObject);
-                break;
-            case "Bible":
-                BibleHandler.Instance.RemoveItem(item.gameObject);
-                break;
-            case "Cross":
-                CrossHandler.Instance.RemoveItem(item.gameObject);
-                break;
-            case "Salt":
-                SaltHandler.Instance.RemoveItem(item.gameObject);
-                break;
-            case "Voodoo Doll":
-                VoodooHandler.Instance.RemoveItem(item.gameObject);
-                break;
-            case "Rosary":
-                RosaryHandler.Instance.RemoveItem(item.gameObject);
-                break;
-        }
-    }
-
     public InventoryItemHandler GetHandler(Item item)
     {
-        switch (item.name)
+        return item.itemName switch
         {
-            case "Lighter":
-                return LighterHandler.Instance;
-            case "Bible":
-                return BibleHandler.Instance;
-            case "Cross":
-                return CrossHandler.Instance;
-            case "Salt":
-                return SaltHandler.Instance;
-            case "Voodoo Doll":
-                return VoodooHandler.Instance;
-            case "Rosary":
-                return RosaryHandler.Instance;
-        }
-        
-        return null;
+            "Lighter" => LighterHandler.Instance,
+            "Bible" => BibleHandler.Instance,
+            "Cross" => CrossHandler.Instance,
+            "Salt" => SaltHandler.Instance,
+            "Voodoo Doll" => VoodooHandler.Instance,
+            "Rosary" => RosaryHandler.Instance,
+            _ => null
+        };
     }
 
     public void SaveCount(string itemName, bool sum)
     {
-        var name = "";
-        
-        switch (itemName)
+        var name = itemName switch
         {
-            case "Lighter":
-                name = "Lighter";
-                break;
-            case "Bible":
-                name = "Bible";
-                break;
-            case "Cross":
-                name = "Cross";
-                break;
-            case "Salt":
-                name = "Salt";
-                break;
-            case "Voodoo Doll":
-                name = "Voodoo";
-                break;
-            case "Rosary":
-                name = "Rosary";
-                break;
-        }
+            "Lighter" => "Lighter",
+            "Bible" => "Bible",
+            "Cross" => "Cross",
+            "Salt" => "Salt",
+            "Voodoo Doll" => "Voodoo",
+            "Rosary" => "Rosary",
+            _ => ""
+        };
 
         name += "Count";
         

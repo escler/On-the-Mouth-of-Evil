@@ -13,8 +13,9 @@ public class ItemShopSlot : MonoBehaviour
     public bool unlocked;
     [SerializeField] private Button purchaseBTN, unlockBTN;
     [SerializeField] private Color canBuy, cantBuy;
+    [SerializeField] private bool badItem;
 
-    private InventoryItemHandler handler;
+    public InventoryItemHandler handler;
 
     
     private void OnEnable()
@@ -95,8 +96,16 @@ public class ItemShopSlot : MonoBehaviour
     
     private void UnlockItem()
     {
-        if (costToUnlock > GoodEssencesHandler.Instance.CurrentAmount) return;
-        GoodEssencesHandler.Instance.SubtractCurrency(costToUnlock);
+        if (!badItem)
+        {
+            if(costToUnlock > GoodEssencesHandler.Instance.CurrentAmount) return;
+            GoodEssencesHandler.Instance.SubtractCurrency(costToUnlock);
+        }
+        else
+        {
+            if (costToUnlock > BadEssencesHandler.Instance.CurrentAmount) return;
+            BadEssencesHandler.Instance.SubtractCurrency(costToUnlock);
+        }
         unlocked = true;
         purchaseBTN.gameObject.SetActive(true);
         unlockBTN.gameObject.SetActive(false);
