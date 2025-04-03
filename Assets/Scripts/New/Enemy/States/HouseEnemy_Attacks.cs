@@ -361,6 +361,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         if (owner.playerGrabbedCount > 0)
         {
             dead.Play();
+            Inventory.Instance.deleteItem = true;
             FadeOutHandler.Instance.FaceOut(1f);
             GameManagerNew.Instance.LoadSceneWithDelay("Hub", 1.5f);
         }

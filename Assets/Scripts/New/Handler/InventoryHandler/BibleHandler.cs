@@ -51,8 +51,8 @@ public class BibleHandler : InventoryItemHandler
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
         var pos = transform.GetChild(count - 1).transform;
-        go.transform.position = pos.localPosition;
-        go.transform.rotation = pos.localRotation;
+        go.transform.position = pos.position;
+        go.transform.rotation = pos.rotation;
     }
 
     public override void RemoveItem(GameObject itemObj)

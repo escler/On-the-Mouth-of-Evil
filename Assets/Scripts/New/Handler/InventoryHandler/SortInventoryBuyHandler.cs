@@ -72,6 +72,7 @@ public class SortInventoryBuyHandler : MonoBehaviour
             _ => ""
         };
 
+        if (name == "") return;
         name += "Count";
         
         var count = PlayerPrefs.GetInt(name);

@@ -15,33 +15,36 @@ public class ItemShopSlot : MonoBehaviour
     [SerializeField] private Color canBuy, cantBuy;
     [SerializeField] private bool badItem;
 
-    public InventoryItemHandler handler;
+    InventoryItemHandler _handler;
+    public string item;
 
     
     private void OnEnable()
     {
-        if (handler == null) handler = SortInventoryBuyHandler.Instance.GetHandler(_item);
+        if (_handler == null) _handler = SortInventoryBuyHandler.Instance.GetHandler(_item);
+        CheckPrefs();
         LockSettings();
         CurrencyHandler.Instance.OnUpdateCurrency += CheckColor;
         CurrencyHandler.Instance.OnUpdateCurrency += CheckInteractable;
         CurrencyHandler.Instance.OnUpdateCurrency += ShowText;
-        handler.OnUpdateCount += CheckColor;
-        handler.OnUpdateCount += CheckInteractable;
-        handler.OnUpdateCount += ShowText;
+        _handler.OnUpdateCount += CheckColor;
+        _handler.OnUpdateCount += CheckInteractable;
+        _handler.OnUpdateCount += ShowText;
         ShowText();
         CheckColor();
         CheckInteractable();
         purchaseBTN.onClick.AddListener(BuyItem);
     }
 
+
     private void OnDisable()
     {
-        handler.OnUpdateCount -= CheckColor;
-        handler.OnUpdateCount -= CheckInteractable;
-        handler.OnUpdateCount -= ShowText;
-        handler.OnUpdateCount -= CheckColor;
-        handler.OnUpdateCount -= CheckInteractable;
-        handler.OnUpdateCount -= ShowText;
+        _handler.OnUpdateCount -= CheckColor;
+        _handler.OnUpdateCount -= CheckInteractable;
+        _handler.OnUpdateCount -= ShowText;
+        _handler.OnUpdateCount -= CheckColor;
+        _handler.OnUpdateCount -= CheckInteractable;
+        _handler.OnUpdateCount -= ShowText;
         purchaseBTN.onClick.RemoveAllListeners();
     }
     private void CheckInteractable()
@@ -53,7 +56,7 @@ public class ItemShopSlot : MonoBehaviour
     private bool CanInteract()
     {
         if(!unlocked) return false;
-        if(handler.Count >= handler.countMax) return false;
+        if(_handler.Count >= _handler.countMax) return false;
         if (cost > CurrencyHandler.Instance.CurrentAmount) return false;
         return true;
     }
@@ -62,18 +65,18 @@ public class ItemShopSlot : MonoBehaviour
     {
         if (!unlocked) return;
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = 
-            handler.Count >= handler.countMax ? "Out of Stock" : cost.ToString();
+            _handler.Count >= _handler.countMax ? "Out of Stock" : cost.ToString();
 
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().fontSize =
-            handler.Count >= handler.countMax ? 3.5f : 4;
+            _handler.Count >= _handler.countMax ? 3.5f : 4;
     }
 
     private void CheckColor()
     {
         if (!unlocked) return;
-        purchaseBTN.GetComponent<Image>().color = handler.Count < handler.countMax ? canBuy : cantBuy;
+        purchaseBTN.GetComponent<Image>().color = _handler.Count < _handler.countMax ? canBuy : cantBuy;
         
-        if (handler.Count >= handler.countMax) return;
+        if (_handler.Count >= _handler.countMax) return;
         
         purchaseBTN.GetComponent<Image>().color = cost <= CurrencyHandler.Instance.CurrentAmount ? canBuy : cantBuy;
     }
@@ -106,12 +109,22 @@ public class ItemShopSlot : MonoBehaviour
             if (costToUnlock > BadEssencesHandler.Instance.CurrentAmount) return;
             BadEssencesHandler.Instance.SubtractCurrency(costToUnlock);
         }
+        PlayerPrefs.SetInt(item + "Unlocked", 1);
+        PlayerPrefs.Save();
         unlocked = true;
         purchaseBTN.gameObject.SetActive(true);
         unlockBTN.gameObject.SetActive(false);
         ShowText();
         CheckColor();
         CheckInteractable();
+    }
+    
+    private void CheckPrefs()
+    {
+        if(unlocked) return;
+        var pref = item + "Unlocked";
+        var result = PlayerPrefs.GetInt(pref);
+        unlocked = result == 1;
     }
     
 }

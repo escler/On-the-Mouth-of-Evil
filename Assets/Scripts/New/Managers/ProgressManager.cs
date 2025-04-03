@@ -30,6 +30,8 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("BibleCount", 0);
         PlayerPrefs.SetInt("RosaryCount", 0);
         PlayerPrefs.SetInt("VoodooCount", 0);
+        PlayerPrefs.SetInt("VoodooUnlocked", 0);
+        PlayerPrefs.SetInt("RosaryUnlocked", 0);
         
         
         PlayerPrefs.Save();

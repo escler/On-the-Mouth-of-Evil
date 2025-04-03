@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
     private KeyCode _key;
     private int _inventorySelect;
     public bool cantSwitch;
+    public bool deleteItem;
 
     public Item[] inventory, hubInventory, enviromentInventory;
     public Item specialItem;
@@ -57,6 +58,10 @@ public class Inventory : MonoBehaviour
             {
                 if (inv[i] == null) continue;
                 InventoryUI.Instance.DeleteUI(i, inv[i].category);
+                if (deleteItem)
+                {
+                    SortInventoryBuyHandler.Instance.SaveCount(inv[i].itemName,false);
+                }
                 Destroy(inv[i].gameObject);
                 inv[i] = null;
             }
@@ -72,6 +77,7 @@ public class Inventory : MonoBehaviour
         countEnviroment = 0;
         countHub = 0;
         cantSwitch = false;
+        deleteItem = false;
 
     }
 
