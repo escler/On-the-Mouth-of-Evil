@@ -203,6 +203,16 @@ public class ObjectDetector : MonoBehaviour
             {
                 puzzleSlot.OnInteractWithObject();
             }
+            
+            if (_hit.transform.TryGetComponent(out StrongboxWheel wheel))
+            {
+                wheel.OnInteractWithObject();
+            }
+            
+            if (_hit.transform.TryGetComponent(out StrongboxHandle handle))
+            {
+                handle.OnInteractWithObject();
+            }
         }
     }
 
