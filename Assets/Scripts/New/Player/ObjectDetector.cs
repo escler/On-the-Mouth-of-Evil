@@ -116,6 +116,8 @@ public class ObjectDetector : MonoBehaviour
         }
         
         if(_hit.transform.TryGetComponent(out SkullPuzzleSlot slot)) _crosshairUI.IncreaseUI();
+        else if(_hit.transform.TryGetComponent(out StrongboxWheel wheel)) _crosshairUI.IncreaseUI();
+        else if(_hit.transform.TryGetComponent(out StrongboxHandle handle)) _crosshairUI.IncreaseUI();
         else _crosshairUI.DecreaseUI();
     }
 

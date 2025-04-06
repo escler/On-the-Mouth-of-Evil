@@ -6,24 +6,21 @@ using Vector3 = UnityEngine.Vector3;
 public class TarotCardPuzzle : MonoBehaviour
 {
     public static TarotCardPuzzle Instance { get; private set; }
-    
-    public GameObject heldObj, paperPuzzleSalt, skull;
+
+    public GameObject heldObj;
     public Rigidbody heldObjRb;
     public Transform holdPos;
     private PlayerCam _playerCam;
     private PlayerHandler _player;
     private bool _canDrop, _canPlace, _canPlaceInverse;
     private float _sensX, _sensY, _xRot, _yRot;
-    public GameObject[] piecesCardGood, piecesCardBad;
+    public GameObject[] piecesCardGood;
     private int _actualPiece, _piecePlacesCount;
     public Material cardMaterial;
     public Transform drawer;
     private float _angleX;
     Vector3 reference = Vector3.zero;
     private bool _rotating;
-    private bool _badPath, _goodPath, _badPathTaked;
-
-    public bool BadPathTaked => _badPathTaked;
 
     public bool CanPlace => _canPlace;
     public bool CanPlaceInverse => _canPlaceInverse;
@@ -58,7 +55,6 @@ public class TarotCardPuzzle : MonoBehaviour
         MoveObject(_rotating ? PlayerHandler.Instance.cameraPos.position + PlayerHandler.Instance.cameraPos.forward * heldObj.GetComponent<PieceTarotCard>().offset: PlayerHandler.Instance.handPivot.position);
         
         CompareOrientationGoodCard();
-        CompareOrientationBadCard();
         
         if (_rotating) RotateObject();
         
@@ -80,18 +76,10 @@ public class TarotCardPuzzle : MonoBehaviour
     {
         var actualPiece = heldObj;
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
-        if (_badPathTaked)
-        {
-            piecesCardBad[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
-            piecesCardBad[_actualPiece].GetComponent<MeshRenderer>().enabled = true;
-            _badPath = true;
-        }
-        else
-        {
-            piecesCardGood[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
-            piecesCardGood[_actualPiece].GetComponent<MeshRenderer>().enabled = true;
-            _goodPath = true;
-        }
+        
+        piecesCardGood[_actualPiece].GetComponent<MeshRenderer>().material = cardMaterial;
+        piecesCardGood[_actualPiece].GetComponent<MeshRenderer>().enabled = true;
+
         Destroy(actualPiece);
         _piecePlacesCount++;
         CheckPuzzleState();
@@ -101,18 +89,6 @@ public class TarotCardPuzzle : MonoBehaviour
 
     IEnumerator MoveDrawer()
     {
-        if (_goodPath)
-        {
-            DecisionsHandler.Instance.GoodChoiceTaked();
-            _good.Play();
-            paperPuzzleSalt.SetActive(true);
-        }
-        else
-        {
-            DecisionsHandler.Instance.BadChoiceTaked();
-            _bad.Play();
-            skull.SetActive(true);
-        }
         if(RitualManager.Instance.altarCompleted) RitualManager.Instance.AltarCompleted();
         while (_angleX < 50f)
         {
@@ -120,17 +96,6 @@ public class TarotCardPuzzle : MonoBehaviour
 
             _angleX = drawer.localRotation.eulerAngles.x;
             yield return new WaitForSeconds(.01f);
-        }
-
-        if (_goodPath)
-        {
-            paperPuzzleSalt.GetComponent<BoxCollider>().enabled = true;
-            paperPuzzleSalt.GetComponent<Rigidbody>().isKinematic = false;
-        }
-        else
-        {
-            skull.GetComponent<BoxCollider>().enabled = true;
-            skull.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 
@@ -144,39 +109,18 @@ public class TarotCardPuzzle : MonoBehaviour
 
     private void CompareOrientationGoodCard()
     {
-        if (_badPath) return;
         var actualCardPiece = piecesCardGood[_actualPiece].transform;
         var orientation = Vector3.Dot(heldObj.transform.forward, actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
         var distance = Vector3.Distance(PlayerHandler.Instance.transform.position, actualCardPiece.position);
         if (orientation > 1.8f && distance < 2f)
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
-            _badPathTaked = false;
             _canPlace = true;
         }
         else
         {
             actualCardPiece.GetComponent<MeshRenderer>().enabled = false;
             _canPlace = false;
-        }
-    }
-
-    private void CompareOrientationBadCard()
-    {
-        if (_goodPath) return;
-        var actualCardPiece = piecesCardBad[_actualPiece].transform;
-        var orientation = Vector3.Dot(-heldObj.transform.forward, -actualCardPiece.forward) + Vector3.Dot(heldObj.transform.up, actualCardPiece.up);
-        var distance = Vector3.Distance(PlayerHandler.Instance.transform.position, actualCardPiece.position);
-        if (orientation > 1.8f && distance < 2f)
-        {
-            actualCardPiece.GetComponent<MeshRenderer>().enabled = true;
-            _canPlaceInverse = true;
-            _badPathTaked = true;
-        }
-        else
-        {
-            actualCardPiece.GetComponent<MeshRenderer>().enabled = false;
-            _canPlaceInverse = false;
         }
     }
     
@@ -219,21 +163,11 @@ public class TarotCardPuzzle : MonoBehaviour
         heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.right, YaxisRotation);
         heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.up, XaxisRotation);
         heldObj.transform.RotateAround(heldObj.transform.position, _playerCam.transform.forward, ZaxisRotation);
-        //heldObj.transform.Rotate(Vector3.up, XaxisRotation);
-        //heldObj.transform.Rotate(Vector3.right, YaxisRotation);
-        //heldObjRb.transform.Rotate(-YaxisRotation,XaxisRotation,0);
-
-
-
-        /*heldObj.transform.Rotate(transform.up, XaxisRotation);
-        heldObj.transform.Rotate(transform.right, YaxisRotation);
-        heldObjRb.transform.localEulerAngles += transform.up * XaxisRotation + transform.right * YaxisRotation;*/
     }
 
     public void DeactivateMesh()
     {
         piecesCardGood[_actualPiece].GetComponent<MeshRenderer>().enabled = false;
-        piecesCardBad[_actualPiece].GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void PickUpObject(GameObject pickUpObj, int actualPiece)
