@@ -8,7 +8,9 @@ public class StrongboxPuzzle : MonoBehaviour
     public static StrongboxPuzzle Instance { get; private set; }
     [SerializeField] private StrongboxWheel[] wheels = new StrongboxWheel[3];
     [SerializeField] private int correctCode;
-    [SerializeField] private StrongboxHandle Handle;
+    [SerializeField] private StrongboxHandle handle;
+    private Animator _animator;
+    [SerializeField] private BoxCollider body;
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class StrongboxPuzzle : MonoBehaviour
         }
 
         Instance = this;
+        _animator = GetComponent<Animator>();
     }
 
     public void CheckCode()
@@ -32,8 +35,25 @@ public class StrongboxPuzzle : MonoBehaviour
 
         if (code == correctCode.ToString())
         {
-            print("Gane");
+            OpenDoor();
         }
-        else print("Perdi");
+        else _animator.SetTrigger("WrongCode");
+    }
+
+    private void OpenDoor()
+    {
+        DisableColliders();
+        _animator.SetBool("Open", true);
+    }
+
+    private void DisableColliders()
+    {
+        body.enabled = false;
+        foreach (var w in wheels)
+        {
+            w.GetComponent<BoxCollider>().enabled = false;
+        }
+
+        handle.GetComponent<BoxCollider>().enabled = false;
     }
 }
