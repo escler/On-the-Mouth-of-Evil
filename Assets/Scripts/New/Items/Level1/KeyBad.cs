@@ -24,7 +24,8 @@ public class KeyBad : Item
 
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
-
+        CheckPart();
+        
     }
 
     public override void OnUpdate()
@@ -83,11 +84,18 @@ public class KeyBad : Item
     
     public void ChangeMesh(int part)
     {
-        transform.GetChild(part).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(part).gameObject.SetActive(true);
     }
 
+    private void CheckPart()
+    {
+        var i = _keyCompleted ? 2 : part;
+        InventoryUI.Instance.GetComponentInChildren<KeyBadUI>().ChangeUI(i);
+    }
+    
     public void CombineKey()
     {
+        InventoryUI.Instance.GetComponentInChildren<KeyBadUI>().ChangeUI(2);
         _keyCompleted = true;
     }
 }

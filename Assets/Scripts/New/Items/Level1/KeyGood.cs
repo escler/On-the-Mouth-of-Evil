@@ -11,7 +11,7 @@ public class KeyGood : Item
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
-        var haveKey = inventory.Where(x => x != null && x.itemName == x.itemName);
+        var haveKey = inventory.Where(x => x != null && itemName == x.itemName);
         
         if (haveKey.Any())
         {
@@ -24,7 +24,7 @@ public class KeyGood : Item
 
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
-
+        CheckPart();
     }
 
     public override void OnUpdate()
@@ -83,11 +83,18 @@ public class KeyGood : Item
     
     public void ChangeMesh(int part)
     {
-        transform.GetChild(part).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(part).gameObject.SetActive(true);
+    }
+
+    private void CheckPart()
+    {
+        var i = _keyCompleted ? 2 : part;
+        InventoryUI.Instance.GetComponentInChildren<KeyGoodUI>().ChangeUI(i);
     }
 
     public void CombineKey()
     {
+        InventoryUI.Instance.GetComponentInChildren<KeyGoodUI>().ChangeUI(2);
         _keyCompleted = true;
     }
 }
