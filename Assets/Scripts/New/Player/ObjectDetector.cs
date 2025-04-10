@@ -115,9 +115,7 @@ public class ObjectDetector : MonoBehaviour
             return;
         }
         
-        if(_hit.transform.TryGetComponent(out SkullPuzzleSlot slot)) _crosshairUI.IncreaseUI();
-        else if(_hit.transform.TryGetComponent(out StrongboxWheel wheel)) _crosshairUI.IncreaseUI();
-        else if(_hit.transform.TryGetComponent(out StrongboxHandle handle)) _crosshairUI.IncreaseUI();
+        if(_hit.transform.TryGetComponent(out IInteractObject interactObject)) _crosshairUI.IncreaseUI();
         else _crosshairUI.DecreaseUI();
     }
 
@@ -201,19 +199,9 @@ public class ObjectDetector : MonoBehaviour
 
         if (raycast && Input.GetMouseButtonDown(0))
         {
-            if (_hit.transform.TryGetComponent(out SkullPuzzleSlot puzzleSlot))
+            if (_hit.transform.TryGetComponent(out IInteractObject i))
             {
-                puzzleSlot.OnInteractWithObject();
-            }
-            
-            if (_hit.transform.TryGetComponent(out StrongboxWheel wheel))
-            {
-                wheel.OnInteractWithObject();
-            }
-            
-            if (_hit.transform.TryGetComponent(out StrongboxHandle handle))
-            {
-                handle.OnInteractWithObject();
+                i.OnInteractWithThisObject();
             }
         }
     }

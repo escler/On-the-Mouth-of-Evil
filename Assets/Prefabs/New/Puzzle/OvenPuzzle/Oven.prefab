@@ -12,13 +12,15 @@ GameObject:
   - component: {fileID: 1736663219153942652}
   - component: {fileID: 3317670032563185379}
   - component: {fileID: 7048857360585280453}
+  - component: {fileID: 7663598078519084839}
+  - component: {fileID: 4559395156797302954}
   m_Layer: 9
   m_Name: perilla2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1334760563814487529
 Transform:
   m_ObjectHideFlags: 0
@@ -105,6 +107,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.053228043, y: 0.108121105, z: 0.108121105}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7663598078519084839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278977785197788046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64492a3b4fce4254693fa7abef3959bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &4559395156797302954
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278977785197788046}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f79c0ca36fc51747a6e8aa20f388f52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1327202871806875935
 GameObject:
   m_ObjectHideFlags: 0
@@ -4952,6 +4987,8 @@ GameObject:
   - component: {fileID: 3224913772433086542}
   - component: {fileID: 3218616085596951801}
   - component: {fileID: 13081884012463025}
+  - component: {fileID: 5196923830918542892}
+  - component: {fileID: 4569484855987108735}
   m_Layer: 9
   m_Name: door
   m_TagString: Untagged
@@ -4967,7 +5004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544159057447091129}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5595184, y: -0.5139356, z: -0.007249129}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5045,6 +5082,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15092218, y: 0.7935234, z: 1.191329}
   m_Center: {x: -0.06709616, y: 0.37428108, z: -0.000000029802322}
+--- !u!95 &5196923830918542892
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544159057447091129}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be6b9780508c1af47ae8105b319e8429, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4569484855987108735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544159057447091129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fb94528dc2cd046b2053f83a0b94bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1714331461941353192
 GameObject:
   m_ObjectHideFlags: 0
@@ -9893,6 +9963,7 @@ GameObject:
   - component: {fileID: 5857834557988118199}
   - component: {fileID: 9156358203787917446}
   - component: {fileID: 836186878500772233}
+  - component: {fileID: 6272396304614775590}
   m_Layer: 9
   m_Name: perilla3
   m_TagString: Untagged
@@ -9998,6 +10069,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b28678094b50e4ea432064d3efb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 3
+--- !u!95 &6272396304614775590
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951111251034485590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f79c0ca36fc51747a6e8aa20f388f52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1997299299957024586
 GameObject:
   m_ObjectHideFlags: 0
@@ -14929,6 +15022,7 @@ GameObject:
   - component: {fileID: 8107015889941119578}
   - component: {fileID: 3437179287094221966}
   - component: {fileID: 8548224169661152010}
+  - component: {fileID: 2667678592607475215}
   m_Layer: 9
   m_Name: perilla1
   m_TagString: Untagged
@@ -15034,6 +15128,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b28678094b50e4ea432064d3efb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 2
+--- !u!95 &2667678592607475215
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420306292303164479}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f79c0ca36fc51747a6e8aa20f388f52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5363829266489716111
 GameObject:
   m_ObjectHideFlags: 0
@@ -15047,6 +15163,7 @@ GameObject:
   - component: {fileID: 5421870888072979969}
   - component: {fileID: 6461594094357620762}
   - component: {fileID: 3001212963216469230}
+  - component: {fileID: 5820588636218312490}
   m_Layer: 9
   m_Name: perilla
   m_TagString: Untagged
@@ -15152,6 +15269,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b28678094b50e4ea432064d3efb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 1
+--- !u!95 &5820588636218312490
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5363829266489716111}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f79c0ca36fc51747a6e8aa20f388f52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5650249049279016150
 GameObject:
   m_ObjectHideFlags: 0
@@ -15162,6 +15301,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2120645279813997652}
   - component: {fileID: 6171336138649143637}
+  - component: {fileID: 7133452090584084599}
+  - component: {fileID: 5922344854442697577}
+  - component: {fileID: 6692922016696881600}
   m_Layer: 0
   m_Name: Oven
   m_TagString: Untagged
@@ -15189,6 +15331,7 @@ Transform:
   - {fileID: 990072723505068958}
   - {fileID: 5908002122584953206}
   - {fileID: 7448022850829891726}
+  - {fileID: 6108833190969014028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6171336138649143637
@@ -15203,18 +15346,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05f867d49f22d6428728cdbc581ba20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 0}
   _hornilla: {fileID: 0}
   _knobs:
   - {fileID: 3001212963216469230}
   - {fileID: 8548224169661152010}
   - {fileID: 836186878500772233}
   - {fileID: 2779320687431001819}
+  _ovenDoor: {fileID: 4569484855987108735}
   _particles:
   - {fileID: 1402851350865274946}
   - {fileID: 6310176037397045728}
   - {fileID: 4841852435438765702}
   - {fileID: 8510166425631883192}
+  numbers: 
+  code: 1342
+--- !u!65 &7133452090584084599
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650249049279016150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2512739, y: 1.2655169, z: 0.15675545}
+  m_Center: {x: 0.07339537, y: -0.13275793, z: 0.57837784}
+--- !u!65 &5922344854442697577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650249049279016150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2512739, y: 1.2655169, z: 0.15675545}
+  m_Center: {x: 0.07339537, y: -0.13275793, z: -0.55}
+--- !u!65 &6692922016696881600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650249049279016150}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2512739, y: 0.2506019, z: 1.2657291}
+  m_Center: {x: 0.07339537, y: 0.3779543, z: 0.023891628}
 --- !u!1 &6372744603904446369
 GameObject:
   m_ObjectHideFlags: 0
@@ -15228,6 +15436,7 @@ GameObject:
   - component: {fileID: 4128220289022007766}
   - component: {fileID: 7509621229810920728}
   - component: {fileID: 2779320687431001819}
+  - component: {fileID: 6160536075933794917}
   m_Layer: 9
   m_Name: perilla4
   m_TagString: Untagged
@@ -15333,6 +15542,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b28678094b50e4ea432064d3efb684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 4
+--- !u!95 &6160536075933794917
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372744603904446369}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f79c0ca36fc51747a6e8aa20f388f52, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6738869444744625480
 GameObject:
   m_ObjectHideFlags: 0
@@ -20204,3 +20435,69 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6934031225863991321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6108833190969014028}
+  - component: {fileID: 5500602789560858450}
+  - component: {fileID: 4298330161484588877}
+  m_Layer: 9
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6108833190969014028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6934031225863991321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.071, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2120645279813997652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5500602789560858450
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6934031225863991321}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.5862694, z: 0.865516}
+  m_Center: {x: 0, y: -0.1277527, z: 0}
+--- !u!114 &4298330161484588877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6934031225863991321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd3cf0480ae21c418481c36c38dc456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongboxWheel : MonoBehaviour, IInteractable
+public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
 {
     private bool _cantRotate;
     private int actualRotation;
@@ -59,5 +59,10 @@ public class StrongboxWheel : MonoBehaviour, IInteractable
     public bool CanShowText()
     {
         return false;
+    }
+
+    public void OnInteractWithThisObject()
+    {
+        OnInteractWithObject();
     }
 }

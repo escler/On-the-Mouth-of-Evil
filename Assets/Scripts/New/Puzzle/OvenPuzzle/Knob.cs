@@ -1,20 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knob : MonoBehaviour, IInteractable
+public class Knob : MonoBehaviour, IInteractable, IInteractObject
 {
-    public void OnInteractItem()
+    private bool _on;
+    public int number;
+    private Animator _animator;
+
+    private void Awake()
     {
-        Oven.Instance.ChangeFireState(this);
+        _animator = GetComponent<Animator>();
     }
 
+    public void OnInteractItem()
+    {
+    }
+
+    public void ResetKnob()
+    {
+        _on = false;
+        _animator.SetBool("Open", _on);
+    }
     public void OnInteract(bool hit, RaycastHit i)
     {
     }
 
     public void OnInteractWithObject()
     {
+        Oven.Instance.ChangeFireState(this);
+        if (_on)
+        {
+            Oven.Instance.RemoveKnob(this);
+        }
+        else
+        {   
+            Oven.Instance.AddKnob(this);
+        }
+
+        _on = !_on;
+        _animator.SetBool("Open", _on);
     }
 
     public string ShowText()
@@ -25,5 +51,10 @@ public class Knob : MonoBehaviour, IInteractable
     public bool CanShowText()
     {
         return false;
+    }
+
+    public void OnInteractWithThisObject()
+    {
+        OnInteractWithObject();
     }
 }

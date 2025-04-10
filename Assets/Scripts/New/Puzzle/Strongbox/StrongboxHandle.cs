@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongboxHandle : MonoBehaviour, IInteractable
+public class StrongboxHandle : MonoBehaviour, IInteractable, IInteractObject
 {
     public void OnInteractItem()
     {
@@ -25,5 +25,10 @@ public class StrongboxHandle : MonoBehaviour, IInteractable
     public bool CanShowText()
     {
         return false;
+    }
+
+    public void OnInteractWithThisObject()
+    {
+        OnInteractWithObject();
     }
 }

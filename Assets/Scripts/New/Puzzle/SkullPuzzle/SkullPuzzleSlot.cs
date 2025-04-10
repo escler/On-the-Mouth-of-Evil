@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkullPuzzleSlot : MonoBehaviour, IInteractable
+public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
 {
     public Skull currentSkull;
     public Transform slotTransform;
@@ -70,7 +70,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
     {
         
     }
-
+    
     public void OnInteractWithObject()
     {
         if (_cantRotate) return;
@@ -117,5 +117,10 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable
         _cantGrab = true;
         yield return new WaitForSeconds(0.1f);
         _cantGrab = false;
+    }
+
+    public void OnInteractWithThisObject()
+    {
+        OnInteractWithObject();
     }
 }
