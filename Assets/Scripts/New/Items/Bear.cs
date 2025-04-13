@@ -6,7 +6,6 @@ public class Bear : Item
     public override void OnUpdate()
     {
         base.OnUpdate();
-        base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         canInteractWithItem = CanInteractWithItem();
