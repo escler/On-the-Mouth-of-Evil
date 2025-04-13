@@ -46,6 +46,18 @@ public class Bear : Item
         GetComponent<BoxCollider>().enabled = false;
         float time = 0;
         Vector3 actualLocation = transform.position;
+
+        var yHeight = transform.position;
+        yHeight.y = location.y;
+        while (time < 1)
+        {
+            transform.position = Vector3.Lerp(actualLocation, yHeight, time);
+            time += Time.deltaTime * 2;
+            yield return null;
+        }
+
+        time = 0;
+        actualLocation = transform.position;
         while (time < 1)
         {
             transform.position = Vector3.Lerp(actualLocation, location, time);

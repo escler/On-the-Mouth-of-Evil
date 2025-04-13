@@ -65,7 +65,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f601a939a37b17245af94538939369bf, type: 2}
-  - {fileID: 2100000, guid: c64756a7fc6efe9458f4ffaa5a083ff4, type: 2}
+  - {fileID: 2100000, guid: 69e878d32a5992e4caabce35de8fbaac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,12 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18b241700a8ede4e993c77a1d32b1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalMaterial:
-  - {fileID: 2100000, guid: f601a939a37b17245af94538939369bf, type: 2}
-  - {fileID: 2100000, guid: f601a939a37b17245af94538939369bf, type: 2}
-  onMaterial:
-  - {fileID: 2100000, guid: f601a939a37b17245af94538939369bf, type: 2}
-  - {fileID: 2100000, guid: c64756a7fc6efe9458f4ffaa5a083ff4, type: 2}
+  channels:
+  - {fileID: 2100000, guid: 21c4f62b4110b5d4a85bd189a372d2cd, type: 2}
+  - {fileID: 2100000, guid: 73b91f95564636b4897fd8f59a5fc81c, type: 2}
+  - {fileID: 2100000, guid: 1b195ead5c562b64291da16e2e7eae0f, type: 2}
+  tvOffMat: {fileID: 2100000, guid: 69e878d32a5992e4caabce35de8fbaac, type: 2}
+  changeChannelMat: {fileID: 2100000, guid: c64756a7fc6efe9458f4ffaa5a083ff4, type: 2}
+  tvMat: {fileID: 2100000, guid: f601a939a37b17245af94538939369bf, type: 2}
   _tv: {fileID: 4021219446206243382}
 --- !u!65 &7554978891791340194
 BoxCollider:

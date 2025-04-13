@@ -2,24 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemoteControl : MonoBehaviour, IInteractable
+public class RemoteControl : MonoBehaviour, IInteractable, IInteractObject
 {
     public Television tv;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnInteractItem()
     {
-        tv.ChangeMaterial();
     }
 
     public void OnInteract(bool hit, RaycastHit i)
@@ -28,6 +15,7 @@ public class RemoteControl : MonoBehaviour, IInteractable
 
     public void OnInteractWithObject()
     {
+        tv.ChangeMaterial();
     }
 
     public string ShowText()
@@ -37,6 +25,11 @@ public class RemoteControl : MonoBehaviour, IInteractable
 
     public bool CanShowText()
     {
-        return true;
+        return false;
+    }
+
+    public void OnInteractWithThisObject()
+    {
+        OnInteractWithObject();
     }
 }
