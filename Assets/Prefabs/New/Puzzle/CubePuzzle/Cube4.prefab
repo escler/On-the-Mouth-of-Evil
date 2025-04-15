@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3408968991104807666
+--- !u!1 &6733668764666678239
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2595418710851184712}
-  - component: {fileID: 1417257318652897261}
-  - component: {fileID: 3769490126186484519}
+  - component: {fileID: 1444435560867561036}
+  - component: {fileID: 1236989469996014999}
+  - component: {fileID: 4004764844591399240}
   m_Layer: 0
-  m_Name: teddylp2
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2595418710851184712
+--- !u!4 &1444435560867561036
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3408968991104807666}
+  m_GameObject: {fileID: 6733668764666678239}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 786365591022174081}
+  m_Father: {fileID: 3617509561280923895}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1417257318652897261
+--- !u!33 &1236989469996014999
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3408968991104807666}
-  m_Mesh: {fileID: 4164511204261677510, guid: 40cbeb80dc9a7b94882f526e8230efc9, type: 3}
---- !u!23 &3769490126186484519
+  m_GameObject: {fileID: 6733668764666678239}
+  m_Mesh: {fileID: 1898779868546654636, guid: 448dc5ec7cf7a9348b8789e2a9e5ae99, type: 3}
+--- !u!23 &4004764844591399240
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3408968991104807666}
+  m_GameObject: {fileID: 6733668764666678239}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb90a575ed027d9429f28719d5bc05e4, type: 2}
+  - {fileID: 2100000, guid: e4cbb8904e4e44b448c9d0b9623bcf82, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,7 +83,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7267738691449680516
+--- !u!1 &8212823651105309910
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,63 +91,64 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 786365591022174081}
-  - component: {fileID: 8323068460949818145}
-  - component: {fileID: 109514631765508030}
-  - component: {fileID: 2851699268507401057}
+  - component: {fileID: 3617509561280923895}
+  - component: {fileID: 7972468750392251421}
+  - component: {fileID: 7186796688414715641}
+  - component: {fileID: 4613348517605060383}
   m_Layer: 9
-  m_Name: Bear
+  m_Name: Cube4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &786365591022174081
+--- !u!4 &3617509561280923895
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7267738691449680516}
+  m_GameObject: {fileID: 8212823651105309910}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.718414, y: 1.3085939, z: 16.352}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.43630815, y: 0.0000000026656564, z: 0.0000000018934012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2595418710851184712}
+  - {fileID: 1444435560867561036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8323068460949818145
+--- !u!114 &7972468750392251421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7267738691449680516}
+  m_GameObject: {fileID: 8212823651105309910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e9d08ab43e904648aaddf4b6b1699f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0585562fb5bf9ec419409a7c3984da78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Bear
-  objectPrefab: {fileID: 7267738691449680516}
-  uiElement: {fileID: 461621442566964039, guid: 54bae61602cae2d49a1190703db0ac91,
+  itemName: RedCube
+  objectPrefab: {fileID: 0}
+  uiElement: {fileID: 461621442566964039, guid: 3cd7af088de0e2849b61153473665642,
     type: 3}
-  uiText: Bear
+  uiText: 
   category: 1
   canShowText: 1
   canInspectItem: 0
   canInteractWithItem: 1
-  angleHand: {x: 0, y: 180, z: 0}
+  angleHand: {x: 0, y: 0, z: 0}
   soundName: 
---- !u!65 &109514631765508030
+  number: 0
+--- !u!65 &7186796688414715641
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7267738691449680516}
+  m_GameObject: {fileID: 8212823651105309910}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -160,15 +161,15 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.4, z: 0.4}
+  m_Size: {x: 0.14999084, y: 0.15000045, z: 0.15000042}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2851699268507401057
+--- !u!54 &4613348517605060383
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7267738691449680516}
+  m_GameObject: {fileID: 8212823651105309910}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
