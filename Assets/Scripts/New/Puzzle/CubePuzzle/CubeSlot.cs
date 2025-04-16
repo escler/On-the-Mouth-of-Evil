@@ -7,17 +7,18 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     [SerializeField] private int position;
     [SerializeField] private Cube cubeInSlot;
     public Cube CubeInSlot => cubeInSlot;
-    private bool _cubePlaced, _movingCube, _canRot;
+    private bool _cubePlaced, _movingCube, _canRot, _rotatingPhase;
+    public bool RotatingPhase => _rotatingPhase;
 
     public void PlaceCube(Cube cube)
     {
         if (cubeInSlot != null) return;
-        cubeInSlot = cube;
+        _cubePlaced = true;
         cube.GetComponent<BoxCollider>().enabled = false;
         cube.GetComponent<Rigidbody>().isKinematic = true;
-        _cubePlaced = true;
         cube.MoveCube(transform);
-        StartCoroutine(EnableBool());
+        StartCoroutine(PlaceCubeCor(cube));
+        CubePuzzle.Instance.CheckCode();
     }
 
     private void RemoveCube()
@@ -37,6 +38,12 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
         _canRot = true;
     }
 
+    IEnumerator PlaceCubeCor(Cube cube)
+    {
+        yield return new WaitForSeconds(0.1f);
+        cubeInSlot = cube;
+    }
+
     public void OnInteractItem()
     {
         RemoveCube();
@@ -49,7 +56,7 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
 
     private void Update()
     {
-        if(!_movingCube) return;
+        if(!_rotatingPhase) return;
         if(Input.GetKeyDown(KeyCode.W)) MoveCube(Vector3.right);
         if(Input.GetKeyDown(KeyCode.S)) MoveCube(-Vector3.right);
         if(Input.GetKeyDown(KeyCode.D)) MoveCube(Vector3.forward);
@@ -60,7 +67,8 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
 
     private void MoveCube(Vector3 direction)
     {
-        _movingCube = false;
+        if (_movingCube) return;
+        _movingCube = true;
         var final = direction;
         StartCoroutine(MoveCubeCor(final));
     }
@@ -68,7 +76,6 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     IEnumerator MoveCubeCor(Vector3 final)
     {
         float time = 0;
-        Vector3 start = cubeInSlot.transform.eulerAngles;
         while (time < 90)
         {
             cubeInSlot.transform.Rotate(final * 3, Space.World);
@@ -76,34 +83,40 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
             yield return new WaitForSeconds(0.01f);
         }
 
-        _movingCube = true;
+        _movingCube = false;
     }
 
     public void OnInteractWithObject()
     {
         if(cubeInSlot == null) return;
-        if (_canRot)
+        if (_movingCube) return;
+        if (_rotatingPhase)
         {
             ExitRotCube();
-            return;
+            CubePuzzle.Instance.CheckCode();
         }
-        
-        RotCube();
-
+        else
+        {
+            RotCube();
+        }
     }
 
     private void RotCube()
     {
+        StartCoroutine(MovePlaceCube(transform.GetChild(0).position));
+        CanvasManager.Instance.rotateInfo.SetActive(true);
         PlayerHandler.Instance.UnPossesPlayer();
+        _rotatingPhase = true;
         _cubePlaced = false;
-        _movingCube = true;
-        _canRot = true;
+        StartCoroutine(EnableBool());
     }
 
     private void ExitRotCube()
     {
+        StartCoroutine(MovePlaceCube(transform.position));
+        CanvasManager.Instance.rotateInfo.SetActive(false);
         PlayerHandler.Instance.PossesPlayer();
-        _movingCube = false;
+        _rotatingPhase = false;
         _cubePlaced = true;
         _canRot = false;
     }
@@ -121,5 +134,17 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     public void OnInteractWithThisObject()
     {
         OnInteractWithObject();
+    }
+
+    IEnumerator MovePlaceCube(Vector3 final)
+    {
+        var start = cubeInSlot.transform.position;
+        float time = 0;
+        while (time < 1)
+        {
+            cubeInSlot.transform.position = Vector3.Lerp(start, final, time);
+            time += Time.deltaTime * 4;
+            yield return null;
+        }
     }
 }

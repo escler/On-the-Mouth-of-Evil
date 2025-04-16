@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cube : Item
 {
@@ -10,21 +11,9 @@ public class Cube : Item
 
     public void MoveCube(Transform position)
     {
-        StartCoroutine(MoveCubeCor(position));
-    }
-
-    IEnumerator MoveCubeCor(Transform position)
-    {
-        float time = 0;
-        Vector3 start = transform.position;
-        
-        while (time < 1)
-        {
-            transform.position = Vector3.Lerp(start, position.position, time);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.rotation = quaternion.identity;
+        transform.position = position.position;
+        var random = Random.Range(0, 3);
+        transform.eulerAngles = CubePuzzle.Instance.rotations[random];
     }
     
     public override void OnInteract(bool hit, RaycastHit i)
@@ -44,8 +33,8 @@ public class Cube : Item
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         canInteractWithItem = CanInteractWithItem();
-        ChangeCrossHair();
-        if (Input.GetMouseButtonDown(0))
+        ObjectDetector.Instance.uiInteractionText.SetActive(CanInteractWithItem());
+        if (Input.GetButtonDown("Interact"))
         {
             OnInteract(rayConnected, ray);
         }
