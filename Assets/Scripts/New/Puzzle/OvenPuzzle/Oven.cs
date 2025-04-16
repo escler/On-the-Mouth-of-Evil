@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,6 +60,7 @@ public class Oven : MonoBehaviour
         foreach (var knob in _knobs)
         {
             knob.enabled = false;
+            knob.GetComponent<BoxCollider>().enabled = false;
         }
         
         _ovenDoor.OpendDoor();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CubePuzzle : MonoBehaviour
@@ -10,6 +11,7 @@ public class CubePuzzle : MonoBehaviour
     public Vector3[] rotations;
     [SerializeField] private string code;
     [SerializeField] private Transform initial, final;
+    private Vector3 orientation = new Vector3(0, -180, 0);
     private void Awake()
     {
         if (Instance)
@@ -28,7 +30,9 @@ public class CubePuzzle : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].CubeInSlot == null) break;
-            if (slots[i].CubeInSlot.transform.eulerAngles != Vector3.zero) break;
+            var slot = slots[i];
+            if (slot.CubeInSlot.transform.up != Vector3.up) break;
+            if (slot.CubeInSlot.transform.forward != slot.transform.forward ) break;
             count++;
             codePlace += slots[i].CubeInSlot.Number.ToString();
         }
@@ -62,7 +66,7 @@ public class CubePuzzle : MonoBehaviour
         float time = 0;
         while (time < 1)
         {
-            init.position = Vector3.Lerp(transform.position, final.position, time);
+            initial.position = Vector3.Lerp(init.position, final.position, time);
             time+=Time.deltaTime;
             yield return null;
         }
