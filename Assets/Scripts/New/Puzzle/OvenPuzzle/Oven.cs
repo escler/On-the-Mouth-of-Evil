@@ -12,6 +12,8 @@ public class Oven : MonoBehaviour
     [SerializeField] private OvenDoor _ovenDoor;
     [SerializeField] private ParticleSystem[] _particles;
     [SerializeField] List<int> numbers = new List<int>();
+    [SerializeField] private GameObject key;
+    public GameObject bear;
     public string code;
     private bool _bearInOven;
 
@@ -55,6 +57,15 @@ public class Oven : MonoBehaviour
 
     private void CorrectAnswer()
     {
+        key.gameObject.SetActive(true);
+        bear.gameObject.SetActive(false);
+        foreach (var knob in _knobs)
+        {
+            knob.enabled = false;
+        }
+        
+        _ovenDoor.OpendDoor();
+        _ovenDoor.enabled = false;
         print("Good");
     }
     private void WrongAnswer()

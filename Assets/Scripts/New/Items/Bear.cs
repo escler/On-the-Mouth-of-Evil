@@ -65,5 +65,6 @@ public class Bear : Item
         }
 
         Oven.Instance.BearInOven = true;
+        Oven.Instance.bear = gameObject;
     }
 }

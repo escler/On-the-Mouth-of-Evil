@@ -36,6 +36,12 @@ public class OvenDoor : MonoBehaviour, IInteractable
         _animator.SetBool("Open", _open);
     }
 
+    public void OpendDoor()
+    {
+        _open = true;
+        _animator.SetBool("Open", _open);
+    }
+
     public void OnInteract(bool hit, RaycastHit i)
     {
     }
