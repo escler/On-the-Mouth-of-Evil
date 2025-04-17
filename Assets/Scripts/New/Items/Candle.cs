@@ -8,12 +8,15 @@ public class Candle : Item, IInteractable
     private Rigidbody heldObjRb;
     private GameObject heldObj;
     public bool canTake;
+    public bool badCandle;
+    [SerializeField] Material goodCandleMat, badCandleMat;
 
     private PlayerHandler _player;
 
     private void Awake()
     {
         _player = PlayerHandler.Instance;
+        GetComponentInChildren<MeshRenderer>().material = badCandle ? badCandleMat : goodCandleMat;
     }
 
     public override void OnGrabItem()

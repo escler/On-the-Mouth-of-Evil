@@ -22,8 +22,6 @@ public class RitualManager : MonoBehaviour
     public List<ParticleSystem> psCrater;
     public VisualEffect heat;
     public GameObject floorCrater;
-    public Color candleColorGoodPath, candleColorBadPath;
-    public Material candleMat;
     public bool altarCompleted;
     public bool candlesBurned;
     public GameObject crater;
@@ -44,7 +42,6 @@ public class RitualManager : MonoBehaviour
 
         Instance = this;
         cameraPos = PlayerHandler.Instance.cameraPos;
-        candleMat.color = candleColorGoodPath;
     }
 
     public void AltarCompleted()
@@ -57,14 +54,12 @@ public class RitualManager : MonoBehaviour
             crater.SetActive(false);
             ritualBadFloor.SetActive(true);
             ritualFloor.SetActive(false);
-            candleMat.color = candleColorBadPath;
         }
         else
         {
             //sonidoPuzzleSalt
             heat.Stop();
             crater.SetActive(true);
-            candleMat.color = candleColorGoodPath;
             ritualFloor.SetActive(true);
             ritualBadFloor.SetActive(false);
         }

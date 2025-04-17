@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CandlesGoodHandle : MonoBehaviour
 {
+    [SerializeField] private BoxCollider box;
     public void OpenDoor()
     {
-        print("Abri las velas buenas");
+        box.enabled = false;
+        gameObject.SetActive(false);
     }
 }
