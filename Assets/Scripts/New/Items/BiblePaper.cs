@@ -34,12 +34,6 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
     public void OnBurn()
     {
         GetComponent<BoxCollider>().enabled = false;
-        if(Enemy.Instance != null && !paperOnRitual) Enemy.Instance.SetGoalPos(transform.position);
-        if (HouseEnemy.Instance != null && paperOnRitual && RitualManager.Instance.candlesBurned)
-        {
-            HouseEnemy.Instance.RitualReady(RitualManager.Instance.ritualNode);
-            RitualManager.Instance.circles.SetActive(false);
-        }
         StartCoroutine(BibleBurning());        
         StartCoroutine(BurnPaper());
         foreach (var mesh in meshesh)

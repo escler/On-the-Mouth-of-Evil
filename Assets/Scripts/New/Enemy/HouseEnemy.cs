@@ -296,7 +296,7 @@ public class HouseEnemy : Enemy
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.playerCam.CameraLock = true;
         item.GetComponent<LevitatingItem>().grabbed = true;
-        Inventory.Instance.selectedItem.gameObject.SetActive(false);
+        if(Inventory.Instance.selectedItem != null) Inventory.Instance.selectedItem.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.movement.absorbEnd = false;

@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class RitualManager : MonoBehaviour
 {
     public GameObject ritualFloor, ritualBadFloor, psRitual;
-    public Transform[] candlesInRitual;
+    public List<CandleRitual> candlesInRitual = new List<CandleRitual>();
     private int _candlesBurning;
     public int candlesPlaced;
     public bool candleTaked;
@@ -75,6 +75,23 @@ public class RitualManager : MonoBehaviour
             else ritualFloor.SetActive(true);
         }
         candlesPlaced++;
+        if (candlesPlaced < 3) return;
+
+        foreach (var c in candlesInRitual)
+        {
+            c.candle.gameObject.SetActive(false);
+            c.gameObject.SetActive(false);
+        }
+        DecisionsHandler.Instance.badPath = firstCandlePlaced.badCandle;
+        crater.SetActive(!firstCandlePlaced.badCandle);
+        StartCoroutine(CheckCandles());
+    }
+
+    IEnumerator CheckCandles()
+    {
+        yield return new WaitForSeconds(2f);
+        HouseEnemy.Instance.RitualReady(ritualNode);
+        circles.SetActive(false);
     }
 
     public void RemoveCandle(Candle candle)
@@ -103,12 +120,6 @@ public class RitualManager : MonoBehaviour
         {
             crater.Stop();
         }
-    }
-
-    public void CandlesBurned()
-    {
-        candlesPlaced++;
-        candlesBurned = _candlesBurning >= 3;
     }
 
     public void RitualFinish()
