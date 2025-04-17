@@ -9,6 +9,7 @@ public class Candle : Item, IInteractable
     private GameObject heldObj;
     public bool canTake;
     public bool badCandle;
+    public bool placedInRitual;
     [SerializeField] Material goodCandleMat, badCandleMat;
 
     private PlayerHandler _player;
@@ -23,21 +24,21 @@ public class Candle : Item, IInteractable
     {
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
+        GetComponent<BoxCollider>().isTrigger = false;
     }
 
     public override void OnSelectItem()
     {
         base.OnSelectItem();
         if (!RitualManager.Instance) return;
-        RitualManager.Instance.TakeCandle(this);
         RitualManager.Instance.candleTaked = true;
+
     }
 
     public override void OnDeselectItem()
     {
         base.OnDeselectItem();
         if (!RitualManager.Instance) return;
-        RitualManager.Instance.UnassignCandle();
         RitualManager.Instance.candleTaked = false;
     }
 
@@ -52,9 +53,18 @@ public class Candle : Item, IInteractable
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
-        if (i.transform.TryGetComponent(out RitualFloor ritualFloor))
+        if (i.transform.TryGetComponent(out CandleRitual candleRitual))
         {
-            ritualFloor.OnInteractItem();
+            if (candleRitual.isCandlePlaced) return;
+            if (RitualManager.Instance.firstCandlePlaced == null)
+            {
+                candleRitual.GetCandle(this);
+            }else if (RitualManager.Instance.firstCandlePlaced.badCandle ==
+                      badCandle && !candleRitual.isCandlePlaced)
+            {
+                candleRitual.GetCandle(this);
+
+            }
         }
     }
 
@@ -63,7 +73,7 @@ public class Candle : Item, IInteractable
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
-        canInteractWithItem = CanInteractWithItem();
+        canShowText = CanInteractWithItem();
         ChangeCrossHair();
         
         if(Input.GetButtonDown("Interact")) OnInteract(rayConnected,ray);
@@ -75,8 +85,12 @@ public class Candle : Item, IInteractable
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
         if (!rayConnected) return false;
-        if (ray.transform.TryGetComponent(out RitualFloor item)) return true;
-
+        if (ray.transform.TryGetComponent(out CandleRitual item))
+        {
+            if (RitualManager.Instance.firstCandlePlaced == null) return true;
+            if (RitualManager.Instance.firstCandlePlaced.placedInRitual == badCandle && !item.isCandlePlaced)
+                return true;
+        }
         return false;
     }
 

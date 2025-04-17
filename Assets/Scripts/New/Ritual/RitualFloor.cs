@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RitualFloor : MonoBehaviour, IInteractable
+public class RitualFloor : MonoBehaviour
 {
     private RitualManager _ritualManager;
     public bool canShowText;
@@ -16,7 +16,6 @@ public class RitualFloor : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         if (!_ritualManager.candleTaked) return;
-        _ritualManager.CheckCandleFloor();
     }
 
     private void Update()

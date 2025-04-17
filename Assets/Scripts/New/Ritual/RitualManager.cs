@@ -7,13 +7,13 @@ using UnityEngine.VFX;
 
 public class RitualManager : MonoBehaviour
 {
-    public GameObject ritualFloor, ritualBadFloor, stampBlock, stampRelease, psRitual;
-    public Candle[] candles;
-    public GameObject[] candlesInRitual;
+    public GameObject ritualFloor, ritualBadFloor, psRitual;
+    public Transform[] candlesInRitual;
     private int _candlesBurning;
     public int candlesPlaced;
     public bool candleTaked;
     private Candle _actualCandleTaked;
+    public Candle firstCandlePlaced;
     private Transform cameraPos;
     private RaycastHit _hit;
     public LayerMask layermask;
@@ -46,6 +46,7 @@ public class RitualManager : MonoBehaviour
 
     public void AltarCompleted()
     {
+        return;
         altarCompleted = true;
         circles.SetActive(true);
         if (DecisionsHandler.Instance.badPath)
@@ -63,45 +64,32 @@ public class RitualManager : MonoBehaviour
             ritualFloor.SetActive(true);
             ritualBadFloor.SetActive(false);
         }
-        stampBlock.SetActive(false);
-        stampRelease.SetActive(true);
-        foreach (var candle in candles)
+    }
+
+    public void CandlePlaced(Candle candle)
+    {
+        if (candlesPlaced <= 0)
         {
-            candle.canTake = true;
-            candle.canShowText = true;
+            firstCandlePlaced = candle;
+            if (candle.badCandle) ritualBadFloor.SetActive(true);
+            else ritualFloor.SetActive(true);
         }
-    }
-
-    public void TakeCandle(Candle candle)
-    {
-        _actualCandleTaked = candle;
-    }
-
-    public void UnassignCandle()
-    {
-        _actualCandleTaked = null;
-    }
-
-    public void CheckCandleFloor()
-    {
-        if (_actualCandleTaked == null) return;
-        var candle = _actualCandleTaked;
-        _actualCandleTaked = null;
-        candlesInRitual[candlesPlaced].SetActive(true);
-        candleTaked = false;
         candlesPlaced++;
-        Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
-        Destroy(candle.gameObject);
+    }
+
+    public void RemoveCandle(Candle candle)
+    {
+        candlesPlaced--;
+        if (candlesPlaced > 0) return;
+        firstCandlePlaced = null;
+        if (candle.badCandle) ritualBadFloor.SetActive(false);
+        else ritualFloor.SetActive(false);
     }
 
     public void ActivateCraterFloor()
     {
         ritualFloor.SetActive(false);
         floorCrater.GetComponent<Animator>().SetBool("Fall", true);
-        foreach (var candle in candlesInRitual)
-        {
-            candle.SetActive(false);
-        }
         foreach (var crater in psCrater)
         {
             crater.Play();
@@ -119,7 +107,7 @@ public class RitualManager : MonoBehaviour
 
     public void CandlesBurned()
     {
-        _candlesBurning++;
+        candlesPlaced++;
         candlesBurned = _candlesBurning >= 3;
     }
 
@@ -129,8 +117,5 @@ public class RitualManager : MonoBehaviour
         //craterFloor.SetActive(false);
         ritualBadFloor.SetActive(false);
         ritualFloor.SetActive(false);
-        stampRelease.SetActive(false);
-
-
     }
 }

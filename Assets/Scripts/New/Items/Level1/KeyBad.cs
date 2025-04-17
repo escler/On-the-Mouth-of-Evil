@@ -25,7 +25,8 @@ public class KeyBad : Item
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
         CheckPart();
-        
+        GetComponent<BoxCollider>().isTrigger = false;
+
     }
 
     public override void OnUpdate()

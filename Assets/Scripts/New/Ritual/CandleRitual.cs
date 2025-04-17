@@ -3,28 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
+public class CandleRitual : MonoBehaviour, IInteractable
 {
-    public GameObject psFire;
-    private bool burning;
-    public Transform lighterPos;
-    public Vector3 Position { get; set; }
+    public bool isCandlePlaced;
+    public Candle candle;
 
-    private void Update()
+    public void GetCandle(Candle candlePlaced)
     {
-        Position = lighterPos.position;
+        candle = candlePlaced;
+        StartCoroutine(WaitForBool());
+        Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
+        candle.transform.position = transform.position;
+        candlePlaced.transform.rotation = transform.rotation;
+        RitualManager.Instance.CandlePlaced(candle);
+        candle.GetComponent<BoxCollider>().enabled = false;
+        candle.GetComponent<Rigidbody>().isKinematic = true;
+        candle.canShowText = true;
     }
 
-    public void OnBurn()
+    IEnumerator WaitForBool()
     {
-        if (burning) return;
-        psFire.SetActive(true);
-        burning = true;
-        RitualManager.Instance.CandlesBurned();
+        yield return new WaitForSeconds(0.5f);
+        isCandlePlaced = true;
     }
-
     public void OnInteractItem()
     {
+        if (!isCandlePlaced) return;
+        isCandlePlaced = false;
+        candle.OnGrabItem();
+        RemoveCandle();
+    }
+
+    public void RemoveCandle()
+    {
+        RitualManager.Instance.RemoveCandle(candle);
+        candle = null;
     }
 
     public void OnInteract(bool hit, RaycastHit i)
@@ -33,7 +46,6 @@ public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
 
     public void OnInteractWithObject()
     {
-        
     }
 
     public string ShowText()
@@ -43,6 +55,6 @@ public class CandleRitual : MonoBehaviour, IBurneable, IInteractable
 
     public bool CanShowText()
     {
-        return false;
+        return isCandlePlaced;
     }
 }
