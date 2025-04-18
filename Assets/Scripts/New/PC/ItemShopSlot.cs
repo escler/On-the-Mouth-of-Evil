@@ -14,6 +14,7 @@ public class ItemShopSlot : MonoBehaviour
     [SerializeField] private Button purchaseBTN, unlockBTN;
     [SerializeField] private Color canBuy, cantBuy;
     [SerializeField] private bool badItem;
+    [SerializeField] private Sprite iconCurrency;
 
     InventoryItemHandler _handler;
     public string item;

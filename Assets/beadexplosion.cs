@@ -23,11 +23,7 @@ public class beadexplosion : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            beadAnimator.SetBool("used", true);
-            foreach (VisualEffect item in particles)
-            {
-                item.Play();
-            }
+
 
         }
 
