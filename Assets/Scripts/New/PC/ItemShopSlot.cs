@@ -14,7 +14,8 @@ public class ItemShopSlot : MonoBehaviour
     [SerializeField] private Button purchaseBTN, unlockBTN;
     [SerializeField] private Color canBuy, cantBuy;
     [SerializeField] private bool badItem;
-    [SerializeField] private Sprite iconCurrency;
+    [SerializeField] private Image iconCurrency;
+    [SerializeField] private Sprite goodCurrency, badCurrency;
 
     InventoryItemHandler _handler;
     public string item;
@@ -96,6 +97,7 @@ public class ItemShopSlot : MonoBehaviour
         unlockBTN.gameObject.SetActive(true);
         unlockBTN.GetComponentInChildren<TextMeshProUGUI>().text = costToUnlock.ToString();
         unlockBTN.onClick.AddListener(UnlockItem);
+        iconCurrency.sprite = badItem ? badCurrency : goodCurrency;
     }
     
     private void UnlockItem()
