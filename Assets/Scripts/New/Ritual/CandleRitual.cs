@@ -23,7 +23,7 @@ public class CandleRitual : MonoBehaviour, IInteractable
 
     IEnumerator WaitForBool()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         isCandlePlaced = true;
     }
     public void OnInteractItem()

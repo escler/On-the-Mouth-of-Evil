@@ -90,6 +90,13 @@ public class ObjectDetector : MonoBehaviour
             if (Inventory.Instance.selectedItem == null) return false;
             if (slot.CubeInSlot == null && Inventory.Instance.selectedItem.itemName == "Cube") return true;
         }
+        
+        if (_hit.transform.TryGetComponent(out BookSpot bookSlot))
+        {
+            if (bookSlot.BookPuzzleTV != null) return true;
+            if (Inventory.Instance.selectedItem == null) return false;
+            if (bookSlot.BookPuzzleTV == null && Inventory.Instance.selectedItem.itemName == "Book") return true;
+        }
 
         if (_hit.transform.TryGetComponent(out SaltPuzzleTable table))
         {
