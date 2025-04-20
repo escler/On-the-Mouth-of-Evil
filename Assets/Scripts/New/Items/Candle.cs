@@ -11,13 +11,15 @@ public class Candle : Item, IInteractable
     public bool badCandle;
     public bool placedInRitual;
     [SerializeField] Material goodCandleMat, badCandleMat;
-
+    [SerializeField] GameObject candleGoodUI, candleBadUI;
+    
     private PlayerHandler _player;
 
     private void Awake()
     {
         _player = PlayerHandler.Instance;
         GetComponentInChildren<MeshRenderer>().material = badCandle ? badCandleMat : goodCandleMat;
+        uiElement = badCandle ? candleBadUI : candleGoodUI;
     }
 
     public override void OnGrabItem()
