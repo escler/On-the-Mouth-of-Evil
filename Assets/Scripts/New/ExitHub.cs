@@ -17,31 +17,8 @@ public class ExitHub : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         _count = 0;
-        var playerInventory = Inventory.Instance.hubInventory;
         if (PlayerHandler.Instance.actualMission == null) return;
-        var actualMissionItemsNeededs = PlayerHandler.Instance.actualMission.
-            itemsNeededs.Select(item => item.name);
 
-        for (int i = 0; i < Inventory.Instance.capacity; i++)
-        {
-            if (playerInventory[i] == null) return;
-            if (actualMissionItemsNeededs.Contains(playerInventory[i].itemName) && !checkedItems.Contains(playerInventory[i].itemName))
-            {
-                checkedItems.Add(playerInventory[i].itemName);
-                _count++;
-                continue;
-            }
-
-            break;
-        }
-        
-        print(_count);
-
-        if (_count < _itemNeeded)
-        {
-            checkedItems.Clear();
-            return;
-        }
         MusicManager.Instance.PlaySound(soundName, false);
         GameManagerNew.Instance.LoadSceneWithDelay(PlayerHandler.Instance.actualMission.misionName, 3f);
     }
