@@ -11,6 +11,7 @@ public class PuzzleBookTV : MonoBehaviour
     [SerializeField] private string codeNeeded;
     [SerializeField] private VHS vhs;
     [SerializeField] BookSpot[] bookSpots;
+    [SerializeField] private KeyBad keyBad;
     
     private void Awake()
     {
@@ -67,5 +68,6 @@ public class PuzzleBookTV : MonoBehaviour
         }
         
         vhs.MoveSpot();
+        keyBad.ChangeLight(true);
     }
 }

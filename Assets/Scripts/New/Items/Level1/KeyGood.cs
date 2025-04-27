@@ -8,11 +8,12 @@ public class KeyGood : Item
     [SerializeField] MeshRenderer[] _meshRenderer;
     [SerializeField] private int part;
     private bool _keyCompleted;
+    [SerializeField] private Light keyLight;
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
         var haveKey = inventory.Where(x => x != null && itemName == x.itemName);
-        
+        keyLight.enabled = false;
         if (haveKey.Any())
         {
             var item = haveKey.First().GetComponent<KeyGood>();
@@ -72,6 +73,7 @@ public class KeyGood : Item
     {
         gameObject.SetActive(true);
         ChangeLayer(1);
+        keyLight.enabled = true;
     }
     private void ChangeLayer(int numberLayer)
     {
@@ -96,5 +98,10 @@ public class KeyGood : Item
     {
         InventoryUI.Instance.GetComponentInChildren<KeyGoodUI>().ChangeUI(2);
         _keyCompleted = true;
+    }
+
+    public void ChangeLight(bool state)
+    {
+        keyLight.enabled = state;
     }
 }

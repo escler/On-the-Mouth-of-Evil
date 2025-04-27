@@ -83,6 +83,7 @@ public class Oven : MonoBehaviour
         _ovenDoor.OpendDoor();
         _ovenDoor.enabled = false;
         key.gameObject.SetActive(true);
+        key.GetComponent<KeyBad>().ChangeLight(true);
         bear.gameObject.SetActive(false);
     }
     private void WrongAnswer()

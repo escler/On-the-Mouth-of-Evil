@@ -12,6 +12,7 @@ public class CubePuzzle : MonoBehaviour
     [SerializeField] private string code;
     [SerializeField] private Transform initial, final;
     private Vector3 orientation = new Vector3(0, -180, 0);
+    [SerializeField] private GameObject key;
     private void Awake()
     {
         if (Instance)
@@ -54,6 +55,8 @@ public class CubePuzzle : MonoBehaviour
     private void WinPuzzle()
     {
         StartCoroutine(MoveGO());
+        key.SetActive(true);
+        key.GetComponent<KeyGood>().ChangeLight(true);
         foreach (var slot in slots)
         {
             slot.GetComponent<BoxCollider>().enabled = false;

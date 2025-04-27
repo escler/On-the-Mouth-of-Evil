@@ -11,6 +11,7 @@ public class StrongboxPuzzle : MonoBehaviour
     [SerializeField] private StrongboxHandle handle;
     private Animator _animator;
     [SerializeField] private BoxCollider body;
+    [SerializeField] private GameObject keyGood;
 
     private void Awake()
     {
@@ -44,6 +45,8 @@ public class StrongboxPuzzle : MonoBehaviour
     {
         DisableColliders();
         _animator.SetBool("Open", true);
+        keyGood.SetActive(true);
+        keyGood.GetComponent<KeyGood>().ChangeLight(true);
     }
 
     private void DisableColliders()
