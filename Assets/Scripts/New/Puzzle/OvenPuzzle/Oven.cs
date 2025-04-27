@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class Oven : MonoBehaviour
     public GameObject bear;
     public string code;
     private bool _bearInOven;
+    [SerializeField] private GameObject ovenSmoke;
+    [SerializeField] List<GameObject> ovenPsComplete = new List<GameObject>();
 
     public bool BearInOven
     {
@@ -55,17 +58,32 @@ public class Oven : MonoBehaviour
 
     private void CorrectAnswer()
     {
-        key.gameObject.SetActive(true);
-        bear.gameObject.SetActive(false);
+        StartCoroutine(CompleteOven());
+    }
+
+    IEnumerator CompleteOven()
+    {
+        ovenSmoke.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
         foreach (var knob in _knobs)
         {
             knob.enabled = false;
             knob.GetComponent<BoxCollider>().enabled = false;
         }
+        foreach (var p in _particles)
+        {
+            var ps = p.emission;
+            ps.enabled = false;
+        }
+        foreach (var go in ovenPsComplete)
+        {
+            go.SetActive(true);
+        }
         
         _ovenDoor.OpendDoor();
         _ovenDoor.enabled = false;
-        print("Good");
+        key.gameObject.SetActive(true);
+        bear.gameObject.SetActive(false);
     }
     private void WrongAnswer()
     {
