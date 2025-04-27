@@ -267,12 +267,10 @@ public class HouseEnemy : Enemy
         magnetVFX.GetComponent<VisualEffect>().Stop();
         RitualManager.Instance.RitualFinish();
 
-        if (PathManager.Instance.BadPath <= 0)
-        {
-            RitualManager.Instance.levitatingItems[1].gameObject.SetActive(true);
-            RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
 
-        }
+        RitualManager.Instance.levitatingItems[1].gameObject.SetActive(true);
+        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
+
         yield return new WaitForSeconds(3f);
         StartCoroutine(GoToVoodo());
         //gameObject.SetActive(false);
@@ -281,14 +279,6 @@ public class HouseEnemy : Enemy
     IEnumerator GoToVoodo()
     {
         GameObject item = RitualManager.Instance.levitatingItems[1].gameObject;
-        if (PathManager.Instance.BadPath > 0)
-        {
-            PlayerHandler.Instance.movement.ritualCinematic = false;
-            PlayerHandler.Instance.animator.enabled = false;
-            PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-            GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
-            yield break;
-        }
         PlayerHandler.Instance.movement.absorbEnd = true;
         PlayerHandler.Instance.animator.enabled = false;
         PlayerHandler.Instance.movement.GoToVoodoo(item.transform.position);
