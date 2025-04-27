@@ -9,6 +9,18 @@ public class Cube : Item
     [SerializeField] private int number;
     public int Number => number;
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        GetComponentInChildren<AuraItem>().onHand = true;
+    }
+
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        GetComponentInChildren<AuraItem>().onHand = false;
+    }
+
     public void MoveCube(Transform position)
     {
         transform.position = position.position;

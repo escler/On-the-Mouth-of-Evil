@@ -3,6 +3,18 @@ using UnityEngine;
 
 public class Bear : Item
 {
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        GetComponentInChildren<AuraItem>().onHand = true;
+    }
+
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        GetComponentInChildren<AuraItem>().onHand = false;
+    }
+    
     public override void OnUpdate()
     {
         base.OnUpdate();

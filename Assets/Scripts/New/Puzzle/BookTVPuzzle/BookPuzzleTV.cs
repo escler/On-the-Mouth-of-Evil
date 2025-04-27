@@ -6,6 +6,18 @@ public class BookPuzzleTV : Item
 {
     public int number;
     
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        GetComponentInChildren<AuraItem>().onHand = true;
+    }
+
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        GetComponentInChildren<AuraItem>().onHand = false;
+    }
+    
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
