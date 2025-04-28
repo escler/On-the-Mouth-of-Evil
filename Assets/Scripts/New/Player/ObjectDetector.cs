@@ -104,6 +104,13 @@ public class ObjectDetector : MonoBehaviour
             if (Inventory.Instance.selectedItem.itemName == "Salt Recipient") return true;
         }
 
+        if (_hit.transform.TryGetComponent(out SheetSlot sheetSlot))
+        {
+            if (sheetSlot.Sheet != null) return true;
+            if (Inventory.Instance.selectedItem == null) return false;
+            if (Inventory.Instance.selectedItem.itemName == "Music Sheet") return true;
+        }
+        
         if (!_hit.transform.TryGetComponent(out MovableItem movableItem) && _hit.transform.TryGetComponent(out IInteractable interactable))
         {
             if (interactable.CanShowText()) return true;
