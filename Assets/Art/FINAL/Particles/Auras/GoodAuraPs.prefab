@@ -90,7 +90,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6e-44, z: 1.8e-44, w: 1.1709e-41}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 1.4e-44, z: 3.1358e-41, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5920257378365797274
 Transform:
   m_ObjectHideFlags: 0
@@ -778,7 +778,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.21
+      scalar: -0.15
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1657,7 +1657,7 @@ ParticleSystem:
     speedRange: {x: 0.4, y: 0.89}
     tilesX: 12
     tilesY: 5
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
