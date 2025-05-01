@@ -83,6 +83,19 @@ public class ObjectDetector : MonoBehaviour
             if (socket.currentSkull == null && Inventory.Instance.selectedItem.itemName == "Skull") return true;
         }
         
+        if (_hit.transform.TryGetComponent(out CandleRitual candleRitual))
+        {
+            if (candleRitual.candle != null) return true;
+            if (Inventory.Instance.selectedItem == null) return false;
+            if (candleRitual.candle == null && Inventory.Instance.selectedItem.itemName == "Candle")
+            {
+                if(RitualManager.Instance.firstCandlePlaced == null) return true;
+                if (RitualManager.Instance.firstCandlePlaced.badCandle ==
+                    Inventory.Instance.selectedItem.GetComponent<Candle>().badCandle) return true;
+                return false;
+            }
+        }
+        
         if (_hit.transform.TryGetComponent(out CubeSlot slot))
         {
             if (slot.RotatingPhase) return false;

@@ -21,6 +21,7 @@ public class ProgressManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("GoodPath", 0);
         PlayerPrefs.SetInt("RespectAmount", 0);
+        PlayerPrefs.SetInt("RespectLevel", 1);
         PlayerPrefs.SetInt("CurrencyAmount", 0);
         PlayerPrefs.SetInt("GoodEssencesAmount", 0);
         PlayerPrefs.SetInt("BadEssencesAmount", 0);

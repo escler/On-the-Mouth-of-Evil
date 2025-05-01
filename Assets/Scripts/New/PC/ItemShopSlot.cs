@@ -49,6 +49,18 @@ public class ItemShopSlot : MonoBehaviour
         _handler.OnUpdateCount -= ShowText;
         purchaseBTN.onClick.RemoveAllListeners();
     }
+
+    private void OnDestroy()
+    {
+        _handler.OnUpdateCount -= CheckColor;
+        _handler.OnUpdateCount -= CheckInteractable;
+        _handler.OnUpdateCount -= ShowText;
+        _handler.OnUpdateCount -= CheckColor;
+        _handler.OnUpdateCount -= CheckInteractable;
+        _handler.OnUpdateCount -= ShowText;
+        purchaseBTN.onClick.RemoveAllListeners();
+    }
+
     private void CheckInteractable()
     {
         purchaseBTN.enabled = CanInteract();

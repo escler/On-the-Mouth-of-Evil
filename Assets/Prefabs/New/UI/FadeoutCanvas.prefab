@@ -1603,6 +1603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3318595812066617472}
+  - component: {fileID: 5948334239246431541}
   m_Layer: 5
   m_Name: RespectUI
   m_TagString: Untagged
@@ -1631,6 +1632,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -105}
   m_SizeDelta: {x: 687.4, y: 127.44791}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5948334239246431541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6298478874625964091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af5914eac5c03749acd80da90c1d24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actualLevel: {fileID: 814838613164773390}
+  slider: {fileID: 2142857268553957430}
 --- !u!1 &6336748125990590687
 GameObject:
   m_ObjectHideFlags: 0
