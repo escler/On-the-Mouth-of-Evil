@@ -14,6 +14,8 @@ public class FadeOutHandler : MonoBehaviour
     private Color imageColor;
     public bool fadeOut;
     public GameObject loadingScreen;
+    public GameObject currency;
+    public GameObject proceedButton;
 
     private void Awake()
     {

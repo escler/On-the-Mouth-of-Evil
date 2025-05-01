@@ -292,7 +292,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.absorbEnd = false;
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-        GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+        GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         
     }
     
@@ -334,11 +334,9 @@ public class HouseEnemy : Enemy
 
         RitualManager.Instance.CloseCrater();
 
-        if (PathManager.Instance.GoodPath <= 0)
-        {
-            RitualManager.Instance.levitatingItems[0].gameObject.SetActive(true);
-            RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[0].gameObject;
-        }
+
+        RitualManager.Instance.levitatingItems[0].gameObject.SetActive(true);
+        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[0].gameObject;
         yield return new WaitForSeconds(3f);
         StartCoroutine(GoToRosary());
     }
@@ -347,26 +345,19 @@ public class HouseEnemy : Enemy
     {
         print("Entre a la cor GoToRosary");
         GameObject item = RitualManager.Instance.levitatingItems[0].gameObject;
-        if (PathManager.Instance.GoodPath > 0)
-        {
-            PlayerHandler.Instance.movement.ritualCinematic = false;
-            PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-            GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
-            yield break;
-        }
         PlayerHandler.Instance.movement.absorbEnd = true;
         PlayerHandler.Instance.movement.GoToVoodoo(item.transform.position);
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.playerCam.CameraLock = true;
         item.GetComponent<LevitatingItem>().grabbed = true;
-        Inventory.Instance.selectedItem.gameObject.SetActive(false);
+        if(Inventory.Instance.selectedItem != null) Inventory.Instance.selectedItem.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.movement.absorbEnd = false;
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
-        GameManagerNew.Instance.LoadSceneWithDelay("Hub",5);
+        GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         
     }
     

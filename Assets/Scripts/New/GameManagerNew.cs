@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManagerNew : MonoBehaviour
 {
     public static GameManagerNew Instance { get; private set; }
-    public bool cantPause;
+    public bool cantPause, canProceed;
 
     private void Awake()
     {
@@ -34,6 +33,7 @@ public class GameManagerNew : MonoBehaviour
         print("Entre a cor");
         FadeOutHandler.Instance.FaceOut(1);
         yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
+        
         FadeOutHandler.Instance.loadingScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -45,5 +45,56 @@ public class GameManagerNew : MonoBehaviour
         FadeOutHandler.Instance.loadingScreen.SetActive(false);
         if(PlayerHandler.Instance != null) PlayerHandler.Instance.PossesPlayer();
         cantPause = false;
+    }
+
+    public void LoadCurrencyStats(string sceneName, float seconds)
+    {
+        StartCoroutine(LoadCompleteLevel(sceneName, seconds));
+    }
+
+    IEnumerator LoadCompleteLevel(string sceneName, float seconds)
+    {
+        cantPause = true;
+        if(PlayerHandler.Instance != null) PlayerHandler.Instance.UnPossesPlayer();
+        print("Entre a cor");
+        FadeOutHandler.Instance.FaceOut(1);
+        
+        yield return new WaitUntil(() => FadeOutHandler.Instance.fadeOut);
+
+        FadeOutHandler.Instance.currency.SetActive(true);
+        canProceed = false;
+        
+        yield return new WaitUntil(() => canProceed);
+        FadeOutHandler.Instance.proceedButton.SetActive(true);
+        
+        yield return new WaitUntil(() => Input.anyKeyDown);
+        FadeOutHandler.Instance.proceedButton.SetActive(false);
+        FadeOutHandler.Instance.currency.SetActive(false);
+        FadeOutHandler.Instance.loadingScreen.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        FadeOutHandler.Instance.loadingScreen.SetActive(false);
+        if(PlayerHandler.Instance != null) PlayerHandler.Instance.PossesPlayer();
+        cantPause = false;
+    }
+
+    public void CheckProceed()
+    {
+        var currencies = FadeOutHandler.Instance.currency.GetComponentsInChildren<CurrencyUIGained>();
+        int count = 0;
+
+        print("Lengh" + currencies.Length);
+        foreach (var c in currencies)
+        {
+            if (!c.IsDone) break;
+            count++;
+        }
+        
+        canProceed = count == currencies.Length;
     }
 }
