@@ -41,9 +41,9 @@ public class ItemShopSlot : MonoBehaviour
 
     private void OnDisable()
     {
-        _handler.OnUpdateCount -= CheckColor;
-        _handler.OnUpdateCount -= CheckInteractable;
-        _handler.OnUpdateCount -= ShowText;
+        CurrencyHandler.Instance.OnUpdateCurrency -= CheckColor;
+        CurrencyHandler.Instance.OnUpdateCurrency -= CheckInteractable;
+        CurrencyHandler.Instance.OnUpdateCurrency -= ShowText;
         _handler.OnUpdateCount -= CheckColor;
         _handler.OnUpdateCount -= CheckInteractable;
         _handler.OnUpdateCount -= ShowText;
@@ -52,9 +52,9 @@ public class ItemShopSlot : MonoBehaviour
 
     private void OnDestroy()
     {
-        _handler.OnUpdateCount -= CheckColor;
-        _handler.OnUpdateCount -= CheckInteractable;
-        _handler.OnUpdateCount -= ShowText;
+        CurrencyHandler.Instance.OnUpdateCurrency -= CheckColor;
+        CurrencyHandler.Instance.OnUpdateCurrency -= CheckInteractable;
+        CurrencyHandler.Instance.OnUpdateCurrency -= ShowText;
         _handler.OnUpdateCount -= CheckColor;
         _handler.OnUpdateCount -= CheckInteractable;
         _handler.OnUpdateCount -= ShowText;

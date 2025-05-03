@@ -8,9 +8,9 @@ public class HubBell : MonoBehaviour, IInteractable
     public AudioSource bell;
     public float timeForBell;
     private float _actualTime;
-    public Transform paper, finalPos;
-    private bool interactUsed;
-    private GameObject paperMission;
+    public Transform paperPos, finalPos;
+    private bool _interactUsed;
+    private GameObject _paperMission;
    
     private void Awake()
     {
@@ -21,11 +21,11 @@ public class HubBell : MonoBehaviour, IInteractable
 
     private void SetMissionPaper()
     {
-        if (paperMission == null) return;
-        paperMission.GetComponent<BoxCollider>().enabled = false;
-        paperMission.GetComponent<Rigidbody>().isKinematic = true;
-        paperMission.transform.position = paper.transform.position;
-        paperMission.transform.rotation = paper.transform.rotation;
+        if (_paperMission == null) return;
+        _paperMission.GetComponent<BoxCollider>().enabled = false;
+        _paperMission.GetComponent<Rigidbody>().isKinematic = true;
+        _paperMission.transform.position = paperPos.transform.position;
+        _paperMission.transform.rotation = paperPos.transform.rotation;
     }
 
     private void CheckPaperMission()
@@ -39,7 +39,7 @@ public class HubBell : MonoBehaviour, IInteractable
                 DisableObject();
                 return;
             }
-            paperMission = Instantiate(ProgressManager.Instance.missions[1]);
+            _paperMission = Instantiate(ProgressManager.Instance.missions[1]);
             return;
         }
         
@@ -49,7 +49,7 @@ public class HubBell : MonoBehaviour, IInteractable
             DisableObject();
             return;
         }
-        paperMission = Instantiate(ProgressManager.Instance.missions[0]);
+        _paperMission = Instantiate(ProgressManager.Instance.missions[0]);
     }
 
     private void DisableObject()
@@ -61,7 +61,7 @@ public class HubBell : MonoBehaviour, IInteractable
 
     void Update()
     {
-        if (interactUsed) return;
+        if (_interactUsed) return;
         _actualTime -= Time.deltaTime;
         if (_actualTime < 0)
         {
@@ -74,24 +74,24 @@ public class HubBell : MonoBehaviour, IInteractable
     IEnumerator MovePaper()
     {
         float ticks = 0;
-        Vector3 originalPos = paper.position;
+        Vector3 originalPos = paperPos.position;
         while (ticks < 1)
         {
             ticks += Time.deltaTime;
-            paper.position = Vector3.Lerp(originalPos, finalPos.position, ticks);
+            _paperMission.transform.position = Vector3.Lerp(originalPos, finalPos.position, ticks);
             yield return null;
         }
 
-        paper.GetComponent<BoxCollider>().enabled = true;
-        paper.GetComponent<Rigidbody>().isKinematic = false;
+        _paperMission.GetComponent<BoxCollider>().enabled = true;
+        _paperMission.GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<BoxCollider>().enabled = false;
         enabled = false;
     }
 
     public void OnInteractItem()
     {
-        if(!interactUsed) StartCoroutine(MovePaper());
-        interactUsed = true;
+        if(!_interactUsed) StartCoroutine(MovePaper());
+        _interactUsed = true;
     }
 
     public void OnInteract(bool hit, RaycastHit i)
