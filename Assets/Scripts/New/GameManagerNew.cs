@@ -55,6 +55,7 @@ public class GameManagerNew : MonoBehaviour
     IEnumerator LoadCompleteLevel(string sceneName, float seconds)
     {
         cantPause = true;
+        CheckLevelAndSave();
         if(PlayerHandler.Instance != null) PlayerHandler.Instance.UnPossesPlayer();
         print("Entre a cor");
         FadeOutHandler.Instance.FaceOut(1);
@@ -83,12 +84,17 @@ public class GameManagerNew : MonoBehaviour
         cantPause = false;
     }
 
+    private void CheckLevelAndSave()
+    {
+        var nameScene = SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetInt(nameScene == "HouseLevel" ? "Mission1Complete" : "Mission2Complete", 1);
+    }
+
     public void CheckProceed()
     {
         var currencies = FadeOutHandler.Instance.currency.GetComponentsInChildren<CurrencyUIGained>();
         int count = 0;
 
-        print("Lengh" + currencies.Length);
         foreach (var c in currencies)
         {
             if (!c.IsDone) break;
