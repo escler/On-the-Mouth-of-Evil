@@ -29,7 +29,23 @@ public class LighterHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
-        count = PlayerPrefs.HasKey("LighterCount") ? PlayerPrefs.GetInt("LighterCount") : 0;
+        if (PlayerPrefs.HasKey("TutorialCompleted"))
+        {
+            if (PlayerPrefs.GetInt("TutorialCompleted") == 0)
+            {
+                count = 0;
+                PlayerPrefs.SetInt("LighterCount", count);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                count = PlayerPrefs.HasKey("LighterCount") ? PlayerPrefs.GetInt("LighterCount") : 0;
+            }
+        }
+        else
+        {
+            count = PlayerPrefs.HasKey("LighterCount") ? PlayerPrefs.GetInt("LighterCount") : 0;
+        }
         lighters.Clear();
 
         for (int i = 0; i < count; i++)

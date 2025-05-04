@@ -28,7 +28,23 @@ public class BibleHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
-        count = PlayerPrefs.HasKey("BibleCount") ? PlayerPrefs.GetInt("BibleCount") : 0;
+        if (PlayerPrefs.HasKey("TutorialCompleted"))
+        {
+            if (PlayerPrefs.GetInt("TutorialCompleted") == 0)
+            {
+                count = 0;
+                PlayerPrefs.SetInt("BibleCount", count);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                count = PlayerPrefs.HasKey("BibleCount") ? PlayerPrefs.GetInt("BibleCount") : 0;
+            }
+        }
+        else
+        {
+            count = PlayerPrefs.HasKey("BibleCount") ? PlayerPrefs.GetInt("BibleCount") : 0;
+        }
         bibles.Clear();
 
         for (int i = 0; i < count; i++)

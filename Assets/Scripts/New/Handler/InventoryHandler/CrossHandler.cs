@@ -27,7 +27,23 @@ public class CrossHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
-        count = PlayerPrefs.HasKey("CrossCount") ? PlayerPrefs.GetInt("CrossCount") : 0;
+        if (PlayerPrefs.HasKey("TutorialCompleted"))
+        {
+            if (PlayerPrefs.GetInt("TutorialCompleted") == 0)
+            {
+                count = 0;
+                PlayerPrefs.SetInt("CrossCount", count);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                count = PlayerPrefs.HasKey("CrossCount") ? PlayerPrefs.GetInt("CrossCount") : 0;
+            }
+        }
+        else
+        {
+            count = PlayerPrefs.HasKey("CrossCount") ? PlayerPrefs.GetInt("CrossCount") : 0;
+        }
         crosses.Clear();
 
         for (int i = 0; i < count; i++)
