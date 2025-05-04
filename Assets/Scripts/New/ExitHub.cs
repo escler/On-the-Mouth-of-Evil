@@ -10,7 +10,6 @@ public class ExitHub : MonoBehaviour, IInteractable
     public string interactDescription;
     private int _count;
     private int _itemNeeded = 4;
-    private List<string> checkedItems = new List<string>();
     private AudioSource audioSource;
     public string soundName;
 
@@ -18,6 +17,8 @@ public class ExitHub : MonoBehaviour, IInteractable
     {
         _count = 0;
         if (PlayerHandler.Instance.actualMission == null) return;
+
+        if (!TutorialHub.Instance.TutorialCompleted) TutorialHub.Instance.exithub = true;
 
         MusicManager.Instance.PlaySound(soundName, false);
         GameManagerNew.Instance.LoadSceneWithDelay(PlayerHandler.Instance.actualMission.misionName, 3f);

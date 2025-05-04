@@ -68,6 +68,11 @@ public class Lighter : Item
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
         lighterView.animator.SetBool("Open", true);
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed++;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
@@ -98,6 +103,12 @@ public class Lighter : Item
         PSIdle.SetActive(false);
         gameObject.SetActive(true);
         lighterView.animator.SetBool("Open", false);
+        
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed--;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         

@@ -23,7 +23,7 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("GoodPath", 0);
         PlayerPrefs.SetInt("RespectAmount", 0);
         PlayerPrefs.SetInt("RespectLevel", 1);
-        PlayerPrefs.SetInt("CurrencyAmount", 0);
+        PlayerPrefs.SetInt("CurrencyAmount", 100);
         PlayerPrefs.SetInt("GoodEssencesAmount", 0);
         PlayerPrefs.SetInt("BadEssencesAmount", 0);
         PlayerPrefs.SetInt("SaltCount", 0);
@@ -36,6 +36,7 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("RosaryUnlocked", 0);
         PlayerPrefs.SetInt("Mission1Complete", 0);
         PlayerPrefs.SetInt("Mission2Complete", 0);
+        PlayerPrefs.SetInt("TutorialCompleted", 0);
         
         
         PlayerPrefs.Save();

@@ -11,6 +11,7 @@ public class PcInteractable : MonoBehaviour, IInteractable
     {
         if (_inPC) return;
         if (_cantInteract) return;
+        if (TutorialHub.Instance != null) TutorialHub.Instance.pcOpen = true;
         _cantInteract = true;
         StartCoroutine(CantInteractCD());
         PlayerHandler.Instance.UnPossesPlayer();

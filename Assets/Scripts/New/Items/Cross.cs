@@ -37,6 +37,12 @@ public class Cross : Item
         }
         transform.localEulerAngles = angleHand;
         
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed++;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
+        
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
@@ -47,6 +53,12 @@ public class Cross : Item
     {
         base.OnDropItem();
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToCrossEvent();
+        
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed--;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         

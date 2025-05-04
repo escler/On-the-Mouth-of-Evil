@@ -70,6 +70,10 @@ public class ItemShopSlot : MonoBehaviour
     private bool CanInteract()
     {
         if(!unlocked) return false;
+        if (!TutorialHub.Instance.TutorialCompleted)
+        {
+            if(_handler.Count >= 1) return false;
+        }
         if(_handler.Count >= _handler.countMax) return false;
         if (cost > CurrencyHandler.Instance.CurrentAmount) return false;
         return true;
@@ -78,6 +82,13 @@ public class ItemShopSlot : MonoBehaviour
     private void ShowText()
     {
         if (!unlocked) return;
+        
+        if (!TutorialHub.Instance.TutorialCompleted)
+        {
+            purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = 
+                _handler.Count > 0 ? "Out of Stock" : cost.ToString();
+            return;
+        }
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().text = 
             _handler.Count >= _handler.countMax ? "Out of Stock" : cost.ToString();
 
@@ -88,6 +99,13 @@ public class ItemShopSlot : MonoBehaviour
     private void CheckColor()
     {
         if (!unlocked) return;
+        if (!TutorialHub.Instance.TutorialCompleted)
+        {
+            purchaseBTN.GetComponent<Image>().color = _handler.Count < 1 ? canBuy : cantBuy;
+            TutorialHub.Instance.CheckStoreBuy();
+            purchaseBTN.GetComponent<Image>().color = cost <= CurrencyHandler.Instance.CurrentAmount ? canBuy : cantBuy;
+            return;
+        }
         purchaseBTN.GetComponent<Image>().color = _handler.Count < _handler.countMax ? canBuy : cantBuy;
         
         if (_handler.Count >= _handler.countMax) return;
@@ -97,6 +115,7 @@ public class ItemShopSlot : MonoBehaviour
 
     private void BuyItem()
     {
+        if (!TutorialHub.Instance.TutorialCompleted) TutorialHub.Instance.countItemBuy++;
         CurrencyHandler.Instance.SubtractCurrency(cost);
         SortInventoryBuyHandler.Instance.AddItemToHandler(_item);
     }

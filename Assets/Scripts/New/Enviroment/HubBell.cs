@@ -90,7 +90,11 @@ public class HubBell : MonoBehaviour, IInteractable
 
     public void OnInteractItem()
     {
-        if(!_interactUsed) StartCoroutine(MovePaper());
+        if (!_interactUsed)
+        {
+            StartCoroutine(MovePaper());
+            if (TutorialHub.Instance != null) TutorialHub.Instance.confessionaryReached = true;
+        }
         _interactUsed = true;
     }
 

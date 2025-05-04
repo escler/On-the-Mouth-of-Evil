@@ -54,6 +54,12 @@ public class Bible : Item
                 break;
             }
         }
+        
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed++;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
 
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
@@ -73,6 +79,12 @@ public class Bible : Item
             mesh.gameObject.layer = 1;
         } 
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToBibleEvent();
+        
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed--;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         

@@ -26,11 +26,13 @@ public class PaperMission1 : Mission
         _sensY = PlayerHandler.Instance.playerCam.sensY;
         _playerCam = PlayerHandler.Instance.playerCam;
     }
+    
 
     public override void OnGrabMission()
     {
         base.OnGrabMission();
         PlayerHandler.Instance.actualMission = this;
+        if (TutorialHub.Instance != null) TutorialHub.Instance.missionGrabbed = true;
     }
 
     public void OnInteract()
@@ -67,6 +69,7 @@ public class PaperMission1 : Mission
 
     IEnumerator FocusObjectCor()
     {
+        if (TutorialHub.Instance != null) TutorialHub.Instance.missionInspect = true;
         cantBobbing = true;
         canInteract = true;
         transform.SetParent(null);

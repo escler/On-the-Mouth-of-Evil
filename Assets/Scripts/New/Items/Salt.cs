@@ -49,6 +49,12 @@ public class Salt : Item
             }
         }
         
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed++;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
+        
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
@@ -148,6 +154,12 @@ public class Salt : Item
         SaltPuzzleTable.Instance.playerInTable = false;
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToSaltEvent();
 
+        if (TutorialHub.Instance != null)
+        {
+            TutorialHub.Instance.countItemGrabbed--;
+            TutorialHub.Instance.CheckGrabbedItems();
+        }
+        
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
