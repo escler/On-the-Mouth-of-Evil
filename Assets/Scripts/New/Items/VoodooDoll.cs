@@ -127,8 +127,11 @@ public class VoodooDoll : Item
     IEnumerator SaltPlace()
     {
         voodooVFXHandler.OpenPrison();
-        HouseEnemy.Instance.voodooPosition = transform.position;
-        HouseEnemy.Instance.voodooActivate = true;
+        if (HouseEnemy.Instance != null)
+        {
+            HouseEnemy.Instance.voodooPosition = transform.position;
+            HouseEnemy.Instance.voodooActivate = true;
+        }
         _actualTime = timeActive;
         var rb = GetComponent<Rigidbody>();
         var collider = GetComponent<BoxCollider>();
@@ -139,7 +142,7 @@ public class VoodooDoll : Item
             _actualTime -= 0.1f;
             yield return new WaitForSeconds(0.1f);
         }
-        HouseEnemy.Instance.voodooActivate = false;
+        if (HouseEnemy.Instance != null) HouseEnemy.Instance.voodooActivate = false;
         yield return new WaitForSeconds(2f);
         voodooVFXHandler.ClosePrison();
         collider.enabled = true;

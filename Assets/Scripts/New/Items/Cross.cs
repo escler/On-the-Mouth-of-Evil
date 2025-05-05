@@ -122,7 +122,8 @@ public class Cross : Item
         }
         _crossCd.cantUse = true;
         _crossCd.SetCooldown(0);
-        
+
+        if (HouseEnemy.Instance == null) return;
         HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
         HouseEnemy.Instance.CheckRoom();
     }

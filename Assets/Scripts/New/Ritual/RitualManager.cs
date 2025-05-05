@@ -29,6 +29,7 @@ public class RitualManager : MonoBehaviour
     public GameObject actualItemActive;
     public GameObject circles;
     public GameObject godRayVFX;
+    [SerializeField] private HouseEnemy enemy;
    
     public static RitualManager Instance { get; private set; }
 
@@ -90,6 +91,7 @@ public class RitualManager : MonoBehaviour
     IEnumerator CheckCandles()
     {
         yield return new WaitForSeconds(2f);
+        if (HouseEnemy.Instance == null) enemy.GetComponent<HouseEnemy>().enabled = true;
         HouseEnemy.Instance.RitualReady(ritualNode);
         circles.SetActive(false);
     }

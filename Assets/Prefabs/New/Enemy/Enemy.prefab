@@ -9940,6 +9940,7 @@ GameObject:
   - component: {fileID: 883735602850974852}
   - component: {fileID: 644912042593859076}
   - component: {fileID: 8658860974737885454}
+  - component: {fileID: 2618749298753592569}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -10001,7 +10002,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7959037354911713852}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b82ac3040e124a4da5e4818a553acdb, type: 3}
   m_Name: 
@@ -10034,6 +10035,7 @@ MonoBehaviour:
   nodeRitual: {fileID: 0}
   enemyMaterial: {fileID: 2100000, guid: 762508584f8a9fc45a3701735c8336db, type: 2}
   enemyVisibility: 0
+  enemyInflate: 0
   onRitual: 0
   grabHead: 0
   headPos: {fileID: 3075575447948344557}
@@ -10711,6 +10713,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2618749298753592569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833bbf70c82f7804288534ad92eb0f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToActivate: 120
+  script: {fileID: 3234476839139166343}
 --- !u!1 &7967842052077510085
 GameObject:
   m_ObjectHideFlags: 0
