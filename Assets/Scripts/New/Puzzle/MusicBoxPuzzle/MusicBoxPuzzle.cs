@@ -9,6 +9,8 @@ public class MusicBoxPuzzle : MonoBehaviour
     [SerializeField] private int code;
     [SerializeField] private SheetSlot[] slots;
     private Animator _animator;
+    [SerializeField] private GameObject ps;
+    [SerializeField] private AnimationClip animation;
     
     private void Awake()
     {
@@ -41,5 +43,9 @@ public class MusicBoxPuzzle : MonoBehaviour
         {
             s.Sheet.MoveInMusicBox();
         }
+
+        ps.SetActive(true);
+        var psC = ps.GetComponent<ParticleSystem>().main;
+        psC.duration = animation.length;
     }
 }
