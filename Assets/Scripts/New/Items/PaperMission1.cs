@@ -128,14 +128,15 @@ public class PaperMission1 : Mission
             DisableContent();
             return;
         }
-        var content = CanvasManager.Instance.descriptionMissionContent;
+        var content = misionName == "HouseLevel" ? CanvasManager.Instance.descriptionMissionContent : CanvasManager.Instance.descrptionMissionConten2;
         content.SetActive(true);
         contentActive = true;
     }
 
     private void DisableContent()
     {
-        CanvasManager.Instance.descriptionMissionContent.SetActive(false);
+        var content = misionName == "HouseLevel" ? CanvasManager.Instance.descriptionMissionContent : CanvasManager.Instance.descrptionMissionConten2;
+        content.SetActive(false);
         contentActive = false;
     }
 
