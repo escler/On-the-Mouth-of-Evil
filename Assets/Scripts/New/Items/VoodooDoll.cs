@@ -78,6 +78,8 @@ public class VoodooDoll : Item
     public override bool CanInteractWithItem()
     {
         if (!ray) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
+
         
         if (_hit.transform.gameObject.layer == 19 || _hit.transform.TryGetComponent(out RitualFloor ritualFloor)) return true;
 

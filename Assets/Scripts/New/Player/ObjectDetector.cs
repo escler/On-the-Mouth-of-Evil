@@ -66,6 +66,54 @@ public class ObjectDetector : MonoBehaviour
         }
     }
 
+    public bool InteractText()
+    {
+        var ray = CheckRayCast();
+        
+        if (!ray)
+        {
+            return false;
+        }
+        
+        if (_hit.transform.TryGetComponent(out SkullPuzzleSlot socket))
+        {
+            return true;
+        }
+        
+        if (_hit.transform.TryGetComponent(out CubeSlot slot))
+        {
+            if (slot.RotatingPhase) return false;
+            if (slot.CubeInSlot != null) return true;
+        }
+
+        if (_hit.transform.TryGetComponent(out Knob k))
+        {
+            return true;
+        }
+
+        if (_hit.transform.TryGetComponent(out RemoteControl r))
+        {
+            return true;
+        }
+
+        if (_hit.transform.TryGetComponent(out StrongboxWheel s))
+        {
+            return true;
+        }
+
+        if (_hit.transform.TryGetComponent(out StrongboxHandle sh))
+        {
+            return true;
+        }
+        
+        if (_hit.transform.TryGetComponent(out MusicBoxHandle mh))
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
     bool GrabText()
     {
         var ray = CheckRayCast();
@@ -143,14 +191,15 @@ public class ObjectDetector : MonoBehaviour
     private void CrossHairCheck()
     {
         var ray = CheckRayCast();
+        var interact = InteractText();
 
-        if (!ray)
+        if (!ray && !interact)
         {
             _crosshairUI.DecreaseUI();
             return;
         }
         
-        if(_hit.transform.TryGetComponent(out IInteractObject interactObject)) _crosshairUI.IncreaseUI();
+        if(_hit.transform.TryGetComponent(out IInteractObject interactObject) || interact) _crosshairUI.IncreaseUI();
         else _crosshairUI.DecreaseUI();
     }
 

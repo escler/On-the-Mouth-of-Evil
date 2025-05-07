@@ -57,7 +57,9 @@ public class Cube : Item
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
+        
         if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
         if (ray.transform.TryGetComponent(out CubeSlot item))
         {
             if (item.CubeInSlot == null) return true;

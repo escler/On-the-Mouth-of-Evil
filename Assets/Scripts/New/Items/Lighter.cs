@@ -56,6 +56,8 @@ public class Lighter : Item
     {
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        
+        if (rayConnected && ObjectDetector.Instance.InteractText()) return true;
 
         if (!rayConnected) return false;
         if (ray.transform.TryGetComponent(out IBurneable item)) return true;

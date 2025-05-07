@@ -44,7 +44,9 @@ public class Cross : Item
         }
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
-        
+
+        if (SortInventoryBuyHandler.Instance == null) return;
+            
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
 
     }
@@ -62,6 +64,8 @@ public class Cross : Item
         
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
+        if (SortInventoryBuyHandler.Instance == null) return;
+
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
 
     }
@@ -105,7 +109,7 @@ public class Cross : Item
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
-        ChangeCrossHair();
+        canInteractWithItem = ObjectDetector.Instance.InteractText();
 
         if (Input.GetMouseButton(0)) OnInteract(rayConnected, ray);
         if(Input.GetMouseButtonUp(0)) OnUpCross();

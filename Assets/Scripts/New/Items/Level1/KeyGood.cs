@@ -63,6 +63,7 @@ public class KeyGood : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
         if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
         if (!_keyCompleted) return false;
         if (ray.transform.TryGetComponent(out CandlesGoodHandle item)) return true;
 

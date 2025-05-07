@@ -50,6 +50,7 @@ public class MusicSheet : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
         if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
         if (ray.transform.TryGetComponent(out SheetSlot item))
         {
             if (item.Sheet == null) return true;

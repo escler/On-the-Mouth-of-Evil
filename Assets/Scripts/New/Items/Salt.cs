@@ -168,9 +168,11 @@ public class Salt : Item
 
     public override bool CanInteractWithItem()
     {
-        if (_uses <= 0) return false;
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        if (rayConnected && ObjectDetector.Instance.InteractText()) return true;
+
+        if (_uses <= 0) return false;
 
         if (!rayConnected) return false;
         if (ray.transform.TryGetComponent(out Door door))

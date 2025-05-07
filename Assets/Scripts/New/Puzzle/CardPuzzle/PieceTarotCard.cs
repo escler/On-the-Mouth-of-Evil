@@ -46,6 +46,7 @@ public class PieceTarotCard : Item, IInteractable
     public override void OnUpdate()
     {
         base.OnUpdate();
+        canInteractWithItem = ObjectDetector.Instance.InteractText();
         if(Input.GetButtonDown("Focus")) FocusObject();
     }
 

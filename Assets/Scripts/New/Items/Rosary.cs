@@ -30,6 +30,7 @@ public class Rosary : Item
        if(!_broke) return;
        
        _timeTobroke += Time.deltaTime;
+       canInteractWithItem = ObjectDetector.Instance.InteractText();
        if (_timeTobroke >= 1.5f)
        {
            Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);

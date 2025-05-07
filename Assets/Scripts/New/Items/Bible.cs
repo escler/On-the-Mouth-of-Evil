@@ -124,6 +124,7 @@ public class Bible : Item
     
     public override bool CanInteractWithItem()
     {
+        if (ray && ObjectDetector.Instance.InteractText()) return true;
         if (!ray || _bibleCD.Cooldown < 10) return false;
         
         if (_hit.transform.gameObject.layer == 19 || _hit.transform.TryGetComponent(out RitualFloor ritualFloor)) return true;

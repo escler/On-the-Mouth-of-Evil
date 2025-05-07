@@ -17,6 +17,7 @@ public class Television : MonoBehaviour
     private void Awake()
     {
         mesh = GetComponent<Renderer>();
+        TvOn();
     }
 
     public void ChangeMaterial()
