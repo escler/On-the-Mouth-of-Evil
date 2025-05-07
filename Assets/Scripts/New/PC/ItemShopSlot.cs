@@ -64,7 +64,6 @@ public class ItemShopSlot : MonoBehaviour
     private void CheckInteractable()
     {
         purchaseBTN.enabled = CanInteract();
-        print("Interact " + gameObject.name + " " + purchaseBTN.interactable);
     }
 
     private bool CanInteract()
@@ -93,7 +92,7 @@ public class ItemShopSlot : MonoBehaviour
             _handler.Count >= _handler.countMax ? "Out of Stock" : cost.ToString();
 
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().fontSize =
-            _handler.Count >= _handler.countMax ? 3.5f : 4;
+            _handler.Count >= _handler.countMax ? 3f : 4;
     }
 
     private void CheckColor()

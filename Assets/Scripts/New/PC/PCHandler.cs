@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PCHandler : MonoBehaviour
 {
     public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2, testBTN3;
-    public GameObject goodShopGO, badShopGO; 
+    public GameObject goodShopGO, badShopGO, badShopIcon; 
 
     private void Awake()
     {
@@ -18,6 +18,14 @@ public class PCHandler : MonoBehaviour
         testBTN.onClick.AddListener(AddCurrency);
         testBTN2.onClick.AddListener(AddGoodCurrency);
         testBTN3.onClick.AddListener(AddBadCurrency);
+        CheckBadShopEnable();
+    }
+
+    private void CheckBadShopEnable()
+    {
+        var badCount = PlayerPrefs.HasKey("BadPath") ? PlayerPrefs.GetInt("BadPath") : 0;
+        print(badCount + "Bad Count");
+        badShopIcon.gameObject.SetActive(badCount > 0);
     }
 
     private void OnDestroy()

@@ -83,6 +83,7 @@ public class HouseEnemy : Enemy
     //public AudioSource ritualAudio;
     AudioSource _audioSource;
     public String[] ritualTexts;
+    public int level;
     private void Awake()
     {
         if (Instance)
@@ -291,7 +292,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.movement.absorbEnd = false;
         
-        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
+        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         
     }
@@ -356,7 +357,7 @@ public class HouseEnemy : Enemy
         PlayerHandler.Instance.movement.ritualCinematic = false;
         PlayerHandler.Instance.movement.absorbEnd = false;
         
-        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath");
+        PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         
     }

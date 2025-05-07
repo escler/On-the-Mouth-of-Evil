@@ -52,37 +52,37 @@ public class TutorialHub : MonoBehaviour
 
     IEnumerator Tutorial()
     {
-        tutorialUI.ChangeText("Go To The Confessional and Interact with Window");
+        tutorialUI.ChangeText("Go To The Confessional and Interact with the Window (E)");
         yield return new WaitUntil(() => confessionaryReached);
         tutorialUI.CompleteTask();
         yield return new WaitForSeconds(.25f);
         
-        tutorialUI.ChangeText("Interact and grab Mission");
+        tutorialUI.ChangeText("Grab The Mission (E)");
         yield return new WaitUntil(() => missionGrabbed);
         pcHandler.GetComponent<BoxCollider>().enabled = true;
         tutorialUI.CompleteTask();
         yield return new WaitForSeconds(.25f);
         
-        tutorialUI.ChangeText("Press TAB to change inventory and F to Inspect Mission");
+        tutorialUI.ChangeText("Change the inventory (TAB) and Inspect the Mission (F)");
         yield return new WaitUntil(() => missionInspect);
         pcHandler.GetComponent<BoxCollider>().enabled = true;
         tutorialUI.CompleteTask();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.25f);
 
-        tutorialUI.ChangeText("Sit At The PC");
+        tutorialUI.ChangeText("Sit At The PC (E)");
         yield return new WaitUntil(() => pcOpen);
         tutorialUI.CompleteTask();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.25f);
         
         tutorialUI.ChangeText("Open the Good Shop and buy one item of each type");
         yield return new WaitUntil(() => itemsBuyed);
         tutorialUI.CompleteTask();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.25f);
         
         tutorialUI.ChangeText("Pick items at the store");
         yield return new WaitUntil(() => itemsGrabbed);
         tutorialUI.CompleteTask();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.25f);
         
         exitHub.GetComponent<BoxCollider>().enabled = true;
         tutorialUI.ChangeText("Go to the door to start mission");

@@ -74,17 +74,15 @@ public class PathManager : MonoBehaviour
         }
     }
 
-    public void ChangePrefs(string pref)
+    public void ChangePrefs(string pref, int amount)
     {
         switch (pref)
         {
             case "GoodPath":
-                _goodPath++;
-                PlayerPrefs.SetInt(pref,_goodPath);
+                PlayerPrefs.SetInt(pref,amount);
                 break;
             case "BadPath":
-                _badPath++;
-                PlayerPrefs.SetInt(pref, _badPath);
+                PlayerPrefs.SetInt(pref, amount);
                 break;
         }
         
