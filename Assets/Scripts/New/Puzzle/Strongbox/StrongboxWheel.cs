@@ -10,6 +10,7 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
     public Vector3[] rotations;
     public float speedRotation;
     private Transform model;
+    private AudioSource _audiosource;
 
     public int number;
 
@@ -17,10 +18,12 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
     private void Awake()
     {
         model = transform.GetChild(0);
+        _audiosource = GetComponent<AudioSource>();
     }
 
     IEnumerator RotateWheel()
     {
+        _audiosource.Play();
         _cantRotate = true;
         actualRotation++;
         if (actualRotation >= rotations.Length) actualRotation = 0;

@@ -32,11 +32,13 @@ public class Television : MonoBehaviour
     IEnumerator ChangeChannel(Material mat)
     {
         var distorsionMats = new Material[2];
+        _tv.Play();
         distorsionMats[0] = tvMat;
         distorsionMats[1] = changeChannelMat;
         mesh.materials = distorsionMats;
         mesh.materials[1] = changeChannelMat;
         yield return new WaitForSeconds(1f);
+        _tv.Stop();
         var newMat = new Material[2];
         newMat[0] = tvMat;
         newMat[1] = mat;

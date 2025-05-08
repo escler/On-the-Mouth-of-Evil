@@ -12,6 +12,7 @@ public class PuzzleBookTV : MonoBehaviour
     [SerializeField] private VHS vhs;
     [SerializeField] BookSpot[] bookSpots;
     [SerializeField] private KeyBad keyBad;
+    [SerializeField] private AudioSource audioSource;
     
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class PuzzleBookTV : MonoBehaviour
 
     private void CorrectCode()
     {
+        audioSource.Play();
         for (int i = 0; i < _books.Length; i++)
         {
             _books[i].enabled = false;

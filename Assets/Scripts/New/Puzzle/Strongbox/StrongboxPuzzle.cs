@@ -12,6 +12,8 @@ public class StrongboxPuzzle : MonoBehaviour
     private Animator _animator;
     [SerializeField] private BoxCollider body;
     [SerializeField] private GameObject keyGood;
+    [SerializeField] private AudioSource audiosource;
+    [SerializeField] private AudioClip lockedSound, openSound;
 
     private void Awake()
     {
@@ -58,5 +60,15 @@ public class StrongboxPuzzle : MonoBehaviour
         }
 
         handle.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void PlayLockedSound()
+    {
+        audiosource.PlayOneShot(lockedSound);
+    }
+
+    public void PlayOpenSound()
+    {
+        audiosource.PlayOneShot(openSound);
     }
 }

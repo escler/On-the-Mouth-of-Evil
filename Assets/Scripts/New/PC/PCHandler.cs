@@ -7,10 +7,19 @@ using UnityEngine.UI;
 public class PCHandler : MonoBehaviour
 {
     public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2, testBTN3;
-    public GameObject goodShopGO, badShopGO, badShopIcon; 
+    public GameObject goodShopGO, badShopGO, badShopIcon;
+    public AudioSource clickSound;
+    public static PCHandler Instance { get; private set; }
 
     private void Awake()
     {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        
         goodShopApp.onClick.AddListener(OpenGoodShop);
         badShopApp.onClick.AddListener(OpenBadShop);
         closeGoodShop.onClick.AddListener(CloseGoodShop);
@@ -19,6 +28,11 @@ public class PCHandler : MonoBehaviour
         testBTN2.onClick.AddListener(AddGoodCurrency);
         testBTN3.onClick.AddListener(AddBadCurrency);
         CheckBadShopEnable();
+    }
+
+    public void ClickSound()
+    {
+        clickSound.Play();
     }
 
     private void CheckBadShopEnable()
@@ -41,36 +55,43 @@ public class PCHandler : MonoBehaviour
 
     private void OpenGoodShop()
     {
+        ClickSound();
         goodShopGO.SetActive(!goodShopGO.activeInHierarchy);
     }
 
     private void OpenBadShop()
     {
+        ClickSound();
         badShopGO.SetActive(!badShopGO.activeInHierarchy);
     }
 
     private void CloseGoodShop()
     {
+        ClickSound();
         goodShopGO.SetActive(false);
     }
 
     private void CloseBadShop()
     {
+        ClickSound();
         badShopGO.SetActive(false);
     }
 
     private void AddCurrency()
     {
+        ClickSound();
         CurrencyHandler.Instance.AddCurrency(20);
     }
     
     private void AddGoodCurrency()
     {
+        ClickSound();
         GoodEssencesHandler.Instance.AddCurrency(50);
     }
     
     private void AddBadCurrency()
     {
+        ClickSound();
         BadEssencesHandler.Instance.AddCurrency(50);
     }
 }

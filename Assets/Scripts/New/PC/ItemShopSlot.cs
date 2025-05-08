@@ -117,6 +117,7 @@ public class ItemShopSlot : MonoBehaviour
         if (!TutorialHub.Instance.TutorialCompleted) TutorialHub.Instance.countItemBuy++;
         CurrencyHandler.Instance.SubtractCurrency(cost);
         SortInventoryBuyHandler.Instance.AddItemToHandler(_item);
+        PCHandler.Instance.ClickSound();
     }
 
     private void LockSettings()
@@ -147,6 +148,7 @@ public class ItemShopSlot : MonoBehaviour
         unlocked = true;
         purchaseBTN.gameObject.SetActive(true);
         unlockBTN.gameObject.SetActive(false);
+        PCHandler.Instance.ClickSound();
         ShowText();
         CheckColor();
         CheckInteractable();
