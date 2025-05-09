@@ -17,6 +17,7 @@ public class Oven : MonoBehaviour
     private bool _bearInOven;
     [SerializeField] private GameObject ovenSmoke;
     [SerializeField] List<GameObject> ovenPsComplete = new List<GameObject>();
+    [SerializeField] private AudioSource fireLoopAudio, bearAudio, explosionFireAudio;
 
     public bool BearInOven
     {
@@ -64,7 +65,10 @@ public class Oven : MonoBehaviour
     IEnumerator CompleteOven()
     {
         ovenSmoke.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        fireLoopAudio.Play();
+        StartCoroutine(BearScreaming());
+        yield return new WaitForSeconds(4f);
+        explosionFireAudio.Play();
         foreach (var knob in _knobs)
         {
             knob.enabled = false;
@@ -84,6 +88,13 @@ public class Oven : MonoBehaviour
         _ovenDoor.enabled = false;
         key.gameObject.SetActive(true);
         bear.gameObject.SetActive(false);
+    }
+
+    IEnumerator BearScreaming()
+    {
+        yield return new WaitForSeconds(1f);
+        bearAudio.Play();
+        
     }
     private void WrongAnswer()
     {

@@ -57,6 +57,7 @@ public class CubePuzzle : MonoBehaviour
         StartCoroutine(MoveGO());
         key.SetActive(true);
         key.GetComponent<KeyGood>().ChangeLight(true);
+        initial.GetComponent<AudioSource>().Play();
         foreach (var slot in slots)
         {
             slot.GetComponent<BoxCollider>().enabled = false;
