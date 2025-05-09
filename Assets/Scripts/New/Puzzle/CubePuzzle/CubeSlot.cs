@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,18 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     public Cube CubeInSlot => cubeInSlot;
     private bool _cubePlaced, _movingCube, _canRot, _rotatingPhase;
     public bool RotatingPhase => _rotatingPhase;
+    [SerializeField] private AudioSource rotateAudioSource, audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void PlaceCube(Cube cube)
     {
         if (cubeInSlot != null) return;
         _cubePlaced = true;
+        audioSource.Play();
         cube.GetComponent<BoxCollider>().enabled = false;
         cube.GetComponent<Rigidbody>().isKinematic = true;
         cube.MoveCube(transform);
@@ -76,6 +84,7 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     IEnumerator MoveCubeCor(Vector3 final)
     {
         float time = 0;
+        rotateAudioSource.Play();
         while (time < 90)
         {
             cubeInSlot.transform.Rotate(final * 3, Space.World);

@@ -13,6 +13,7 @@ public class CubePuzzle : MonoBehaviour
     [SerializeField] private Transform initial, final;
     private Vector3 orientation = new Vector3(0, -180, 0);
     [SerializeField] private GameObject key;
+    private bool _corInitialized;
     private void Awake()
     {
         if (Instance)
@@ -54,10 +55,9 @@ public class CubePuzzle : MonoBehaviour
 
     private void WinPuzzle()
     {
-        StartCoroutine(MoveGO());
+        if(!_corInitialized)StartCoroutine(MoveGO());
         key.SetActive(true);
         key.GetComponent<KeyGood>().ChangeLight(true);
-        initial.GetComponent<AudioSource>().Play();
         foreach (var slot in slots)
         {
             slot.GetComponent<BoxCollider>().enabled = false;
@@ -66,6 +66,8 @@ public class CubePuzzle : MonoBehaviour
 
     IEnumerator MoveGO()
     {
+        _corInitialized = true;
+        initial.GetComponent<AudioSource>().Play();
         var init = initial;
         float time = 0;
         while (time < 1)
