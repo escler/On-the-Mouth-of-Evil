@@ -177,7 +177,10 @@ public class ObjectDetector : MonoBehaviour
             if (interactable.CanShowText()) return true;
         }
 
-        if (rayDoor && _hitDoors.transform.TryGetComponent(out Door door)) return true;
+        if (rayDoor && _hitDoors.transform.TryGetComponent(out Door door))
+        {
+            if (door.enabled) return true;
+        }
 
         return false;
     }
@@ -235,7 +238,7 @@ public class ObjectDetector : MonoBehaviour
 
         if (!_hitDoors.transform.TryGetComponent(out Door doorC)) return;
         
-        if(Input.GetButtonDown("Interact")) doorC.InteractDoor();
+        if(Input.GetButtonDown("Interact") && doorC.enabled) doorC.InteractDoor();
     }
 
     private void CheckInteractText()

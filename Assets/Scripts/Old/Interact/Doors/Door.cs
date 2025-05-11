@@ -20,6 +20,11 @@ public class Door : MonoBehaviour, IInteractable
         SetDoor(open);
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void OnInteractItem()
     {
 
