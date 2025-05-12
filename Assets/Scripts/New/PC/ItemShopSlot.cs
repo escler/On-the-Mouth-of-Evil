@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class ItemShopSlot : MonoBehaviour
+public class ItemShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Item _item;
     [SerializeField] private int cost, costToUnlock;
@@ -16,7 +17,8 @@ public class ItemShopSlot : MonoBehaviour
     [SerializeField] private bool badItem;
     [SerializeField] private Image iconCurrency;
     [SerializeField] private Sprite goodCurrency, badCurrency;
-
+    [SerializeField] private GameObject tutorial;
+    
     InventoryItemHandler _handler;
     public string item;
 
@@ -161,5 +163,16 @@ public class ItemShopSlot : MonoBehaviour
         var result = PlayerPrefs.GetInt(pref);
         unlocked = result == 1;
     }
-    
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (tutorial == null) return;
+        tutorial.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (tutorial == null) return;
+        tutorial.SetActive(false);
+    }
 }
