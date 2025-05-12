@@ -92,7 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 425901729218226337}
-  m_Layer: 0
+  - component: {fileID: 3180883467695243321}
+  m_Layer: 8
   m_Name: puertacompletga
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +117,27 @@ Transform:
   - {fileID: 2880723367263009783}
   m_Father: {fileID: 938046325233615038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3180883467695243321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546538049176061266}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7414514, y: 0.78572106, z: 0.19422163}
+  m_Center: {x: 0.40983316, y: -0.24283291, z: -0.041856777}
 --- !u!1 &3562318195060815281
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +232,8 @@ GameObject:
   - component: {fileID: 8041199178650095620}
   - component: {fileID: 6356777658408574881}
   - component: {fileID: 9210768129704455019}
-  m_Layer: 0
+  - component: {fileID: 2607082816246656196}
+  m_Layer: 8
   m_Name: bandeja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,6 +305,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2607082816246656196
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7265366815774755518}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.023771318, y: 0.014458226, z: 0.024594912}
+  m_Center: {x: -0.000010520223, y: -0.0052708862, z: 0.000011142812}
 --- !u!1 &8022474554830189645
 GameObject:
   m_ObjectHideFlags: 0
