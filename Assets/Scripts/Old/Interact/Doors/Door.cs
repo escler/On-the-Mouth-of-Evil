@@ -67,7 +67,7 @@ public class Door : MonoBehaviour, IInteractable
     {
         saltPS.SetActive(true); //Aca prendo la sal
         _saltBlock.PlayOneShot(_saltBlock.clip);
-        doorNode.gameObject.SetActive(false);
+        if(doorNode != null) doorNode.gameObject.SetActive(false);
         triggerObstacle.SetActive(true);
         DisableNodes();
         yield return new WaitForSeconds(blockDuration);
