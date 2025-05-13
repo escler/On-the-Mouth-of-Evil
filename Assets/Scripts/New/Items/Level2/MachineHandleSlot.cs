@@ -18,7 +18,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 
     IEnumerator WaitCor(HandleMachine handleMachine)
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(.2f);
         _handleMachine = handleMachine;
     }
 
