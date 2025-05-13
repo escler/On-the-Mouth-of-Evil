@@ -87,12 +87,12 @@ public class MusicSheet : Item
 
     IEnumerator MoveCor()
     {
-        Vector3 initial = transform.position;
-        Vector3 final = transform.position - Vector3.forward * 0.2f;
+        Vector3 initial = transform.localPosition;
+        Vector3 final = transform.localPosition + transform.right * 0.2f;
         float timer = 0;
         while (timer < 1)
         {
-            transform.position = Vector3.Lerp(initial, final, timer);
+            transform.localPosition = Vector3.Lerp(initial, final, timer);
             timer += Time.deltaTime * 0.5f;
             yield return null;
         }
