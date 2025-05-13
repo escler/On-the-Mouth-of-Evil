@@ -7,6 +7,7 @@ public class CurrencyHandler : MonoBehaviour
 {
     private int _currentAmount;
     public int CurrentAmount => _currentAmount;
+    [SerializeField] private int initialAmount = 100;
     public static CurrencyHandler Instance { get; private set; }
 
     public delegate void UpdateCurrency();
@@ -46,7 +47,7 @@ public class CurrencyHandler : MonoBehaviour
             return;
         }
         
-        PlayerPrefs.SetInt("CurrencyAmount", _currentAmount);
+        PlayerPrefs.SetInt("CurrencyAmount", initialAmount);
         PlayerPrefs.Save();
     }
 
