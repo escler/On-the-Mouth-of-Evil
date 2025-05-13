@@ -18,17 +18,26 @@ public class Mission : Item
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
-        var missions = inventory.Select(x => x != null && x.itemName == "Mission Level");
-        print(missions.Count());
+        var missions = inventory.Where(x => x != null && x.itemName == "Mission Level" );
+        print(missions.Count() + " Missions");
+        foreach (var mission in missions)
+        {
+            print(mission.itemName + " " + mission.name);
+        }
         if (missions.Any())
         {
             var first = missions.First();
-            for (int i = 0; i < inventory.Length; i++)
+            var invhub = Inventory.Instance.enviromentInventory;
+            for (int i = 0; i < invhub.Length; i++)
             {
-                if(inventory[i] != first) continue;
-                Inventory.Instance.DropItem(inventory[i], i);
+                if(invhub[i] == null) continue;
+                if(invhub[i] == this) continue;
+                print(i + " Position");
+
+                
+                Inventory.Instance.ChangeSelectedItem(i);
+                Inventory.Instance.DropItem(invhub[i], i);
                 Inventory.Instance.AddItem(this, category);
-                break;
             }
         }
         else
@@ -46,6 +55,21 @@ public class Mission : Item
             GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
         }
     }
+
+    IEnumerator AddItemC()
+    {
+        yield return new WaitForSeconds(2f);
+        if (GetComponentInChildren<SkinnedMeshRenderer>() == null)
+        {
+            GetComponentInChildren<MeshRenderer>().gameObject.layer = 18;
+        }
+        else
+        {
+            GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 18;
+        }
+
+    }
+
 
     public virtual void OnGrabMission()
     {

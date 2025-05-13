@@ -208,7 +208,7 @@ public class Inventory : MonoBehaviour
         InventoryUI.Instance.DeleteUI(index,i.category);
     }
 
-    private void ChangeSelectedItem(int index)
+    public void ChangeSelectedItem(int index)
     {
         if (index >= inventory.Length) index = 0;
         else if (index < 0) index = inventory.Length - 1;
