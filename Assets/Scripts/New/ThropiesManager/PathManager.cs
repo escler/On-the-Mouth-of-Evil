@@ -41,39 +41,7 @@ public class PathManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name != "Hub") return;
 
-        StartCoroutine(CheckThropiesCor());
     }
-
-    IEnumerator CheckThropiesCor()
-    {
-        yield return new WaitForSeconds(.1f);
-        if (TrophiesHandler.Instance == null) yield break;
-        var goodObjects = TrophiesHandler.Instance.goodThropies;
-        var goodPathObjs = ItemPathHandler.Instance.goodPathObjs;
-
-
-        for (int i = 0; i < _goodPath; i++)
-        {
-            if (i < goodObjects.Length)
-                goodObjects[i].SetActive(true);
-            
-            if (i < goodPathObjs.Length)
-                goodPathObjs[i].SetActive(true);
-        }
-
-        var badObjects = TrophiesHandler.Instance.badThropies;
-        var badPathObjs = ItemPathHandler.Instance.badPathObjs;
-
-        for (int i = 0; i < _badPath; i++)
-        {
-            if (i < badObjects.Length)
-                badObjects[i].SetActive(true);
-
-            if (i < badPathObjs.Length)
-                badPathObjs[i].SetActive(true);
-        }
-    }
-
     public void ChangePrefs(string pref, int amount)
     {
         switch (pref)
