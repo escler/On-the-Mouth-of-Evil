@@ -24,4 +24,49 @@ public class Liquid : Item
             mesh.gameObject.layer = 1;
         }
     }
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnInteract(rayConnected, ray);
+        }
+    }
+
+
+    public override void OnInteract(bool hit, RaycastHit i)
+    {
+        if (!hit) return;
+
+        if (i.transform.TryGetComponent(out GoodRitual ritual))
+        {
+            if (!ritual.leverActivated) return;
+            ritual.StartRitual();
+            Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+            Destroy(gameObject);
+        }
+
+    }
+    
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        
+        if (ObjectDetector.Instance.InteractText()) return true;
+        if (ray.transform.TryGetComponent(out GoodRitual ritual))
+        {
+            if (ritual.leverActivated) return true;
+        } 
+        return false;
+    }
+    
 }

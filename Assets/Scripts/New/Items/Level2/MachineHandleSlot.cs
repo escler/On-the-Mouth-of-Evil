@@ -51,7 +51,8 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
             time += Time.deltaTime;
             yield return null;
         }
-        print("Listo");
+
+        GoodRitual.Instance.leverActivated = true;
     }
 
     public string ShowText()
