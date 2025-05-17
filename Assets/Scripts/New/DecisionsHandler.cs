@@ -31,6 +31,16 @@ public class DecisionsHandler : MonoBehaviour
         _goodChoice = 0;
         _badChoice = 0;
         Instance = this;
+
+        CheckAndInitialized();
+    }
+
+    private void CheckAndInitialized()
+    {
+        if(!PlayerPrefs.HasKey("VoodooAvaible"))PlayerPrefs.SetInt("VoodooAvaible", 0);
+        if(!PlayerPrefs.HasKey("RosaryAvaible"))PlayerPrefs.SetInt("RosaryAvaible", 0);
+        if(!PlayerPrefs.HasKey("SwarmAvaible"))PlayerPrefs.SetInt("SwarmAvaible", 0);
+        if(!PlayerPrefs.HasKey("InciensoAvaible"))PlayerPrefs.SetInt("InciensoAvaible", 0);
     }
 
     public void GoodChoiceTaked()

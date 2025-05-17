@@ -14,11 +14,8 @@ public class GoodShopHandler : MonoBehaviour
 
     private void CheckItemsEnable()
     {
-        var goodPath = PlayerPrefs.HasKey("GoodPath") ? PlayerPrefs.GetInt("GoodPath") : 0;
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (i >= goodPath) break;
-            items[i].SetActive(true);
-        }
+        items[0].SetActive(PlayerPrefs.GetInt("RosaryAvaible") == 1);
+        //items[1].SetActive(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+
     }
 }

@@ -35,9 +35,15 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("VoodooCount", 0);
         PlayerPrefs.SetInt("VoodooUnlocked", 0);
         PlayerPrefs.SetInt("RosaryUnlocked", 0);
+        PlayerPrefs.SetInt("InciensoUnlocked", 0);
+        PlayerPrefs.SetInt("SwarmUnlocked", 0);
         PlayerPrefs.SetInt("Mission1Complete", 0);
         PlayerPrefs.SetInt("Mission2Complete", 0);
-        PlayerPrefs.SetInt("TutorialCompleted", 0);
+        PlayerPrefs.SetInt("TutorialCompleted", 0); 
+        PlayerPrefs.SetInt("VoodooAvaible", 0);
+        PlayerPrefs.SetInt("RosaryAvaible", 0);
+        PlayerPrefs.SetInt("InciensoAvaible", 0);
+        PlayerPrefs.SetInt("SwarmAvaible", 0);
         
         
         PlayerPrefs.Save();

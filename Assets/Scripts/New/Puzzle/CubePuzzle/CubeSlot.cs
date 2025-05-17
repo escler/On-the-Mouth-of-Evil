@@ -50,6 +50,7 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     {
         yield return new WaitForSeconds(0.1f);
         cubeInSlot = cube;
+        cubeInSlot.transform.parent = transform;
     }
 
     public void OnInteractItem()

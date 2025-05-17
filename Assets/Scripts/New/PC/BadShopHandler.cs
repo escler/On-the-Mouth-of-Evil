@@ -13,11 +13,6 @@ public class BadShopHandler : MonoBehaviour
 
     private void CheckItemsEnable()
     {
-        var goodPath = PlayerPrefs.HasKey("BadPath") ? PlayerPrefs.GetInt("BadPath") : 0;
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (i >= goodPath) break;
-            items[i].SetActive(true);
-        }
+        items[0].SetActive(PlayerPrefs.GetInt("VoodooAvaible") == 1);
     }
 }

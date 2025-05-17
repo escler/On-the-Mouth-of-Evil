@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PCHandler : MonoBehaviour
 {
     public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2, testBTN3;
-    public GameObject goodShopGO, badShopGO, badShopIcon;
+    public GameObject goodShopGO, badShopGO;
     public AudioSource clickSound;
     public static PCHandler Instance { get; private set; }
 
@@ -39,7 +39,10 @@ public class PCHandler : MonoBehaviour
     {
         var badCount = PlayerPrefs.HasKey("BadPath") ? PlayerPrefs.GetInt("BadPath") : 0;
         print(badCount + "Bad Count");
-        badShopIcon.gameObject.SetActive(badCount > 0);
+        badShopApp.interactable = badCount > 0;
+        var color = badShopApp.GetComponent<Image>().color;
+        color.a = badCount > 0 ? 1f : .7f;
+        badShopApp.GetComponent<Image>().color = color;
     }
 
     private void OnDestroy()

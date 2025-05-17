@@ -21,6 +21,7 @@ public class BookSpot : MonoBehaviour, IInteractable
         book.transform.rotation = pivotBook.localRotation;
         book.GetComponent<BoxCollider>().enabled = false;
         book.GetComponent<Rigidbody>().isKinematic = true;
+        book.transform.parent = pivotBook;
 
     }
     public void OnInteractItem()
