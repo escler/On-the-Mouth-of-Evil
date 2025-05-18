@@ -45,7 +45,7 @@ public class VoodooHandler : InventoryItemHandler
     {
         if (voodooes.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        voodooes.Add(itemObj);
+        voodooes.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;

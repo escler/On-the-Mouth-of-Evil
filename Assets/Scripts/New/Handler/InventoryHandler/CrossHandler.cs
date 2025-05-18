@@ -61,7 +61,7 @@ public class CrossHandler : InventoryItemHandler
     {
         if (crosses.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        crosses.Add(itemObj);
+        crosses.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;

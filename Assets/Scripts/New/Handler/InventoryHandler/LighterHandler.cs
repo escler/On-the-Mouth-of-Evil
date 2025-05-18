@@ -63,7 +63,7 @@ public class LighterHandler : InventoryItemHandler
     {
         if (lighters.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        lighters.Add(itemObj);
+        lighters.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;

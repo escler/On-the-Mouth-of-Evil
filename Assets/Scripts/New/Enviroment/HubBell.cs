@@ -11,6 +11,8 @@ public class HubBell : MonoBehaviour, IInteractable
     public Transform paperPos, finalPos;
     private bool _interactUsed;
     private GameObject _paperMission;
+    
+    public GameObject PaperMission => _paperMission; 
    
     private void Awake()
     {

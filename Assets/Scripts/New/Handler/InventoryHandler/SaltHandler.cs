@@ -61,7 +61,7 @@ public class SaltHandler : InventoryItemHandler
     {
         if (salts.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        salts.Add(itemObj);
+        salts.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;

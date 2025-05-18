@@ -45,7 +45,7 @@ public class RosaryHandler : InventoryItemHandler
     {
         if (rosaries.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        rosaries.Add(itemObj);
+        rosaries.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;

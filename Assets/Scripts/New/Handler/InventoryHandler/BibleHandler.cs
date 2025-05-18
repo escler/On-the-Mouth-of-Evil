@@ -62,7 +62,7 @@ public class BibleHandler : InventoryItemHandler
     {
         if (bibles.Count >= countMax) return;
         var go = Instantiate(itemObj);
-        bibles.Add(itemObj);
+        bibles.Add(go);
         count++;
         SaveCount(true);
         if (SceneManager.GetActiveScene().name != "Hub") return;
