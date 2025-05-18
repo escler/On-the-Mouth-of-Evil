@@ -50,6 +50,8 @@ public class MusicSheet : Item
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             sheetSlot.PlaceSheet(this);
             GetComponentInChildren<AuraItem>().onHand = false;
+            StopAllCoroutines();
+            canInteract = false;
         }
     }
     public override void OnUpdate()

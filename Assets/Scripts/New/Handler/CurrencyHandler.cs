@@ -48,6 +48,7 @@ public class CurrencyHandler : MonoBehaviour
         }
         
         PlayerPrefs.SetInt("CurrencyAmount", initialAmount);
+        _currentAmount = initialAmount;
         PlayerPrefs.Save();
     }
 

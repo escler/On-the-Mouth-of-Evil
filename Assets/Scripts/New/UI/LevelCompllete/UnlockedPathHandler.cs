@@ -10,11 +10,15 @@ public class UnlockedPathHandler : MonoBehaviour
 {
     [SerializeField] private GameObject newItemUnlockedText;
     [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private GoodItemUnlocked goodItem, badItem;
+    [SerializeField] private ItemUIUnlocked goodItem, badItem;
     private void OnEnable()
     {
-        CheckLevelsItems();
+        print(PlayerPrefs.GetInt("RosaryAvaible") + " Rosario");
+        print(PlayerPrefs.GetInt("VoodooAvaible") + " Voodoo");
+        print(PlayerPrefs.GetInt("SwarmAvaible") + " Swarm");
+        print(PlayerPrefs.GetInt("InciensoAvaible") + " Incienso");
         newItemUnlockedText.SetActive(false);
+        CheckLevelsItems();
         title.text = DecisionsHandler.Instance.badPath ? "Bad Ending Done" : "Good Ending Done";
     }
 
@@ -32,43 +36,67 @@ public class UnlockedPathHandler : MonoBehaviour
             {
                 if (PlayerPrefs.GetInt("VoodooAvaible") == 0)
                 {
+                    badItem.UnlockItem();
                     PlayerPrefs.SetInt("VoodooAvaible", 1);
+                    PlayerPrefs.Save();
                     newItemUnlockedText.SetActive(true);
-                    badItem.DoAnimation();
+                    goodItem.UnlockedItem(PlayerPrefs.GetInt("RosaryAvaible") == 1);
                     return;
-                } 
+                }
+                
+                goodItem.UnlockedItem(PlayerPrefs.GetInt("RosaryAvaible") == 1);
+                badItem.UnlockedItem(PlayerPrefs.GetInt("VoodooAvaible") == 1);
+                
             }
             else
             {
                 if (PlayerPrefs.GetInt("RosaryAvaible") == 0)
                 {
+                    goodItem.UnlockItem();
                     PlayerPrefs.SetInt("RosaryAvaible", 1);
+                    PlayerPrefs.Save();
                     newItemUnlockedText.SetActive(true);
-                    goodItem.DoAnimation();
+                    badItem.UnlockedItem(PlayerPrefs.GetInt("VoodooAvaible") == 1);
                     return;
                 }
+
+                print("Aca");
+                goodItem.UnlockedItem(PlayerPrefs.GetInt("RosaryAvaible") == 1);
+                badItem.UnlockedItem(PlayerPrefs.GetInt("VoodooAvaible") == 1);
             }
         }
 
+        if (name != "MorgueLevel") return;
+        
         if (badPath)
         {
             if (PlayerPrefs.GetInt("SwarmAvaible") == 0)
             {
+                badItem.UnlockItem();
                 PlayerPrefs.SetInt("SwarmAvaible", 1);
+                PlayerPrefs.Save();
                 newItemUnlockedText.SetActive(true);
-                badItem.DoAnimation();
+                goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
                 return;
             }
+                    
+            goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+            badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
         }
         else
         {
             if (PlayerPrefs.GetInt("InciensoAvaible") == 0)
             {
+                goodItem.UnlockItem();
                 PlayerPrefs.SetInt("InciensoAvaible", 1);
+                PlayerPrefs.Save();
                 newItemUnlockedText.SetActive(true);
-                goodItem.DoAnimation();
+                badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
+                return;
             }
+                    
+            goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+            badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
         }
-        
     }
 }
