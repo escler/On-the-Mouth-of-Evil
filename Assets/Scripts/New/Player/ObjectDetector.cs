@@ -182,6 +182,12 @@ public class ObjectDetector : MonoBehaviour
             if (door.enabled) return true;
         }
 
+        if (_hit.transform.TryGetComponent(out BloodDrainButton bloodDrainButton))
+        {
+            if (!bloodDrainButton.buttonPress) return true;
+        }
+
+
         return false;
     }
 
