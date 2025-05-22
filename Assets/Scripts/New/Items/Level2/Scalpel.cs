@@ -29,7 +29,9 @@ public class Scalpel : Item
             if (!body.bloodDrained) return;
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             body.OpenBody();
-            //Vemos aca
+            Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+            Destroy(gameObject);
+            
         }
     }
     
