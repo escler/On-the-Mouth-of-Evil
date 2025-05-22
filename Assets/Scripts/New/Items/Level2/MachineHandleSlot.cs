@@ -6,6 +6,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 {
     [SerializeField] private Transform pivot, finalPos;
     HandleMachine _handleMachine;
+    [SerializeField] private GameObject goodAura;
     public void PlaceHandle(HandleMachine handleMachine)
     {
         handleMachine.transform.parent = pivot;
@@ -39,6 +40,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 
     IEnumerator RotHandler()
     {
+        goodAura.SetActive(true);
         var initial = pivot.localRotation;
         var initialX = pivot.localRotation.x;
         var finalX = finalPos.localRotation.x;

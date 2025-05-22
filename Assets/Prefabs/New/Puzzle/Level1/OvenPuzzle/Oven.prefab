@@ -15340,6 +15340,7 @@ Transform:
   - {fileID: 6108833190969014028}
   - {fileID: 4354994095434074948}
   - {fileID: 995290949667141604}
+  - {fileID: 8078580877067158290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6171336138649143637
@@ -15380,6 +15381,7 @@ MonoBehaviour:
   fireLoopAudio: {fileID: 1988051631291364470}
   bearAudio: {fileID: 4322944069823517467}
   explosionFireAudio: {fileID: 3115650819990319746}
+  badAura: {fileID: 5737501397650476391}
 --- !u!65 &7133452090584084599
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20928,6 +20930,91 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6334075614102196676, guid: 67fea342b1c9eb547830b0eab5ea9d5e,
     type: 3}
   m_PrefabInstance: {fileID: 911570310409257691}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &967146453520382220
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2120645279813997652}
+    m_Modifications:
+    - target: {fileID: 4824566365159421035, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_Name
+      value: BadPuzzle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824566365159421035, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.305
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26902ed3d99412b4dad8f747b764c4ed, type: 3}
+--- !u!1 &5737501397650476391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4824566365159421035, guid: 26902ed3d99412b4dad8f747b764c4ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 967146453520382220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8078580877067158290 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9040725641359948318, guid: 26902ed3d99412b4dad8f747b764c4ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 967146453520382220}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2344164884154147553
 PrefabInstance:

@@ -18,6 +18,7 @@ public class Oven : MonoBehaviour
     [SerializeField] private GameObject ovenSmoke;
     [SerializeField] List<GameObject> ovenPsComplete = new List<GameObject>();
     [SerializeField] private AudioSource fireLoopAudio, bearAudio, explosionFireAudio;
+    [SerializeField] private GameObject badAura;
 
     public bool BearInOven
     {
@@ -60,6 +61,7 @@ public class Oven : MonoBehaviour
     private void CorrectAnswer()
     {
         StartCoroutine(CompleteOven());
+        badAura.SetActive(true);
     }
 
     IEnumerator CompleteOven()

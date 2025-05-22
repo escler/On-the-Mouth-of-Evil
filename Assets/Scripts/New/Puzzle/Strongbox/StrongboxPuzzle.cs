@@ -14,6 +14,7 @@ public class StrongboxPuzzle : MonoBehaviour
     [SerializeField] private GameObject keyGood;
     [SerializeField] private AudioSource audiosource;
     [SerializeField] private AudioClip lockedSound, openSound;
+    [SerializeField] private GameObject goodEffectAura;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class StrongboxPuzzle : MonoBehaviour
 
     private void OpenDoor()
     {
+        goodEffectAura.SetActive(true);
         DisableColliders();
         _animator.SetBool("Open", true);
         keyGood.SetActive(true);

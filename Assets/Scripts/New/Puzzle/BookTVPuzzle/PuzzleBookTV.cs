@@ -13,6 +13,7 @@ public class PuzzleBookTV : MonoBehaviour
     [SerializeField] BookSpot[] bookSpots;
     [SerializeField] private KeyBad keyBad;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private GameObject badAura;
     
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class PuzzleBookTV : MonoBehaviour
     private void CorrectCode()
     {
         audioSource.Play();
+        badAura.SetActive(true);
         for (int i = 0; i < _books.Length; i++)
         {
             _books[i].enabled = false;

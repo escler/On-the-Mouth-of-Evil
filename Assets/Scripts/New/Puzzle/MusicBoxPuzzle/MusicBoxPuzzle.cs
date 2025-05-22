@@ -13,6 +13,7 @@ public class MusicBoxPuzzle : MonoBehaviour
     [SerializeField] private AnimationClip animation;
     [SerializeField] private AudioClip music;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private GameObject goodAura;
     
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class MusicBoxPuzzle : MonoBehaviour
     
     private void CorrectCode()
     {
+        goodAura.SetActive(true);
         _animator.SetBool("Open", true);
         foreach (var s in slots)
         {

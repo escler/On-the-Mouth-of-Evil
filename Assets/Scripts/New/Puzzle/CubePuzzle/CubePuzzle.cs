@@ -14,6 +14,7 @@ public class CubePuzzle : MonoBehaviour
     private Vector3 orientation = new Vector3(0, -180, 0);
     [SerializeField] private GameObject key;
     private bool _corInitialized;
+    [SerializeField] private GameObject goodAura;
     private void Awake()
     {
         if (Instance)
@@ -56,6 +57,7 @@ public class CubePuzzle : MonoBehaviour
     private void WinPuzzle()
     {
         if(!_corInitialized)StartCoroutine(MoveGO());
+        goodAura.SetActive(true);
         key.SetActive(true);
         key.GetComponent<KeyGood>().ChangeLight(true);
         foreach (var slot in slots)
