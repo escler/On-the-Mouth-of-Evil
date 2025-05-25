@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodRitual : MonoBehaviour
+public class BadRitual : MonoBehaviour
 {
-    public static GoodRitual Instance { get; private set; }
-    public bool leverActivated;
+    public static BadRitual Instance { get; private set; }
+    public bool baitBoxPlaced;
     [SerializeField] private Transform ritualPos;
     [SerializeField] private int level;
 
@@ -23,11 +22,11 @@ public class GoodRitual : MonoBehaviour
 
     public void StartRitual()
     {
-        DecisionsHandler.Instance.badPath = false;
-        StartCoroutine(GoodRitualSteps());
+        DecisionsHandler.Instance.badPath = true;
+        StartCoroutine(BadRitualSteps());
     }
 
-    IEnumerator GoodRitualSteps()
+    IEnumerator BadRitualSteps()
     {
         PlayerHandler.Instance.movement.ritualCinematic = true;
         Inventory.Instance.cantSwitch = true;
@@ -38,10 +37,10 @@ public class GoodRitual : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        RitualManager.Instance.levitatingItems[0].SetActive(true);
-        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[0].gameObject;
+        RitualManager.Instance.levitatingItems[1].SetActive(true);
+        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
         
-        GameObject item = RitualManager.Instance.levitatingItems[0].gameObject;
+        GameObject item = RitualManager.Instance.levitatingItems[1].gameObject;
         PlayerHandler.Instance.movement.absorbEnd = true;
         PlayerHandler.Instance.movement.GoToVoodoo(item.transform.position);
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inVoodooPos);
