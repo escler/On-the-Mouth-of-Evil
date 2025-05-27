@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialHub : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class TutorialHub : MonoBehaviour
     public Material outlineMaterial;
     public MeshRenderer pc, bellWindows, doorExit, paper;
     public GameObject salt, lighter, bible, cross;
-    
+    public GameObject holyMarketGlow, fGlow, tabGlow;
+    public GameObject[] priceGlows;
+    public Color colorGlow;
     private void Awake()
     {
         if (Instance)
@@ -49,7 +52,20 @@ public class TutorialHub : MonoBehaviour
         pcHandler.GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(Tutorial());
         StartCoroutine(FlickOutline());
+        StartCoroutine(FlickUIOutline());
+        ApplyColor();
 
+    }
+
+    private void ApplyColor()
+    {
+        holyMarketGlow.GetComponent<Image>().color = colorGlow;
+        fGlow.GetComponent<Image>().color = colorGlow;
+        tabGlow.GetComponent<Image>().color = colorGlow;
+        foreach (var p in priceGlows)
+        {
+            p.GetComponent<Image>().color = colorGlow;
+        }
     }
 
     public void ChangeStep()
@@ -75,8 +91,14 @@ public class TutorialHub : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         
         tutorialUI.ChangeText("Change the inventory (TAB) and Inspect the Mission (F)");
+        StartCoroutine(DisableF());
+        StartCoroutine(DisableTab());
+        tabGlow.SetActive(true);
+        fGlow.SetActive(true);
         RemoveOutline(paper);
         yield return new WaitUntil(() => missionInspect);
+        tabGlow.SetActive(false);
+        fGlow.SetActive(false);
         pcHandler.GetComponent<BoxCollider>().enabled = true;
         tutorialUI.CompleteTask();
         yield return new WaitForSeconds(.25f);
@@ -88,6 +110,11 @@ public class TutorialHub : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         
         tutorialUI.ChangeText("Open the Good Shop and buy one item of each type");
+        holyMarketGlow.SetActive(true);
+        foreach (var p in priceGlows)
+        {
+            p.SetActive(true);
+        }
         RemoveOutline(pc);
         yield return new WaitUntil(() => itemsBuyed);
         tutorialUI.CompleteTask();
@@ -149,6 +176,18 @@ public class TutorialHub : MonoBehaviour
         PlayerPrefs.SetInt("TutorialCompleted",1);
         tutorialUI.gameObject.SetActive(false);
 
+    }
+
+    IEnumerator DisableTab()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Tab));
+        tabGlow.SetActive(false);
+    }
+
+    IEnumerator DisableF()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F));
+        fGlow.SetActive(false);
     }
 
     public void CheckStoreBuy()
@@ -221,6 +260,25 @@ public class TutorialHub : MonoBehaviour
             amount += increased ? delta : -delta;
             amount = Mathf.Clamp01(amount);
             outlineMaterial.SetFloat("_Alpha", amount);
+            yield return null;
+        }
+    }
+
+    IEnumerator FlickUIOutline()
+    {
+        float amount = 1;
+        float condition = -1;
+        bool increased = false;
+        while (!exithub)
+        {
+            if(amount >= 1f) increased = false;
+            else if(amount <= 0f) increased = true;
+
+            float delta = Time.deltaTime;
+            amount += increased ? delta : -delta;
+            amount = Mathf.Clamp01(amount);
+            colorGlow.a = amount;
+            ApplyColor();
             yield return null;
         }
     }

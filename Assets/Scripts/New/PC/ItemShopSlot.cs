@@ -18,7 +18,7 @@ public class ItemShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private Image iconCurrency;
     [SerializeField] private Sprite goodCurrency, badCurrency;
     [SerializeField] private GameObject tutorial;
-    
+    [SerializeField] private GameObject glow;
     InventoryItemHandler _handler;
     public string item;
 
@@ -73,7 +73,11 @@ public class ItemShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if(!unlocked) return false;
         if (!TutorialHub.Instance.TutorialCompleted)
         {
-            if(_handler.Count >= 1) return false;
+            if (_handler.Count >= 1)
+            {
+                if (glow != null) glow.SetActive(false);
+                return false;
+            }
         }
         if(_handler.Count >= _handler.countMax) return false;
         if (cost > CurrencyHandler.Instance.CurrentAmount) return false;
