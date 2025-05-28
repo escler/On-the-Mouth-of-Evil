@@ -6883,7 +6883,7 @@ GameObject:
   - component: {fileID: 6689706638962106695}
   - component: {fileID: 8488266547949108340}
   m_Layer: 0
-  m_Name: Shop (3)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6897,7 +6897,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5926248567912392300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6906,8 +6906,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.821, y: -0.439}
-  m_SizeDelta: {x: 16.3953, y: 13.2734}
+  m_AnchoredPosition: {x: -0.8561, y: -0.4673}
+  m_SizeDelta: {x: 11.7103, y: 9.5054}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6689706638962106695
 CanvasRenderer:
@@ -6930,14 +6930,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6d19c76632b21be499998a4655a430ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9716b703250a8fc4f91248a176e127b9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
