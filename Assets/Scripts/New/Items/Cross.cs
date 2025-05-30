@@ -127,9 +127,16 @@ public class Cross : Item
         _crossCd.cantUse = true;
         _crossCd.SetCooldown(0);
 
-        if (HouseEnemy.Instance == null) return;
-        HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
-        HouseEnemy.Instance.CheckRoom();
+        if (HouseEnemy.Instance != null)
+        {
+            HouseEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
+            HouseEnemy.Instance.CheckRoom();
+            return;
+        }
+
+        if (MorgueEnemy.Instance == null) return;
+        MorgueEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
+        MorgueEnemy.Instance.CheckRoom();
     }
 
     public void OnUpCross()

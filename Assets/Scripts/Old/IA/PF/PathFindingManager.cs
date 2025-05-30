@@ -163,6 +163,20 @@ public class PathFindingManager : MonoBehaviour
         if (nodesActuals.Count() == 0) return null;
         return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
     }
+    
+    public Node CalculateOtherRoomNodeMorgue(Node start)
+    {
+        if (start == null)
+        {
+            print("Start null");
+            return null;
+        }
+
+        var nodesActuals = _nodes.Where(x => x.room != start.room && x.room != MorgueEnemy.Instance.crossRoom && !x.doorNode);
+
+        if (nodesActuals.Count() == 0) return null;
+        return nodesActuals.ElementAt(Random.Range(0, nodesActuals.Count()));
+    }
 
     public Node CalculateNearnestNodeAndRoom(Vector3 position)
     {

@@ -33,6 +33,7 @@ public class BiblePaper : MonoBehaviour, IBurneable, IInteractable
 
     public void OnBurn()
     {
+        Enemy.Instance.SetGoalPos(transform.position);
         GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(BibleBurning());        
         StartCoroutine(BurnPaper());

@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using FSM;
 using UnityEngine;
 
-public class HouseEnemy_Patrol : MonoBaseState
+public class MorgueEnemy_Patrol : MonoBaseState
 {
-    [SerializeField] private HouseEnemy owner;
+    [SerializeField] private MorgueEnemy owner;
     public List<Transform> _path;
     public Node startNode, goal;
     private bool _pathCalculated, _pathFinish;
     public override void UpdateLoop()
     {
-        if (!HypnosisHandler.Instance.skyboxIsOn)
-        {
-            HypnosisHandler.Instance.EndLerpShader("GOTOloCation");
-        }
+
     }
 
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -24,10 +21,9 @@ public class HouseEnemy_Patrol : MonoBaseState
         print("Entre a Patrol");
         
         startNode = PathFindingManager.instance.CalculateDistance(owner.transform.position);
-        goal = PathFindingManager.instance.CalculateOtherRoomNode(startNode);
+        goal = PathFindingManager.instance.CalculateOtherRoomNodeMorgue(startNode);
         if (owner.crossUsed)
         {
-            if(!HypnosisHandler.Instance.skyboxIsOn) HypnosisHandler.Instance.EndLerpShader("Enter Patrol");
             print("Entre al if");
             CrossUsed();
             return;
@@ -50,16 +46,18 @@ public class HouseEnemy_Patrol : MonoBaseState
     
     IEnumerator HideEnemy()
     {
+        /*
         while (owner.enemyVisibility > 0)
         {
             owner.enemyVisibility -= .3f;
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
-        owner.crossUsed = false;
         owner.enemyVisible = false;
+        */
+        yield return null;
+        owner.crossUsed = false;
         owner.actualTime = 0;
-        
         if (goal == null)
         {
             print("Goal null");
@@ -87,21 +85,16 @@ public class HouseEnemy_Patrol : MonoBaseState
 
     public override IState ProcessInput()
     {
-        if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
-            return Transitions[StateTransitions.ToRitual];
-
-        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
-            return Transitions[StateTransitions.ToVoodoo];
-        
         if (_pathFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
-
-        if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
-            return Transitions[StateTransitions.ToSpecifyLocation];
-
+        
+        
         if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
+        
+        if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
+            return Transitions[StateTransitions.ToSpecifyLocation];
+        
         return this;
     }
-
 }
