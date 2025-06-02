@@ -27,7 +27,10 @@ public class MorgueEnemy : Enemy
     [SerializeField] private MorgueEnemy_Spawn spawnState;
     [SerializeField] private MorgueEnemy_Idle idleState;
     [SerializeField] private MorgueEnemy_Patrol patrolState;
-    [SerializeField] private MorgueLevel_ToLocation goToLocationState;
+    [SerializeField] private MorgueEnemy_Attacks attacksState;
+    [SerializeField] private MorgueEnemy_ToLocation goToLocationState;
+    [SerializeField] private MorgueEnemy_Ritual ritualState;
+    [SerializeField] private MorgueEnemy_Voodoo voodooState;
     
     public bool ritualDone;
     public Node nodeRitual;
@@ -37,6 +40,9 @@ public class MorgueEnemy : Enemy
 
     public bool canAttackPlayer;
     public bool appear;
+    
+    public bool voodooActivate;
+    public Vector3 voodooPosition;
     
     private void Awake()
     {
@@ -61,23 +67,31 @@ public class MorgueEnemy : Enemy
         //Spawn
         //_fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
         _fsm.AddTransition(StateTransitions.ToIdle, spawnState, idleState);
-        //_fsm.AddTransition(StateTransitions.ToVoodoo, spawnState, voodooState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, spawnState, voodooState);
         
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToSpawn, idleState, spawnState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, idleState, voodooState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToVoodoo, patrolState, voodooState);
+        
+        //Attack
+        _fsm.AddTransition(StateTransitions.ToVoodoo, attacksState, voodooState);
         
         //ToLocation
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, goToLocationState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
 
+        //Voodoo
+        _fsm.AddTransition(StateTransitions.ToPatrol, voodooState, patrolState);
+        _fsm.AddTransition(StateTransitions.ToRitual, voodooState, ritualState);
 
         _fsm.Active = true;
         OnAwake();

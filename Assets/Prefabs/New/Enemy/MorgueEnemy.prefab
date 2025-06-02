@@ -161,6 +161,9 @@ GameObject:
   - component: {fileID: 7195405607700254965}
   - component: {fileID: 7712715196023298129}
   - component: {fileID: 8221880419646397247}
+  - component: {fileID: 3126116515879295400}
+  - component: {fileID: 8158158275401702211}
+  - component: {fileID: 5698931506589274301}
   m_Layer: 7
   m_Name: MorgueEnemy
   m_TagString: Untagged
@@ -263,14 +266,22 @@ MonoBehaviour:
   compareRoom: 0
   enemyVisible: 0
   actualTimeToLost: 0
+  _corroutineActivate: 0
   spawnState: {fileID: 1964070738113681956}
   idleState: {fileID: 7195405607700254965}
   patrolState: {fileID: 7712715196023298129}
+  attacksState: {fileID: 3126116515879295400}
   goToLocationState: {fileID: 8221880419646397247}
+  ritualState: {fileID: 5698931506589274301}
+  voodooState: {fileID: 8158158275401702211}
   ritualDone: 0
   nodeRitual: {fileID: 0}
   enemyMaterial: {fileID: 2100000, guid: 3be6cc17121e61d4099829415158892a, type: 2}
   enemyVisibility: 0
+  canAttackPlayer: 0
+  appear: 0
+  voodooActivate: 0
+  voodooPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1964070738113681956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,3 +340,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5434877687383990785}
+--- !u!114 &3126116515879295400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eac10e37fca3034a97e59e1a9910106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8158158275401702211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15a8bcd7e5389346a283502ad7cd596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 5434877687383990785}
+  timeStunned: 15
+--- !u!114 &5698931506589274301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01d24575b97a5c4d97b32f0ccaf73f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

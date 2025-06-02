@@ -134,6 +134,13 @@ public class VoodooDoll : Item
             HouseEnemy.Instance.voodooPosition = transform.position;
             HouseEnemy.Instance.voodooActivate = true;
         }
+
+        if (MorgueEnemy.Instance != null)
+        {
+            MorgueEnemy.Instance.voodooPosition = transform.position;
+            MorgueEnemy.Instance.voodooActivate = true;
+        }
+        
         _actualTime = timeActive;
         var rb = GetComponent<Rigidbody>();
         var collider = GetComponent<BoxCollider>();
@@ -145,6 +152,7 @@ public class VoodooDoll : Item
             yield return new WaitForSeconds(0.1f);
         }
         if (HouseEnemy.Instance != null) HouseEnemy.Instance.voodooActivate = false;
+        if (MorgueEnemy.Instance != null) MorgueEnemy.Instance.voodooActivate = false;
         yield return new WaitForSeconds(2f);
         voodooVFXHandler.ClosePrison();
         collider.enabled = true;

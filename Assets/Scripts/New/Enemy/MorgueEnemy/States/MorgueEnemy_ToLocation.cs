@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FSM;
 using UnityEngine;
 
-public class MorgueLevel_ToLocation : MonoBaseState
+public class MorgueEnemy_ToLocation : MonoBaseState
 {
     [SerializeField] private MorgueEnemy owner;
     private List<Transform> _path;
@@ -56,8 +56,8 @@ public class MorgueLevel_ToLocation : MonoBaseState
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
         
-        /*if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
-            return Transitions[StateTransitions.ToVoodoo];*/
+        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
         
         if (owner.crossUsed && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];

@@ -85,16 +85,23 @@ public class MorgueEnemy_Patrol : MonoBaseState
 
     public override IState ProcessInput()
     {
+        
+        if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
+            return Transitions[StateTransitions.ToRitual];
+        
         if (_pathFinish && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         
+        if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
         
-        if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
-            return Transitions[StateTransitions.ToPatrol];
         
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
         
+        if (owner.crossUsed && Transitions.ContainsKey(StateTransitions.ToPatrol))
+            return Transitions[StateTransitions.ToPatrol];
+
         return this;
     }
 }
