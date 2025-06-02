@@ -46,7 +46,7 @@ public class MorgueEnemy_Patrol : MonoBaseState
     
     IEnumerator HideEnemy()
     {
-        /*
+        
         while (owner.enemyVisibility > 0)
         {
             owner.enemyVisibility -= .3f;
@@ -54,7 +54,7 @@ public class MorgueEnemy_Patrol : MonoBaseState
             yield return new WaitForSeconds(0.1f);
         }
         owner.enemyVisible = false;
-        */
+        
         yield return null;
         owner.crossUsed = false;
         owner.actualTime = 0;

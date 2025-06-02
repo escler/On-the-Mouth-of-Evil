@@ -55,15 +55,23 @@ public class MorgueLevel_ToLocation : MonoBaseState
     {
         if (owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToRitual))
             return Transitions[StateTransitions.ToRitual];
-
+        
+        /*if (owner.voodooActivate && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];*/
+        
         if (owner.crossUsed && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToPatrol))
             return Transitions[StateTransitions.ToPatrol];
 
+        if (owner.actualTime > owner.timeToShowMe && !owner.ritualDone &&
+            Transitions.ContainsKey(StateTransitions.ToSpawn))
+            return Transitions[StateTransitions.ToSpawn];
+        
         if (!owner.bibleBurning && _pathFinish && !owner.ritualDone && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         
         if (!owner.ritualDone && _pathFinish && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
+
         
         return this;
     }

@@ -77,7 +77,6 @@ public class Cross : Item
         if(PlayerHandler.Instance.movingObject) OnUpCross();
         if (_crossCd.cantUse) return;
         _currentTime += Time.deltaTime;
-        print(_currentTime);
         if (!holdingPSActive)
         {
             foreach (var holdPS in holdingPS)

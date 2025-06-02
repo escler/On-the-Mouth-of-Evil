@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3be6cc17121e61d4099829415158892a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 9077910510145259794}
   - component: {fileID: 3433673491691955081}
   - component: {fileID: 5434877687383990785}
+  - component: {fileID: 1964070738113681956}
   - component: {fileID: 7195405607700254965}
   - component: {fileID: 7712715196023298129}
   - component: {fileID: 8221880419646397247}
@@ -260,12 +261,29 @@ MonoBehaviour:
   actualTime: 0
   timeToShowMe: 5
   compareRoom: 0
+  enemyVisible: 0
   actualTimeToLost: 0
+  spawnState: {fileID: 1964070738113681956}
   idleState: {fileID: 7195405607700254965}
   patrolState: {fileID: 7712715196023298129}
   goToLocationState: {fileID: 8221880419646397247}
   ritualDone: 0
   nodeRitual: {fileID: 0}
+  enemyMaterial: {fileID: 2100000, guid: 3be6cc17121e61d4099829415158892a, type: 2}
+  enemyVisibility: 0
+--- !u!114 &1964070738113681956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7959037354911713852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409a56cb92ebba049ba4e24bd3ccc605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 5434877687383990785}
 --- !u!114 &7195405607700254965
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,18 +17,26 @@ public class MorgueEnemy : Enemy
     private PlayerHandler _player;
     public float actualTime, timeToShowMe;
     private List<IInteractableEnemy> _objects;
-    public bool compareRoom;
+    public bool compareRoom, enemyVisible;
     private bool _canInteractWithObjectsEnv;
     public float actualTimeToLost;
+    public bool _corroutineActivate;
     
 
     private FiniteStateMachine _fsm;
+    [SerializeField] private MorgueEnemy_Spawn spawnState;
     [SerializeField] private MorgueEnemy_Idle idleState;
     [SerializeField] private MorgueEnemy_Patrol patrolState;
     [SerializeField] private MorgueLevel_ToLocation goToLocationState;
-
+    
     public bool ritualDone;
     public Node nodeRitual;
+
+    public Material enemyMaterial;
+    public float enemyVisibility;
+
+    public bool canAttackPlayer;
+    public bool appear;
     
     private void Awake()
     {
@@ -39,15 +47,26 @@ public class MorgueEnemy : Enemy
         }
         
         Instance = this;
+        
+        enemyMaterial.SetFloat("_Power", 0);
+        enemyVisibility = enemyMaterial.GetFloat("_Power");
+        
+        enemyMaterial.SetFloat("_intensity", 0.01f);
 
         _objects = new List<IInteractableEnemy>();
         _player = PlayerHandler.Instance;
         pf = new PathFinding();
         _fsm = new FiniteStateMachine(idleState, StartCoroutine);
         
+        //Spawn
+        //_fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
+        _fsm.AddTransition(StateTransitions.ToIdle, spawnState, idleState);
+        //_fsm.AddTransition(StateTransitions.ToVoodoo, spawnState, voodooState);
+        
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToSpawn, idleState, spawnState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
@@ -73,6 +92,7 @@ public class MorgueEnemy : Enemy
         
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
         compareRoom = _player.actualRoom == actualRoom;
+        canAttackPlayer = enemyVisible && actualTimeToLost > 0;
     }
 
     private void CompareRooms()
@@ -133,5 +153,27 @@ public class MorgueEnemy : Enemy
         if (actualRoom != PlayerHandler.Instance.actualRoom) return;
         crossUsed = true;
         //_enemyAnimator.ChangeStateAnimation("CrossUsed", true);
+    }
+    
+    public void HideEnemy()
+    {
+        if (_corroutineActivate) return;
+        
+        StartCoroutine(HideEnemyLerp());
+        //_enemyAnimator.ChangeStateAnimation("Spawn", false);
+        appear = false;
+    }
+    
+    IEnumerator HideEnemyLerp()
+    {
+        _corroutineActivate = true;
+        while (enemyVisibility > 0)
+        {
+            enemyVisibility -= .3f;
+            enemyMaterial.SetFloat("_Power", enemyVisibility);
+            yield return new WaitForSeconds(0.1f);
+        }
+        enemyVisible = false;
+        _corroutineActivate = false;
     }
 }
