@@ -43,6 +43,9 @@ public class MorgueEnemy_Idle : MonoBaseState
         
         if (owner.bibleBurning && Transitions.ContainsKey(StateTransitions.ToSpecifyLocation))
             return Transitions[StateTransitions.ToSpecifyLocation];
+        
+        if (owner.canAttackPlayer && Transitions.ContainsKey(StateTransitions.ToAttacks)) 
+            return Transitions[StateTransitions.ToAttacks];
 
         return this;
     }

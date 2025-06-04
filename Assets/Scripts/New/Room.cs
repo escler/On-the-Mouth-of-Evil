@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -12,6 +13,9 @@ public class Room : MonoBehaviour
     private int count;
     public bool cantBlock;
     public bool roomBlocked;
+
+    public SwarmPsRooms _ps;
+    public bool swarmActivate;
     private void Awake()
     {
         count = doors.Length;
@@ -19,6 +23,27 @@ public class Room : MonoBehaviour
         {
             node.room = this;
         }
+    }
+
+    public void ActivateSwarm(float seconds)
+    {
+        if (swarmActivate) return;
+        
+        _ps.PlayPS(seconds);
+        swarmActivate = true;
+        StartCoroutine(TimerForSwarm(seconds));
+    }
+
+    IEnumerator TimerForSwarm(float seconds)
+    {
+        float timer = 0;
+        while (timer < seconds)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        swarmActivate = false;
     }
 
     public void CheckDoors()

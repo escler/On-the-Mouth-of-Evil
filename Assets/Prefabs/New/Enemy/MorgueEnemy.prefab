@@ -282,6 +282,9 @@ MonoBehaviour:
   appear: 0
   voodooActivate: 0
   voodooPosition: {x: 0, y: 0, z: 0}
+  attackEnded: 0
+  reference: {x: 0, y: 0, z: 0}
+  rotationSmoothTime: 2.5
 --- !u!114 &1964070738113681956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +355,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eac10e37fca3034a97e59e1a9910106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 5434877687383990785}
+  _path: []
+  startNode: {fileID: 0}
+  goal: {fileID: 0}
+  timeToLostPlayer: 10
+  hipnosisTime: 0
+  grabCD: 0
+  enemyAction: 00000000
+  curseDuration: 15
 --- !u!114 &8158158275401702211
 MonoBehaviour:
   m_ObjectHideFlags: 0

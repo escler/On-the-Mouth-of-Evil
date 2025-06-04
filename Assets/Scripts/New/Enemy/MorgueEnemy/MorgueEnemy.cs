@@ -43,6 +43,11 @@ public class MorgueEnemy : Enemy
     
     public bool voodooActivate;
     public Vector3 voodooPosition;
+
+    public bool attackEnded;
+
+    public Vector3 reference = Vector3.zero;
+    public float rotationSmoothTime;
     
     private void Awake()
     {
@@ -65,23 +70,31 @@ public class MorgueEnemy : Enemy
         _fsm = new FiniteStateMachine(idleState, StartCoroutine);
         
         //Spawn
-        //_fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, spawnState, attacksState);
         _fsm.AddTransition(StateTransitions.ToIdle, spawnState, idleState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, spawnState, voodooState);
         
         //Idle
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, idleState, attacksState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToSpawn, idleState, spawnState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, idleState, voodooState);
         
         //Patrol
         _fsm.AddTransition(StateTransitions.ToIdle, patrolState, idleState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, patrolState, attacksState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, patrolState, voodooState);
         
         //Attack
+        //Attack
+        _fsm.AddTransition(StateTransitions.ToIdle, attacksState, idleState);
+        _fsm.AddTransition(StateTransitions.ToPatrol, attacksState, patrolState);
+        _fsm.AddTransition(StateTransitions.ToSpecifyLocation, attacksState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, attacksState, ritualState);
+        _fsm.AddTransition(StateTransitions.ToAttacks, attacksState, attacksState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, attacksState, voodooState);
         
         //ToLocation

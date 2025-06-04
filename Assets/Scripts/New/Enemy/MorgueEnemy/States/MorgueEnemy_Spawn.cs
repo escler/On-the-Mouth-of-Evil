@@ -27,10 +27,10 @@ public class MorgueEnemy_Spawn : MonoBaseState
 
     public override IState ProcessInput()
     {
-        /*if (owner.voodooActivate && stateEnd && Transitions.ContainsKey(StateTransitions.ToVoodoo))
-            return Transitions[StateTransitions.ToVoodoo];*/
+        if (owner.voodooActivate && stateEnd && Transitions.ContainsKey(StateTransitions.ToVoodoo))
+            return Transitions[StateTransitions.ToVoodoo];
         
-        if (/*dontAttack &&*/ stateEnd && Transitions.ContainsKey(StateTransitions.ToIdle))
+        if (dontAttack && stateEnd && Transitions.ContainsKey(StateTransitions.ToIdle))
             return Transitions[StateTransitions.ToIdle];
         
         if (stateEnd && Transitions.ContainsKey(StateTransitions.ToAttacks))
