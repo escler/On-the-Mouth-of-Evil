@@ -116,6 +116,7 @@ public class Cross : Item
 
     public void CheckRoom()
     {
+        PlayerHandler.Instance.PlayerEndDanger();
         var playerRoom = PlayerHandler.Instance.actualRoom;
         if (playerRoom == null) return;
         if (playerRoom.cantBlock) return;

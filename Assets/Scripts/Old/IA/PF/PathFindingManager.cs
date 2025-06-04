@@ -209,7 +209,6 @@ public class PathFindingManager : MonoBehaviour
         {
             if (Vector3.Distance(position, nodes[i].transform.position) < 6)
             {
-                print("Continuo");
                 continue;
             }
             

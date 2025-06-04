@@ -20,6 +20,12 @@ public class PlayerHandler : MonoBehaviour
     public bool cantInteract;
     public bool movingObject;
 
+    public delegate void PlayerInDanger();
+    public event PlayerInDanger OnPlayerInDanger;
+
+    public delegate void PlayerInDangerEnd();
+    public event PlayerInDangerEnd OnPlayerInDangerEnd;
+
 
     private void Awake()
     {
@@ -94,11 +100,23 @@ public class PlayerHandler : MonoBehaviour
         cantInteract = true;
     }
     
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer != 16) return;
+
+        if (actualRoom == null) return;
+        if (other != actualRoom.GetComponent<BoxCollider>()) return;
+
+        actualRoom = null;
+        InfectionHandler.Instance.ActualRoom = null;
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer != 16) return;
 
         actualRoom = other.GetComponent<Room>();
+        InfectionHandler.Instance.ActualRoom = actualRoom;
     }
 
     public void HeadGrabbed(Transform target)
@@ -124,7 +142,16 @@ public class PlayerHandler : MonoBehaviour
         
         PossesPlayer();
     }
-    
+
+    public void PlayerOnDanger()
+    {
+        OnPlayerInDanger?.Invoke();
+    }
+
+    public void PlayerEndDanger()
+    {
+        OnPlayerInDangerEnd?.Invoke();
+    }
     
     
 }

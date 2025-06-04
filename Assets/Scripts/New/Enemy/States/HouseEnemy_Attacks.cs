@@ -319,6 +319,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     
     IEnumerator WaitAnimState()
     {
+        PlayerHandler.Instance.PlayerOnDanger();
         owner.EnemyAnimator.ActivateGrabHead();
         yield return new WaitUntil(() =>
             owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Grabhead"));
@@ -347,6 +348,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         }
         else
         {
+            PlayerHandler.Instance.PlayerEndDanger();
             PlayerHandler.Instance.PossesPlayer();
             owner.grabHead = false;
             owner.EnemyAnimator.ChangeStateAnimation("RosaryTrigger", true);

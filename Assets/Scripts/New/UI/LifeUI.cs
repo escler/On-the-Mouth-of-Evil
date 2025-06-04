@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class LifeUI : MonoBehaviour
 {
@@ -11,11 +10,56 @@ public class LifeUI : MonoBehaviour
     public Image lifeUI;
     public Sprite normalCoin, brokedCoin;
     private int actualLife;
+    bool _corroutineActive = false;
+    
+    public float shakeMagnitude = 10f;
+
+    private Vector3 originalPosition;
+    private bool _shaking;
+
+    private void CalculateShake()
+    {
+        float baseValue = 1920f;
+        shakeMagnitude *= (Screen.width / baseValue);
+    }
+    private void Unshake()
+    {
+        _shaking = false;
+    }
+    
+    private void Shake()
+    {
+        if (_corroutineActive) return;
+        _shaking = true;
+        StartCoroutine(ShakeUI());
+    }
+
+    private IEnumerator ShakeUI()
+    {
+        _corroutineActive = true;
+        float time = 0f;
+
+        while (_shaking)
+        {
+            float xOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
+            float yOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
+            Vector3 newPosition = new Vector3(xOffset, yOffset, 0f) + originalPosition;
+            transform.localPosition = newPosition;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _corroutineActive = false;
+        transform.localPosition = originalPosition;
+    }
 
     private void Awake()
     {
         StartCoroutine(WaitCor()); 
         EnableUI(SceneManager.GetActiveScene(),LoadSceneMode.Single);
+        originalPosition = transform.localPosition;
+        CalculateShake();
     }
 
     IEnumerator WaitCor()
@@ -26,6 +70,8 @@ public class LifeUI : MonoBehaviour
         actualLife = _lifeHandler.ActualLife;
         SceneManager.sceneLoaded += ResetUI;
         SceneManager.sceneLoaded += EnableUI;
+        PlayerHandler.Instance.OnPlayerInDanger += Shake;
+        PlayerHandler.Instance.OnPlayerInDangerEnd += Unshake;
     }
 
     private void OnDestroy()
@@ -33,6 +79,8 @@ public class LifeUI : MonoBehaviour
         SceneManager.sceneLoaded -= ResetUI;
         SceneManager.sceneLoaded -= EnableUI;
         if(_lifeHandler != null) _lifeHandler.OnLifeChange -= ChangeUI;
+        PlayerHandler.Instance.OnPlayerInDanger -= Shake;
+        PlayerHandler.Instance.OnPlayerInDangerEnd -= Unshake;
     }
 
     private void ChangeUI()
@@ -40,6 +88,7 @@ public class LifeUI : MonoBehaviour
         actualLife = _lifeHandler.ActualLife;
         
         lifeUI.sprite = brokedCoin;
+        PlayerHandler.Instance.PlayerEndDanger();
     }
 
     private void ResetUI(Scene scene, LoadSceneMode loadSceneMode)
