@@ -68,7 +68,7 @@ public class Rosary : Item
 
     public bool RosaryProtect()
     {
-        float random = Random.Range(0, 1);
+        float random = Random.Range(0,0.6f);
         bool success = random <= chanceToProtect;
         BreakRosary();
         

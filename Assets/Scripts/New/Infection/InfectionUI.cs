@@ -12,19 +12,25 @@ public class InfectionUI : MonoBehaviour
     private void Awake()
     {
         _slider = GetComponentInChildren<Slider>();
+        StartCoroutine(WaitCor());
+    }
+
+    IEnumerator WaitCor()
+    {
+        yield return new WaitForSeconds(0.1f);
         InitParams();
-        _infectionHandler.OnUpdateInfection += UpdateSlider;
     }
 
     private void OnDestroy()
     {
+        if (_infectionHandler == null) return;
         _infectionHandler.OnUpdateInfection -= UpdateSlider;
     }
 
     private void InitParams()
     {
         _infectionHandler = InfectionHandler.Instance;
-        if (_infectionHandler == null) return;
+        _infectionHandler.OnUpdateInfection += UpdateSlider;
         _slider.maxValue = _infectionHandler.MaxInfection;
         _slider.gameObject.SetActive(false);
     }

@@ -41,6 +41,18 @@ public class InfectionHandler : MonoBehaviour
         if (_actualInfection < maxInfection) return;
         if (_dead) return;
 
+        var itemInHand = Inventory.Instance.inventory[Inventory.Instance.countSelected];
+        if (itemInHand != null)
+        {
+            if (itemInHand.itemName == "Rosary")
+            {
+                _actualInfection = 0;
+                OnUpdateInfection?.Invoke();
+                itemInHand.GetComponent<Rosary>().RosaryProtect();
+                return;
+            }
+        }
+        
         _dead = true;
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
         Inventory.Instance.deleteItem = true;
