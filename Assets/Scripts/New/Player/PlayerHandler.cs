@@ -19,6 +19,7 @@ public class PlayerHandler : MonoBehaviour
     public Animator animator;
     public bool cantInteract;
     public bool movingObject;
+    public GameObject particleStun;
 
     public delegate void PlayerInDanger();
     public event PlayerInDanger OnPlayerInDanger;

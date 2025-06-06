@@ -66,7 +66,6 @@ public class MorgueEnemy_Spawn : MonoBaseState
         }*/
         while (owner.enemyVisibility < 8)
         {
-            print("Estoy en el loop");
             owner.enemyVisibility += .2f;
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             yield return new WaitForSeconds(0.1f);

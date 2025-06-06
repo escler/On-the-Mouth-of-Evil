@@ -17,7 +17,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     public float hipnosisTime;
     private float _actualGrabCD;
     public float grabCD;
-    public int[] enemyAction = { 0, 1}; //0 - CurseRoom / 1 - Stun / 2 - Blind 
+    public int[] enemyAction = { 0, 1 }; //0 - CurseRoom / 1 - Stun / 2 - Blind 
     private int _actualAction;
     private bool animationStarted;
     private float waitingTime;
@@ -53,6 +53,24 @@ public class MorgueEnemy_Attacks : MonoBaseState
         if (_ray) return;
         
         owner.actualTimeToLost = timeToLostPlayer;
+    }
+    private void ChooseAttack()
+    {
+        _actualAction = Random.Range(0, enemyAction.Length + 1);
+        print(enemyAction.Length + 1);
+        print("Ataque Elegido: " + _actualAction);
+        switch (_actualAction)
+        {
+            case 0:
+                AttackCurseRoom();
+                break;
+            case 1:
+                AttackSwarmStun();
+                break;
+            case 2:
+                //OnEnterBlockDoorAttack();
+                break;
+        }
     }
     
     private void Teleport()
@@ -118,22 +136,6 @@ public class MorgueEnemy_Attacks : MonoBaseState
         StartCoroutine(nextAction);
     }
 
-    private void ChooseAttack()
-    {
-        _actualAction = Random.Range(0, enemyAction.Length);
-        switch (_actualAction)
-        {
-            case 0:
-                AttackCurseRoom();
-                break;
-            case 1:
-                AttackSwarmStun();
-                break;
-            case 2:
-                //OnEnterBlockDoorAttack();
-                break;
-        }
-    }
     #region CurseRoom
     void AttackCurseRoom()
     {
@@ -178,6 +180,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     IEnumerator AttackSwarmStunCor()
     {
         float actualTime = 0;
+        PlayerHandler.Instance.particleStun.SetActive(true);
  
         while (actualTime < stunDuration)
         {
@@ -197,6 +200,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
             yield return null;
         }
 
+        PlayerHandler.Instance.particleStun.SetActive(false);
         PlayerHandler.Instance.PossesPlayer();
         owner.attackEnded = true;
     }
@@ -207,6 +211,11 @@ public class MorgueEnemy_Attacks : MonoBaseState
         goal = null;
         _corroutine = false;
         nextAction = null;
+        if (owner.crossUsed)
+        {
+            PlayerHandler.Instance.PossesPlayer();
+            PlayerHandler.Instance.particleStun.SetActive(false);
+        }
         StopAllCoroutines();
         print("Sali de attack");
         waitingTime = 0;
