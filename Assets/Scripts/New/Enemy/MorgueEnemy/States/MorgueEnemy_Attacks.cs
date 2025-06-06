@@ -17,12 +17,15 @@ public class MorgueEnemy_Attacks : MonoBaseState
     public float hipnosisTime;
     private float _actualGrabCD;
     public float grabCD;
-    public int[] enemyAction = { 0}; //0 - CurseRoom / 1 - Stun / 2 - Blind 
+    public int[] enemyAction = { 0, 1}; //0 - CurseRoom / 1 - Stun / 2 - Blind 
     private int _actualAction;
     private bool animationStarted;
     private float waitingTime;
     private bool _corroutine;
     [SerializeField] private float curseDuration;
+    [SerializeField] private float stunDuration;
+
+    private IEnumerator nextAction = null;
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
     {
         base.Enter(from, transitionParameters);
@@ -112,43 +115,98 @@ public class MorgueEnemy_Attacks : MonoBaseState
         waitingTime = 4f;
         goal = null;
         _corroutine = false;
-        CurseRoom();
-        //if (_actualGrabCD <= 0) StartCoroutine(Hipnosis());
-        //else 
+        StartCoroutine(nextAction);
     }
 
     private void ChooseAttack()
     {
+        _actualAction = Random.Range(0, enemyAction.Length);
         switch (_actualAction)
         {
             case 0:
                 AttackCurseRoom();
                 break;
+            case 1:
+                AttackSwarmStun();
+                break;
+            case 2:
+                //OnEnterBlockDoorAttack();
+                break;
         }
     }
-
+    #region CurseRoom
     void AttackCurseRoom()
     {
+        nextAction = CurseRoom();
         Teleport();
     }
 
-    private void CurseRoom()
+    IEnumerator CurseRoom()
     {
         if (owner.actualRoom.swarmActivate || owner.crossUsed)
         {
             owner.attackEnded = true;
-            return;
+            StopCoroutine(CurseRoom());
         }
         owner.actualRoom.ActivateSwarm(curseDuration);
         owner.attackEnded = true;
+        yield return null;
     }
+    #endregion
     
+    #region SwarmStun
+
+    private void AttackSwarmStun()
+    {
+        var playerPos = PlayerHandler.Instance.transform.position;
+        playerPos.y = owner.transform.position.y;
+        var dir = playerPos - transform.position;
+        _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+        Teleport();
+        nextAction = AttackSwarmStunCor();
+        return;
+        if (_ray)
+        {
+            Teleport();
+            nextAction = AttackSwarmStunCor();
+            return;
+        }
+        StartCoroutine(AttackSwarmStunCor());
+    }
+
+    IEnumerator AttackSwarmStunCor()
+    {
+        float actualTime = 0;
+ 
+        while (actualTime < stunDuration)
+        {
+            actualTime += Time.deltaTime;
+            PlayerHandler.Instance.UnPossesPlayer();
+            var playerPos = PlayerHandler.Instance.transform.position;
+            playerPos.y = owner.transform.position.y;
+            var dir = playerPos - transform.position;
+            _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+            if (owner.crossUsed || _ray)
+            {
+                PlayerHandler.Instance.PossesPlayer();
+                owner.attackEnded = true;
+                break;
+            }
+            yield return null;
+        }
+
+        PlayerHandler.Instance.PossesPlayer();
+        owner.attackEnded = true;
+    }
+    #endregion
     public override Dictionary<string, object> Exit(IState to)
     {
-        
         startNode = null;
         goal = null;
         _corroutine = false;
+        nextAction = null;
         StopAllCoroutines();
         print("Sali de attack");
         waitingTime = 0;
