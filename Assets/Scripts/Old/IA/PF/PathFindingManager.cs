@@ -203,20 +203,34 @@ public class PathFindingManager : MonoBehaviour
     {
         var closestNode = _nodes.Where(x => x.room == PlayerHandler.Instance.actualRoom && !x.doorNode);
         Node[] nodes = closestNode.OrderBy(x => (position - x.transform.position).sqrMagnitude).ToArray();
-        var nodesFarthest = nodes.Reverse().ToArray();
+        var shuffleNodes = GetShuffledArray(nodes);
         
-        for (int i = 0; i < nodesFarthest.Length; i++)
+        for (int i = 0; i < shuffleNodes.Length; i++)
         {
-            if (Vector3.Distance(position, nodes[i].transform.position) < 6)
+            if (Vector3.Distance(position, shuffleNodes[i].transform.position) < 6)
             {
                 continue;
             }
             
             print("Retorne el nodo " + i);
-            return nodes[i];
+            return shuffleNodes[i];
         }
 
-        return nodes.Length == 0 ? null : nodes.First();
-        
+        return shuffleNodes.Length == 0 ? null : shuffleNodes.First();
+    }
+
+    T[] GetShuffledArray<T>(T[] input)
+    {
+        T[] array = (T[])input.Clone();
+
+        for (int i = array.Length - 1; i > 0; i--)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            T temp = array[i];
+            array[i] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+
+        return array;
     }
 }

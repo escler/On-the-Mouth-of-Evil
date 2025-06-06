@@ -153,6 +153,10 @@ public class PlayerHandler : MonoBehaviour
     {
         OnPlayerInDangerEnd?.Invoke();
     }
-    
+
+    public void Vomit()
+    {
+        
+    }
     
 }

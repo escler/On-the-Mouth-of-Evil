@@ -17,13 +17,15 @@ public class MorgueEnemy_Attacks : MonoBaseState
     public float hipnosisTime;
     private float _actualGrabCD;
     public float grabCD;
-    public int[] enemyAction = { 0, 1 }; //0 - CurseRoom / 1 - Stun / 2 - Blind 
+    public int[] enemyAction = { 0, 1, 2 }; //0 - CurseRoom / 1 - Stun / 2 - Blind 
     private int _actualAction;
     private bool animationStarted;
     private float waitingTime;
     private bool _corroutine;
     [SerializeField] private float curseDuration;
     [SerializeField] private float stunDuration;
+    public GameObject vomitBall;
+    public Transform vomitBallStart;
 
     private IEnumerator nextAction = null;
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -56,7 +58,8 @@ public class MorgueEnemy_Attacks : MonoBaseState
     }
     private void ChooseAttack()
     {
-        _actualAction = Random.Range(0, enemyAction.Length + 1);
+        //_actualAction = Random.Range(0, enemyAction.Length + 1);
+        _actualAction = 2;
         print(enemyAction.Length + 1);
         print("Ataque Elegido: " + _actualAction);
         switch (_actualAction)
@@ -68,7 +71,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
                 AttackSwarmStun();
                 break;
             case 2:
-                //OnEnterBlockDoorAttack();
+                AttackVomit();
                 break;
         }
     }
@@ -204,6 +207,45 @@ public class MorgueEnemy_Attacks : MonoBaseState
         PlayerHandler.Instance.PossesPlayer();
         owner.attackEnded = true;
     }
+    #endregion
+
+    #region VomitBall
+
+    private void AttackVomit()
+    {
+        var playerPos = PlayerHandler.Instance.transform.position;
+        playerPos.y = owner.transform.position.y;
+        var dir = playerPos - transform.position;
+        _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+        Teleport();
+        nextAction = AttackVomitCor();
+    }
+
+    IEnumerator AttackVomitCor()
+    {
+        var ball = Instantiate(vomitBall, vomitBallStart.position, vomitBallStart.rotation);
+        ball.transform.parent = vomitBallStart;
+        float time = 0;
+        Vector3 original = ball.transform.localScale;
+        Vector3 finalScale = Vector3.one;
+        ball.GetComponent<Rigidbody>().isKinematic = true;
+        while (time < 1)
+        {
+            time += Time.deltaTime * 0.5f;
+            ball.transform.localRotation = vomitBallStart.localRotation;
+            ball.transform.localScale = Vector3.Lerp(original, finalScale, time);
+            yield return null;
+        }
+        //ball.GetComponent<VomitBall>().ThrowBall();
+        ball.GetComponent<Rigidbody>().isKinematic = false;
+        ball.transform.forward = vomitBallStart.forward;
+        ball.transform.parent = null;
+        ball.GetComponent<VomitBall>().StartTrajectory();
+        yield return new WaitForSeconds(.5f);
+        owner.attackEnded = true;
+    }
+
     #endregion
     public override Dictionary<string, object> Exit(IState to)
     {
