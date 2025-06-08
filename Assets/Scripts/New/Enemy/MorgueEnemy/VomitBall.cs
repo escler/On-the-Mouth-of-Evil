@@ -9,6 +9,7 @@ public class VomitBall : MonoBehaviour
     [SerializeField] private GameObject particle;
     [SerializeField] LayerMask layer;
     [SerializeField] private float timeToExplode;
+    [SerializeField] private float splashTime;
     private float _actualTime;
     bool trajectory;
     private Rigidbody _rb;
@@ -39,7 +40,7 @@ public class VomitBall : MonoBehaviour
         if (!trajectory) return;
         if (other.gameObject.layer == 19 || other.gameObject.layer == 2 || other.gameObject.layer == 8)
         {
-            if(other.gameObject.CompareTag("Player")) PlayerHandler.Instance.Vomit();
+            if(other.gameObject.CompareTag("Player")) PlayerHandler.Instance.Vomit(splashTime);
             print("Pegue");
             Explode();
         }

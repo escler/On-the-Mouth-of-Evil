@@ -154,9 +154,10 @@ public class PlayerHandler : MonoBehaviour
         OnPlayerInDangerEnd?.Invoke();
     }
 
-    public void Vomit()
+    public void Vomit(float splashTime)
     {
-        
+        print("Pegue al player");
+        VomitSplashUI.Instance.AddTime(splashTime);
     }
     
 }
