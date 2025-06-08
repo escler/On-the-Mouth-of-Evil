@@ -26,6 +26,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     [SerializeField] private float stunDuration;
     public GameObject vomitBall;
     public Transform vomitBallStart;
+    private VomitBall _actualBall;
 
     private IEnumerator nextAction = null;
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -226,6 +227,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     {
         var ball = Instantiate(vomitBall, vomitBallStart.position, vomitBallStart.rotation);
         ball.transform.parent = vomitBallStart;
+        _actualBall = ball.GetComponent<VomitBall>();
         float time = 0;
         Vector3 original = ball.transform.localScale;
         Vector3 finalScale = Vector3.one;
@@ -253,6 +255,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
         goal = null;
         _corroutine = false;
         nextAction = null;
+        if(_actualBall != null) _actualBall.Explode();
         if (owner.crossUsed)
         {
             PlayerHandler.Instance.PossesPlayer();

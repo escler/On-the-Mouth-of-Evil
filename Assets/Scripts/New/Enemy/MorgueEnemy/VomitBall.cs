@@ -47,7 +47,7 @@ public class VomitBall : MonoBehaviour
 
     }
 
-    private void Explode()
+    public void Explode()
     {
         Instantiate(particle, transform.position, Quaternion.identity);
         Destroy(gameObject);

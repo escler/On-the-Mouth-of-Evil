@@ -50,6 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flickerSound: {fileID: 4662560781465483473}
   _light: {fileID: 1069171317954951588}
+  flickMaterial: 1
+  lightOnColor: {r: 1, g: 1, b: 1, a: 0}
+  lightOffColor: {r: 0, g: 0, b: 0, a: 0}
+  lightRenderer: {fileID: 3342536441537733955}
 --- !u!82 &1069171317954951588
 AudioSource:
   m_ObjectHideFlags: 0
@@ -271,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 1292035936947924240}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.574, y: 0, z: 0.532}
+  m_LocalPosition: {x: 0.5, y: -0.1, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,10 +293,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.9900874, b: 0.9481132, a: 1}
-  m_Intensity: 16.51
-  m_Range: 5.38
-  m_SpotAngle: 101.95349
-  m_InnerSpotAngle: 61.519905
+  m_Intensity: 10
+  m_Range: 5.570917
+  m_SpotAngle: 109.91077
+  m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -320,7 +324,7 @@ Light:
       e32: 0
       e33: 1
     m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
+  m_Cookie: {fileID: 2800000, guid: 9fa342d08257f5742ac23461a13c76e1, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0

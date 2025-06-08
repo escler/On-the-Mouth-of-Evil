@@ -13,10 +13,20 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
     private float _interval;
     public AudioSource _flickerSound;
     public AudioSource _light;
+    [SerializeField] private bool flickMaterial;
+    [ColorUsage(true, true)][SerializeField] Color lightOnColor, lightOffColor;
+    [SerializeField] MeshRenderer lightRenderer;
+    MaterialPropertyBlock _props;
 
     private void Awake()
     {
         _lights = GetComponentsInChildren<Light>();
+        if (flickMaterial)
+        {
+            _props = new MaterialPropertyBlock();
+            _props.SetColor("_EmissionColor", lightOnColor);
+            lightRenderer.SetPropertyBlock(_props);
+        }
     }
 
     public void OnStartInteract()
@@ -37,11 +47,18 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
             {
                 light.enabled = !light.enabled;
             }
-        }
 
+            if (flickMaterial)
+            {
+                _props.SetColor("_EmissionColor", _lights[0].enabled ? lightOnColor : lightOffColor);
+                lightRenderer.SetPropertyBlock(_props);
+
+            }
+        }
         _interval -= Time.deltaTime;
-        
     }
+    
+    
 
     public void OnEndInteract()
     {
@@ -52,5 +69,7 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
         {
             light.enabled = true;
         }
+        _props.SetColor("_EmissionColor", lightOnColor);
+        lightRenderer.SetPropertyBlock(_props);
     }
 }
