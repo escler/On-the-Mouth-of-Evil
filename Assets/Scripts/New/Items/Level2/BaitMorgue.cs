@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scalpel : Item
+public class BaitMorgue : Item
 {
     public override void OnUpdate()
     {
@@ -24,13 +24,14 @@ public class Scalpel : Item
     {
         if (!hit) return;
 
-        if (i.transform.TryGetComponent(out BodyPuzzle body))
+        if (i.transform.TryGetComponent(out BadRitual ritual))
         {
-            if (!body.bloodDrained) return;
-            body.OpenBody();
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
-            Destroy(gameObject);
-            
+            ritual.baitBoxPlaced = true;
+            transform.position = ritual.transform.position + Vector3.up * 0.25f;
+            transform.rotation = ritual.transform.rotation;
+            GetComponent<BoxCollider>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
         }
     }
     
@@ -42,9 +43,9 @@ public class Scalpel : Item
         if (!rayConnected) return false;
         
         if (ObjectDetector.Instance.InteractText()) return true;
-        if (ray.transform.TryGetComponent(out BodyPuzzle body))
+        if (ray.transform.TryGetComponent(out BadRitual ritual))
         {
-            if(body.bloodDrained) return true;
+            return true;
         } 
         return false;
     }

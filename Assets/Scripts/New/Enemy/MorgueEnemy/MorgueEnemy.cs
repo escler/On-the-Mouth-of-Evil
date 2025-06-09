@@ -13,7 +13,7 @@ public class MorgueEnemy : Enemy
     public LayerMask obstacles;
     public PathFinding pf;
     public Room actualRoom, crossRoom;
-    public bool crossUsed;
+    public bool crossUsed, inRitualNode;
     private PlayerHandler _player;
     public float actualTime, timeToShowMe;
     private List<IInteractableEnemy> _objects;
@@ -21,6 +21,8 @@ public class MorgueEnemy : Enemy
     private bool _canInteractWithObjectsEnv;
     public float actualTimeToLost;
     public bool _corroutineActivate;
+
+    public GameObject absorbVFX, magnetVFX;
     
 
     private FiniteStateMachine _fsm;
@@ -78,6 +80,7 @@ public class MorgueEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToPatrol, idleState, patrolState);
         _fsm.AddTransition(StateTransitions.ToAttacks, idleState, attacksState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, idleState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, idleState, ritualState);
         _fsm.AddTransition(StateTransitions.ToSpawn, idleState, spawnState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, idleState, voodooState);
         
@@ -86,9 +89,9 @@ public class MorgueEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToAttacks, patrolState, attacksState);
         _fsm.AddTransition(StateTransitions.ToPatrol, patrolState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, patrolState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, patrolState, ritualState);
         _fsm.AddTransition(StateTransitions.ToVoodoo, patrolState, voodooState);
         
-        //Attack
         //Attack
         _fsm.AddTransition(StateTransitions.ToIdle, attacksState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, attacksState, patrolState);
@@ -101,6 +104,7 @@ public class MorgueEnemy : Enemy
         _fsm.AddTransition(StateTransitions.ToIdle, goToLocationState, idleState);
         _fsm.AddTransition(StateTransitions.ToPatrol, goToLocationState, patrolState);
         _fsm.AddTransition(StateTransitions.ToSpecifyLocation, goToLocationState, goToLocationState);
+        _fsm.AddTransition(StateTransitions.ToRitual, goToLocationState, ritualState);
 
         //Voodoo
         _fsm.AddTransition(StateTransitions.ToPatrol, voodooState, patrolState);

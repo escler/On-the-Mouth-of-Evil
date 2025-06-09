@@ -9,10 +9,18 @@ public class VFXTarget : MonoBehaviour
     public Transform targetEnemy, targetPlayer;
     private Vector3 oldPosEnemy, oldPosPlayer;
     private VisualEffect _vfx;
+    public bool toRitual;
 
     private void Awake()
     {
-        if (PlayerHandler.Instance != null) targetPlayer = PlayerHandler.Instance.particlePivot;
+        if (!toRitual)
+        {
+            if (PlayerHandler.Instance != null) targetPlayer = PlayerHandler.Instance.particlePivot;
+        }
+        else
+        {
+            if(BadRitual.Instance != null) targetPlayer = BadRitual.Instance.transform;
+        }
         _vfx = GetComponent<VisualEffect>();
     }
 

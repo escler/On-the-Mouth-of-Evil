@@ -48,6 +48,7 @@ public class Guts : Item
         {
             if (!ritual.baitBoxPlaced) return;
             ritual.StartRitual();
+            MorgueEnemy.Instance.ritualDone = true;
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             Destroy(gameObject);
         }

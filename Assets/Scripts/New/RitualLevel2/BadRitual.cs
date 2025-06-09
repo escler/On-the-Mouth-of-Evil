@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BadRitual : MonoBehaviour
 {
@@ -32,11 +33,39 @@ public class BadRitual : MonoBehaviour
         Inventory.Instance.cantSwitch = true;
 
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
-        
-        //Lo que activamos al hacer el good ritual
+        yield return new WaitUntil(() => MorgueEnemy.Instance.inRitualNode);
+        var enemy = MorgueEnemy.Instance;
+        while (enemy.enemyVisibility < 8)
+        {
+            enemy.enemyVisibility += Time.deltaTime * 1.6f;
+            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+
+            if (enemy.enemyVisibility >= 2f)
+            {
+                //_enemyAnimator.ChangeStateAnimation("Absorb", true);
+            }
+
+            yield return null;
+        }
 
         yield return new WaitForSeconds(1f);
 
+        enemy.absorbVFX.SetActive(true);
+        enemy.magnetVFX.SetActive(true);
+        
+        while (enemy.enemyVisibility > 0)
+        {
+            enemy.enemyVisibility -= Time.deltaTime * 1.6f;
+            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+
+            yield return null;
+        }
+        
+        yield return new WaitForSeconds(3f);
+        enemy.absorbVFX.GetComponent<VisualEffect>().Stop();
+        enemy.magnetVFX.GetComponent<VisualEffect>().Stop();
+
+        yield return new WaitForSeconds(2f);
         RitualManager.Instance.levitatingItems[1].SetActive(true);
         RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
         
