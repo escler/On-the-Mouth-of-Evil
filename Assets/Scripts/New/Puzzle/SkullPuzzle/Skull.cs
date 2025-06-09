@@ -14,6 +14,7 @@ public class Skull : Item
     private PlayerCam _playerCam;
     public Mark mark;
     public float offset;
+    public int numberSlot;
 
 
     private void Start()

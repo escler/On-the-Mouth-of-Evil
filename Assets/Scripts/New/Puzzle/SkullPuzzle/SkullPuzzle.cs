@@ -8,6 +8,7 @@ public class SkullPuzzle : MonoBehaviour
     public SkullPuzzleSlot[] slots;
     private int count;
     public GameObject ps;
+    [SerializeField] Animator freezerAnimator;
     public static SkullPuzzle Instance { get; private set; }
 
     private void Awake()
@@ -27,21 +28,22 @@ public class SkullPuzzle : MonoBehaviour
         foreach (var slot in slots)
         {
             if (slot.currentSkull == null) break;
-            if (slot.mark != slot.currentSkull.mark) break;
+            if (slot.numberSlot != slot.currentSkull.numberSlot) break;
             if (slot.correctRotation != slot.actualRotation) break;
             count++;
         }
         
         if(count < slots.Length) return;
         
-        DecisionsHandler.Instance.BadChoiceTaked();
+        //DecisionsHandler.Instance.BadChoiceTaked();
 
         foreach (var slot in slots)
         {
             slot.DisableSlot();
         }
 
+        freezerAnimator.SetBool("Open", true);
         ps.SetActive(true);
-        RitualManager.Instance.AltarCompleted();
+        //RitualManager.Instance.AltarCompleted();
     }
 }
