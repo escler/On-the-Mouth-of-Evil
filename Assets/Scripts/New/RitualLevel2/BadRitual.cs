@@ -37,7 +37,7 @@ public class BadRitual : MonoBehaviour
         var enemy = MorgueEnemy.Instance;
         while (enemy.enemyVisibility < 8)
         {
-            enemy.enemyVisibility += Time.deltaTime * 1.6f;
+            enemy.enemyVisibility += Time.deltaTime * 0.8f;
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
 
             if (enemy.enemyVisibility >= 2f)
@@ -47,8 +47,6 @@ public class BadRitual : MonoBehaviour
 
             yield return null;
         }
-
-        yield return new WaitForSeconds(1f);
 
         enemy.absorbVFX.SetActive(true);
         enemy.magnetVFX.SetActive(true);
@@ -60,14 +58,12 @@ public class BadRitual : MonoBehaviour
 
             yield return null;
         }
-        
-        yield return new WaitForSeconds(3f);
+        RitualManager.Instance.levitatingItems[1].SetActive(true);
+        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
         enemy.absorbVFX.GetComponent<VisualEffect>().Stop();
         enemy.magnetVFX.GetComponent<VisualEffect>().Stop();
 
         yield return new WaitForSeconds(2f);
-        RitualManager.Instance.levitatingItems[1].SetActive(true);
-        RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
         
         GameObject item = RitualManager.Instance.levitatingItems[1].gameObject;
         PlayerHandler.Instance.movement.absorbEnd = true;
