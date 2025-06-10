@@ -15,6 +15,12 @@ public class PlayerCam : MonoBehaviour
         public float ticks;
         private Vector3 cameraForward;
 
+        private float yaw;   // rotación acumulada en X (horizontal)
+        private float pitch; // rotación acumulada en Y (vertical)
+
+        private float targetYaw;
+        private float targetPitch;
+        public float smoothSpeed = 10;
         private void Awake()
         {
                 GetValueSens();
@@ -44,15 +50,18 @@ public class PlayerCam : MonoBehaviour
                         _mouseY = 0;
                         return;
                 }
-                _mouseX = Input.GetAxis("Mouse X") * sensX * sens * Time.deltaTime;
-                _mouseY = Input.GetAxis("Mouse Y") * sensY * sens * Time.deltaTime;
-                _xRotation = Mathf.Lerp(_xRotation, _mouseX, .5f);
-                _yRotation += _mouseY;
-                _yRotation = Mathf.Clamp(_yRotation, -limitAngleY, limitAngleY);
-                cameraPos.localRotation =
-                        Quaternion.Slerp(cameraPos.localRotation, Quaternion.Euler(-_yRotation, 0, 0), .5f);
-                //cameraPos.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
-                transform.Rotate(Vector3.up * _xRotation);
+                float mouseX = Input.GetAxis("Mouse X") * sens * sensX * Time.deltaTime;
+                float mouseY = Input.GetAxis("Mouse Y") * sens * sensY * Time.deltaTime;
+                
+                targetYaw += mouseX;
+                targetPitch -= mouseY;
+                targetPitch = Mathf.Clamp(targetPitch, -limitAngleY, limitAngleY);
+
+                yaw = Mathf.Lerp(yaw, targetYaw, Time.deltaTime * smoothSpeed);
+                pitch = Mathf.Lerp(pitch, targetPitch, Time.deltaTime * smoothSpeed);
+
+                transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
+                cameraPos.localRotation = Quaternion.Euler(pitch, 0f, 0f); 
         }
 
         void LookRitual()

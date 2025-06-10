@@ -86,6 +86,11 @@ public class PlayerHandler : MonoBehaviour
         playerCam.CameraLock = false;
     }
 
+    public void StunPlayer()
+    {
+        movement.enabled = false;
+        bobbingCamera.enabled = false;
+    }
     public void ChangePlayerPosses(bool state)
     {
         movement.enabled = state;
