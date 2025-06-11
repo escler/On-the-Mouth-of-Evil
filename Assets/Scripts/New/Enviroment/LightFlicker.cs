@@ -69,6 +69,8 @@ public class LightFlicker : MonoBehaviour, IInteractableEnemy
         {
             light.enabled = true;
         }
+
+        if (!flickMaterial) return;
         _props.SetColor("_EmissionColor", lightOnColor);
         lightRenderer.SetPropertyBlock(_props);
     }
