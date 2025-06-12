@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerCam : MonoBehaviour
 {
@@ -16,14 +14,6 @@ public class PlayerCam : MonoBehaviour
         private bool _inSpot;
         public float ticks;
         private Vector3 cameraForward;
-        private bool _stopLerp;
-
-        private float yaw; // rotación acumulada en X (horizontal)
-        private float pitch; // rotación acumulada en Y (vertical)
-
-        private float targetYaw;
-        private float targetPitch;
-        public float smoothSpeed = 10;
 
         private void Awake()
         {
@@ -54,19 +44,15 @@ public class PlayerCam : MonoBehaviour
                         _mouseY = 0;
                         return;
                 }
-
-                float mouseX = Input.GetAxis("Mouse X") * sens * sensX * Time.deltaTime;
-                float mouseY = Input.GetAxis("Mouse Y") * sens * sensY * Time.deltaTime;
-
-                targetYaw += mouseX;
-                targetPitch -= mouseY;
-                targetPitch = Mathf.Clamp(targetPitch, -limitAngleY, limitAngleY);
-
-                yaw = Mathf.Lerp(yaw, targetYaw, Time.deltaTime * smoothSpeed);
-                pitch = Mathf.Lerp(pitch, targetPitch, Time.deltaTime * smoothSpeed);
-
-                transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
-                cameraPos.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+                _mouseX = Input.GetAxis("Mouse X") * sensX * sens * Time.deltaTime;
+                _mouseY = Input.GetAxis("Mouse Y") * sensY * sens * Time.deltaTime;
+                _xRotation = Mathf.Lerp(_xRotation, _mouseX, .5f);
+                _yRotation += _mouseY;
+                _yRotation = Mathf.Clamp(_yRotation, -limitAngleY, limitAngleY);
+                cameraPos.localRotation =
+                        Quaternion.Slerp(cameraPos.localRotation, Quaternion.Euler(-_yRotation, 0, 0), .5f);
+                //cameraPos.localRotation = Quaternion.Euler(-_yRotation, 0, 0);
+                transform.Rotate(Vector3.up * _xRotation);
         }
 
         void LookRitual()
@@ -75,8 +61,7 @@ public class PlayerCam : MonoBehaviour
                 if (_lookVoodoDoll) return;
                 var target = transform.localRotation;
                 target.x = Quaternion.identity.x;
-                cameraPos.localRotation =
-                        Quaternion.Slerp(cameraPos.localRotation, Quaternion.identity, .7f * Time.deltaTime);
+                cameraPos.localRotation = Quaternion.Slerp(cameraPos.localRotation, Quaternion.identity, .7f * Time.deltaTime);
                 _yRotation = 0;
         }
 
@@ -87,7 +72,6 @@ public class PlayerCam : MonoBehaviour
                         cameraForward = cameraPos.forward;
                         return;
                 }
-
                 ticks += Time.deltaTime;
 
                 Vector3 dir = RitualManager.Instance.actualItemActive.transform.position - cameraPos.position;
@@ -95,7 +79,8 @@ public class PlayerCam : MonoBehaviour
                 cameraPos.forward = Vector3.Lerp(cameraForward, dir, ticks);
 
         }
-
+        
+        
         private void GetValueSens()
         {
                 if (PlayerPrefs.HasKey("Sens"))
@@ -108,16 +93,5 @@ public class PlayerCam : MonoBehaviour
                 sens = 1;
                 PlayerPrefs.SetFloat("Sens",sens);
                 PlayerPrefs.Save();
-        }
-
-        public void ResetVar(Vector3 eulers)
-        {
-                float initialYaw = eulers.y;
-                float initialPitch = eulers.x;
-                
-                yaw = initialYaw;
-                targetYaw = initialYaw;
-                pitch = initialPitch;
-                targetPitch = initialPitch;
         }
 }

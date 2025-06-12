@@ -9,6 +9,6 @@ public class StartPosPlayer : MonoBehaviour
     {
         if (PlayerHandler.Instance == null) return;
         PlayerHandler.Instance.transform.position = transform.position;
-        PlayerHandler.Instance.playerCam.ResetVar(transform.eulerAngles);
+        PlayerHandler.Instance.transform.rotation = transform.rotation;
     }
 }
