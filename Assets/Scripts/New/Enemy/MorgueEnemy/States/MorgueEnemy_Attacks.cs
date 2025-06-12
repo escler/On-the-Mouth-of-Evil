@@ -59,8 +59,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     }
     private void ChooseAttack()
     {
-        //_actualAction = Random.Range(0, enemyAction.Length + 1);
-        _actualAction = 2;
+        _actualAction = Random.Range(0, enemyAction.Length + 1);
         print(enemyAction.Length + 1);
         print("Ataque Elegido: " + _actualAction);
         switch (_actualAction)
@@ -189,7 +188,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
         while (actualTime < stunDuration)
         {
             actualTime += Time.deltaTime;
-            PlayerHandler.Instance.UnPossesPlayer();
+            PlayerHandler.Instance.StunPlayer();
             var playerPos = PlayerHandler.Instance.transform.position;
             playerPos.y = owner.transform.position.y;
             var dir = playerPos - transform.position;

@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private float _actualSpeed, _inputX, _inputY;
     private Rigidbody _rb;
     private bool _run;
-    private AudioSource _walkAudioSource;
     public bool ritualCinematic;
     public bool inSpot;
     private Vector3 reference = Vector3.zero;
@@ -69,20 +68,6 @@ public class PlayerMovement : MonoBehaviour
         if(isWalking && !walking.isPlaying) walking.Play();
         
         if(!isWalking && walking.isPlaying) walking.Stop();
-
-       /* if (isWalking && _walkAudioSource == null)
-        {
-            MusicManager.Instance.PlaySound("Footsteps-concrete", true, (source) =>
-            {
-                _walkAudioSource = source;
-            });
-        }
-        else if (!isWalking && _walkAudioSource != null)
-        {
-            print("Entro aca");
-            MusicManager.Instance.StopSound(_walkAudioSource);
-            _walkAudioSource = null;
-        }*/
     }
 
     public void GoToVoodoo(Vector3 item)
