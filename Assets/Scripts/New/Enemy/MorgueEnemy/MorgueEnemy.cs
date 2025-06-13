@@ -21,6 +21,7 @@ public class MorgueEnemy : Enemy
     private bool _canInteractWithObjectsEnv;
     public float actualTimeToLost;
     public bool _corroutineActivate;
+    public MorgueEnemyAnim anim;
 
     public GameObject absorbVFX, magnetVFX;
     
@@ -183,7 +184,7 @@ public class MorgueEnemy : Enemy
     {
         if (actualRoom != PlayerHandler.Instance.actualRoom) return;
         crossUsed = true;
-        //_enemyAnimator.ChangeStateAnimation("CrossUsed", true);
+        anim.animator.SetBool("CrossUsed", true);
     }
     
     public void HideEnemy()
@@ -206,5 +207,10 @@ public class MorgueEnemy : Enemy
         }
         enemyVisible = false;
         _corroutineActivate = false;
+    }
+
+    public void ThrowVomit()
+    {
+        attacksState.ThrowVomit();
     }
 }

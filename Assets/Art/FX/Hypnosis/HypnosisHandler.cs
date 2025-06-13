@@ -43,7 +43,7 @@ public class HypnosisHandler : MonoBehaviour
         GetLights(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.ambientIntensity = .53f;
+        RenderSettings.ambientIntensity = .3f;
         //RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
         DynamicGI.UpdateEnvironment();
 
@@ -124,7 +124,7 @@ public class HypnosisHandler : MonoBehaviour
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.ambientIntensity = scene.name == "Menu" ? 0.0f : 0.53f;
+        RenderSettings.ambientIntensity = scene.name == "Menu" ? 0.0f : 0.3f;
         DynamicGI.UpdateEnvironment();
     }
 

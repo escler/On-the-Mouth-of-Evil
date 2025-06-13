@@ -59,8 +59,8 @@ public class MorgueEnemy_Attacks : MonoBaseState
     }
     private void ChooseAttack()
     {
-        _actualAction = Random.Range(0, enemyAction.Length + 1);
-        print(enemyAction.Length + 1);
+        _actualAction = Random.Range(0, 3);
+        _actualAction = 2;
         print("Ataque Elegido: " + _actualAction);
         switch (_actualAction)
         {
@@ -224,27 +224,23 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     IEnumerator AttackVomitCor()
     {
-        var ball = Instantiate(vomitBall, vomitBallStart.position, vomitBallStart.rotation);
-        ball.transform.parent = vomitBallStart;
-        _actualBall = ball.GetComponent<VomitBall>();
-        float time = 0;
-        Vector3 original = ball.transform.localScale;
-        Vector3 finalScale = Vector3.one;
-        ball.GetComponent<Rigidbody>().isKinematic = true;
-        while (time < 1)
-        {
-            time += Time.deltaTime * 0.5f;
-            ball.transform.localRotation = vomitBallStart.localRotation;
-            ball.transform.localScale = Vector3.Lerp(original, finalScale, time);
-            yield return null;
-        }
-        //ball.GetComponent<VomitBall>().ThrowBall();
-        ball.GetComponent<Rigidbody>().isKinematic = false;
-        ball.transform.forward = vomitBallStart.forward;
-        ball.transform.parent = null;
-        ball.GetComponent<VomitBall>().StartTrajectory();
-        yield return new WaitForSeconds(.5f);
+        owner.anim.animator.SetBool("Vomit", true);
+        yield return new WaitUntil(() => owner.anim.animator.
+            GetCurrentAnimatorStateInfo(0).IsName("Vomit"));
+        
+        owner.anim.animator.SetBool("Vomit", false);
+        yield return new WaitUntil(() => !owner.anim.animator.
+            GetCurrentAnimatorStateInfo(0).IsName("Vomit"));
+
         owner.attackEnded = true;
+    }
+
+    public void ThrowVomit()
+    {
+        var ball = Instantiate(vomitBall, vomitBallStart.position, vomitBallStart.rotation);
+        _actualBall = ball.GetComponent<VomitBall>();
+        ball.transform.forward = vomitBallStart.forward;
+        ball.GetComponent<VomitBall>().StartTrajectory();
     }
 
     #endregion
