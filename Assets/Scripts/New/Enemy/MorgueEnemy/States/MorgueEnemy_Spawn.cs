@@ -45,7 +45,7 @@ public class MorgueEnemy_Spawn : MonoBaseState
         dontAttack = false;
         stateEnd = false;
         StopAllCoroutines();    
-        //owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
+        owner.anim.ChangeState("Spawn", false);
         return base.Exit(to);
     }
     
@@ -57,9 +57,9 @@ public class MorgueEnemy_Spawn : MonoBaseState
             stateEnd = true;
             yield break;
         }
-        //owner.EnemyAnimator.ChangeStateAnimation("Spawn", true);
+        owner.anim.ChangeState("Spawn", true);
         yield return new WaitForSeconds(0.01f);
-        //owner.EnemyAnimator.ChangeStateAnimation("Spawn", false);
+        owner.anim.ChangeState("Spawn", false);
         /*foreach (var ps in owner.smokePS)
         {
             ps.Play();

@@ -14,6 +14,16 @@ public class MorgueEnemyAnim : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void ChangeState(string state, bool value)
+    {
+        animator.SetBool(state, value);
+    }
+
+    public void ChangeTrigger(string trigger)
+    {
+        animator.SetTrigger(trigger);
+    }
+
     public void DisableBoolCross()
     {
         animator.SetBool("CrossUsed", false);

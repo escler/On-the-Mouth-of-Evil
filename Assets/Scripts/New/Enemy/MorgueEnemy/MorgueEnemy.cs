@@ -184,7 +184,7 @@ public class MorgueEnemy : Enemy
     {
         if (actualRoom != PlayerHandler.Instance.actualRoom) return;
         crossUsed = true;
-        anim.animator.SetBool("CrossUsed", true);
+        anim.ChangeState("CrossUsed", true);
     }
     
     public void HideEnemy()
@@ -192,7 +192,7 @@ public class MorgueEnemy : Enemy
         if (_corroutineActivate) return;
         
         StartCoroutine(HideEnemyLerp());
-        //_enemyAnimator.ChangeStateAnimation("Spawn", false);
+        anim.ChangeState("Spawn", false);
         appear = false;
     }
     

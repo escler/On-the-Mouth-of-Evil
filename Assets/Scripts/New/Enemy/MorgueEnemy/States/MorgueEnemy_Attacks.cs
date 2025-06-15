@@ -57,10 +57,14 @@ public class MorgueEnemy_Attacks : MonoBaseState
         
         owner.actualTimeToLost = timeToLostPlayer;
     }
+
+    private void TriggerAppear()
+    {
+        owner.anim.ChangeTrigger("Appear");
+    }
     private void ChooseAttack()
     {
         _actualAction = Random.Range(0, 3);
-        _actualAction = 2;
         print("Ataque Elegido: " + _actualAction);
         switch (_actualAction)
         {
@@ -110,10 +114,10 @@ public class MorgueEnemy_Attacks : MonoBaseState
     IEnumerator TeleportCor()
     {
         _corroutine = true;
-        //TriggerDissapear();
+        TriggerAppear();
         while (owner.enemyVisibility > 0)
         {
-            owner.enemyVisibility -= .5f;
+            owner.enemyVisibility -= 1f;
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
@@ -128,14 +132,17 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
         while (owner.enemyVisibility < 8)
         {
-            owner.enemyVisibility += .5f;
+            owner.enemyVisibility += 1f;
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             yield return new WaitForSeconds(0.1f);
         }
 
         waitingTime = 4f;
+
+        yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Appear"));
         goal = null;
         _corroutine = false;
+        
         StartCoroutine(nextAction);
     }
 
@@ -148,8 +155,11 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     IEnumerator CurseRoom()
     {
+        owner.anim.ChangeState("CurseRoom", true);
+        yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
         if (owner.actualRoom.swarmActivate || owner.crossUsed)
         {
+            yield return new WaitUntil(() => !owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
             owner.attackEnded = true;
             StopCoroutine(CurseRoom());
         }
@@ -182,6 +192,8 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     IEnumerator AttackSwarmStunCor()
     {
+        owner.anim.ChangeState("SwarmAttack", true);
+        yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
         float actualTime = 0;
         PlayerHandler.Instance.particleStun.SetActive(true);
  
@@ -259,6 +271,10 @@ public class MorgueEnemy_Attacks : MonoBaseState
         StopAllCoroutines();
         print("Sali de attack");
         waitingTime = 0;
+        
+        owner.anim.ChangeState("CurseRoom", false);
+        owner.anim.ChangeState("SwarmAttack", false);
+        owner.anim.ChangeState("Vomit", false);
 
         owner.attackEnded = false;
         
