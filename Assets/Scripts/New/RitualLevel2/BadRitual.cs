@@ -35,10 +35,12 @@ public class BadRitual : MonoBehaviour
         yield return new WaitUntil(() => PlayerHandler.Instance.movement.inSpot);
         yield return new WaitUntil(() => MorgueEnemy.Instance.inRitualNode);
         var enemy = MorgueEnemy.Instance;
-        while (enemy.enemyVisibility < 8)
+        while (enemy.enemyVisibility < 4)
         {
-            enemy.enemyVisibility += Time.deltaTime * 0.8f;
+            enemy.enemyVisibility += Time.deltaTime * 1.6f;
+            enemy.enemyVisibility = Mathf.Clamp(enemy.enemyVisibility, 0, 8);
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+            print(enemy.enemyVisibility);
 
             if (enemy.enemyVisibility >= 2f)
             {
@@ -47,13 +49,25 @@ public class BadRitual : MonoBehaviour
 
             yield return null;
         }
+        print("Bad Ritual Sali del While Aparecer");
+        
+        enemy.anim.ChangeState("Absorb", true);
 
         enemy.absorbVFX.SetActive(true);
         enemy.magnetVFX.SetActive(true);
         
-        while (enemy.enemyVisibility > 0)
+        yield return new WaitUntil(() => enemy.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
+        var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        var speed = enemy.anim.animator.speed;
+        var realDuration = enemyClip / speed;
+        float startVisibility = enemy.enemyVisibility;
+        float elapsed = 0f;
+
+        while (elapsed < realDuration)
         {
-            enemy.enemyVisibility -= Time.deltaTime * 1.6f;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / realDuration);
+            enemy.enemyVisibility = Mathf.Lerp(startVisibility, 0f, t);
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
 
             yield return null;

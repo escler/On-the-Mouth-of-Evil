@@ -42,11 +42,12 @@ public class MorgueEnemy_Ritual : MonoBaseState
 
     IEnumerator Startcor()
     {
-        StartCoroutine(HideEnemy());
+        /*StartCoroutine(HideEnemy());
         while (owner.enemyVisibility > 0)
         {
             yield return new WaitForSeconds(0.01f);
-        }
+        }*/
+        yield return null;
         GoToNodeGoal();
     }
 
@@ -101,11 +102,8 @@ public class MorgueEnemy_Ritual : MonoBaseState
         target.y = owner.transform.position.y;
         owner.transform.position = target;
         StartCoroutine(RitualBadSequenceCor());
-        if (Vector3.Distance(target, owner.transform.position) <= 0.1f)
-        {
-            _pathFinish = true;
-            owner.inRitualNode = true;
-        }
+        _pathFinish = true;
+        owner.inRitualNode = true;
     }
 
     public override Dictionary<string, object> Exit(IState to)
