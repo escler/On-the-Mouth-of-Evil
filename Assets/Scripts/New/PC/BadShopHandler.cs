@@ -14,5 +14,6 @@ public class BadShopHandler : MonoBehaviour
     private void CheckItemsEnable()
     {
         items[0].SetActive(PlayerPrefs.GetInt("VoodooAvaible") == 1);
+        items[1].SetActive(PlayerPrefs.GetInt("SwarmAvaible") == 1);
     }
 }

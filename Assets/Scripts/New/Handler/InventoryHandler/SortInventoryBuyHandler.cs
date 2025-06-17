@@ -41,6 +41,12 @@ public class SortInventoryBuyHandler : MonoBehaviour
             case "Rosary":
                 RosaryHandler.Instance.AddItem(item.gameObject);
                 break;
+            case "Swarm":
+                SwarmHandler.Instance.AddItem(item.gameObject);
+                break;
+            case "Incense":
+                IncenseHandler.Instance.AddItem(item.gameObject);
+                break;
         }
     }
 
@@ -54,6 +60,8 @@ public class SortInventoryBuyHandler : MonoBehaviour
             "Salt" => SaltHandler.Instance,
             "Voodoo Doll" => VoodooHandler.Instance,
             "Rosary" => RosaryHandler.Instance,
+            "Swarm" => SwarmHandler.Instance,
+            "Incense" => IncenseHandler.Instance,
             _ => null
         };
     }
@@ -68,6 +76,8 @@ public class SortInventoryBuyHandler : MonoBehaviour
             "Salt" => "Salt",
             "Voodoo Doll" => "Voodoo",
             "Rosary" => "Rosary",
+            "Swarm" => "Swarm",
+            "Incense" => "Incense",
             _ => ""
         };
 

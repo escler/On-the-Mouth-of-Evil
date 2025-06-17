@@ -40,7 +40,7 @@ public class DecisionsHandler : MonoBehaviour
         if(!PlayerPrefs.HasKey("VoodooAvaible"))PlayerPrefs.SetInt("VoodooAvaible", 0);
         if(!PlayerPrefs.HasKey("RosaryAvaible"))PlayerPrefs.SetInt("RosaryAvaible", 0);
         if(!PlayerPrefs.HasKey("SwarmAvaible"))PlayerPrefs.SetInt("SwarmAvaible", 0);
-        if(!PlayerPrefs.HasKey("InciensoAvaible"))PlayerPrefs.SetInt("InciensoAvaible", 0);
+        if(!PlayerPrefs.HasKey("IncenseAvaible"))PlayerPrefs.SetInt("IncienseAvaible", 0);
     }
 
     public void GoodChoiceTaked()

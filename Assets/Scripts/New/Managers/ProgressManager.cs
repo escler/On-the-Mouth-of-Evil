@@ -42,7 +42,7 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("TutorialCompleted", 0); 
         PlayerPrefs.SetInt("VoodooAvaible", 0);
         PlayerPrefs.SetInt("RosaryAvaible", 0);
-        PlayerPrefs.SetInt("InciensoAvaible", 0);
+        PlayerPrefs.SetInt("IncenseAvaible", 0);
         PlayerPrefs.SetInt("SwarmAvaible", 0);
         
         

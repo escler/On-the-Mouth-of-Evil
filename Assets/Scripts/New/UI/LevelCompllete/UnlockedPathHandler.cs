@@ -16,7 +16,7 @@ public class UnlockedPathHandler : MonoBehaviour
         print(PlayerPrefs.GetInt("RosaryAvaible") + " Rosario");
         print(PlayerPrefs.GetInt("VoodooAvaible") + " Voodoo");
         print(PlayerPrefs.GetInt("SwarmAvaible") + " Swarm");
-        print(PlayerPrefs.GetInt("InciensoAvaible") + " Incienso");
+        print(PlayerPrefs.GetInt("IncenseAvaible") + " Incienso");
         newItemUnlockedText.SetActive(false);
         CheckLevelsItems();
         title.text = DecisionsHandler.Instance.badPath ? "Bad Ending Done" : "Good Ending Done";
@@ -66,7 +66,11 @@ public class UnlockedPathHandler : MonoBehaviour
             }
         }
 
-        if (name != "MorgueLevel") return;
+        if (level != "MorgueLevel")
+        {
+            print("Entre al return");
+            return;
+        }
         
         if (badPath)
         {
@@ -76,26 +80,26 @@ public class UnlockedPathHandler : MonoBehaviour
                 PlayerPrefs.SetInt("SwarmAvaible", 1);
                 PlayerPrefs.Save();
                 newItemUnlockedText.SetActive(true);
-                goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+                goodItem.UnlockedItem(PlayerPrefs.GetInt("IncenseAvaible") == 1);
                 return;
             }
                     
-            goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+            goodItem.UnlockedItem(PlayerPrefs.GetInt("IncenseAvaible") == 1);
             badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
         }
         else
         {
-            if (PlayerPrefs.GetInt("InciensoAvaible") == 0)
+            if (PlayerPrefs.GetInt("IncenseAvaible") == 0)
             {
                 goodItem.UnlockItem();
-                PlayerPrefs.SetInt("InciensoAvaible", 1);
+                PlayerPrefs.SetInt("IncenseAvaible", 1);
                 PlayerPrefs.Save();
                 newItemUnlockedText.SetActive(true);
                 badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
                 return;
             }
                     
-            goodItem.UnlockedItem(PlayerPrefs.GetInt("InciensoAvaible") == 1);
+            goodItem.UnlockedItem(PlayerPrefs.GetInt("IncenseAvaible") == 1);
             badItem.UnlockedItem(PlayerPrefs.GetInt("SwarmAvaible") == 1);
         }
     }

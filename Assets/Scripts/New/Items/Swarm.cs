@@ -12,6 +12,7 @@ public class Swarm : Item
     public float speedSwarm;
     public Animator animator;
     public GameObject swarmPsIdle;
+    public MeshRenderer[] meshRenderers;
     
     private void Awake()
     {
@@ -89,7 +90,19 @@ public class Swarm : Item
     public override void OnGrabItem()
     {
         transform.localEulerAngles = angleHand;
+        foreach (var meshRenderer in meshRenderers)
+        {
+            meshRenderer.gameObject.layer = 18;
+        }
         Inventory.Instance.AddSpecialItem(this);
     }
 
+    public override void OnDropItem()
+    {
+        gameObject.SetActive(true);
+        foreach (var meshRenderer in meshRenderers)
+        {
+            meshRenderer.gameObject.layer = 1;
+        }
+    }
 }
