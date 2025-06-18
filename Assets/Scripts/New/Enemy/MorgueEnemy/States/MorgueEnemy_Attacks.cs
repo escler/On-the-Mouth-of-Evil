@@ -155,7 +155,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     IEnumerator CurseRoom()
     {
-        owner.anim.ChangeState("CurseRoom", true);
+        owner.anim.ChangeTrigger("CurseRoom");
         yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
         if (owner.actualRoom.swarmActivate || owner.crossUsed)
         {
@@ -164,6 +164,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
             StopCoroutine(CurseRoom());
         }
         owner.actualRoom.ActivateSwarm(curseDuration);
+        yield return new WaitUntil(() => !owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
         owner.attackEnded = true;
         yield return null;
     }
@@ -272,7 +273,6 @@ public class MorgueEnemy_Attacks : MonoBaseState
         print("Sali de attack");
         waitingTime = 0;
         
-        owner.anim.ChangeState("CurseRoom", false);
         owner.anim.ChangeState("SwarmAttack", false);
         owner.anim.ChangeState("Vomit", false);
 

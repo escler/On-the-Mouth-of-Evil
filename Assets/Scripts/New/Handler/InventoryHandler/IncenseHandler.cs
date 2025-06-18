@@ -29,7 +29,7 @@ public class IncenseHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
-        count = PlayerPrefs.HasKey("IncienseCount") ? PlayerPrefs.GetInt("IncienseCount") : 0;
+        count = PlayerPrefs.HasKey("IncenseCount") ? PlayerPrefs.GetInt("IncenseCount") : 0;
         incienses.Clear();
         
         for (int i = 0; i < count; i++)

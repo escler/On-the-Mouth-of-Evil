@@ -123,14 +123,14 @@ public class MorgueEnemy : Enemy
         TimeToShow();
         
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
-        compareRoom = _player.actualRoom == actualRoom;
+        compareRoom = _player.actualRoom == actualRoom && !_player.incenseProtect;
         canAttackPlayer = enemyVisible && actualTimeToLost > 0;
     }
 
     private void CompareRooms()
     {
         if (_player.actualRoom == null) return;
-        if (_player.actualRoom != actualRoom)
+        if (_player.actualRoom != actualRoom || _player.incenseProtect)
         {
             if (_objects.Count() > 0)
             {
@@ -145,6 +145,7 @@ public class MorgueEnemy : Enemy
             return;
         }
         
+        if (_player.incenseProtect) return;
         if (!_canInteractWithObjectsEnv) return;
         print("Room Igual");
         _canInteractWithObjectsEnv = false;

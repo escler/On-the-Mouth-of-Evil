@@ -20,6 +20,7 @@ public class PlayerHandler : MonoBehaviour
     public bool cantInteract;
     public bool movingObject;
     public GameObject particleStun;
+    public bool incenseProtect;
 
     public delegate void PlayerInDanger();
     public event PlayerInDanger OnPlayerInDanger;

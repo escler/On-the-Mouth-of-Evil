@@ -168,7 +168,7 @@ public class HouseEnemy : Enemy
         TimeToShow();
 
         if (actualTimeToLost > 0) actualTimeToLost -= Time.deltaTime;
-        compareRoom = _player.actualRoom == actualRoom;
+        compareRoom = _player.actualRoom == actualRoom && !_player.incenseProtect;
         canAttackPlayer = enemyVisible && actualTimeToLost > 0;
     }
 
@@ -396,6 +396,7 @@ public class HouseEnemy : Enemy
             return;
         }
 
+        if (_player.incenseProtect) return;
         if (!canInteract) return;
         canInteract = false;
         var objectsInRoom = actualRoom.interactableEnemy.ToList();

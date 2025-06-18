@@ -95,6 +95,7 @@ public class Swarm : Item
             meshRenderer.gameObject.layer = 18;
         }
         Inventory.Instance.AddSpecialItem(this);
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
     }
 
     public override void OnDropItem()
@@ -104,5 +105,8 @@ public class Swarm : Item
         {
             meshRenderer.gameObject.layer = 1;
         }
+        
+        SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
+
     }
 }
