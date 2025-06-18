@@ -18,6 +18,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
     private bool _cantGrab;
     public AudioSource _girar;
     public int numberSlot;
+    public GameObject[] correctPs;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
         currentSkull.transform.rotation = slotTransform.rotation;
         currentSkull.transform.SetParent(slotTransform);
         SkullPuzzle.Instance.CheckPuzzleState();
+        CheckCorrectState();
     }
 
     public void InteractWithSkull(Skull skull)
@@ -94,6 +96,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
         SkullPuzzle.Instance.CheckPuzzleState();
 
         _cantRotate = false;
+        CheckCorrectState();
     }
     
 
@@ -123,5 +126,17 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
     public void OnInteractWithThisObject()
     {
         OnInteractWithObject();
+    }
+
+    private void CheckCorrectState()
+    {
+        if (currentSkull == null) return;
+        if (numberSlot != currentSkull.numberSlot) return;
+        if (correctRotation != actualRotation) return;
+
+        foreach (var c in correctPs)
+        {
+            c.SetActive(true);
+        }
     }
 }

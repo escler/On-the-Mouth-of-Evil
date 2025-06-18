@@ -7,6 +7,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
     [SerializeField] private Transform pivot, finalPos;
     HandleMachine _handleMachine;
     [SerializeField] private GameObject goodAura;
+    [SerializeField] private GameObject elecPs;
     public void PlaceHandle(HandleMachine handleMachine)
     {
         handleMachine.transform.parent = pivot;
@@ -45,9 +46,15 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
         var initialX = pivot.localRotation.x;
         var finalX = finalPos.localRotation.x;
         float time = 0;
-
+        bool electActive = false;
+        
         while (time < 1)
         {
+            if (!electActive)
+            {
+                elecPs.gameObject.SetActive(true);
+                electActive = true;
+            }
             initial.x = Mathf.Lerp(initialX, finalX, time);
             pivot.localRotation = initial;
             time += Time.deltaTime;
