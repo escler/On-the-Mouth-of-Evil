@@ -93,5 +93,6 @@ public class BadRitual : MonoBehaviour
         
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
+        MailHandler.Instance.AddEmail("bad");
     }
 }

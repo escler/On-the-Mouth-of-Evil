@@ -55,5 +55,7 @@ public class ProgressManager : MonoBehaviour
         
         
         PlayerPrefs.Save();
+        
+        MailHandler.Instance.ResetEmails();
     }
 }
