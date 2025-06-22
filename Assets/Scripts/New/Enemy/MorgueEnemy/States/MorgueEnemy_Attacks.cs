@@ -52,7 +52,12 @@ public class MorgueEnemy_Attacks : MonoBaseState
         }
         
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
-        
+
+        if (owner.Player.incenseProtect)
+        {
+            owner.actualTimeToLost = 0;
+            return;
+        }
         if (_ray) return;
         
         owner.actualTimeToLost = timeToLostPlayer;

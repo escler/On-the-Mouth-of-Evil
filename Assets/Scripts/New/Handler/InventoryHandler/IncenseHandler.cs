@@ -34,6 +34,7 @@ public class IncenseHandler : InventoryItemHandler
         
         for (int i = 0; i < count; i++)
         {
+            if (incienses.Count >= countMax) return;
             var go = Instantiate(handlerItem.gameObject);
             incienses.Add(go);
             if (SceneManager.GetActiveScene().name != "Hub") return;

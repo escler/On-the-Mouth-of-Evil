@@ -22,6 +22,8 @@ public class MorgueEnemy : Enemy
     public float actualTimeToLost;
     public bool _corroutineActivate;
     public MorgueEnemyAnim anim;
+    
+    public PlayerHandler Player => _player;
 
     public GameObject absorbVFX, magnetVFX;
     

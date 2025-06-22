@@ -21,6 +21,9 @@ public class PlayerHandler : MonoBehaviour
     public bool movingObject;
     public GameObject particleStun;
     public bool incenseProtect;
+    public float incenseTimer;
+    private float _actualTimer;
+    public Transform incensePivot;
 
     public delegate void PlayerInDanger();
     public event PlayerInDanger OnPlayerInDanger;
@@ -61,6 +64,8 @@ public class PlayerHandler : MonoBehaviour
 
     private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)
     {
+        incenseProtect = false;
+        _actualTimer = 0;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.None;
         PossesPlayer();
         movement.inSpot = false;
@@ -137,14 +142,16 @@ public class PlayerHandler : MonoBehaviour
         UnPossesPlayer();
         while (HouseEnemy.Instance.grabHead)
         {
-            Quaternion lookDirection = Quaternion.LookRotation(point.position - transform.position).normalized;
-            lookDirection.x = transform.rotation.x;
-            lookDirection.z = transform.rotation.z;
+            Vector3 direction = point.position - transform.position;
+            direction.y = 0f;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, 10f * Time.deltaTime);
-            
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookDirection = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookDirection, 10f * Time.deltaTime);
+            }
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
         
         PossesPlayer();
@@ -162,8 +169,26 @@ public class PlayerHandler : MonoBehaviour
 
     public void Vomit(float splashTime)
     {
-        print("Pegue al player");
         VomitSplashUI.Instance.AddTime(splashTime);
+    }
+
+    IEnumerator IncenseActivateCor()
+    {
+        _actualTimer = 0;
+        while (_actualTimer < incenseTimer)
+        {
+            _actualTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        incenseProtect = false;
+    }
+
+    public void IncenseActivate()
+    {
+        incenseProtect = true;
+        StopCoroutine(IncenseActivateCor());
+        StartCoroutine(IncenseActivateCor());
     }
     
 }

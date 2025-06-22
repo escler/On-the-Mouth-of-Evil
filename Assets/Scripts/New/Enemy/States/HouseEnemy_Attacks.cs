@@ -113,6 +113,12 @@ public class HouseEnemy_Attacks : MonoBaseState
             _actualGrabCD -= Time.deltaTime;
         }
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
+
+        if (owner.Player.incenseProtect)
+        {
+            owner.actualTimeToLost = 0;
+            return;
+        }
         
         if (_ray) return;
         
@@ -327,7 +333,7 @@ public class HouseEnemy_Attacks : MonoBaseState
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", false);
         
         owner.grabHead = true;
-        PlayerHandler.Instance.HeadGrabbed(owner.transform);
+        PlayerHandler.Instance.HeadGrabbed(owner.headPos);
         while (owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("Grabhead"))
         {
             Quaternion lookDirection = Quaternion.LookRotation(PlayerHandler.Instance.transform.position - owner.transform.position).normalized;
@@ -410,6 +416,12 @@ public class HouseEnemy_Attacks : MonoBaseState
         var playerPos = PlayerHandler.Instance.transform.position;
         var dir = playerPos - transform.position;
         
+        if (owner.Player.incenseProtect)
+        {
+            owner.actualTimeToLost = 0;
+            return;
+        }
+        
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 
         if (!_ray)
@@ -457,6 +469,12 @@ public class HouseEnemy_Attacks : MonoBaseState
     {
         var playerPos = PlayerHandler.Instance.transform.position;
         var dir = playerPos - transform.position;
+        
+        if (owner.Player.incenseProtect)
+        {
+            owner.actualTimeToLost = 0;
+            return;
+        }
         
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 

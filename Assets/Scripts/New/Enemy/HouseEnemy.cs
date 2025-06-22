@@ -26,6 +26,8 @@ public class HouseEnemy : Enemy
     public bool appear;
     [SerializeField] public GameObject lavaPrefab;
     private Vector3 targetScale;
+    
+    public PlayerHandler Player => _player;
 
     private FiniteStateMachine _fsm;
     [SerializeField] private HouseEnemy_Spawn spawnState;

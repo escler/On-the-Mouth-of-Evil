@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Incense : Item
 {
@@ -14,14 +17,46 @@ public class Incense : Item
         var emit = particle.emission;
         emit.rateOverTime = 5;
         _incenseActivated = true;
-        PlayerHandler.Instance.incenseProtect = true;
+        PlayerHandler.Instance.IncenseActivate();
+        StartCoroutine(MoveToPivot());
     }
 
+    IEnumerator MoveToPivot()
+    {
+        Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+        var initial = transform.position;
+        var target = PlayerHandler.Instance.incensePivot.position;
+
+        float time = 0;
+        while (time < 1)
+        {
+            transform.position = Vector3.Lerp(initial,target,time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        transform.SetParent(PlayerHandler.Instance.incensePivot.transform);
+        transform.localPosition = Vector3.zero;
+    }
+
+    private void DestroyPlayer(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (!_incenseActivated) return;
+        Destroy(gameObject);
+    }
     void Awake()
     {
         var emit = particle.emission;
         emit.rateOverTime = 0;
+        SceneManager.sceneLoaded += DestroyPlayer;
     }
+
+    public void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= DestroyPlayer;
+    }
+    
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -33,6 +68,14 @@ public class Incense : Item
         {
             OnInteract(rayConnected, ray);
         }
+    }
+
+    private void Update()
+    {
+        if (!_incenseActivated) return;
+        
+        var emit = particle.emission;
+        emit.rateOverTime = PlayerHandler.Instance.incenseProtect ? 5 : 0;
     }
 
     public override bool CanInteractWithItem()

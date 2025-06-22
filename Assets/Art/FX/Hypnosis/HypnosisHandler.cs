@@ -137,13 +137,13 @@ public class HypnosisHandler : MonoBehaviour
     {
         if (!skyBoxState)
         {
-            yield return StartCoroutine(ChangeSkyboxIntensity(.53f, 0.0f));
+            yield return StartCoroutine(ChangeSkyboxIntensity(.3f, 0.0f));
             DeactivateLights();
             ActivateDemonLight();
         }
         else
         {
-            yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, .53f));
+            yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, .3f));
             ActivateLights();
             DeactivateDemonLight();
         }
