@@ -10,6 +10,7 @@ public class BodyPuzzle : MonoBehaviour
     [SerializeField] private GameObject badAura;
     [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private GameObject itemGained;
+    [SerializeField] private AudioSource knifeCut;
     public bool bloodDrained;
 
     private void Awake()
@@ -25,6 +26,7 @@ public class BodyPuzzle : MonoBehaviour
 
     public void OpenBody()
     {
+        knifeCut.Play();
         badAura.SetActive(true);
         _animator.SetBool("Open", true);
         enabled = false;

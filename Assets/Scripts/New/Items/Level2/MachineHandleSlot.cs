@@ -8,8 +8,10 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
     HandleMachine _handleMachine;
     [SerializeField] private GameObject goodAura;
     [SerializeField] private GameObject elecPs;
+    [SerializeField] private AudioSource placeLever, moveLever, machineLoop;
     public void PlaceHandle(HandleMachine handleMachine)
     {
+        placeLever.Play();
         handleMachine.transform.parent = pivot;
         handleMachine.transform.localPosition = Vector3.zero;
         handleMachine.transform.localRotation = Quaternion.identity;
@@ -42,6 +44,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
     IEnumerator RotHandler()
     {
         goodAura.SetActive(true);
+        moveLever.Play();
         var initial = pivot.localRotation;
         var initialX = pivot.localRotation.x;
         var finalX = finalPos.localRotation.x;
@@ -61,6 +64,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
             yield return null;
         }
 
+        machineLoop.Play();
         GoodRitual.Instance.leverActivated = true;
     }
 
