@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sangre : MonoBehaviour
+public class BloodFX : MonoBehaviour
 {
     public Vector3 escalaOriginal = new Vector3(2.91087556f, 1.73157787f, 2.90893531f);
     public Vector3 escalaObjetivo = new Vector3(1f, 4f, 1f);
@@ -41,17 +41,18 @@ public class sangre : MonoBehaviour
         materialSangre.SetFloat("_rotate_power", rotatePowerOriginal);
     }
 
+    public void StartAnimation()
+    {
+        animando = true;
+        tiempoTranscurrido = 0f;
+        estadoActual = 1;
+
+        // Cambiar rotatePower de forma inmediata al comenzar la fase 1
+        materialSangre.SetFloat("_rotate_power", rotatePowerObjetivo);
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && estadoActual == 0)
-        {
-            animando = true;
-            tiempoTranscurrido = 0f;
-            estadoActual = 1;
-
-            // Cambiar rotatePower de forma inmediata al comenzar la fase 1
-            materialSangre.SetFloat("_rotate_power", rotatePowerObjetivo);
-        }
 
         if (animando)
         {
@@ -90,9 +91,11 @@ public class sangre : MonoBehaviour
                     materialSangre.SetFloat("_twirl_power", twirlPowerObjetivo);
 
                     animando = false;
-                    estadoActual = 3; // Animación completa
+                    estadoActual = 3; // Animaciï¿½n completa
                 }
             }
         }
+
+        if (estadoActual == 3) gameObject.SetActive(false);
     }
 }
