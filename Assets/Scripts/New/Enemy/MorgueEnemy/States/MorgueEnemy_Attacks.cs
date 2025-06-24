@@ -162,6 +162,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     {
         owner.anim.ChangeTrigger("CurseRoom");
         yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
+        owner.CurseRoomSound();
         if (owner.actualRoom.swarmActivate || owner.crossUsed)
         {
             yield return new WaitUntil(() => !owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Cast"));
@@ -200,6 +201,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     {
         owner.anim.ChangeState("SwarmAttack", true);
         yield return new WaitUntil(() => owner.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+        owner.StunSound();
         float actualTime = 0;
         PlayerHandler.Instance.particleStun.SetActive(true);
  
@@ -255,6 +257,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     public void ThrowVomit()
     {
+        owner.VomitSound();
         var ball = Instantiate(vomitBall, vomitBallStart.position, vomitBallStart.rotation);
         _actualBall = ball.GetComponent<VomitBall>();
         ball.transform.forward = vomitBallStart.forward;

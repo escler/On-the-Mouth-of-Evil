@@ -58,6 +58,7 @@ public class MorgueEnemy_Spawn : MonoBaseState
             yield break;
         }
         owner.anim.ChangeState("Spawn", true);
+        owner.SpawnSound();
         yield return new WaitForSeconds(0.01f);
         owner.anim.ChangeState("Spawn", false);
         /*foreach (var ps in owner.smokePS)

@@ -53,6 +53,8 @@ public class MorgueEnemy : Enemy
 
     public Vector3 reference = Vector3.zero;
     public float rotationSmoothTime;
+
+    [SerializeField] private AudioSource spawnSound, stunSound, curseRoomSound, vomitSound;
     
     private void Awake()
     {
@@ -215,5 +217,25 @@ public class MorgueEnemy : Enemy
     public void ThrowVomit()
     {
         attacksState.ThrowVomit();
+    }
+
+    public void SpawnSound()
+    {
+        spawnSound.Play();
+    }
+
+    public void StunSound()
+    {
+        stunSound.Play();
+    }
+
+    public void CurseRoomSound()
+    {
+        curseRoomSound.Play();
+    }
+    
+    public void VomitSound()
+    {
+        vomitSound.Play();
     }
 }

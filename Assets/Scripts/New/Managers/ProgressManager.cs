@@ -40,6 +40,7 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("VoodooCount", 0);
         PlayerPrefs.SetInt("SwarmCount", 0);
         PlayerPrefs.SetInt("IncenseCount", 0);
+        PlayerPrefs.SetInt("MailCount", 0);
         
         //Avaible
         PlayerPrefs.SetInt("VoodooAvaible", 0);
@@ -52,7 +53,6 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("RosaryUnlocked", 0);
         PlayerPrefs.SetInt("IncenseUnlocked", 0);
         PlayerPrefs.SetInt("SwarmUnlocked", 0);
-        
         
         PlayerPrefs.Save();
         
