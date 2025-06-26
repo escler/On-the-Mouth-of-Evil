@@ -27,7 +27,8 @@ public class VoodooHandler : InventoryItemHandler
     private void CreateItems(Scene scene, LoadSceneMode loadSceneMode)
     {
         if(SceneManager.GetActiveScene().name != "Hub") return;
-        count = PlayerPrefs.HasKey("VoodoCount") ? PlayerPrefs.GetInt("VoodoCount") : 0;
+        count = PlayerPrefs.HasKey("VoodooCount") ? PlayerPrefs.GetInt("VoodooCount") : 0;
+        print(count);
         voodooes.Clear();
         
         for (int i = 0; i < count; i++)

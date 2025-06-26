@@ -18,7 +18,7 @@ public class MorgueEnemy_Voodoo : MonoBaseState
         transform.position = target;
         _actualTime = timeStunned;
         StartCoroutine(ShowEnemyLerp());
-        //owner.EnemyAnimator.ChangeStateAnimation("Voodoo", true);
+        owner.anim.ChangeState("Voodoo", true);
     }
 
     public override Dictionary<string, object> Exit(IState to)
@@ -29,7 +29,7 @@ public class MorgueEnemy_Voodoo : MonoBaseState
             owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
             owner.appear = false;
         }
-        //owner.EnemyAnimator.ChangeStateAnimation("Voodoo", false);
+        owner.anim.ChangeState("Voodoo", false);
         owner.voodooActivate = false;
         return base.Exit(to);
     }
@@ -37,10 +37,6 @@ public class MorgueEnemy_Voodoo : MonoBaseState
     
     public override void UpdateLoop()
     {
-        if (!HypnosisHandler.Instance.skyboxIsOn)
-        {
-            HypnosisHandler.Instance.EndLerpShader("GOTOloCation");
-        }
         
         _actualTime -= Time.deltaTime;
         owner.actualTime = 0;

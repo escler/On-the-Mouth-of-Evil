@@ -74,19 +74,26 @@ public class SortInventoryBuyHandler : MonoBehaviour
             "Bible" => "Bible",
             "Cross" => "Cross",
             "Salt" => "Salt",
-            "Voodoo Doll" => "Voodoo",
+            "VoodooDoll" => "Voodoo",
             "Rosary" => "Rosary",
             "Swarm" => "Swarm",
             "Incense" => "Incense",
             _ => ""
         };
 
-        if (name == "") return;
+        if (name == "")
+        {
+            print("Entre aca");
+            return;
+        }
         name += "Count";
         
         var count = PlayerPrefs.GetInt(name);
         
         count = sum ? count + 1 : count - 1;
+        count = Mathf.Clamp(count, 0, int.MaxValue);
+
+        print(name);
         
         PlayerPrefs.SetInt(name, count);
         PlayerPrefs.Save();
