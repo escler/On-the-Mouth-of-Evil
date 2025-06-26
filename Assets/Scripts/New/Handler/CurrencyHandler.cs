@@ -35,13 +35,16 @@ public class CurrencyHandler : MonoBehaviour
 
     private void DestroyInMenu(Scene scene, LoadSceneMode loadSceneMode)
     {
+        
+        CheckPrefs();
         if (scene.name != "Menu") return;
         
         Destroy(gameObject);
     }
     private void CheckPrefs()
     {
-        if (PlayerPrefs.HasKey("CurrencyAmount"))
+        var tutorialComplete = PlayerPrefs.GetInt("TutorialCompleted", 0);
+        if (PlayerPrefs.HasKey("CurrencyAmount") && tutorialComplete == 1)
         {
             _currentAmount = PlayerPrefs.GetInt("CurrencyAmount");
             return;

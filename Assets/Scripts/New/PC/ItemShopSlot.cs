@@ -98,7 +98,7 @@ public class ItemShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             _handler.Count >= _handler.countMax ? "Out of Stock" : cost.ToString();
 
         purchaseBTN.GetComponentInChildren<TextMeshProUGUI>().fontSize =
-            _handler.Count >= _handler.countMax ? 3f : 4;
+            _handler.Count >= _handler.countMax ? 2.5f : 4;
     }
 
     private void CheckColor()

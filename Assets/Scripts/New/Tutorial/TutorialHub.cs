@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class TutorialHub : MonoBehaviour
 {
@@ -44,9 +47,20 @@ public class TutorialHub : MonoBehaviour
         tutorialUI.gameObject.SetActive(!_tutorialCompleted);
     }
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    private void StopCoroutines(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        //StopAllCoroutines();
+    }
+
     private void StartTutorial()
     {
         if (_tutorialCompleted) return;
+
         hubBell.enabled = true;
         exitHub.GetComponent<BoxCollider>().enabled = false;
         pcHandler.GetComponent<BoxCollider>().enabled = false;
@@ -59,6 +73,8 @@ public class TutorialHub : MonoBehaviour
 
     private void ApplyColor()
     {
+        if (tabGlow == null) tabGlow = CanvasManager.Instance.tabGlow;
+        if (fGlow == null) fGlow = CanvasManager.Instance.fGlow;
         holyMarketGlow.GetComponent<Image>().color = colorGlow;
         fGlow.GetComponent<Image>().color = colorGlow;
         tabGlow.GetComponent<Image>().color = colorGlow;
@@ -66,11 +82,6 @@ public class TutorialHub : MonoBehaviour
         {
             p.GetComponent<Image>().color = colorGlow;
         }
-    }
-
-    public void ChangeStep()
-    {
-        
     }
 
     IEnumerator Tutorial()
@@ -174,6 +185,7 @@ public class TutorialHub : MonoBehaviour
         RemoveOutline(doorExit);
         tutorialUI.CompleteTask();
         PlayerPrefs.SetInt("TutorialCompleted",1);
+        PlayerPrefs.Save();
         tutorialUI.gameObject.SetActive(false);
 
     }

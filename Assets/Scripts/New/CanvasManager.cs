@@ -16,6 +16,7 @@ public class CanvasManager : MonoBehaviour
     public CrosshairUI crossHairUI;
 
     public Image crossHair;
+    public GameObject fGlow, tabGlow;
     
     private void Awake()
     {

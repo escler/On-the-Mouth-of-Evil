@@ -6,6 +6,9 @@ using UnityEngine;
 public class MenuHandler : MonoBehaviour
 {
     public GameObject menu;
+
+    private bool _cursorVisibleState;
+    private CursorLockMode _cursorLockModeState;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -18,8 +21,31 @@ public class MenuHandler : MonoBehaviour
     public void SwitchMenu()
     {
         menu.SetActive(!menu.activeInHierarchy);
-        Cursor.visible = menu.activeInHierarchy;
-        Cursor.lockState = Cursor.visible ? CursorLockMode.Confined : CursorLockMode.Locked;
-        Time.timeScale = Cursor.visible ? 0 : 1;
+        if (menu.activeInHierarchy)
+        {
+            PauseState();
+        }
+        else
+        {
+            UnPauseState();
+        }
+    }
+
+    private void PauseState()
+    {
+        _cursorVisibleState = Cursor.visible;
+        _cursorLockModeState = Cursor.lockState;
+        print(_cursorVisibleState);
+        print(_cursorLockModeState);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Time.timeScale = 0;
+    }
+
+    private void UnPauseState()
+    {
+        Cursor.visible = _cursorVisibleState;
+        Cursor.lockState = _cursorLockModeState;
+        Time.timeScale = 1;
     }
 }

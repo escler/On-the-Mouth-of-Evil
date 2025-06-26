@@ -18,7 +18,7 @@ public class PcInteractable : MonoBehaviour, IInteractable
         CameraFollow.Instance.SetNewCameraPos(cameraPos);
         GetComponent<BoxCollider>().enabled = false;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         _inPC = true;
         CanvasManager.Instance.crossHair.enabled = false;
     }
@@ -43,7 +43,7 @@ public class PcInteractable : MonoBehaviour, IInteractable
         CameraFollow.Instance.SetNewCameraPos(PlayerHandler.Instance.cameraPos);
         GetComponent<BoxCollider>().enabled = true;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         CanvasManager.Instance.crossHair.enabled = true;
         StartCoroutine(LeavingPC());
         StartCoroutine(CantInteractCD());
