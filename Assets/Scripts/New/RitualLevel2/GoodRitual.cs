@@ -6,7 +6,7 @@ using UnityEngine;
 public class GoodRitual : MonoBehaviour
 {
     public static GoodRitual Instance { get; private set; }
-    public bool leverActivated;
+    public bool leverActivated, nestOnFire;
     [SerializeField] private Transform ritualPos;
     [SerializeField] private int level;
     [SerializeField] private GameObject godRays;
@@ -30,6 +30,7 @@ public class GoodRitual : MonoBehaviour
 
     IEnumerator GoodRitualSteps()
     {
+        yield return new WaitUntil(() => nestOnFire);
         var enemy = MorgueEnemy.Instance;
         enemy.ritualDone = true;
         PlayerHandler.Instance.movement.ritualCinematic = true;
@@ -54,16 +55,18 @@ public class GoodRitual : MonoBehaviour
 
             yield return null;
         }
-        print("Bad Ritual Sali del While Aparecer");
         
         enemy.anim.ChangeState("Exorcism", true);
         
         yield return new WaitUntil(() => enemy.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Burn"));
+        enemy.firePs.SetActive(true);
         var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         var speed = enemy.anim.animator.speed;
-        var realDuration = enemyClip / speed;
+        var realDuration = enemyClip * speed;
         float startVisibility = enemy.enemyVisibility;
         float elapsed = 0f;
+
+        yield return new WaitUntil(() => enemy.startDisappear);
 
         while (elapsed < realDuration)
         {
@@ -74,6 +77,8 @@ public class GoodRitual : MonoBehaviour
 
             yield return null;
         }
+        var emission = enemy.firePs.GetComponent<ParticleSystem>().emission;
+        emission.rateOverTime = 0;
         
         yield return new WaitForSeconds(1f);
         godRays.SetActive(true);

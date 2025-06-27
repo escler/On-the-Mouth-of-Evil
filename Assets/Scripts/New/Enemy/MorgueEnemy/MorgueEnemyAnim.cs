@@ -33,4 +33,14 @@ public class MorgueEnemyAnim : MonoBehaviour
     {
         _owner.ThrowVomit();
     }
+
+    public void PlayPs()
+    {
+        _owner.firePs.SetActive(true);
+    }
+
+    public void StarDissapear()
+    {
+        _owner.startDisappear = true;
+    }
 }

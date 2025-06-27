@@ -5,6 +5,7 @@ using UnityEngine;
 public class Liquid : Item
 {
     [SerializeField] private MeshRenderer[] meshes;
+    [SerializeReference] Animator animator;
 
     public override void OnGrabItem()
     {
@@ -49,7 +50,10 @@ public class Liquid : Item
             if (!ritual.leverActivated) return;
             ritual.StartRitual();
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
-            Destroy(gameObject);
+            transform.position = NestHandler.Instance.LiquidPos.transform.position;
+            transform.rotation = NestHandler.Instance.LiquidPos.transform.rotation;
+            animator.SetTrigger("ThrowLiquid");
+            GetComponent<Rigidbody>().isKinematic = true;
         }
 
     }
@@ -68,5 +72,6 @@ public class Liquid : Item
         } 
         return false;
     }
-    
+
+
 }
