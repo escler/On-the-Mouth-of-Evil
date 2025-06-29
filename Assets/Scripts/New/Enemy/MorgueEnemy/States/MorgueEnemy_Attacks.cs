@@ -154,6 +154,11 @@ public class MorgueEnemy_Attacks : MonoBaseState
     #region CurseRoom
     void AttackCurseRoom()
     {
+        if (owner.actualRoom.swarmActivate)
+        {
+            ChooseAttack();
+            return;
+        }
         nextAction = CurseRoom();
         Teleport();
     }
@@ -180,6 +185,11 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
     private void AttackSwarmStun()
     {
+        if (!owner.actualRoom.swarmActivate)
+        {
+            owner.attackEnded = true;
+            return;
+        }
         var playerPos = PlayerHandler.Instance.transform.position;
         playerPos.y = owner.transform.position.y;
         var dir = playerPos - transform.position;
@@ -187,14 +197,6 @@ public class MorgueEnemy_Attacks : MonoBaseState
 
         Teleport();
         nextAction = AttackSwarmStunCor();
-        return;
-        if (_ray)
-        {
-            Teleport();
-            nextAction = AttackSwarmStunCor();
-            return;
-        }
-        StartCoroutine(AttackSwarmStunCor());
     }
 
     IEnumerator AttackSwarmStunCor()
