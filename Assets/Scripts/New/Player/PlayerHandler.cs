@@ -206,13 +206,13 @@ public class PlayerHandler : MonoBehaviour
 
     private void StopHeartSound()
     {
-        if (heartBeat.isPlaying) return;
+        if (!heartBeat.isPlaying) return;
         heartBeat.Stop();
     }
     
     private void StopHeartSound(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (heartBeat.isPlaying) return;
+        if (!heartBeat.isPlaying) return;
         heartBeat.Stop();
     }
     

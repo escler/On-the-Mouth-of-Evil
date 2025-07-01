@@ -44,21 +44,21 @@ public class LifeUI : MonoBehaviour
             float xOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
             float yOffset = Random.Range(-shakeMagnitude, shakeMagnitude);
             Vector3 newPosition = new Vector3(xOffset, yOffset, 0f) + originalPosition;
-            transform.localPosition = newPosition;
+            transform.GetChild(0).localPosition = newPosition;
 
             time += Time.deltaTime;
             yield return null;
         }
 
         _corroutineActive = false;
-        transform.localPosition = originalPosition;
+        transform.GetChild(0).localPosition = originalPosition;
     }
 
     private void Awake()
     {
         StartCoroutine(WaitCor()); 
         EnableUI(SceneManager.GetActiveScene(),LoadSceneMode.Single);
-        originalPosition = transform.localPosition;
+        originalPosition = transform.GetChild(0).localPosition;
         CalculateShake();
     }
 
