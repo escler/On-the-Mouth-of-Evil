@@ -105,7 +105,8 @@ public class Incense : Item
 
     public override void OnDropItem()
     {
-        base.OnDropItem();
+        gameObject.SetActive(true);
+        GetComponentInChildren<MeshRenderer>().gameObject.layer = 2;
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
     }
 }
