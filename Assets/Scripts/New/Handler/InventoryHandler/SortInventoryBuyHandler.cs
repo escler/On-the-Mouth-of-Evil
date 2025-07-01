@@ -83,7 +83,7 @@ public class SortInventoryBuyHandler : MonoBehaviour
 
         if (name == "")
         {
-            print("Entre aca");
+            print("No encontre SaveCount");
             return;
         }
         name += "Count";

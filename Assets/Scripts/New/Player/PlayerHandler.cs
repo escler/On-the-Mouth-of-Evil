@@ -25,6 +25,8 @@ public class PlayerHandler : MonoBehaviour
     private float _actualTimer;
     public Transform incensePivot;
 
+    [SerializeField] private AudioSource heartBeat;
+
     public delegate void PlayerInDanger();
     public event PlayerInDanger OnPlayerInDanger;
 
@@ -42,8 +44,11 @@ public class PlayerHandler : MonoBehaviour
         DontDestroyOnLoad(this);
         Instance = this;
         movement = GetComponent<PlayerMovement>();
+        OnPlayerInDanger += PlayHeartSound;
+        OnPlayerInDangerEnd += StopHeartSound;
         SceneManager.sceneLoaded += UnlockPlayer;
         SceneManager.sceneLoaded += DestroyPlayer;
+        SceneManager.sceneLoaded += StopHeartSound;
         cantInteract = false;
         StartCoroutine(WaitForLock());
     }
@@ -59,7 +64,9 @@ public class PlayerHandler : MonoBehaviour
     {
         SceneManager.sceneLoaded -= UnlockPlayer;
         SceneManager.sceneLoaded -= DestroyPlayer;
-
+        SceneManager.sceneLoaded -= StopHeartSound;
+        OnPlayerInDanger -= PlayHeartSound;
+        OnPlayerInDangerEnd -= StopHeartSound;
     }
 
     private void UnlockPlayer(Scene scene, LoadSceneMode loadSceneMode)
@@ -189,6 +196,24 @@ public class PlayerHandler : MonoBehaviour
         incenseProtect = true;
         StopCoroutine(IncenseActivateCor());
         StartCoroutine(IncenseActivateCor());
+    }
+
+    private void PlayHeartSound()
+    {
+        if (heartBeat.isPlaying) return;
+        heartBeat.Play();
+    }
+
+    private void StopHeartSound()
+    {
+        if (heartBeat.isPlaying) return;
+        heartBeat.Stop();
+    }
+    
+    private void StopHeartSound(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (heartBeat.isPlaying) return;
+        heartBeat.Stop();
     }
     
 }

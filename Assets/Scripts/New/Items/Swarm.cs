@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Swarm : Item
 {
@@ -95,6 +96,7 @@ public class Swarm : Item
             meshRenderer.gameObject.layer = 18;
         }
         Inventory.Instance.AddSpecialItem(this);
+        if (SceneManager.GetActiveScene().name == "Hub") return;
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
     }
 
@@ -106,7 +108,10 @@ public class Swarm : Item
             meshRenderer.gameObject.layer = 1;
         }
         
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        
+        print("Entre a Drop Incense y descarte el item");
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
-
+        
     }
 }

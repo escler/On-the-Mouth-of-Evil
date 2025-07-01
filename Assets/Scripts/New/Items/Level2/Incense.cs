@@ -100,6 +100,7 @@ public class Incense : Item
         }
         transform.localEulerAngles = angleHand;
         Inventory.Instance.AddSpecialItem(this);
+        if (SceneManager.GetActiveScene().name == "Hub") return;
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
     }
 
@@ -107,6 +108,9 @@ public class Incense : Item
     {
         gameObject.SetActive(true);
         GetComponentInChildren<MeshRenderer>().gameObject.layer = 2;
+
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
     }
 }
