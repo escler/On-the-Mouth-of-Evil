@@ -108,7 +108,7 @@ public class PuzzleSaltPaper : Item, IInteractable
             return;
         }
         
-        var content = CanvasManager.Instance.descriptionPuzzleContent;
+        var content = CanvasManager.Instance.descriptionNote;
         content.SetActive(true);
         contentActive = true;
 
@@ -116,7 +116,7 @@ public class PuzzleSaltPaper : Item, IInteractable
 
     private void DisableContent()
     {
-        CanvasManager.Instance.descriptionPuzzleContent.SetActive(false);
+        CanvasManager.Instance.descriptionNote.SetActive(false);
         contentActive = false;
     }
 
