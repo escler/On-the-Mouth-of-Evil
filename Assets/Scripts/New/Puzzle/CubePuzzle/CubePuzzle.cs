@@ -42,6 +42,7 @@ public class CubePuzzle : MonoBehaviour
 
         if (count != code.Length || codePlace != code)
         {
+
             WrongCode();
             return;
         }
@@ -52,6 +53,19 @@ public class CubePuzzle : MonoBehaviour
     private void WrongCode()
     {
         print("Mal");
+        
+        var slotCount = 0;
+
+        foreach (var slot in slots)
+        {
+            if (slot.CubeInSlot != null) slotCount++;
+        }
+
+        print(slotCount);
+        
+        if (slotCount < 3) return;
+        
+        DialogHandler.Instance.ChangeText("I feel like I’ve seen these letters before… not just here.");
     }
 
     private void WinPuzzle()

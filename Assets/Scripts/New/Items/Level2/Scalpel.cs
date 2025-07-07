@@ -26,7 +26,11 @@ public class Scalpel : Item
 
         if (i.transform.TryGetComponent(out BodyPuzzle body))
         {
-            if (!body.bloodDrained) return;
+            if (!body.bloodDrained)
+            {
+                DialogHandler.Instance.ChangeText("Too much blood. I need to drain it first.");
+                return;
+            }
             body.OpenBody();
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             Destroy(gameObject);
@@ -44,7 +48,7 @@ public class Scalpel : Item
         if (ObjectDetector.Instance.InteractText()) return true;
         if (ray.transform.TryGetComponent(out BodyPuzzle body))
         {
-            if(body.bloodDrained) return true;
+            return true;
         } 
         return false;
     }

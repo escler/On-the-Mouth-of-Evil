@@ -37,8 +37,26 @@ public class MusicBoxPuzzle : MonoBehaviour
         }
 
         if (actualCode == code.ToString()) CorrectCode();
+        else
+        {
+            WrongCode();
+        }
     }
-    
+
+    private void WrongCode()
+    {
+        var count = 0;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if(slots[i].Sheet != null) count++;
+        }
+
+        if (count < slots.Length) return;
+        
+        DialogHandler.Instance.ChangeText("Each music sheet has a strange little icon… I feel like I’ve seen them somewhere else.");
+    }
+
     private void CorrectCode()
     {
         goodAura.SetActive(true);

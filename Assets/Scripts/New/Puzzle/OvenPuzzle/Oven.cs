@@ -44,6 +44,7 @@ public class Oven : MonoBehaviour
     {
         if (numbers.Count < 4 || _ovenDoor.Open || !_bearInOven)
         {
+            DisplayDialog();
             WrongAnswer();
             return;
         }
@@ -53,11 +54,22 @@ public class Oven : MonoBehaviour
         {
             actualCode += n;
         }
-        
-        if(actualCode != code)WrongAnswer();
+
+        if (actualCode != code)
+        {
+            DisplayDialog();
+            WrongAnswer();
+        }
         else CorrectAnswer();
     }
 
+    private void DisplayDialog()
+    {
+        DialogHandler.Instance.ChangeText(!_bearInOven
+            ? "I think I’m missing something... like a sacrifice."
+            : "That didn’t seem to work. Maybe the order matters?");
+    }
+    
     private void CorrectAnswer()
     {
         StartCoroutine(CompleteOven());

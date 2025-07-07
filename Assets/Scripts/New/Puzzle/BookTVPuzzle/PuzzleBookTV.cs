@@ -41,19 +41,38 @@ public class PuzzleBookTV : MonoBehaviour
     private void CheckCode()
     {
         var code = "";
+        int count = 0;
         for (int i = 0; i < _books.Length; i++)
         {
-            if (_books[i] == null) break;
+            if (_books[i] == null)
+            {
+                count++;
+                break;
+            }
             code += _books[i].number.ToString();
         }
 
         if (codeNeeded != code) WrongCode();
         else CorrectCode();
+
+        if (_books.Length != count || codeNeeded == code) return;
+        
     }
 
     private void WrongCode()
     {
         print("Wrong");
+
+        var count = 0;
+        for (int i = 0; i < _books.Length; i++)
+        {
+            if(_books[i] == null) continue;
+            count++;
+        }
+
+        if (count < 3) return;
+        DialogHandler.Instance.ChangeText("Maybe the TV isn’t just noise after all.");
+
     }
 
     private void CorrectCode()
