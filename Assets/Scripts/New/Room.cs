@@ -14,7 +14,7 @@ public class Room : MonoBehaviour
     public bool cantBlock;
     public bool roomBlocked;
 
-    public SwarmPsRooms _ps;
+    public SwarmPsRooms[] _ps;
     public bool swarmActivate;
     private void Awake()
     {
@@ -28,8 +28,11 @@ public class Room : MonoBehaviour
     public void ActivateSwarm(float seconds)
     {
         if (swarmActivate) return;
-        
-        _ps.PlayPS(seconds);
+
+        for (int i = 0; i < _ps.Length; i++)
+        {
+            _ps[i].PlayPS(seconds);
+        }
         swarmActivate = true;
         StartCoroutine(TimerForSwarm(seconds));
     }
