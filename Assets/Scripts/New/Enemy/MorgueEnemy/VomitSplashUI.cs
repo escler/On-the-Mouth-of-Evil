@@ -11,6 +11,7 @@ public class VomitSplashUI : MonoBehaviour
     private Image _splash;
     private float _actualTime;
     private bool _corroutineActive;
+    private Animator _animator;
 
     private void Awake()
     {
@@ -19,8 +20,9 @@ public class VomitSplashUI : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        _animator = GetComponent<Animator>();
         Instance = this;
-        _splash = GetComponent<Image>();
+        _splash = GetComponentInChildren<Image>();
         HideSplash();
         SceneManager.sceneLoaded += InitsParams;
     }
@@ -42,34 +44,23 @@ public class VomitSplashUI : MonoBehaviour
     }
     void ShowSplash()
     {
-        var color = _splash.color;
-        color.a = 1;
-        _splash.color = color;
+
         if (_corroutineActive) return;
+        _animator.SetBool("Start", true);
         _corroutineActive = true;
         StartCoroutine(HideLerpSplash());
     }
+
 
     IEnumerator HideLerpSplash()
     {
         _corroutineActive = true;
         yield return new WaitUntil(() => _actualTime <= 1);
-        float time = 0;
-        float alpha = _splash.color.a;
-        while (time < 1)
-        {
-            time += Time.deltaTime;
-            var color = _splash.color;
-            color.a = Mathf.Lerp(alpha, 0, time);
-            _splash.color = color;
-            yield return null;
-        }
+        _animator.SetBool("Start", false);
     }
-    void HideSplash()
+    public void HideSplash()
     {
-        var color = _splash.color;
-        color.a = 0;
-        _splash.color = color;
+        _splash.enabled = false;
     }
 
     private void OnDestroy()
@@ -80,9 +71,9 @@ public class VomitSplashUI : MonoBehaviour
 
     void InitsParams(Scene scene, LoadSceneMode loadSceneMode)
     {
-        var color = _splash.color;
-        color.a = 0;
-        _splash.color = color;
-
+        StopAllCoroutines();
+        _corroutineActive = false;
+        _splash.enabled = false;
+        _animator.SetBool("Start", false);
     }
 }
