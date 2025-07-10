@@ -7,18 +7,41 @@ using UnityEngine.SceneManagement;
 
 public class Incense : Item
 {
-    [SerializeField] ParticleSystem particle;
+    [SerializeField] ParticleSystem smokeConstant;
+    [SerializeField] private ParticleSystem[] smokeExplosion;
     private bool _incenseActivated;
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (canInteractWithItem) return;
         if (_incenseActivated) return;
-        var emit = particle.emission;
-        emit.rateOverTime = 5;
+        foreach (var s in smokeExplosion)
+        {
+            s.Play();
+        }
+        var emit = smokeConstant.emission;
+        emit.rateOverTime = 1;
         _incenseActivated = true;
         PlayerHandler.Instance.IncenseActivate();
         StartCoroutine(MoveToPivot());
+        StartCoroutine(WaitToStop());
+    }
+
+    IEnumerator WaitToStop()
+    {
+        float time = PlayerHandler.Instance.incenseTimer;
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
+        var emit = smokeConstant.emission;
+        emit.rateOverTime = 0;
+        transform.parent = null;
+        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.layer = 0;
     }
 
     IEnumerator MoveToPivot()
@@ -47,7 +70,7 @@ public class Incense : Item
     }
     void Awake()
     {
-        var emit = particle.emission;
+        var emit = smokeConstant.emission;
         emit.rateOverTime = 0;
         SceneManager.sceneLoaded += DestroyPlayer;
     }
@@ -74,7 +97,7 @@ public class Incense : Item
     {
         if (!_incenseActivated) return;
         
-        var emit = particle.emission;
+        var emit = smokeConstant.emission;
         emit.rateOverTime = PlayerHandler.Instance.incenseProtect ? 5 : 0;
     }
 
