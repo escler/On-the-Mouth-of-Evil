@@ -41,7 +41,7 @@ public class GoodRitual : MonoBehaviour
         //Lo que activamos al hacer el good ritual
 
         yield return new WaitUntil(() => MorgueEnemy.Instance.inRitualNode);
-        while (enemy.enemyVisibility < 4)
+        while (enemy.enemyVisibility < 5)
         {
             enemy.enemyVisibility += Time.deltaTime * 1.6f;
             enemy.enemyVisibility = Mathf.Clamp(enemy.enemyVisibility, 0, 8);
@@ -62,23 +62,49 @@ public class GoodRitual : MonoBehaviour
         enemy.firePs.SetActive(true);
         var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         var speed = enemy.anim.animator.speed;
-        var realDuration = enemyClip * speed;
+        var realDuration = enemyClip / speed;
         float startVisibility = enemy.enemyVisibility;
         float elapsed = 0f;
 
         yield return new WaitUntil(() => enemy.startDisappear);
 
-        while (elapsed < realDuration)
+        while (enemy.enemyVisibility > 3)
         {
+            /*
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / realDuration);
             enemy.enemyVisibility = Mathf.Lerp(startVisibility, 0f, t);
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+            */
 
+            enemy.enemyVisibility -= Time.deltaTime;
+            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
             yield return null;
         }
-        var emission = enemy.firePs.GetComponent<ParticleSystem>().emission;
-        emission.rateOverTime = 0;
+
+        yield return new WaitForSeconds(2);
+        
+        while (enemy.enemyVisibility > 0)
+        {
+            /*
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / realDuration);
+            enemy.enemyVisibility = Mathf.Lerp(startVisibility, 0f, t);
+            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+            */
+
+            enemy.enemyVisibility -= Time.deltaTime * 2;
+            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+            yield return null;
+        }
+        
+        
+        var emission = enemy.firePs.GetComponentsInChildren<ParticleSystem>();
+        foreach (var e in emission)
+        {
+            var emit = e.emission;
+            emit.rateOverTime = 0;
+        }
         
         yield return new WaitForSeconds(1f);
         godRays.SetActive(true);
