@@ -55,6 +55,7 @@ public class MorgueEnemy : Enemy
     public float rotationSmoothTime;
 
     [SerializeField] private AudioSource spawnSound, stunSound, curseRoomSound, vomitSound;
+    public AudioSource burnSound, burnFlame;
 
     public GameObject firePs;
     public bool startDisappear;

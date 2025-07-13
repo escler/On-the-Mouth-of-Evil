@@ -60,6 +60,8 @@ public class GoodRitual : MonoBehaviour
         
         yield return new WaitUntil(() => enemy.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Burn"));
         enemy.firePs.SetActive(true);
+        enemy.burnFlame.Play();
+        enemy.burnSound.Play();
         var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         var speed = enemy.anim.animator.speed;
         var realDuration = enemyClip / speed;
@@ -70,13 +72,6 @@ public class GoodRitual : MonoBehaviour
 
         while (enemy.enemyVisibility > 3)
         {
-            /*
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / realDuration);
-            enemy.enemyVisibility = Mathf.Lerp(startVisibility, 0f, t);
-            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
-            */
-
             enemy.enemyVisibility -= Time.deltaTime;
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
             yield return null;
@@ -86,18 +81,10 @@ public class GoodRitual : MonoBehaviour
         
         while (enemy.enemyVisibility > 0)
         {
-            /*
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / realDuration);
-            enemy.enemyVisibility = Mathf.Lerp(startVisibility, 0f, t);
-            enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
-            */
-
             enemy.enemyVisibility -= Time.deltaTime * 2;
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
             yield return null;
         }
-        
         
         var emission = enemy.firePs.GetComponentsInChildren<ParticleSystem>();
         foreach (var e in emission)
