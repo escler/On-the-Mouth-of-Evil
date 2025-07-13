@@ -36,7 +36,11 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 
     public void OnInteractWithObject()
     {
-        if (_handleMachine == null) return;
+        if (_handleMachine == null)
+        {
+            DialogHandler.Instance.ChangeText("A lever should fit here perfectly. Now where is it?");
+            return;
+        }
         GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(RotHandler());
     }
@@ -66,6 +70,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 
         machineLoop.Play();
         GoodRitual.Instance.leverActivated = true;
+        DialogHandler.Instance.ChangeText("There we go… the ovens are back online.");
     }
 
     public string ShowText()

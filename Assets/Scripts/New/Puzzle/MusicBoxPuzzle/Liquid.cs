@@ -6,9 +6,15 @@ public class Liquid : Item
 {
     [SerializeField] private MeshRenderer[] meshes;
     [SerializeReference] Animator animator;
+    private bool _textShowed;
 
     public override void OnGrabItem()
     {
+        if (!_textShowed)
+        {
+            DialogHandler.Instance.ChangeText("They spread like a disease... maybe fire is the cure.");
+            _textShowed = true;
+        }
         Inventory.Instance.AddItem(this, category);
         transform.localEulerAngles = angleHand;
         foreach (var mesh in meshes)
@@ -47,7 +53,11 @@ public class Liquid : Item
 
         if (i.transform.TryGetComponent(out GoodRitual ritual))
         {
-            if (!ritual.leverActivated) return;
+            if (!ritual.leverActivated)
+            {
+                DialogHandler.Instance.ChangeText("I need to get the furnaces working first.");
+                return;
+            }
             ritual.StartRitual();
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             transform.position = NestHandler.Instance.LiquidPos.transform.position;
@@ -66,10 +76,7 @@ public class Liquid : Item
         if (!rayConnected) return false;
         
         if (ObjectDetector.Instance.InteractText()) return true;
-        if (ray.transform.TryGetComponent(out GoodRitual ritual))
-        {
-            if (ritual.leverActivated) return true;
-        } 
+        if (ray.transform.TryGetComponent(out GoodRitual ritual)) return true;
         return false;
     }
 

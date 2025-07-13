@@ -32,6 +32,16 @@ public class SkullPuzzle : MonoBehaviour
             if (slot.correctRotation != slot.actualRotation) break;
             count++;
         }
+
+        var skulls = 0;
+        foreach (var s in slots)
+        {
+            if (s.currentSkull != null) skulls++;
+        }
+
+        if (skulls >= slots.Length)
+            DialogHandler.Instance.ChangeText(
+                "These skulls don’t seem to be in the right position… maybe I should take a closer look.");
         
         if(count < slots.Length) return;
         
