@@ -237,6 +237,8 @@ public class HouseEnemy_Attacks : MonoBaseState
             owner.attackEnded = true;
             yield break;
         }
+
+
         owner.EnemyAnimator.ChangeStateAnimation("HypnosisAttack", true);
         yield return new WaitUntil(() =>
             owner.EnemyAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("HypnosisAttack"));
@@ -255,6 +257,11 @@ public class HouseEnemy_Attacks : MonoBaseState
         hipnosis.Play();
         while (time > 0 && !_ray && owner.compareRoom)
         {
+            if (PlayerHandler.Instance.focusView)
+            {
+                PlayerHandler.Instance.Unfocus();
+                PlayerHandler.Instance.UnPossesPlayer();
+            }
             if (!closeEyes)
             {
                 HypnosisHandler.Instance.StartLerpShader("Hipnosis");

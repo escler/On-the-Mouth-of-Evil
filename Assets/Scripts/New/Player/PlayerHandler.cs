@@ -24,6 +24,7 @@ public class PlayerHandler : MonoBehaviour
     public float incenseTimer;
     private float _actualTimer;
     public Transform incensePivot;
+    public bool focusView;
 
     [SerializeField] private AudioSource heartBeat;
 
@@ -34,6 +35,19 @@ public class PlayerHandler : MonoBehaviour
     public event PlayerInDangerEnd OnPlayerInDangerEnd;
 
 
+    public void Unfocus()
+    {
+        var selected = Inventory.Instance.selectedItem;
+        if (selected.TryGetComponent(out PaperMission1 paper))
+        {
+            selected.FocusObject();
+        }
+
+        if (selected.TryGetComponent(out PieceTarotCard piece))
+        {
+            piece.FocusObject();
+        }
+    }
     private void Awake()
     {
         if (Instance)

@@ -12,9 +12,7 @@ public class KeyTagLocker : MonoBehaviour
     public void OpenLocker()
     {
         audioSource.Play();
-        door.enabled = true;
+        door._locked = false;
         enabled = false;
     }
-
-    private void Update() { }
 }

@@ -41,7 +41,11 @@ public class StrongboxPuzzle : MonoBehaviour
         {
             OpenDoor();
         }
-        else _animator.SetTrigger("WrongCode");
+        else
+        {
+            DialogHandler.Instance.ChangeText("I need to find the combination. It has to be in this room.");
+            _animator.SetTrigger("WrongCode");
+        }
     }
 
     private void OpenDoor()

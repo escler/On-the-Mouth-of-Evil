@@ -69,6 +69,7 @@ public class PaperMission1 : Mission
 
     IEnumerator FocusObjectCor()
     {
+        PlayerHandler.Instance.focusView = true;
         if (TutorialHub.Instance != null) TutorialHub.Instance.missionInspect = true;
         cantBobbing = true;
         canInteract = true;
@@ -86,6 +87,7 @@ public class PaperMission1 : Mission
 
     IEnumerator UnFocusObject()
     {
+        PlayerHandler.Instance.focusView = false;
         cantBobbing = false;
         canInteract = true;
         DisableContent();

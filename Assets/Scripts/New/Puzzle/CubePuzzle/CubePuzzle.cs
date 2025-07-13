@@ -89,7 +89,7 @@ public class CubePuzzle : MonoBehaviour
         while (time < 1)
         {
             initial.position = Vector3.Lerp(init.position, final.position, time);
-            time+=Time.deltaTime;
+            time += Time.deltaTime;
             yield return null;
         }
     }

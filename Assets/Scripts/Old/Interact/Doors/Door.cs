@@ -15,6 +15,7 @@ public class Door : MonoBehaviour, IInteractable
     public Room[] rooms;
     public GameObject saltPS, triggerObstacle;
     public AudioSource _saltBlock;
+    public bool _locked;
     private void Awake()
     {
         SetDoor(open);
@@ -42,6 +43,11 @@ public class Door : MonoBehaviour, IInteractable
 
     public void InteractDoor()
     {
+        if (_locked)
+        {
+            DialogHandler.Instance.ChangeText("Locked. I’ll need a key.");
+            return;
+        }
         open = !open;
         SetDoor(open);
     }
