@@ -28,6 +28,7 @@ public class KeyTag : Item
     {
         Inventory.Instance.AddItem(this, category);
         transform.localEulerAngles = angleHand;
+        GetComponent<BoxCollider>().isTrigger = false;
         foreach (var mesh in meshes)
         {
             mesh.gameObject.layer = 18;

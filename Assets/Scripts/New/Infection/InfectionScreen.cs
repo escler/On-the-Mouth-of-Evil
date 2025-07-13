@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class InfectionScreen : MonoBehaviour
 {
@@ -12,18 +14,20 @@ public class InfectionScreen : MonoBehaviour
     [SerializeField] private float fadeOutDuration;
     private bool _coroutineActivate;
     IEnumerator _screenCouroutine;
+    private bool _isInfected;
 
     private void Awake()
     {
         _screenUI = GetComponent<Image>();
         StopLoopAndFadeOut();
         StartCoroutine(InitsParams());
-        
+        SceneManager.sceneLoaded += ResetPrefs;
     }
 
     private void OnDestroy()
     {
         InfectionHandler.Instance.OnUpdateInfection -= ChangeInfectionScreen;
+        SceneManager.sceneLoaded -= ResetPrefs;
     }
 
     IEnumerator InitsParams()
@@ -36,14 +40,16 @@ public class InfectionScreen : MonoBehaviour
     {
         var infectionRoom = PlayerHandler.Instance.actualRoom != null && PlayerHandler.Instance.actualRoom.swarmActivate;
 
-        if (infectionRoom)
+        if (infectionRoom && !_isInfected)
         {
+            _isInfected = true;
             if (_screenCouroutine != null) return;
             _screenCouroutine = MakeScreenEffect();
             StartCoroutine(_screenCouroutine);
         }
-        else
+        else if(!infectionRoom && _isInfected)
         {
+            _isInfected = false;
             if (_coroutineActivate) return;
             StopLoopAndFadeOut();
         }
@@ -92,7 +98,7 @@ public class InfectionScreen : MonoBehaviour
 
         SetImageAlpha(initialCurve.Evaluate(1f)); // asegura el final exacto
         
-        while (true)
+        while (_isInfected)
         {
             timer = 0f;
 
@@ -117,5 +123,13 @@ public class InfectionScreen : MonoBehaviour
             c.a = Mathf.Clamp01(alpha);
             _screenUI.color = c;
         }
+    }
+
+    private void ResetPrefs(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        _coroutineActivate = false;
+        _screenCouroutine = null;
+        _isInfected = false;
+        SetImageAlpha(0f); // Asegura que quede en 0
     }
 }
