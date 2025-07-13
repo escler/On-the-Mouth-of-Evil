@@ -11,7 +11,7 @@ public class Level2Nest : MonoBehaviour
     {
         if (_dialogStarted) return;
         
-        DialogHandler.Instance.ChangeText("This seems to be the core of the demon’s influence… its nests grow here.");
+        DialogHandler.Instance.ChangeText("This seems to be the heart of the demon’s influence… its nests grow here.");
         _dialogStarted = true;
     }
 }
