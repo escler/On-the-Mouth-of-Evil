@@ -35,6 +35,7 @@ public class BodyPuzzle : MonoBehaviour
 
     public void GiveItem()
     {
+        DialogHandler.Instance.ChangeText("This organ could bait the demon… but I need a container to hold it.");
         var item = Instantiate(itemGained);
         item.GetComponent<Item>().OnGrabItem();
     }
