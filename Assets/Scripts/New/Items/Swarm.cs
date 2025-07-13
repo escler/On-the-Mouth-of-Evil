@@ -14,6 +14,8 @@ public class Swarm : Item
     public Animator animator;
     public GameObject swarmPsIdle;
     public MeshRenderer[] meshRenderers;
+    public AudioSource beeLoop;
+    private bool _used;
     
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class Swarm : Item
         if (canInteractWithItem) return;
         if (Enemy.Instance == null) return;
         
+        Inventory.Instance.cantSwitch = true;
         StartCoroutine(LocateAndMove());
         _actualTime = cdTime;
     }
@@ -49,7 +52,13 @@ public class Swarm : Item
         var swarm = Instantiate(swarmObj);
         swarm.transform.position = swarmPivot.position;
         swarmPsIdle.gameObject.SetActive(false);
-        
+        _used = true;
+        beeLoop.Stop();
+
+        Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+        Inventory.Instance.cantSwitch = false;
+        gameObject.layer = 1;
+
         while (Vector3.Distance(goal, swarm.transform.position) > 0.1f)
         {
             goal = Enemy.Instance.transform.position;
@@ -113,5 +122,11 @@ public class Swarm : Item
         print("Entre a Drop Incense y descarte el item");
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
         
+    }
+
+    private void OnEnable()
+    {
+        if (_used) beeLoop.Stop();
+        else beeLoop.Play();
     }
 }
