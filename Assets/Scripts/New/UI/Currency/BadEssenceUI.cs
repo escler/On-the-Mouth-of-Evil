@@ -11,7 +11,7 @@ public class BadEssenceUI : CurrencyUIGained
     private void OnEnable()
     {
         _currencyHandler = BadEssencesHandler.Instance;
-        GainCurrency(DecisionsHandler.Instance.badPath ? LevelGainCurrency.Instance.goodEssence : 0);
+        GainCurrency(DecisionsHandler.Instance.badPath ? LevelGainCurrency.Instance.badEssence : 0);
     }
 
     public override void GainCurrency(int amount)

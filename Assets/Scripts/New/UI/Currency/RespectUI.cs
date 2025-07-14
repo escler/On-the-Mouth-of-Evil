@@ -16,7 +16,7 @@ public class RespectUI : CurrencyUIGained
         _currencyHandler = RespectHandler.Instance;
         LevelParams();
         slider.value = _actualRespect;
-        GainCurrency(LevelGainCurrency.Instance.currency);
+        GainCurrency(LevelGainCurrency.Instance.respect);
     }
 
     private void LevelParams()

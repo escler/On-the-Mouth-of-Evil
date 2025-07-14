@@ -7,6 +7,7 @@ public class OvenDoor : MonoBehaviour, IInteractable
 {
     Animator _animator;
     private bool _open;
+    [SerializeField] AudioSource openSound, closeSound;
     public bool Open
     {
         get
@@ -27,18 +28,24 @@ public class OvenDoor : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         _open = !_open;
+        
+        if (_open) openSound.Play();
+        else closeSound.Play();
+        
         _animator.SetBool("Open", _open);
     }
 
     public void ResetDoor()
     {
         _open = false;
+        closeSound.Play();
         _animator.SetBool("Open", _open);
     }
 
     public void OpendDoor()
     {
         _open = true;
+        openSound.Play();
         _animator.SetBool("Open", _open);
     }
 

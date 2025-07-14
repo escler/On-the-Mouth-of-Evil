@@ -43,4 +43,9 @@ public class MorgueEnemyAnim : MonoBehaviour
     {
         _owner.startDisappear = true;
     }
+
+    public void PlaySpawnPs()
+    {
+        _owner.SpawnPs();
+    }
 }

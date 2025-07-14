@@ -59,6 +59,8 @@ public class MorgueEnemy : Enemy
 
     public GameObject firePs;
     public bool startDisappear;
+
+    public ParticleSystem[] spawnPs;
     
     private void Awake()
     {
@@ -241,5 +243,13 @@ public class MorgueEnemy : Enemy
     public void VomitSound()
     {
         vomitSound.Play();
+    }
+
+    public void SpawnPs()
+    {
+        foreach (var ps in spawnPs)
+        {
+            ps.Play();
+        }
     }
 }

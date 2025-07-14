@@ -36,6 +36,7 @@ public class MailUI : MonoBehaviour
 
     private void OpenMail()
     {
+        PCHandler.Instance.clickSound.Play();
         newMail.SetActive(false);
         mailGO.SetActive(true);
     }
