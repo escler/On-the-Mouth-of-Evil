@@ -9,6 +9,7 @@ public class SkullPuzzle : MonoBehaviour
     private int count;
     public GameObject ps;
     [SerializeField] Animator freezerAnimator;
+    [SerializeField] private AudioSource fridgeOpen;
     public static SkullPuzzle Instance { get; private set; }
 
     private void Awake()
@@ -53,6 +54,7 @@ public class SkullPuzzle : MonoBehaviour
         }
 
         freezerAnimator.SetBool("Open", true);
+        fridgeOpen.Play();
         ps.SetActive(true);
         //RitualManager.Instance.AltarCompleted();
     }

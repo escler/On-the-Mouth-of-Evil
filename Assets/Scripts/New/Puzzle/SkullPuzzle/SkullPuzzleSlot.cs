@@ -82,6 +82,7 @@ public class SkullPuzzleSlot : MonoBehaviour, IInteractable, IInteractObject
 
     IEnumerator RotateSocket()
     {
+        _girar.Play();
         _cantRotate = true;
         actualRotation++;
         if (actualRotation >= rotations.Length) actualRotation = 0;

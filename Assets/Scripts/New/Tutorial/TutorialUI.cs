@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TutorialUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI tmp;
+    [SerializeField] private TextMeshProUGUI tmp, descriptionTMP;
     private string _text;
 
     private void Awake()
@@ -21,6 +21,11 @@ public class TutorialUI : MonoBehaviour
         tmp.color = Color.white;
         _text = text;
         tmp.text = _text;
+    }
+
+    public void ChangeDescription(string text)
+    {
+        descriptionTMP.text = text;
     }
 
     public void CompleteTask()
