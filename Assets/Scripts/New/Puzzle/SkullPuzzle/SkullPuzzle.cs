@@ -39,7 +39,7 @@ public class SkullPuzzle : MonoBehaviour
             if (s.currentSkull != null) skulls++;
         }
 
-        if (skulls >= slots.Length)
+        if (skulls >= slots.Length && count < slots.Length)
             DialogHandler.Instance.ChangeText(
                 "These skulls don’t seem to be in the right position… maybe I should take a closer look.");
         

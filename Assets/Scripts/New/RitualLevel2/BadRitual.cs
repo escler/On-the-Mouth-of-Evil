@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class BadRitual : MonoBehaviour
     public bool baitBoxPlaced;
     [SerializeField] private Transform ritualPos;
     [SerializeField] private int level;
-
+    private bool _debug;
+    private float time;
     private void Awake()
     {
         if (Instance)
@@ -53,12 +55,14 @@ public class BadRitual : MonoBehaviour
         
         enemy.anim.ChangeState("Absorb", true);
 
+        _debug = true;
         enemy.absorbVFX.SetActive(true);
         enemy.magnetVFX.SetActive(true);
         
         yield return new WaitUntil(() => enemy.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Absorb"));
+        enemy.absorbSound.Play();
         var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        var speed = enemy.anim.animator.speed;
+        var speed = 0.5f;
         var realDuration = enemyClip / speed;
         float startVisibility = enemy.enemyVisibility;
         float elapsed = 0f;
@@ -72,6 +76,9 @@ public class BadRitual : MonoBehaviour
 
             yield return null;
         }
+
+        _debug = false;
+        print("Tiempo total: " + time);
         RitualManager.Instance.levitatingItems[1].SetActive(true);
         RitualManager.Instance.actualItemActive = RitualManager.Instance.levitatingItems[1].gameObject;
         enemy.absorbVFX.GetComponent<VisualEffect>().Stop();
@@ -94,5 +101,12 @@ public class BadRitual : MonoBehaviour
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         MailHandler.Instance.AddEmail("bad");
+    }
+
+    private void Update()
+    {
+        if (!_debug) return;
+        
+        time += Time.deltaTime;
     }
 }

@@ -9,6 +9,7 @@ public class Level2Nest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.TryGetComponent(out PlayerHandler playerHandler)) return;
         if (_dialogStarted) return;
         
         DialogHandler.Instance.ChangeText("This seems to be the heart of the demon’s influence… its nests grow here.");

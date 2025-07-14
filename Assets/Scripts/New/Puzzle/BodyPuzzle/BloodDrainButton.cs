@@ -9,6 +9,8 @@ public class BloodDrainButton : MonoBehaviour, IInteractable
     [SerializeField] BoxCollider collider;
     [SerializeField] BloodFX bloodFX;
     private Animator _animator;
+    [SerializeField] private Transform plane, planeFinalPos;
+    [SerializeField] private AudioSource pressButton, drainSound;
 
     private void Awake()
     {
@@ -22,6 +24,23 @@ public class BloodDrainButton : MonoBehaviour, IInteractable
         BodyPuzzle.Instance.bloodDrained = true;
         buttonPress = true;
         collider.enabled = false;
+        pressButton.Play();
+        drainSound.Play();
+        StartCoroutine(MovePlane());
+    }
+
+    IEnumerator MovePlane()
+    {
+        Vector3 startPosition = plane.position;
+        float time = 0;
+
+        while (time < 1)
+        {
+            plane.transform.position = Vector3.Lerp(startPosition, planeFinalPos.position, time);
+            time += Time.deltaTime / 4;
+            yield return null;
+        }
+        plane.gameObject.SetActive(false);
     }
 
     public void OnInteract(bool hit, RaycastHit i)
