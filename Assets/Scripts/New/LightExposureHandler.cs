@@ -8,8 +8,6 @@ using UnityEngine.Rendering.Universal;
 public class LightExposureHandler : MonoBehaviour
 {
     public static LightExposureHandler Instance {get; private set;}
-    [SerializeField] private Volume volume;
-    [SerializeField] ColorAdjustments colorAdjustments;
 
     private void Awake()
     {
@@ -27,26 +25,16 @@ public class LightExposureHandler : MonoBehaviour
     IEnumerator GetValue()
     {
         yield return null;
-        if(volume.profile.TryGet(out colorAdjustments))
-        {
-            colorAdjustments.postExposure.overrideState = true;
-        }
 
-        if (colorAdjustments == null)
-        {
-            print("No encontre el color adjustments");
-            yield break;
-        }
+        RenderSettings.ambientIntensity =
+            PlayerPrefs.HasKey("LightExposure") ? PlayerPrefs.GetFloat("LightExposure") : .3f;
         
-        if (PlayerPrefs.HasKey("LightExposure"))
-        {
-            colorAdjustments.postExposure.value = PlayerPrefs.GetFloat("LightExposure");
-        }
+        PlayerPrefs.Save();
     }
 
     public void ChangeLightExposure(float exposure)
     {
-        colorAdjustments.postExposure.value = exposure;
+        RenderSettings.ambientIntensity = exposure;
         PlayerPrefs.SetFloat("LightExposure", exposure);
         PlayerPrefs.Save();
     }

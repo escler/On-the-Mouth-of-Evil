@@ -34,7 +34,10 @@ public class HouseEnemyView : MonoBehaviour
     public void DisableGrabHead()
     {
         var currentItem = Inventory.Instance.selectedItem;
-        if (currentItem.itemName == "Rosary") success = currentItem.GetComponent<Rosary>().RosaryProtect();
+        if (currentItem != null)
+        {
+            if (currentItem.itemName == "Rosary") success = currentItem.GetComponent<Rosary>().RosaryProtect();
+        }
         if (success) return;
         ChangeStateAnimation("GrabHead", false);
     }

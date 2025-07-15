@@ -26,6 +26,8 @@ public class HypnosisHandler : MonoBehaviour
 
     private bool skyboxNextState;
 
+    private float _initAmbientIntensity;
+
     private void Awake()
     {
         if (Instance)
@@ -37,13 +39,14 @@ public class HypnosisHandler : MonoBehaviour
         DontDestroyOnLoad(this);
         Instance = this;
 
+        _initAmbientIntensity = PlayerPrefs.GetFloat("LightExposure");
         hypnosisMaterialK.SetFloat("_Blink", startValue);
         SceneManager.sceneLoaded += GetLights;
 
         GetLights(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.ambientIntensity = .3f;
+        RenderSettings.ambientIntensity = _initAmbientIntensity;
         //RenderSettings.skybox.SetFloat("_Exposure", skyboxIntensityStart); // Aseg�rate de usar "_Exposure" o el nombre correcto
         DynamicGI.UpdateEnvironment();
 
@@ -124,7 +127,7 @@ public class HypnosisHandler : MonoBehaviour
         spotLight = GameObject.FindGameObjectWithTag("DemonLight");
         ActivateLights();
         DeactivateDemonLight();
-        RenderSettings.ambientIntensity = scene.name == "Menu" ? 0.0f : 0.3f;
+        RenderSettings.ambientIntensity = scene.name == "Menu" ? 0.0f : _initAmbientIntensity;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -137,13 +140,13 @@ public class HypnosisHandler : MonoBehaviour
     {
         if (!skyBoxState)
         {
-            yield return StartCoroutine(ChangeSkyboxIntensity(.3f, 0.0f));
+            yield return StartCoroutine(ChangeSkyboxIntensity(_initAmbientIntensity, 0.0f));
             DeactivateLights();
             ActivateDemonLight();
         }
         else
         {
-            yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, .3f));
+            yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, _initAmbientIntensity));
             ActivateLights();
             DeactivateDemonLight();
         }
