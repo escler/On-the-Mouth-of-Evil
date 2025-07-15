@@ -6,10 +6,16 @@ using UnityEngine;
 public class BobbingCamera : MonoBehaviour
 {
     [SerializeField] private Transform cameraPos;
-    private float _timer, _defaultPosY, _defaultPosX, _defaultPosYInitialPos, _timerReset;
-    [SerializeField] float bobbingSpeed, bobbingAmount, runBobbingSpeed, runBobbingAmount;
+
+    private float _timer, _defaultPosY, _defaultPosX;
+    [SerializeField] private float bobbingSpeed = 8f;
+    [SerializeField] private float bobbingAmount = 0.015f;
+    [SerializeField] private float runBobbingSpeed = 10f;
+    [SerializeField] private float runBobbingAmount = 0.025f;
+
     private float _actualBobbingSpeed, _actualBobbingAmount;
     private bool _bobbingEnable, _run;
+
     private PlayerMovement _movement;
 
     private void Awake()
@@ -23,18 +29,18 @@ public class BobbingCamera : MonoBehaviour
         _movement = PlayerHandler.Instance.movement;
     }
 
-    void Update()
+    private void Update()
     {
-        if (PlayerHandler.Instance.movement.ritualCinematic) return;
+        if (_movement.ritualCinematic) return;
+
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
 
-        _bobbingEnable = inputX != 0 || inputY != 0;
-        
+        _bobbingEnable = Mathf.Abs(inputX) > 0.1f || Mathf.Abs(inputY) > 0.1f;
+
         _run = _movement.Run;
         _actualBobbingSpeed = _run ? runBobbingSpeed : bobbingSpeed;
         _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
-        
     }
 
     private void FixedUpdate()
@@ -44,25 +50,30 @@ public class BobbingCamera : MonoBehaviour
             ReturnToDefaultPosition();
             return;
         }
+
         MakeBobbing();
     }
 
-    
     void ReturnToDefaultPosition()
     {
         Vector3 targetPos = new Vector3(_defaultPosX, _defaultPosY, cameraPos.localPosition.z);
-        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, Time.deltaTime * 2.5f); // el 5f es la velocidad de retorno
+        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, Time.deltaTime * 4f);
+        _timer = 0f; // evitar salto al volver a caminar
     }
+
     public void DoBobbing()
     {
         MakeBobbing();
     }
+
     void MakeBobbing()
     {
         _timer += Time.deltaTime * _actualBobbingSpeed;
-        cameraPos.transform.localPosition = new Vector3(cameraPos.transform.localPosition.x + Mathf.Sin(_timer) * _actualBobbingAmount * Time.deltaTime,
-            cameraPos.transform.localPosition.y + Mathf.Cos(_timer) * _actualBobbingAmount / 8 * Time.deltaTime,
-            cameraPos.transform.localPosition.z);
+
+        float offsetY = Mathf.Sin(_timer) * _actualBobbingAmount;
+        float offsetX = Mathf.Cos(_timer * 0.5f) * (_actualBobbingAmount);
+
+        cameraPos.localPosition = new Vector3(_defaultPosX + offsetX, _defaultPosY + offsetY, cameraPos.localPosition.z);
     }
 
     void IdleBobbing()
