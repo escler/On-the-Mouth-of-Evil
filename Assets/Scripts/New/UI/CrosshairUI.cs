@@ -16,7 +16,7 @@ public class CrosshairUI : MonoBehaviour
 
     public void IncreaseUI()
     {
-        _transform.localScale = Vector3.Lerp(_transform.localScale, _initialScale * 2, .2f);
+        _transform.localScale = Vector3.Lerp(_transform.localScale, _initialScale * 3, .2f);
     }
 
     public void DecreaseUI()

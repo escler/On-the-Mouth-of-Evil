@@ -41,12 +41,18 @@ public class BobbingCamera : MonoBehaviour
     {
         if (!_bobbingEnable)
         {
-            //IdleBobbing();
+            ReturnToDefaultPosition();
             return;
         }
         MakeBobbing();
     }
 
+    
+    void ReturnToDefaultPosition()
+    {
+        Vector3 targetPos = new Vector3(_defaultPosX, _defaultPosY, cameraPos.localPosition.z);
+        cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, Time.deltaTime * 2.5f); // el 5f es la velocidad de retorno
+    }
     public void DoBobbing()
     {
         MakeBobbing();
