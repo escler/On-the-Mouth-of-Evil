@@ -9,10 +9,11 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
     [SerializeField] private GameObject goodAura;
     [SerializeField] private GameObject elecPs;
     [SerializeField] private AudioSource placeLever, moveLever, machineLoop;
+    [SerializeField] private float speedRot;
     public void PlaceHandle(HandleMachine handleMachine)
     {
         placeLever.Play();
-        handleMachine.transform.parent = pivot;
+        handleMachine.transform.parent = transform;
         handleMachine.transform.localPosition = Vector3.zero;
         handleMachine.transform.localRotation = Quaternion.identity;
         handleMachine.GetComponent<BoxCollider>().enabled = false;
@@ -36,35 +37,41 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
 
     public void OnInteractWithObject()
     {
-        if (_handleMachine == null)
-        {
-            DialogHandler.Instance.ChangeText("A lever should fit here perfectly. Now where is it?");
-            return;
-        }
+        StartCoroutine(ShowDialog());
+        if (_handleMachine == null) return;
         GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(RotHandler());
+    }
+
+    IEnumerator ShowDialog()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        if (_handleMachine == null)
+        {
+            DialogHandler.Instance.ChangeText("A wheel should fit here perfectly. Now where is it?");
+            
+        }
     }
 
     IEnumerator RotHandler()
     {
         goodAura.SetActive(true);
         moveLever.Play();
-        var initial = pivot.localRotation;
-        var initialX = pivot.localRotation.x;
-        var finalX = finalPos.localRotation.x;
+        GetComponent<BoxCollider>().enabled = false;
+
         float time = 0;
         bool electActive = false;
         
-        while (time < 1)
+        while (time < moveLever.clip.length)
         {
-            if (!electActive)
+            if (time > moveLever.clip.length / 2 && !electActive)
             {
-                elecPs.gameObject.SetActive(true);
+                elecPs.SetActive(true);
                 electActive = true;
             }
-            initial.x = Mathf.Lerp(initialX, finalX, time);
-            pivot.localRotation = initial;
             time += Time.deltaTime;
+            transform.Rotate(0,0, speedRot * Time.deltaTime);
             yield return null;
         }
 
