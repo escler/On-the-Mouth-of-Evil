@@ -108,10 +108,22 @@ public class Cross : Item
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
-        canInteractWithItem = ObjectDetector.Instance.InteractText();
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
 
         if (Input.GetMouseButton(0)) OnInteract(rayConnected, ray);
         if(Input.GetMouseButtonUp(0)) OnUpCross();
+    }
+    
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
+
+        return false;
     }
 
     public void CheckRoom()

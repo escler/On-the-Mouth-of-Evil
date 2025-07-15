@@ -41,10 +41,6 @@ public class BobbingCamera : MonoBehaviour
         _run = _movement.Run;
         _actualBobbingSpeed = _run ? runBobbingSpeed : bobbingSpeed;
         _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
-    }
-
-    private void FixedUpdate()
-    {
         if (!_bobbingEnable)
         {
             ReturnToDefaultPosition();
@@ -54,10 +50,22 @@ public class BobbingCamera : MonoBehaviour
         MakeBobbing();
     }
 
+    private void FixedUpdate()
+    {
+
+    }
+
     void ReturnToDefaultPosition()
     {
         Vector3 targetPos = new Vector3(_defaultPosX, _defaultPosY, cameraPos.localPosition.z);
         cameraPos.localPosition = Vector3.Lerp(cameraPos.localPosition, targetPos, Time.deltaTime * 4f);
+
+        // Si estamos muy cerca, forzamos la posición exacta
+        if (Vector3.Distance(cameraPos.localPosition, targetPos) < 0.001f)
+        {
+            cameraPos.localPosition = targetPos;
+        }
+
         _timer = 0f; // evitar salto al volver a caminar
     }
 

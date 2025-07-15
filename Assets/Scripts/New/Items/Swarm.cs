@@ -37,6 +37,7 @@ public class Swarm : Item
     {
         if (_actualTime > 0) return;
         if (canInteractWithItem) return;
+        if(SceneManager.GetActiveScene().name == "Hub") return;
         if (Enemy.Instance == null) return;
         
         Inventory.Instance.cantSwitch = true;

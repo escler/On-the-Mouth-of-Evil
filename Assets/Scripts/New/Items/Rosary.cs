@@ -51,7 +51,26 @@ public class Rosary : Item
         SortInventoryBuyHandler.Instance.SaveCount(itemName, true);
 
     }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
+    }
     
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+        
+        if (rayConnected && ObjectDetector.Instance.InteractText()) return true;
+
+        return false;
+    }
+
     public override void OnDropItem()
     {
         gameObject.SetActive(true);

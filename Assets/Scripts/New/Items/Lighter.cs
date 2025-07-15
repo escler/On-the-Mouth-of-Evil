@@ -48,7 +48,6 @@ public class Lighter : Item
         if (Input.GetMouseButtonDown(0))
         {
             OnInteract(rayConnected, ray);
-            _onfire.PlayOneShot(_onfire.clip);
         }
     }
 
@@ -60,7 +59,11 @@ public class Lighter : Item
         if (rayConnected && ObjectDetector.Instance.InteractText()) return true;
 
         if (!rayConnected) return false;
-        if (ray.transform.TryGetComponent(out IBurneable item)) return true;
+        if (ray.transform.TryGetComponent(out IBurneable item))
+        {
+            _onfire.PlayOneShot(_onfire.clip);
+            return true;
+        }
 
         return false;
     }

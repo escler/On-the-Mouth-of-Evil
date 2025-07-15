@@ -13,6 +13,8 @@ public class Incense : Item
 
     public override void OnInteract(bool hit, RaycastHit i)
     {
+        if (SceneManager.GetActiveScene().name == "Hub") return;
+        if (hit) return;
         if (canInteractWithItem) return;
         if (_incenseActivated) return;
         foreach (var s in smokeExplosion)

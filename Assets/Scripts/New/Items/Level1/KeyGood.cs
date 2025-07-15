@@ -9,6 +9,7 @@ public class KeyGood : Item
     [SerializeField] private int part;
     private bool _keyCompleted;
     [SerializeField] private Light keyLight;
+    private bool _dialogPartKey, _dialogCompleteKey;
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
@@ -20,11 +21,22 @@ public class KeyGood : Item
             item.ChangeMesh(part);
             item.CombineKey();
             Destroy(gameObject);
+            if (!_dialogCompleteKey)
+            {
+                DialogHandler.Instance.ChangeText("The red key is whole… and with it, so is the sin I chose to carry.");
+            }
             return;
+        }
+        
+        if (!_dialogPartKey)
+        {
+            DialogHandler.Instance.ChangeText("A fragment of the golden key… it carries divine intent..");
+            _dialogPartKey = true;
         }
 
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
+        GetComponent<BoxCollider>().isTrigger = true;
         CheckPart();
     }
 

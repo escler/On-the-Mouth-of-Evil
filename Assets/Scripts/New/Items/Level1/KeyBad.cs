@@ -9,6 +9,7 @@ public class KeyBad : Item
     [SerializeField] private int part;
     private bool _keyCompleted;
     [SerializeField] private Light keyLight;
+    private bool _dialogPartKey, _dialogCompleteKey;
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
@@ -20,9 +21,19 @@ public class KeyBad : Item
             item.ChangeMesh(part);
             item.CombineKey();
             Destroy(gameObject);
+            if (!_dialogCompleteKey)
+            {
+                DialogHandler.Instance.ChangeText("The golden key is complete. May divine grace guide me in what lies ahead.");
+                _dialogCompleteKey = true;
+            }
             return;
         }
 
+        if (!_dialogPartKey)
+        {
+            DialogHandler.Instance.ChangeText("A piece of the red key. I shouldn’t be holding this. Every step feels further from the light.");
+            _dialogPartKey = true;
+        }
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
         CheckPart();

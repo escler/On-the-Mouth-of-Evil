@@ -27,6 +27,8 @@ public class Candle : Item, IInteractable
         base.OnGrabItem();
         transform.localEulerAngles = angleHand;
         GetComponent<BoxCollider>().isTrigger = false;
+        DialogHandler.Instance.ChangeText(badCandle ? "The ritual calls for these candles to bind the demon’s essence to me." :
+            "The ritual requires these candles to cleanse and banish the demon’s darkness.");
     }
 
     public override void OnSelectItem()
