@@ -16,6 +16,5 @@ public class GoodShopHandler : MonoBehaviour
     {
         items[0].SetActive(PlayerPrefs.GetInt("RosaryAvaible") == 1);
         items[1].SetActive(PlayerPrefs.GetInt("IncenseAvaible") == 1);
-
     }
 }
