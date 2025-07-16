@@ -13,6 +13,7 @@ public class KeyGood : Item
     public override void OnGrabItem()
     {
         var inventory = Inventory.Instance.enviromentInventory;
+        GetComponent<BoxCollider>().isTrigger = false;
         var haveKey = inventory.Where(x => x != null && itemName == x.itemName);
         keyLight.enabled = false;
         if (haveKey.Any())
@@ -23,7 +24,7 @@ public class KeyGood : Item
             Destroy(gameObject);
             if (!_dialogCompleteKey)
             {
-                DialogHandler.Instance.ChangeText("The red key is whole… and with it, so is the sin I chose to carry.");
+                DialogHandler.Instance.ChangeText("The golden key is complete. May divine grace guide me in what lies ahead.");
             }
             return;
         }
@@ -36,7 +37,6 @@ public class KeyGood : Item
 
         ChangeLayer(18);
         Inventory.Instance.AddItem(this,category);
-        GetComponent<BoxCollider>().isTrigger = true;
         CheckPart();
     }
 

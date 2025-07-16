@@ -84,16 +84,17 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
 
     IEnumerator MoveCubeCor(Vector3 final)
     {
-        float time = 0;
+        float rotationSpeed = 90f;
+        float rotated = 0f;
         rotateAudioSource.Play();
-        while (time < 90)
-        {
-            cubeInSlot.transform.Rotate(final * 3, Space.World);
-            time += 3;
-            yield return new WaitForSeconds(0.01f);
-        }
 
-        _movingCube = false;
+        while (rotated < 90f)
+        {
+            float step = rotationSpeed * Time.deltaTime;
+            cubeInSlot.transform.Rotate(final * step, Space.World);
+            rotated += step;
+            yield return null; // espera un frame (y se adapta al framerate)
+        }
     }
 
     public void OnInteractWithObject()

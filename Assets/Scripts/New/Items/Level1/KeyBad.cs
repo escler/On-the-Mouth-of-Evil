@@ -23,7 +23,7 @@ public class KeyBad : Item
             Destroy(gameObject);
             if (!_dialogCompleteKey)
             {
-                DialogHandler.Instance.ChangeText("The golden key is complete. May divine grace guide me in what lies ahead.");
+                DialogHandler.Instance.ChangeText("The red key is whole… and with it, so is the sin I chose to carry.");
                 _dialogCompleteKey = true;
             }
             return;

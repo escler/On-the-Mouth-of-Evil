@@ -30,6 +30,7 @@ public class BaitMorgue : Item
             ritual.baitBoxPlaced = true;
             transform.position = ritual.transform.position + Vector3.up * 0.25f;
             transform.rotation = ritual.transform.rotation;
+            transform.parent = ritual.transform;
             GetComponent<BoxCollider>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
         }

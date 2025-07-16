@@ -30,7 +30,7 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
         while (Mathf.Abs(model.localEulerAngles.z - rotations[actualRotation].z) > 1)
         {
             print(Mathf.Abs(model.localEulerAngles.z - rotations[actualRotation].z));
-            model.Rotate(0,0,speedRotation,Space.Self);
+            model.Rotate(0,0,speedRotation * Time.deltaTime,Space.Self);
             yield return new WaitForSeconds(0.01f);
         }
 

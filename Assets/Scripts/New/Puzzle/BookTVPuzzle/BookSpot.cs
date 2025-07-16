@@ -7,6 +7,7 @@ public class BookSpot : MonoBehaviour, IInteractable
     [SerializeField] private Transform pivotBook;
     [SerializeField] private GameObject bookPlace;
     [SerializeField] private BookPuzzleTV bookPuzzleTV;
+    [SerializeField] private GameObject glowBook;
     public BookPuzzleTV BookPuzzleTV => bookPuzzleTV;
     public int slot;
     private bool _canGrab;
@@ -14,6 +15,7 @@ public class BookSpot : MonoBehaviour, IInteractable
     public void PlaceBook(BookPuzzleTV book)
     {
         if (bookPuzzleTV != null || _canGrab) return;
+        PuzzleBookTV.Instance.HideGlows();
         bookPuzzleTV = book;
         StartCoroutine(EnableBool(true));
         PuzzleBookTV.Instance.AddBook(slot,book);
@@ -23,6 +25,17 @@ public class BookSpot : MonoBehaviour, IInteractable
         book.GetComponent<Rigidbody>().isKinematic = true;
         book.transform.parent = pivotBook;
 
+    }
+
+    public void ShowGlow()
+    {
+        if (bookPuzzleTV != null) return;
+        glowBook.SetActive(true);
+    }
+    
+    public void HideGlow()
+    {
+        glowBook.SetActive(false);
     }
     public void OnInteractItem()
     {

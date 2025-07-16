@@ -44,15 +44,21 @@ public class FadeOutHandler : MonoBehaviour
 
     IEnumerator FadeOutCor(float duration)
     {
-        interval = (1 - _image.color.a) / duration;
-        while (_image.color.a < 1)
+        float elapsed = 0f;
+        Color imageColor = _image.color;
+
+        while (elapsed < duration)
         {
-            imageColor.a += interval * 0.01f;
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            imageColor.a = alpha;
             _image.color = imageColor;
-            yield return new WaitForSeconds(0.01f);
+
+            yield return null; // esperar al siguiente frame
         }
 
-        imageColor.a = 1;
+        // Asegurar que termina en 1
+        imageColor.a = 1f;
         _image.color = imageColor;
         fadeOut = true;
     }

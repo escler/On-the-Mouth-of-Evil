@@ -16,6 +16,7 @@ public class BookPuzzleTV : Item
     {
         base.OnDropItem();
         GetComponentInChildren<AuraItem>().onHand = false;
+        PuzzleBookTV.Instance.HideGlows();
     }
     
     public override void OnInteract(bool hit, RaycastHit i)
@@ -28,6 +29,18 @@ public class BookPuzzleTV : Item
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             bookSpot.PlaceBook(this);
         }
+    }
+
+    public override void OnSelectItem()
+    {
+        base.OnSelectItem();
+        PuzzleBookTV.Instance.ShowGlows();
+    }
+
+    public override void OnDeselectItem()
+    {
+        base.OnDeselectItem();
+        PuzzleBookTV.Instance.HideGlows();
     }
     public override void OnUpdate()
     {

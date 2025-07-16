@@ -26,6 +26,22 @@ public class PuzzleBookTV : MonoBehaviour
         Instance = this;
     }
 
+    public void ShowGlows()
+    {
+        foreach (var b in bookSpots)
+        {
+            b.ShowGlow();
+        }
+    }
+
+    public void HideGlows()
+    {
+        foreach (var b in bookSpots)
+        {
+            b.HideGlow();
+        }
+    }
+    
     public void AddBook(int slot, BookPuzzleTV book)
     {
         if(_books[slot] != null) return;
