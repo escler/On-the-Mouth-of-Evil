@@ -26,7 +26,7 @@ public class Item : MonoBehaviour, IInteractable
     
     private float _timer;
     private float bobbingSpeed = 5;
-    private float bobbingAmount = .05f;
+    private float bobbingAmount = .005f;
 
     private void Awake()
     {

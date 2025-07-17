@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class GoodRitual : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class GoodRitual : MonoBehaviour
     [SerializeField] private Transform ritualPos;
     [SerializeField] private int level;
     [SerializeField] private GameObject godRays, ovenFire;
+    [SerializeField] private SpriteRenderer stencilBurn;
+    [SerializeField] private VisualEffect vaporEffect;
     private void Awake()
     {
         if (Instance)
@@ -19,6 +23,10 @@ public class GoodRitual : MonoBehaviour
         }
         
         Instance = this;
+
+        var stencilColor = stencilBurn.color;
+        stencilColor.a = 0;
+        stencilBurn.color = stencilColor;
     }
 
     public void StartFireOven()
@@ -45,25 +53,25 @@ public class GoodRitual : MonoBehaviour
         //Lo que activamos al hacer el good ritual
 
         yield return new WaitUntil(() => MorgueEnemy.Instance.inRitualNode);
-        while (enemy.enemyVisibility < 5)
+        while (enemy.enemyVisibility < 4)
         {
             enemy.enemyVisibility += Time.deltaTime * 1.6f;
             enemy.enemyVisibility = Mathf.Clamp(enemy.enemyVisibility, 0, 8);
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
-            print(enemy.enemyVisibility);
-
-            if (enemy.enemyVisibility >= 2f)
-            {
-                //_enemyAnimator.ChangeStateAnimation("Absorb", true);
-            }
 
             yield return null;
         }
+
+        enemy.enemyVisibility = 5;
+        enemy.enemyVisibility = Mathf.Clamp(enemy.enemyVisibility, 0, 8);
+        enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
+
         
         enemy.anim.ChangeState("Exorcism", true);
         
         yield return new WaitUntil(() => enemy.anim.animator.GetCurrentAnimatorStateInfo(0).IsName("Burn"));
         enemy.firePs.SetActive(true);
+        //vaporEffect.Play();
         enemy.burnFlame.Play();
         enemy.burnSound.Play();
         var enemyClip = enemy.anim.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
@@ -71,7 +79,7 @@ public class GoodRitual : MonoBehaviour
         var realDuration = enemyClip / speed;
         float startVisibility = enemy.enemyVisibility;
         float elapsed = 0f;
-
+        
         yield return new WaitUntil(() => enemy.startDisappear);
 
         while (enemy.enemyVisibility > 3)
@@ -80,9 +88,11 @@ public class GoodRitual : MonoBehaviour
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
             yield return null;
         }
+        
 
         yield return new WaitForSeconds(2);
-        
+
+        StartCoroutine(StencilAppear());
         enemy.vfxDissolve.Play();
         
         while (enemy.enemyVisibility > 0)
@@ -92,6 +102,7 @@ public class GoodRitual : MonoBehaviour
             yield return null;
         }
         
+        //vaporEffect.Stop();
         enemy.vfxDissolve.Stop();
         
         var emission = enemy.firePs.GetComponentsInChildren<ParticleSystem>();
@@ -122,5 +133,19 @@ public class GoodRitual : MonoBehaviour
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         MailHandler.Instance.AddEmail("good");
+    }
+
+    IEnumerator StencilAppear()
+    {
+        float time = 0;
+
+        while (time < 1)
+        {
+            time += Time.deltaTime;
+            var stencilColor = stencilBurn.color;
+            stencilColor.a = Mathf.Lerp(0, 1, time);
+            stencilBurn.color = stencilColor;
+            yield return null;
+        }
     }
 }
