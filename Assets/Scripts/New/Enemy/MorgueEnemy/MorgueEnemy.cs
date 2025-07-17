@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FSM;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class MorgueEnemy : Enemy
@@ -61,6 +62,7 @@ public class MorgueEnemy : Enemy
     public bool startDisappear;
 
     public ParticleSystem[] spawnPs;
+    public VisualEffect vfxDissolve;
     
     private void Awake()
     {

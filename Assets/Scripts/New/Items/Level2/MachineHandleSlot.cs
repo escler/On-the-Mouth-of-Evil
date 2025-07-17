@@ -67,6 +67,7 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
         {
             if (time > moveLever.clip.length / 2 && !electActive)
             {
+                DialogHandler.Instance.ChangeText("There we go… the ovens are back online.");
                 elecPs.SetActive(true);
                 electActive = true;
             }
@@ -74,10 +75,10 @@ public class MachineHandleSlot : MonoBehaviour, IInteractable, IInteractObject
             transform.Rotate(0,0, speedRot * Time.deltaTime);
             yield return null;
         }
-
+        
         machineLoop.Play();
         GoodRitual.Instance.leverActivated = true;
-        DialogHandler.Instance.ChangeText("There we go… the ovens are back online.");
+        GoodRitual.Instance.StartFireOven();
     }
 
     public string ShowText()

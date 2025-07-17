@@ -9,8 +9,7 @@ public class GoodRitual : MonoBehaviour
     public bool leverActivated, nestOnFire;
     [SerializeField] private Transform ritualPos;
     [SerializeField] private int level;
-    [SerializeField] private GameObject godRays;
-
+    [SerializeField] private GameObject godRays, ovenFire;
     private void Awake()
     {
         if (Instance)
@@ -22,6 +21,11 @@ public class GoodRitual : MonoBehaviour
         Instance = this;
     }
 
+    public void StartFireOven()
+    {
+        ovenFire.SetActive(true);
+    }
+    
     public void StartRitual()
     {
         DecisionsHandler.Instance.badPath = false;
@@ -79,12 +83,16 @@ public class GoodRitual : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         
+        enemy.vfxDissolve.Play();
+        
         while (enemy.enemyVisibility > 0)
         {
             enemy.enemyVisibility -= Time.deltaTime * 2;
             enemy.enemyMaterial.SetFloat("_Power", enemy.enemyVisibility);
             yield return null;
         }
+        
+        enemy.vfxDissolve.Stop();
         
         var emission = enemy.firePs.GetComponentsInChildren<ParticleSystem>();
         foreach (var e in emission)

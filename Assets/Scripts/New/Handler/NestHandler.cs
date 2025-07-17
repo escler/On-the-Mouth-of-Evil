@@ -27,11 +27,21 @@ public class NestHandler : MonoBehaviour
     {
         nests[0].transform.GetChild(0).gameObject.SetActive(true);
         GoodRitual.Instance.nestOnFire = true;
+        StartCoroutine(FireRestNest());
     }
 
-    public void FireRestNest()
+    IEnumerator FireRestNest()
     {
-        for (int i = 1; i < nests.Length; i++)
+        int count = 1;
+
+        for (int i = count; i < 7; i++)
+        {
+            nests[i].transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        for (int i = count; i < nests.Length; i++)
         {
             nests[i].transform.GetChild(0).gameObject.SetActive(true);
         }
