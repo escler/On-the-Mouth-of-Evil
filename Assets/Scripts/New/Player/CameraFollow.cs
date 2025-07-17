@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         transform.rotation = cameraPos.rotation;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (cameraPos == null) cameraPos = inRitual ? CameraCinematicHandler.Instance.ritual : PlayerHandler.Instance.cameraPos;
 

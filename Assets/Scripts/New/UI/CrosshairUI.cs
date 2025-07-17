@@ -7,6 +7,7 @@ public class CrosshairUI : MonoBehaviour
 {
     private RectTransform _transform;
     private Vector3 _initialScale;
+    public GameObject uiInteractionText;
 
     private void Start()
     {
@@ -16,11 +17,13 @@ public class CrosshairUI : MonoBehaviour
 
     public void IncreaseUI()
     {
+        uiInteractionText.SetActive(true);
         _transform.localScale = Vector3.Lerp(_transform.localScale, _initialScale * 3, .2f);
     }
 
     public void DecreaseUI()
     {
+        uiInteractionText.SetActive(false);
         _transform.localScale = Vector3.Lerp(_transform.localScale, _initialScale, .2f);
     }
 }

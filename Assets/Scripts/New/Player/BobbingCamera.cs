@@ -31,7 +31,7 @@ public class BobbingCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_movement.ritualCinematic) return;
+
 
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
@@ -41,6 +41,19 @@ public class BobbingCamera : MonoBehaviour
         _run = _movement.Run;
         _actualBobbingSpeed = _run ? runBobbingSpeed : bobbingSpeed;
         _actualBobbingAmount = _run ? runBobbingAmount : bobbingAmount;
+
+    }
+
+    private void LateUpdate()
+    {
+        if (_movement.ritualCinematic)
+        {
+            _run = false;
+            _actualBobbingSpeed = bobbingSpeed;
+            _actualBobbingAmount = bobbingAmount;
+            return;
+        }
+        
         if (!_bobbingEnable)
         {
             ReturnToDefaultPosition();
@@ -48,11 +61,6 @@ public class BobbingCamera : MonoBehaviour
         }
 
         MakeBobbing();
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
     void ReturnToDefaultPosition()

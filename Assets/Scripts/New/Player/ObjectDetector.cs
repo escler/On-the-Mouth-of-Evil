@@ -207,9 +207,15 @@ public class ObjectDetector : MonoBehaviour
             _crosshairUI.DecreaseUI();
             return;
         }
-        
-        if(_hit.transform.TryGetComponent(out IInteractObject interactObject) || interact) _crosshairUI.IncreaseUI();
-        else _crosshairUI.DecreaseUI();
+
+        if (_hit.transform.TryGetComponent(out IInteractObject interactObject) || interact)
+        {
+            _crosshairUI.IncreaseUI();
+        }
+        else
+        {
+            _crosshairUI.DecreaseUI();
+        }
     }
 
     void StartParameters(Scene scene, LoadSceneMode loadSceneMode)

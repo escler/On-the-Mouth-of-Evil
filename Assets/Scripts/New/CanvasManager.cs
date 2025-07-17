@@ -12,7 +12,7 @@ public class CanvasManager : MonoBehaviour
     public Dictionary<string, GameObject> descriptions;
     public GameObject InventoryUI, InteractionText, InventoryNameSelect, missionLevelHouse, 
         descriptionLighter, descriptionCross, descriptionBible, descriptionSalt, descriptionVoodoo, descriptionRosary, descriptionIncense, descriptionSwarm, puzzleSaltPaper,
-        rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descrptionMissionConten2, descriptionPuzzleContent, descriptionNote, descriptionScapelNote, fps;
+        rotateInfo, moveObjectUI, inspectImage, menu, descriptionMissionContent, descrptionMissionConten2, descriptionPuzzleContent, descriptionNote, descriptionScapelNote, fps, interactText;
     public CrosshairUI crossHairUI;
 
     public Image crossHair;
