@@ -65,6 +65,7 @@ public class HouseEnemy_Attacks : MonoBaseState
     public override Dictionary<string, object> Exit(IState to)
     {
         StopAllCoroutines();
+        
         switch (_actualAction)
         {
             case 0:

@@ -120,17 +120,21 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
     {
         StartCoroutine(MovePlaceCube(transform.GetChild(0).position));
         CanvasManager.Instance.rotateInfo.SetActive(true);
+        PlayerHandler.Instance.focusView = true;
         PlayerHandler.Instance.UnPossesPlayer();
+        Inventory.Instance.cantSwitch = true;
         _rotatingPhase = true;
         _cubePlaced = false;
         StartCoroutine(EnableBool());
     }
 
-    private void ExitRotCube()
+    public void ExitRotCube()
     {
         StartCoroutine(MovePlaceCube(transform.position));
         CanvasManager.Instance.rotateInfo.SetActive(false);
         PlayerHandler.Instance.PossesPlayer();
+        Inventory.Instance.cantSwitch = false;
+        PlayerHandler.Instance.focusView = false;
         _rotatingPhase = false;
         _cubePlaced = true;
         _canRot = false;
@@ -157,6 +161,7 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
         float time = 0;
         while (time < 1)
         {
+            if (!cubeInSlot) yield break;
             cubeInSlot.transform.position = Vector3.Lerp(start, final, time);
             time += Time.deltaTime * 4;
             yield return null;

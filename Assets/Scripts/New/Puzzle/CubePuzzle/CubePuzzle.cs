@@ -8,6 +8,7 @@ public class CubePuzzle : MonoBehaviour
 {
     public static CubePuzzle Instance { get; private set; }
     [SerializeField] private CubeSlot[] slots = new CubeSlot[4];
+    public CubeSlot[] Slots => slots;
     public Vector3[] rotations;
     [SerializeField] private string code;
     [SerializeField] private Transform initial, final;

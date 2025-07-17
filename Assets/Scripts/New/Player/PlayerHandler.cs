@@ -37,16 +37,34 @@ public class PlayerHandler : MonoBehaviour
 
     public void Unfocus()
     {
+        Inventory.Instance.cantSwitch = true;
         var selected = Inventory.Instance.selectedItem;
-        if (selected.TryGetComponent(out PaperMission1 paper))
+        if (selected != null)
         {
-            selected.FocusObject();
+            if (selected.TryGetComponent(out PaperMission1 paper))
+            {
+                selected.FocusObject();
+                return;
+            }
+
+            if (selected.TryGetComponent(out PieceTarotCard piece))
+            {
+                piece.FocusObject();
+                return;
+            }
         }
 
-        if (selected.TryGetComponent(out PieceTarotCard piece))
+        var slotsCubes = CubePuzzle.Instance.Slots;
+        foreach (var s in slotsCubes)
         {
-            piece.FocusObject();
+            if (s.RotatingPhase)
+            {
+                s.ExitRotCube();
+                print("Me llame");
+            }
         }
+
+
     }
     private void Awake()
     {
