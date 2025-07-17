@@ -63,7 +63,7 @@ public class CubePuzzle : MonoBehaviour
 
         print(slotCount);
         
-        if (slotCount < 3) return;
+        if (slotCount < 4) return;
         
         DialogHandler.Instance.ChangeText("I feel like I’ve seen these letters before… not just here.");
     }
