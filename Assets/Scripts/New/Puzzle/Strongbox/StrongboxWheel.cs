@@ -14,6 +14,7 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
 
     public int number;
 
+    private Coroutine _rotationCoroutine;
 
     private void Awake()
     {
@@ -21,23 +22,34 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
         _audiosource = GetComponent<AudioSource>();
     }
 
+
+
     IEnumerator RotateWheel()
     {
         _audiosource.Play();
         _cantRotate = true;
-        actualRotation++;
-        if (actualRotation >= rotations.Length) actualRotation = 0;
-        while (Mathf.Abs(model.localEulerAngles.z - rotations[actualRotation].z) > 1)
+
+        int prevRotation = actualRotation;
+        actualRotation = (actualRotation + 1) % rotations.Length;
+
+        Quaternion startRot = model.localRotation;
+        Quaternion targetRot = Quaternion.Euler(rotations[actualRotation]);
+
+        float elapsed = 0;
+        float duration = 0.5f; // o calculado según speedRotation
+
+        while (elapsed < duration)
         {
-            print(Mathf.Abs(model.localEulerAngles.z - rotations[actualRotation].z));
-            model.Rotate(0,0,speedRotation * Time.deltaTime,Space.Self);
-            yield return new WaitForSeconds(0.01f);
+            model.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        model.localEulerAngles = rotations[actualRotation];
+        model.localRotation = targetRot;
 
         number = actualRotation;
         _cantRotate = false;
+        _rotationCoroutine = null;
     }
 
     public void OnInteractItem()
@@ -51,7 +63,11 @@ public class StrongboxWheel : MonoBehaviour, IInteractable, IInteractObject
     public void OnInteractWithObject()
     {
         if (_cantRotate) return;
-        StartCoroutine(RotateWheel());
+
+        if (_rotationCoroutine != null)
+            StopCoroutine(_rotationCoroutine);
+
+        _rotationCoroutine = StartCoroutine(RotateWheel());
     }
 
     public string ShowText()

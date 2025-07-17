@@ -90,11 +90,15 @@ public class CubeSlot : MonoBehaviour, IInteractable, IInteractObject
 
         while (rotated < 90f)
         {
-            float step = rotationSpeed * Time.deltaTime;
+            float step = rotationSpeed * Time.deltaTime * 2;
             cubeInSlot.transform.Rotate(final * step, Space.World);
             rotated += step;
             yield return null; // espera un frame (y se adapta al framerate)
         }
+        
+        cubeInSlot.transform.Rotate(final * (90f - rotated), Space.World);
+        _movingCube = false;
+        
     }
 
     public void OnInteractWithObject()
