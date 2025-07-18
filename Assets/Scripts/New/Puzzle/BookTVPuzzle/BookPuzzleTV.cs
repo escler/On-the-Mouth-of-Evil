@@ -22,7 +22,6 @@ public class BookPuzzleTV : Item
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
-        if (!canInteractWithItem) return;
         
         if (i.transform.TryGetComponent(out BookSpot bookSpot))
         {
@@ -47,7 +46,6 @@ public class BookPuzzleTV : Item
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
-        canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
         ObjectDetector.Instance.uiInteractionText.SetActive(CanInteractWithItem());
         if (Input.GetButtonDown("Interact"))
@@ -55,19 +53,5 @@ public class BookPuzzleTV : Item
             OnInteract(rayConnected, ray);
         }
     }
-    
-    public override bool CanInteractWithItem()
-    {
-        var ray = ObjectDetector.Instance._hit;
-        var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
-        if (!rayConnected) return false;
-        if (ObjectDetector.Instance.InteractText()) return true;
-        if (ray.transform.TryGetComponent(out BookSpot item))
-        {
-            if (item.BookPuzzleTV == null) return true;
-            return false;
-        }
-        return false;
-    }
 }

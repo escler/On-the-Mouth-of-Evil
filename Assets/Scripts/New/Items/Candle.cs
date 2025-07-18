@@ -39,6 +39,12 @@ public class Candle : Item, IInteractable
 
     }
 
+    public override void OnDropItem()
+    {
+        base.OnDropItem();
+        canShowText = true;
+    }
+
     public override void OnDeselectItem()
     {
         base.OnDeselectItem();
