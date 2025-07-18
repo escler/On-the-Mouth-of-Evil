@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MenuHandler : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class MenuHandler : MonoBehaviour
 
     private bool _cursorVisibleState;
     private CursorLockMode _cursorLockModeState;
+    [SerializeField] private Button backButton;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -18,12 +21,25 @@ public class MenuHandler : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        backButton.onClick.RemoveAllListeners();
+        backButton.onClick.AddListener(SwitchMenu);
+    }
+
+    private void OnDestroy()
+    {
+        backButton.onClick.RemoveAllListeners();
+    }
+
     public void SwitchMenu()
     {
+        print("Switching menu");
         menu.SetActive(!menu.activeInHierarchy);
         if (menu.activeInHierarchy)
         {
             PauseState();
+            EventSystem.current.SetSelectedGameObject(null);
         }
         else
         {
@@ -35,8 +51,6 @@ public class MenuHandler : MonoBehaviour
     {
         _cursorVisibleState = Cursor.visible;
         _cursorLockModeState = Cursor.lockState;
-        print(_cursorVisibleState);
-        print(_cursorLockModeState);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0;

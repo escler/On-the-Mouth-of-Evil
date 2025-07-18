@@ -25,8 +25,8 @@ public class Item : MonoBehaviour, IInteractable
     }
     
     private float _timer;
-    private float bobbingSpeed = 5;
-    private float bobbingAmount = .005f;
+    private float bobbingSpeed = 2.5f;
+    private float bobbingAmount = .002f;
 
     private void Awake()
     {
@@ -127,6 +127,7 @@ public class Item : MonoBehaviour, IInteractable
 
     void BobbingItem()
     {
+        if (Time.timeScale == 0f) return;
         _timer += Time.deltaTime * bobbingSpeed / 4;
         transform.localPosition = new Vector3(transform.localPosition.x,
             transform.localPosition.y + Mathf.Cos(_timer) * bobbingAmount / 8,
