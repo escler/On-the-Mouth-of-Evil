@@ -8,6 +8,7 @@ public class Knob : MonoBehaviour, IInteractable, IInteractObject
     private bool _on;
     public int number;
     private Animator _animator;
+    [SerializeField] private AudioSource knobOn, knobOff;
 
     private void Awake()
     {
@@ -40,6 +41,8 @@ public class Knob : MonoBehaviour, IInteractable, IInteractObject
         }
 
         _on = !_on;
+        if(_on) knobOn.Play();
+        else knobOff.Play();
         _animator.SetBool("Open", _on);
     }
 
