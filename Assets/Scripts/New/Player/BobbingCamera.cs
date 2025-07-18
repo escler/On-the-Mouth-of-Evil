@@ -84,6 +84,8 @@ public class BobbingCamera : MonoBehaviour
 
     void MakeBobbing()
     {
+        
+        if (Time.timeScale == 0f) return;
         _timer += Time.deltaTime * _actualBobbingSpeed;
 
         float offsetY = Mathf.Sin(_timer) * _actualBobbingAmount;

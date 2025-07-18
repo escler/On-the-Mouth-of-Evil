@@ -26,6 +26,7 @@ public class Lighter : Item
         
         if (i.transform.TryGetComponent(out IBurneable item))
         {
+            _onfire.PlayOneShot(_onfire.clip);
             cantUseItem = true;
             Inventory.Instance.cantSwitch = true;
             StartCoroutine(WaitForUseAgain(item));
@@ -61,7 +62,6 @@ public class Lighter : Item
         if (!rayConnected) return false;
         if (ray.transform.TryGetComponent(out IBurneable item))
         {
-            _onfire.PlayOneShot(_onfire.clip);
             return true;
         }
 

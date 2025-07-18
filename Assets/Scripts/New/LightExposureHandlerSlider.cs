@@ -28,7 +28,7 @@ public class LightExposureHandlerSlider : MonoBehaviour
             return;
         }
 
-        _slider.value = 0;
+        _slider.value = .3f;
         PlayerPrefs.SetFloat("LightExposure", _slider.value);
         PlayerPrefs.Save();
     }

@@ -19,6 +19,16 @@ public class BaitMorgue : Item
         }
     }
 
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        SkullPuzzle.Instance.freezerCollider.enabled = true;
+        foreach (var f in SkullPuzzle.Instance.freezerColliders)
+        {
+            f.enabled = false;
+        }
+    }
+
 
     public override void OnInteract(bool hit, RaycastHit i)
     {

@@ -66,7 +66,7 @@ public class CubePuzzle : MonoBehaviour
         
         if (slotCount < 4) return;
         
-        DialogHandler.Instance.ChangeText("I feel like I’ve seen these letters before… not just here.");
+        DialogHandler.Instance.ChangeText("This feels personal… like something only a child would know.");
     }
 
     private void WinPuzzle()

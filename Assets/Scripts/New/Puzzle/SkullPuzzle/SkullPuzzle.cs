@@ -11,6 +11,9 @@ public class SkullPuzzle : MonoBehaviour
     [SerializeField] Animator freezerAnimator;
     [SerializeField] private AudioSource fridgeOpen;
     public static SkullPuzzle Instance { get; private set; }
+    
+    public BoxCollider freezerCollider;
+    public BoxCollider[] freezerColliders;
 
     private void Awake()
     {

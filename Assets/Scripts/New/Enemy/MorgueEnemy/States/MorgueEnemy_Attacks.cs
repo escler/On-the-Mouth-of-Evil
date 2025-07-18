@@ -27,6 +27,7 @@ public class MorgueEnemy_Attacks : MonoBaseState
     public GameObject vomitBall;
     public Transform vomitBallStart;
     private VomitBall _actualBall;
+    private string _lastAction;
 
     private IEnumerator nextAction = null;
     public override void Enter(IState from, Dictionary<string, object> transitionParameters = null)
@@ -159,6 +160,8 @@ public class MorgueEnemy_Attacks : MonoBaseState
             ChooseAttack();
             return;
         }
+
+        _lastAction = "CurseRoom";
         nextAction = CurseRoom();
         Teleport();
     }
@@ -196,7 +199,16 @@ public class MorgueEnemy_Attacks : MonoBaseState
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 
         Teleport();
-        nextAction = AttackSwarmStunCor();
+        if (_lastAction != "Stun")
+        {
+            nextAction = AttackSwarmStunCor();
+            _lastAction = "Stun";
+        }
+        else
+        {
+            nextAction = AttackVomitCor();
+            _lastAction = "Vomit";
+        }
     }
 
     IEnumerator AttackSwarmStunCor()
@@ -241,7 +253,24 @@ public class MorgueEnemy_Attacks : MonoBaseState
         _ray = Physics.Raycast(transform.position, dir, dir.magnitude, owner.obstacles);
 
         Teleport();
-        nextAction = AttackVomitCor();
+
+        if (!owner.actualRoom.swarmActivate)
+        {
+            nextAction = CurseRoom();
+            _lastAction = "CurseRoom";
+            return;
+        }
+        
+        
+        if (_lastAction != "Vomit")
+        {
+            nextAction = AttackVomitCor();
+        }
+        else
+        {
+            nextAction = AttackSwarmStunCor();
+            _lastAction = "Stun";
+        }
     }
 
     IEnumerator AttackVomitCor()

@@ -14,6 +14,8 @@ public class MovableItem : MonoBehaviour, IInteractable
     private bool onHand;
     private bool canMove;
     public bool relocated;
+    private bool _collidedWithPlayer;
+    private bool relocating; // <-- NUEVO
 
     private void Awake()
     {
@@ -21,8 +23,6 @@ public class MovableItem : MonoBehaviour, IInteractable
         relocated = true;
         _relocatedSpeed = normalSpeed / 2;
         _actualSpeed = normalSpeed;
-
-        FreezePosition(true); // Inicia congelado
     }
 
     private void Update()
@@ -38,14 +38,14 @@ public class MovableItem : MonoBehaviour, IInteractable
             onHand = false;
             actualTarget = finalPos;
             _actualSpeed = normalSpeed;
-
-            FreezePosition(false); // Liberar para moverse
+            relocating = false; // <-- deja de estar en relocate
         }
     }
 
     private void FixedUpdate()
     {
         if (actualTarget == null) return;
+        if (_collidedWithPlayer && relocating) return; // <-- solo si está relocando
         MoveObject(actualTarget.position);
     }
 
@@ -53,17 +53,10 @@ public class MovableItem : MonoBehaviour, IInteractable
     {
         if (relocated) return;
 
-        // Ignorar eje Y
-        Vector3 flatTarget = new Vector3(target.x, _rb.position.y, target.z);
-        Vector3 flatPosition = new Vector3(transform.position.x, _rb.position.y, transform.position.z);
-
-        if (Vector3.Distance(flatPosition, flatTarget) < .1f)
+        if (Vector3.Distance(transform.position, target) < .2f)
         {
-            transform.position = flatTarget;
-            _rb.velocity = Vector3.zero;
-            FreezePosition(true); // Congela al llegar
-
-            if (flatTarget == new Vector3(initialPos.position.x, _rb.position.y, initialPos.position.z) && !relocated)
+            transform.position = target;
+            if (target == initialPos.position && !relocated)
             {
                 relocated = true;
                 gameObject.layer = 8;
@@ -73,7 +66,8 @@ public class MovableItem : MonoBehaviour, IInteractable
             return;
         }
 
-        Vector3 dir = flatTarget - _rb.position;
+        Vector3 dir = target - _rb.position;
+        dir.y = 0; // Ignorar eje Y si hace falta
         dir /= Time.fixedDeltaTime;
         dir = Vector3.ClampMagnitude(dir, _actualSpeed);
         _rb.velocity = dir;
@@ -84,8 +78,8 @@ public class MovableItem : MonoBehaviour, IInteractable
         actualTarget = finalPos;
         relocated = false;
         gameObject.layer = 9;
-
-        FreezePosition(false); // Permite moverse
+        _collidedWithPlayer = false;
+        relocating = false;
     }
 
     public void RelocateItem()
@@ -94,35 +88,22 @@ public class MovableItem : MonoBehaviour, IInteractable
         if (!relocated) PlayerHandler.Instance.movingObject = true;
         actualTarget = initialPos;
         _actualSpeed = _relocatedSpeed;
-
-        FreezePosition(false); // Permite moverse
+        _collidedWithPlayer = false;
+        relocating = true;
     }
 
-    private void FreezePosition(bool freeze)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (freeze)
+        if (relocating && collision.gameObject.CompareTag("Player"))
         {
-            _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        }
-        else
-        {
-            _rb.constraints = RigidbodyConstraints.None | RigidbodyConstraints.FreezeRotation;
+            _collidedWithPlayer = true;
+            _rb.velocity = Vector3.zero;
         }
     }
 
     public void OnInteractItem() { }
-
     public void OnInteract(bool hit, RaycastHit i) { }
-
     public void OnInteractWithObject() { }
-
-    public string ShowText()
-    {
-        return "Hold to Relocation";
-    }
-
-    public bool CanShowText()
-    {
-        return false;
-    }
+    public string ShowText() => "Hold to Relocation";
+    public bool CanShowText() => false;
 }
