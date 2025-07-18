@@ -15,6 +15,14 @@ public class PuzzleSaltPaper : Item, IInteractable
     public float offset;
     public bool canDescriptionContent;
     private bool contentActive;
+    [SerializeField] private GameObject aura;
+
+
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        aura.SetActive(false);
+    }
 
     private void Start()
     {

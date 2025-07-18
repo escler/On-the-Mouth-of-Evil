@@ -33,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7805212927067059312}
+  - {fileID: 7378385641782250976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 4.243, y: 217.751, z: 1.743}
 --- !u!65 &961159536124797667
@@ -110,6 +111,7 @@ MonoBehaviour:
   handPos: {fileID: 0}
   offset: 0.3
   canDescriptionContent: 1
+  aura: {fileID: 6230767192889738787}
 --- !u!1 &6914853092779925532
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,3 +195,119 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &5856849838154138317
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2705095310317089493}
+    m_Modifications:
+    - target: {fileID: 522299197737829614, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_Name
+      value: BadAuraPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756573518048265705, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756573518048265705, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085523504169370686, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200785601502893063, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200785601502893063, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200785601502893063, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200785601502893063, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 7630188830454918296, guid: a1bfb670c3aa15449a03bf60a64e3b83, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a1bfb670c3aa15449a03bf60a64e3b83, type: 3}
+--- !u!1 &6230767192889738787 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 522299197737829614, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+    type: 3}
+  m_PrefabInstance: {fileID: 5856849838154138317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7378385641782250976 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3973018486732312365, guid: a1bfb670c3aa15449a03bf60a64e3b83,
+    type: 3}
+  m_PrefabInstance: {fileID: 5856849838154138317}
+  m_PrefabAsset: {fileID: 0}

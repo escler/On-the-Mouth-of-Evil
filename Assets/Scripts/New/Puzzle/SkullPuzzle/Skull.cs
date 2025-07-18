@@ -15,6 +15,7 @@ public class Skull : Item
     public Mark mark;
     public float offset;
     public int numberSlot;
+    [SerializeField] private GameObject aura;
 
 
     private void Start()
@@ -37,6 +38,7 @@ public class Skull : Item
     {
         base.OnGrabItem();
         transform.localScale = Vector3.one;
+        aura.SetActive(false);
     }
     public override void OnDeselectItem()
     {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Scalpel : Item
 {
+    [SerializeField] private GameObject aura;
+
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -18,7 +20,12 @@ public class Scalpel : Item
             OnInteract(rayConnected, ray);
         }
     }
-
+    
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        aura.SetActive(false);
+    }
 
     public override void OnInteract(bool hit, RaycastHit i)
     {

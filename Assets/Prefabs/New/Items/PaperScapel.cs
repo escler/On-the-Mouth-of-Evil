@@ -13,6 +13,7 @@ public Transform cameraPos, handPos;
     public float offset;
     public bool canDescriptionContent;
     private bool contentActive;
+    [SerializeField] private GameObject aura;
 
     private void Start()
     {
@@ -22,6 +23,12 @@ public Transform cameraPos, handPos;
         _sensX = PlayerHandler.Instance.playerCam.sensX;
         _sensY = PlayerHandler.Instance.playerCam.sensY;
         _playerCam = PlayerHandler.Instance.playerCam;
+    }
+    
+    public override void OnGrabItem()
+    {
+        base.OnGrabItem();
+        aura.SetActive(false);
     }
 
     public override void FocusObject()
