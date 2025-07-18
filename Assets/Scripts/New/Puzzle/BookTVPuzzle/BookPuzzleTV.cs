@@ -33,6 +33,12 @@ public class BookPuzzleTV : Item
     public override void OnSelectItem()
     {
         base.OnSelectItem();
+        StartCoroutine(ShowGlows());
+    }
+
+    IEnumerator ShowGlows()
+    {
+        yield return null;
         PuzzleBookTV.Instance.ShowGlows();
     }
 
@@ -46,12 +52,25 @@ public class BookPuzzleTV : Item
         base.OnUpdate();
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        canInteractWithItem = CanInteractWithItem();
         ChangeCrossHair();
         ObjectDetector.Instance.uiInteractionText.SetActive(CanInteractWithItem());
         if (Input.GetButtonDown("Interact"))
         {
             OnInteract(rayConnected, ray);
         }
+    }
+
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
+
+        return false;
     }
 
 }
