@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaitMorgue : Item
 {
+    private bool _dialogAppear;
+    
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -22,6 +24,11 @@ public class BaitMorgue : Item
     public override void OnGrabItem()
     {
         base.OnGrabItem();
+        if (!_dialogAppear)
+        {
+            DialogHandler.Instance.ChangeText("With this, I could contain the demon… but I’ll need bait strong enough to tempt it.");
+            _dialogAppear = true;
+        }
         SkullPuzzle.Instance.freezerCollider.enabled = true;
         foreach (var f in SkullPuzzle.Instance.freezerColliders)
         {

@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
     
     [SerializeField] private Transform cameraPos;
     public bool inRitual;
+    public CameraZoom cameraZoom;
 
     private void Awake()
     {
