@@ -9,6 +9,7 @@ public class PCHandler : MonoBehaviour
     public Button goodShopApp, badShopApp, closeGoodShop, closeBadShop, testBTN, testBTN2, testBTN3;
     public GameObject goodShopGO, badShopGO;
     public AudioSource clickSound;
+    public GameObject currencyButtons;
     public static PCHandler Instance { get; private set; }
 
     private void Awake()
@@ -35,7 +36,7 @@ public class PCHandler : MonoBehaviour
         clickSound.Play();
     }
 
-    private void CheckBadShopEnable()
+    public void CheckBadShopEnable()
     {
         var badCount = PlayerPrefs.HasKey("BadPath") ? PlayerPrefs.GetInt("BadPath") : 0;
         print(badCount + "Bad Count");
