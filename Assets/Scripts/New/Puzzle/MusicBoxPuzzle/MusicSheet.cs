@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class MusicSheet : Item
 {
@@ -15,6 +17,7 @@ public class MusicSheet : Item
     private float _sensX, _sensY;
     private PlayerCam _playerCam;
     [SerializeField] private string tag;
+    [SerializeField] private bool dropped;
 
 
     private void Start()
@@ -27,16 +30,26 @@ public class MusicSheet : Item
         _playerCam = PlayerHandler.Instance.playerCam;
     }
 
+    private void Awake()
+    {
+    }
+
+    private void OnDestroy()
+    {
+    }
+
     public override void OnGrabItem()
     {
         base.OnGrabItem();
         GetComponentInChildren<AuraItem>().onHand = true;
+        dropped = false;
     }
 
     public override void OnDropItem()
     {
         base.OnDropItem();
         GetComponentInChildren<AuraItem>().onHand = false;
+        dropped = true;
     }
     
     public override void OnInteract(bool hit, RaycastHit i)
@@ -89,12 +102,12 @@ public class MusicSheet : Item
 
     IEnumerator MoveCor()
     {
-        Vector3 initial = transform.localPosition;
-        Vector3 final = transform.localPosition + transform.right * 0.2f;
+        Vector3 initial = transform.position;
+        Vector3 final = transform.position + transform.right * (0.5f * 0.3f);
         float timer = 0;
         while (timer < 1)
         {
-            transform.localPosition = Vector3.Lerp(initial, final, timer);
+            transform.position = Vector3.Lerp(initial, final, timer);
             timer += Time.deltaTime * 0.5f;
             yield return null;
         }

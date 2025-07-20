@@ -86,6 +86,7 @@ public class HouseEnemy : Enemy
     AudioSource _audioSource;
     public String[] ritualTexts;
     public int level;
+    
     private void Awake()
     {
         if (Instance)

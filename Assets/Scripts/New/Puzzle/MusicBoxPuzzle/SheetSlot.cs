@@ -51,6 +51,7 @@ public class SheetSlot : MonoBehaviour, IInteractable
         musicSheet.GetComponent<Rigidbody>().isKinematic = true;
         musicSheet.transform.position = transform.position;
         musicSheet.transform.rotation = transform.rotation;
+        musicSheet.transform.parent = transform;
         StartCoroutine(PlaceSheetCor(musicSheet));
     }
     
