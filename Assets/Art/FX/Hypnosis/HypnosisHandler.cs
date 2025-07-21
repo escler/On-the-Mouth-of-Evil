@@ -28,6 +28,12 @@ public class HypnosisHandler : MonoBehaviour
 
     private float _initAmbientIntensity;
 
+    public void ChangeIntensity(float intensity)
+    {
+        print("Change intensity");
+        _initAmbientIntensity = intensity;
+    }
+    
     private void Awake()
     {
         if (Instance)

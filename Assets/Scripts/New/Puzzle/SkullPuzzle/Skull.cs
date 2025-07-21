@@ -89,6 +89,7 @@ public class Skull : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
 
         if (!rayConnected) return false;
+        if (ObjectDetector.Instance.InteractText()) return true;
         if (ray.transform.TryGetComponent(out SkullPuzzleSlot item)) return true;
 
         return false;

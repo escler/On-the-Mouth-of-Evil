@@ -101,8 +101,26 @@ public class PuzzleSaltPaper : Item, IInteractable
     public override void OnUpdate()
     {
         base.OnUpdate();
+        
+        canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
         if(Input.GetButtonDown("Focus")) FocusObject();
         if (Input.GetMouseButtonDown(0)) GetDescriptionContent();
+    }
+    
+    public override bool CanInteractWithItem()
+    {
+        var ray = ObjectDetector.Instance._hit;
+        var rayConnected = ObjectDetector.Instance.CheckRayCast();
+
+        if (!rayConnected) return false;
+        
+        if (ObjectDetector.Instance.InteractText()) return true;
+        if (ray.transform.TryGetComponent(out BodyPuzzle body))
+        {
+            return true;
+        } 
+        return false;
     }
 
     void GetDescriptionContent()

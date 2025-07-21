@@ -111,6 +111,11 @@ public class ObjectDetector : MonoBehaviour
             return true;
         }
 
+        if (_hit.transform.TryGetComponent(out MachineHandleSlot ms))
+        {
+            return true;
+        }
+
         return false;
     }
     

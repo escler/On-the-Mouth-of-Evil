@@ -337,6 +337,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flickerSound: {fileID: 2026608860855921936}
   _light: {fileID: 3508454791182131001}
+  flickMaterial: 0
+  lightOnColor: {r: 0, g: 0, b: 0, a: 0}
+  lightOffColor: {r: 0, g: 0, b: 0, a: 0}
+  lightRenderer: {fileID: 0}
 --- !u!82 &3508454791182131001
 AudioSource:
   m_ObjectHideFlags: 0
@@ -346,11 +350,11 @@ AudioSource:
   m_GameObject: {fileID: 5232250924810505755}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3694623033944602229, guid: 3063e9029bae8574b9df7c58baf1b27e,
+  OutputAudioMixerGroup: {fileID: 1698728116517991843, guid: 3063e9029bae8574b9df7c58baf1b27e,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 9ba88c4b2a3517d478e5143b608dea07, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_audioClip: {fileID: 8300000, guid: 74c0cb974b9268340bc485791a1ce98c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -361,7 +365,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 2
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -443,7 +447,7 @@ AudioSource:
   m_GameObject: {fileID: 5232250924810505755}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3694623033944602229, guid: 3063e9029bae8574b9df7c58baf1b27e,
+  OutputAudioMixerGroup: {fileID: 1698728116517991843, guid: 3063e9029bae8574b9df7c58baf1b27e,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: ae1beffd116ccd34baf661fea775b4de, type: 3}
   m_PlayOnAwake: 0
@@ -456,9 +460,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 3
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

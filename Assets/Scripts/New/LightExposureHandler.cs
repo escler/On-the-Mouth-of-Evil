@@ -37,5 +37,7 @@ public class LightExposureHandler : MonoBehaviour
         RenderSettings.ambientIntensity = exposure;
         PlayerPrefs.SetFloat("LightExposure", exposure);
         PlayerPrefs.Save();
+        if (HypnosisHandler.Instance == null) return;
+        HypnosisHandler.Instance.ChangeIntensity(exposure);
     }
 }

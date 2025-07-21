@@ -127,8 +127,8 @@ public class TutorialHub : MonoBehaviour
         tutorialUI.CompleteTask();
         yield return new WaitForSeconds(.25f);
         
-        tutorialUI.ChangeText("Open the Good Shop and buy one item of each type");
-        tutorialUI.ChangeDescription("Open the “Good Shop” and buy one item of each type.\n" +
+        tutorialUI.ChangeText("Open the Holy Market and buy one item of each type");
+        tutorialUI.ChangeDescription("Open the Holy Market and buy one item of each type.\n" +
                                      "In each store, you can preview how an item works by hovering over its name to see a tutorial before purchasing.");
         holyMarketGlow.SetActive(true);
         foreach (var p in priceGlows)
