@@ -14,6 +14,7 @@ public class MusicBoxPuzzle : MonoBehaviour
     [SerializeField] private AudioClip music;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private GameObject goodAura;
+    [SerializeField] private BoxCollider handleMusic;
     
     private void Awake()
     {
@@ -52,7 +53,11 @@ public class MusicBoxPuzzle : MonoBehaviour
             if(slots[i].Sheet != null) count++;
         }
 
-        if (count < slots.Length) return;
+        if (count < slots.Length)
+        {
+            DialogHandler.Instance.ChangeText("It won’t play right without all the sheets in place.");
+            return;
+        }
         
         DialogHandler.Instance.ChangeText("Each music sheet has a strange little icon… I feel like I’ve seen them somewhere else.");
     }
@@ -61,9 +66,11 @@ public class MusicBoxPuzzle : MonoBehaviour
     {
         goodAura.SetActive(true);
         _animator.SetBool("Open", true);
+        handleMusic.enabled = false;
         foreach (var s in slots)
         {
             s.Sheet.MoveInMusicBox();
+            s.Sheet.GetComponent<BoxCollider>().enabled = false;
         }
 
         var duration = music.length;

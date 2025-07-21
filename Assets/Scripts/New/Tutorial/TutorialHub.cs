@@ -105,8 +105,7 @@ public class TutorialHub : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         
         tutorialUI.ChangeText("Change the inventory (TAB) and Inspect the Mission (F)");
-        tutorialUI.ChangeDescription("You have two inventories:\n– One for the items you bring from the confessional.\n– Another for items you find during the mission.\n\n" +
-                                     "Some items can be inspected by pressing F. These inspectable items will be marked with a symbol displayed above your inventory.");
+        tutorialUI.ChangeDescription("You have two inventories:\n– One for the items you bring from the confessional.\n– Another for items you find during the mission.\n Some items can be inspected by pressing F. These inspectable items will be marked with a symbol displayed above your inventory.");
         StartCoroutine(DisableF());
         StartCoroutine(DisableTab());
         tabGlow.SetActive(true);
