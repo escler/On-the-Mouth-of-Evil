@@ -19,6 +19,7 @@ public class InventoryItemHandler : MonoBehaviour
     public event UpdateCount OnUpdateCount;
     protected void SaveCount(bool sum)
     {
+        print("Inve " + handlerItem.name);
         SortInventoryBuyHandler.Instance.SaveCount(handlerItem.name, sum);
         OnUpdateCount?.Invoke();
     }

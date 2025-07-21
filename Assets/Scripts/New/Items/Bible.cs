@@ -108,13 +108,6 @@ public class Bible : Item
         if (_cantUse) return;
         if (ray)
         {
-            if (_hit.transform.TryGetComponent(out RitualFloor ritual))
-            {
-                Inventory.Instance.cantSwitch = true;
-                _bibleView.animator.SetTrigger("OpenTrigger");
-                StartCoroutine(WaitForAnimRitual());
-                return;
-            }
             if (_hit.transform.gameObject.layer != 19) return;
             Inventory.Instance.cantSwitch = true;
             _bibleView.animator.SetTrigger("OpenTrigger");
@@ -158,28 +151,6 @@ public class Bible : Item
             paper.transform.position = Vector3.Lerp(originalPos, hitPoint + Vector3.up * 0.01f, ticks);
             yield return null;
         }
-        _bibleCD.SetCooldown(0);
-        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
-        _cantUse = false;
-        Inventory.Instance.cantSwitch = false;
-    }
-    
-    IEnumerator WaitForAnimRitual()
-    {
-        _cantUse = true;
-        yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
-        yield return new WaitUntil(() => !_bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CutBook"));
-        var paperRitual = Instantiate(paperBible);
-        paperRitual.transform.position = transform.position;
-        float ticks = 0;
-        Vector3 originalPos = paperRitual.transform.position;
-        while (ticks < 1)
-        {
-            ticks += Time.deltaTime;
-            paperRitual.transform.position = Vector3.Lerp(originalPos, RitualManager.Instance.ritualFloor.transform.position, ticks);
-            yield return null;
-        }
-        paperRitual.GetComponent<BiblePaper>().paperOnRitual = true;
         _bibleCD.SetCooldown(0);
         yield return new WaitUntil(() => _bibleView.animator.GetCurrentAnimatorStateInfo(0).IsName("CloseIdle"));
         _cantUse = false;

@@ -74,7 +74,7 @@ public class SortInventoryBuyHandler : MonoBehaviour
             "Bible" => "Bible",
             "Cross" => "Cross",
             "Salt" => "Salt",
-            "Voodoo Doll" => "Voodoo",
+            "VoodooDoll" => "Voodoo",
             "Rosary" => "Rosary",
             "Swarm" => "Swarm",
             "Incense" => "Incense",

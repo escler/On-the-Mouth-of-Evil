@@ -124,6 +124,7 @@ public class ItemShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (!TutorialHub.Instance.TutorialCompleted) TutorialHub.Instance.countItemBuy++;
         CurrencyHandler.Instance.SubtractCurrency(cost);
+        print("Item slot " + _item.itemName);
         SortInventoryBuyHandler.Instance.AddItemToHandler(_item);
         PCHandler.Instance.ClickSound();
     }

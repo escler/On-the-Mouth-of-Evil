@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 
 public class RitualManager : MonoBehaviour
 {
-    public GameObject ritualFloor, ritualBadFloor, psRitual;
+    public AlphaMaterial[] ritualFloor, ritualBadFloor;
     public List<CandleRitual> candlesInRitual = new List<CandleRitual>();
     private int _candlesBurning;
     public int candlesPlaced;
@@ -54,16 +54,30 @@ public class RitualManager : MonoBehaviour
         {
             //sonidoPuzzleSalt
             crater.SetActive(false);
-            ritualBadFloor.SetActive(true);
-            ritualFloor.SetActive(false);
+            
+            foreach (var a in ritualBadFloor)
+            {
+                a.FadeIn();
+            }
+            foreach (var a in ritualFloor)
+            {
+                a.FadeOut();
+            }
         }
         else
         {
             //sonidoPuzzleSalt
             heat.Stop();
             crater.SetActive(true);
-            ritualFloor.SetActive(true);
-            ritualBadFloor.SetActive(false);
+            
+            foreach (var a in ritualBadFloor)
+            {
+                a.FadeOut();
+            }
+            foreach (var a in ritualFloor)
+            {
+                a.FadeIn();
+            }
         }
     }
 
@@ -72,8 +86,20 @@ public class RitualManager : MonoBehaviour
         if (candlesPlaced <= 0)
         {
             firstCandlePlaced = candle;
-            if (candle.badCandle) ritualBadFloor.SetActive(true);
-            else ritualFloor.SetActive(true);
+            if (candle.badCandle)
+            {
+                foreach (var a in ritualBadFloor)
+                {
+                    a.FadeIn();
+                }
+            }
+            else
+            {
+                foreach (var a in ritualFloor)
+                {
+                    a.FadeIn();
+                }
+            }
         }
         candlesPlaced++;
         if (candlesPlaced < 3) return;
@@ -101,13 +127,28 @@ public class RitualManager : MonoBehaviour
         candlesPlaced--;
         if (candlesPlaced > 0) return;
         firstCandlePlaced = null;
-        if (candle.badCandle) ritualBadFloor.SetActive(false);
-        else ritualFloor.SetActive(false);
+        if (candle.badCandle)
+        {
+            foreach (var a in ritualBadFloor)
+            {
+                a.FadeOut();
+            }
+        }
+        else
+        {
+            foreach (var a in ritualFloor)
+            {
+                a.FadeOut();
+            }
+        }
     }
 
     public void ActivateCraterFloor()
     {
-        ritualFloor.SetActive(false);
+        foreach (var a in ritualFloor)
+        {
+            a.FadeOut();
+        }
         floorCrater.GetComponent<Animator>().SetBool("Fall", true);
         foreach (var crater in psCrater)
         {
@@ -126,9 +167,13 @@ public class RitualManager : MonoBehaviour
 
     public void RitualFinish()
     {
-        //floor.SetActive(true);
-        //craterFloor.SetActive(false);
-        ritualBadFloor.SetActive(false);
-        ritualFloor.SetActive(false);
+        foreach (var a in ritualBadFloor)
+        {
+            a.FadeOut();
+        }
+        foreach (var a in ritualFloor)
+        {
+            a.FadeOut();
+        }
     }
 }

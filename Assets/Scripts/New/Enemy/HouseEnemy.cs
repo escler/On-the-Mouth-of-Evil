@@ -320,7 +320,12 @@ public class HouseEnemy : Enemy
             RitualManager.Instance.heat.Play();
             yield return new WaitForSeconds(0.1f);
         }
-        RitualManager.Instance.ritualFloor.SetActive(false);
+
+        foreach (var a in RitualManager.Instance.ritualFloor)
+        {
+            a.FadeOut();
+        }
+
         RitualManager.Instance.ActivateCraterFloor();
 
         yield return new WaitForSeconds(10f);
