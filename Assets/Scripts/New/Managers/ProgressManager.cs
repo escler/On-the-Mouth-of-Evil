@@ -54,6 +54,9 @@ public class ProgressManager : MonoBehaviour
         PlayerPrefs.SetInt("IncenseUnlocked", 0);
         PlayerPrefs.SetInt("SwarmUnlocked", 0);
         
+        PlayerPrefs.SetInt("EndingGood", 0);
+        PlayerPrefs.SetInt("EndingBad", 0);
+        
         PlayerPrefs.Save();
         
         MailHandler.Instance.ResetEmails();

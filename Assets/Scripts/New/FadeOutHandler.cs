@@ -16,6 +16,7 @@ public class FadeOutHandler : MonoBehaviour
     public GameObject loadingScreen;
     public GameObject currency;
     public GameObject proceedButton;
+    public EndingsText endingsText;
 
     private void Awake()
     {
@@ -41,6 +42,36 @@ public class FadeOutHandler : MonoBehaviour
     {
         StartCoroutine(FadeOutCor(duration));
     }
+
+    public void ShowEndingGood()
+    {
+        StartCoroutine(EndingGood());
+    }
+
+    public void ShowEndingBad()
+    {
+        StartCoroutine(EndingBad());
+    }
+    
+    IEnumerator EndingGood()
+    {
+        PlayerPrefs.SetInt("EndingGood", 1);
+        PlayerPrefs.Save();
+        PlayerHandler.Instance.UnPossesPlayer();
+        FaceOut(2f);
+        yield return new WaitUntil(() => fadeOut);
+        endingsText.ShowGoodEnding();
+    }
+    
+    IEnumerator EndingBad()
+    {
+        PlayerPrefs.SetInt("EndingBad", 1);
+        PlayerPrefs.Save();
+        FaceOut(2f);
+        yield return new WaitUntil(() => fadeOut);
+        endingsText.ShowBadEnding();
+    }
+
 
     IEnumerator FadeOutCor(float duration)
     {

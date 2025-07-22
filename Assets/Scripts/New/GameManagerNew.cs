@@ -73,6 +73,39 @@ public class GameManagerNew : MonoBehaviour
         FadeOutHandler.Instance.currency.SetActive(false);
         FadeOutHandler.Instance.loadingScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
+
+        bool badPath = DecisionsHandler.Instance.badPath;
+
+        if (!badPath)
+        {
+            int goodMission1 = PlayerPrefs.GetInt("RosaryUnlocked");
+            int goodMission2 = PlayerPrefs.GetInt("IncenseUnlocked");
+            if (goodMission1 == 1 && goodMission2 == 1)
+            {
+                if (PlayerPrefs.GetInt("EndingGood") == 0)
+                {
+                    FadeOutHandler.Instance.loadingScreen.SetActive(false);
+                    FadeOutHandler.Instance.ShowEndingGood();
+                    yield break;
+                }
+            }
+        }
+        else
+        {
+            int badMission1 = PlayerPrefs.GetInt("VoodooUnlocked");
+            int badMission2 = PlayerPrefs.GetInt("SwarmUnlocked");
+            if (badMission1 == 1 && badMission2 == 1)
+            {
+                if (PlayerPrefs.GetInt("EndingBad") == 0)
+                {
+                    FadeOutHandler.Instance.loadingScreen.SetActive(false);
+                    FadeOutHandler.Instance.ShowEndingGood();
+                    yield break;
+                }
+            }
+        }
+
+        
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
