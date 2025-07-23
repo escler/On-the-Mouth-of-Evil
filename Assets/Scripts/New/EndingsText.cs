@@ -15,6 +15,7 @@ public class EndingsText : MonoBehaviour
     [SerializeField] private float timeForSkipDialog = 3f;
     [SerializeField] private Vector3 logoStartScale = new Vector3(0.5f, 0.5f, 0.5f);
     [SerializeField] private Vector3 logoEndScale = Vector3.one;
+    [SerializeField] private AudioSource goodEndingMusic, badEndingMusic;
 
     private CanvasGroup logoCanvasGroup;
 
@@ -40,11 +41,13 @@ public class EndingsText : MonoBehaviour
     public void ShowGoodEnding()
     {
         StartCoroutine(PlayEnding(goodPath));
+        goodEndingMusic.Play();
     }
 
     public void ShowBadEnding()
     {
         StartCoroutine(PlayEnding(badPath));
+        badEndingMusic.Play();
     }
 
     private IEnumerator PlayEnding(string[] lines)
@@ -103,7 +106,7 @@ public class EndingsText : MonoBehaviour
         logoCanvasGroup.alpha = 1;
         logo.transform.localScale = logoEndScale;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         GameManagerNew.Instance.LoadSceneWithDelay("Hub", 2f);
         logo.SetActive(false);
     }

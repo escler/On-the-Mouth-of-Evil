@@ -46,4 +46,12 @@ public class NestHandler : MonoBehaviour
             nests[i].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
+
+    public void DisableNest()
+    {
+        foreach (var n in nests)
+        {
+            n.gameObject.SetActive(false);
+        }
+    }
 }

@@ -14,6 +14,8 @@ public class GoodRitual : MonoBehaviour
     [SerializeField] private GameObject godRays, ovenFire;
     [SerializeField] private SpriteRenderer stencilBurn;
     [SerializeField] private VisualEffect vaporEffect;
+    public AudioSource musicBG;
+    public Door door;
     private void Awake()
     {
         if (Instance)
@@ -37,6 +39,7 @@ public class GoodRitual : MonoBehaviour
     public void StartRitual()
     {
         DecisionsHandler.Instance.badPath = false;
+        door.SetDoor(false);
         StartCoroutine(GoodRitualSteps());
     }
 
@@ -133,6 +136,11 @@ public class GoodRitual : MonoBehaviour
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         MailHandler.Instance.AddEmail("good");
+        
+        yield return new WaitForSeconds(5f);
+        NestHandler.Instance.DisableNest();
+        ovenFire.SetActive(false);
+        musicBG.Stop();
     }
 
     IEnumerator StencilAppear()

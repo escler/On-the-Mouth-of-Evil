@@ -12,6 +12,8 @@ public class BadRitual : MonoBehaviour
     [SerializeField] private int level;
     private bool _debug;
     private float time;
+    public AudioSource musicBG;
+    public Door door;
     private void Awake()
     {
         if (Instance)
@@ -26,6 +28,7 @@ public class BadRitual : MonoBehaviour
     public void StartRitual()
     {
         DecisionsHandler.Instance.badPath = true;
+        door.SetDoor(false);
         StartCoroutine(BadRitualSteps());
     }
 
@@ -101,6 +104,9 @@ public class BadRitual : MonoBehaviour
         PathManager.Instance.ChangePrefs(DecisionsHandler.Instance.badPath ? "BadPath" : "GoodPath", level);
         GameManagerNew.Instance.LoadCurrencyStats("Hub",5);
         MailHandler.Instance.AddEmail("bad");
+
+        yield return new WaitForSeconds(5f);
+        musicBG.Stop();
     }
 
     private void Update()

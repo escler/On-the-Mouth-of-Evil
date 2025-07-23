@@ -14,7 +14,7 @@ public class ObjectSound : MonoBehaviour
     void Start()
     {
 
-        _object.Play();
+        //_object.Play();
 
     }
 

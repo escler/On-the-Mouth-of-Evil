@@ -116,10 +116,6 @@ public class PuzzleSaltPaper : Item, IInteractable
         if (!rayConnected) return false;
         
         if (ObjectDetector.Instance.InteractText()) return true;
-        if (ray.transform.TryGetComponent(out BodyPuzzle body))
-        {
-            return true;
-        } 
         return false;
     }
 
