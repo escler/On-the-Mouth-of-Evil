@@ -55,19 +55,23 @@ public class FadeOutHandler : MonoBehaviour
     
     IEnumerator EndingGood()
     {
+        imageColor.a = 1;
+        _image.color = imageColor;
+        fadeOut = true;
         PlayerPrefs.SetInt("EndingGood", 1);
         PlayerPrefs.Save();
         PlayerHandler.Instance.UnPossesPlayer();
-        FaceOut(2f);
         yield return new WaitUntil(() => fadeOut);
         endingsText.ShowGoodEnding();
     }
     
     IEnumerator EndingBad()
     {
+        imageColor.a = 1;
+        _image.color = imageColor;
+        fadeOut = true;
         PlayerPrefs.SetInt("EndingBad", 1);
         PlayerPrefs.Save();
-        FaceOut(2f);
         yield return new WaitUntil(() => fadeOut);
         endingsText.ShowBadEnding();
     }

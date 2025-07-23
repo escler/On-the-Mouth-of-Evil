@@ -79,6 +79,7 @@ public class Oven : MonoBehaviour
     IEnumerator CompleteOven()
     {
         ovenSmoke.gameObject.SetActive(true);
+        _ovenDoor.gameObject.layer = 1;
         fireLoopAudio.Play();
         StartCoroutine(BearScreaming());
         yield return new WaitForSeconds(4f);

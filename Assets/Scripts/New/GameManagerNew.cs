@@ -99,7 +99,7 @@ public class GameManagerNew : MonoBehaviour
                 if (PlayerPrefs.GetInt("EndingBad") == 0)
                 {
                     FadeOutHandler.Instance.loadingScreen.SetActive(false);
-                    FadeOutHandler.Instance.ShowEndingGood();
+                    FadeOutHandler.Instance.ShowEndingBad();
                     yield break;
                 }
             }
