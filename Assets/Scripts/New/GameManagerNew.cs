@@ -78,8 +78,8 @@ public class GameManagerNew : MonoBehaviour
 
         if (!badPath)
         {
-            int goodMission1 = PlayerPrefs.GetInt("RosaryUnlocked");
-            int goodMission2 = PlayerPrefs.GetInt("IncenseUnlocked");
+            int goodMission1 = PlayerPrefs.GetInt("RosaryAvaible");
+            int goodMission2 = PlayerPrefs.GetInt("IncenseAvaible");
             if (goodMission1 == 1 && goodMission2 == 1)
             {
                 if (PlayerPrefs.GetInt("EndingGood") == 0)
@@ -92,8 +92,8 @@ public class GameManagerNew : MonoBehaviour
         }
         else
         {
-            int badMission1 = PlayerPrefs.GetInt("VoodooUnlocked");
-            int badMission2 = PlayerPrefs.GetInt("SwarmUnlocked");
+            int badMission1 = PlayerPrefs.GetInt("VoodooAvaible");
+            int badMission2 = PlayerPrefs.GetInt("SwarmAvaible");
             if (badMission1 == 1 && badMission2 == 1)
             {
                 if (PlayerPrefs.GetInt("EndingBad") == 0)

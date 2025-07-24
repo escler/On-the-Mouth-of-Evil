@@ -149,6 +149,7 @@ public class Cross : Item
         if (MorgueEnemy.Instance == null) return;
         MorgueEnemy.Instance.crossRoom = PlayerHandler.Instance.actualRoom;
         MorgueEnemy.Instance.CheckRoom();
+        PlayerHandler.Instance.PossesPlayer();
     }
 
     public void OnUpCross()

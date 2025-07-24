@@ -129,6 +129,7 @@ public class PlayerHandler : MonoBehaviour
         bobbingCamera.enabled = true;
         cantInteract = false;
         playerCam.CameraLock = false;
+        Inventory.Instance.cantSwitch = false;
     }
 
     public void StunPlayer()
