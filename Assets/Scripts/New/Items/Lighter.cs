@@ -109,6 +109,7 @@ public class Lighter : Item
         PSIdle.SetActive(false);
         gameObject.SetActive(true);
         lighterView.animator.SetBool("Open", false);
+        lighterView.light.enabled = false;
         
         if (TutorialHub.Instance != null)
         {
