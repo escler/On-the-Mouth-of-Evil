@@ -7,6 +7,7 @@ public class LighterView : MonoBehaviour
 {
     private Lighter owner;
     public Animator animator;
+    public Light light;
 
     private void Awake()
     {
@@ -23,6 +24,11 @@ public class LighterView : MonoBehaviour
     public void StopPS()
     {
         owner.PSIdle.SetActive(false);
+    }
+
+    public void LightOn()
+    {
+        light.enabled = true;
     }
 
 }

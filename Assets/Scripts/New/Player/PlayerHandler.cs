@@ -25,6 +25,7 @@ public class PlayerHandler : MonoBehaviour
     private float _actualTimer;
     public Transform incensePivot;
     public bool focusView;
+    public Light handLight;
 
     [SerializeField] private AudioSource heartBeat;
 
@@ -245,6 +246,8 @@ public class PlayerHandler : MonoBehaviour
     
     private void StopHeartSound(Scene scene, LoadSceneMode loadSceneMode)
     {
+        StopAllCoroutines();
+        handLight.enabled = false;
         if (!heartBeat.isPlaying) return;
         heartBeat.Stop();
     }

@@ -149,12 +149,14 @@ public class HypnosisHandler : MonoBehaviour
             yield return StartCoroutine(ChangeSkyboxIntensity(_initAmbientIntensity, 0.0f));
             DeactivateLights();
             ActivateDemonLight();
+            PlayerHandler.Instance.handLight.enabled = true;
         }
         else
         {
             yield return StartCoroutine(ChangeSkyboxIntensity(0.0f, _initAmbientIntensity));
             ActivateLights();
             DeactivateDemonLight();
+            PlayerHandler.Instance.handLight.enabled = false;
         }
         skyboxIsOn = skyBoxState;
     }

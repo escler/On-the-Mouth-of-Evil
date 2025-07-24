@@ -100,6 +100,7 @@ public class Lighter : Item
         base.OnDeselectItem();
         PSIdle.SetActive(false);
         lighterView.animator.SetBool("Open", false);
+        lighterView.light.enabled = false;
     }
 
     public override void OnDropItem()
