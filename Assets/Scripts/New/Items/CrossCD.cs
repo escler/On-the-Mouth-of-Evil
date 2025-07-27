@@ -7,6 +7,7 @@ public class CrossCD : MonoBehaviour
 {
     public bool cantUse;
     private float _cooldown;
+    public float maxCooldown;
     public delegate void UpdateCrossUI();
     public event UpdateCrossUI OnCrossTimerChange;
 
@@ -22,9 +23,9 @@ public class CrossCD : MonoBehaviour
     {
         if (!cantUse) return;
 
-        if (_cooldown >= 30)
+        if (_cooldown >= maxCooldown)
         {
-            _cooldown = 30;
+            _cooldown = maxCooldown;
             OnCrossTimerChange?.Invoke();
             cantUse = false;
             return;

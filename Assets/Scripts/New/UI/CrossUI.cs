@@ -12,7 +12,7 @@ public class CrossUI : ItemUI
     private void OnEnable()
     {
         _image = GetComponent<Image>();
-        slider.maxValue = 30;
+        slider.maxValue = PlayerHandler.Instance.GetComponent<CrossCD>().maxCooldown;
         _crossCd = PlayerHandler.Instance.GetComponent<CrossCD>();
         slider.value = _crossCd.Cooldown;
         _crossCd.OnCrossTimerChange += UpdateSliderValue;

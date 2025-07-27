@@ -14,6 +14,7 @@ public class SliderUI : MonoBehaviour
     public Color flashColor;
     public float interval;
     private Salt currentSalt;
+    private float _cooldownCross;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class SliderUI : MonoBehaviour
 
     public void SubscribeToCrossEvent()
     {
+        _cooldownCross = PlayerHandler.Instance.GetComponent<CrossCD>().maxCooldown;
         _crossCd = PlayerHandler.Instance.GetComponent<CrossCD>();
         _crossCd.OnCrossTimerChange += UpdateSliderCrossValue;
         crossSubscriber = true;
@@ -58,7 +60,7 @@ public class SliderUI : MonoBehaviour
 
     void UpdateSliderCrossValue()
     {
-        _image.fillAmount = _crossCd.Cooldown / 30;
+        _image.fillAmount = _crossCd.Cooldown / _cooldownCross;
         if (_image.fillAmount < 1) return;
         DoFlash();
     }
