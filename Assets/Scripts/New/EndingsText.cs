@@ -1,41 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Video;
+using TMPro;
+using System.Collections;
 
 public class EndingsText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private string[] goodPath;
     [SerializeField] private string[] badPath;
-    [SerializeField] private GameObject logo;
     [SerializeField] private float fadeDuration = 2f;
-    [SerializeField] private float fadeLogoDuration = 2f;
     [SerializeField] private float timeForSkipDialog = 3f;
-    [SerializeField] private Vector3 logoStartScale = new Vector3(0.5f, 0.5f, 0.5f);
-    [SerializeField] private Vector3 logoEndScale = Vector3.one;
     [SerializeField] private AudioSource goodEndingMusic, badEndingMusic;
 
-    private CanvasGroup logoCanvasGroup;
+    [Header("Video")]
+    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private RawImage videoDisplay;
+    [SerializeField] private VideoClip finalClip;
 
     private void Awake()
     {
-        // Aseguramos que el logo tenga CanvasGroup para controlar alpha
-        logoCanvasGroup = logo.GetComponent<CanvasGroup>();
-        if (logoCanvasGroup == null)
-            logoCanvasGroup = logo.AddComponent<CanvasGroup>();
-
-        logoCanvasGroup.alpha = 0;
-        logo.SetActive(false);
-
-        // Inicializamos escala y transparencia del logo
-        logo.transform.localScale = logoStartScale;
-
         var textColor = text.color;
         textColor.a = 0;
         text.color = textColor;
         text.gameObject.SetActive(false);
+
+        if (videoDisplay != null)
+            videoDisplay.gameObject.SetActive(false);
     }
 
     public void ShowGoodEnding()
@@ -53,7 +44,6 @@ public class EndingsText : MonoBehaviour
     private IEnumerator PlayEnding(string[] lines)
     {
         text.gameObject.SetActive(true);
-        logo.SetActive(false);
 
         foreach (var line in lines)
         {
@@ -64,8 +54,8 @@ public class EndingsText : MonoBehaviour
         }
 
         text.gameObject.SetActive(false);
-        logo.SetActive(true);
-        yield return StartCoroutine(FadeAndScaleLogo());
+
+        PlayFinalVideo();
     }
 
     private IEnumerator FadeText(float from, float to)
@@ -85,29 +75,31 @@ public class EndingsText : MonoBehaviour
         text.color = color;
     }
 
-    private IEnumerator FadeAndScaleLogo()
+    private void PlayFinalVideo()
     {
-        float time = 0f;
-
-        while (time < fadeLogoDuration)
+        if (videoPlayer == null || videoDisplay == null || finalClip == null)
         {
-            time += Time.deltaTime;
-            float t = Mathf.Clamp01(time / fadeLogoDuration);
-
-            // Fade alpha
-            logoCanvasGroup.alpha = Mathf.Lerp(0, 1, t);
-
-            // Scale up
-            logo.transform.localScale = Vector3.Lerp(logoStartScale, logoEndScale, t);
-
-            yield return null;
+            Debug.LogError("Falta VideoPlayer, RawImage o VideoClip.");
+            return;
         }
 
-        logoCanvasGroup.alpha = 1;
-        logo.transform.localScale = logoEndScale;
+        videoDisplay.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(5f);
+        videoPlayer.source = VideoSource.VideoClip;
+        videoPlayer.clip = finalClip;
+
+        RenderTexture renderTex = new RenderTexture(Screen.width, Screen.height, 0);
+        videoPlayer.targetTexture = renderTex;
+        videoDisplay.texture = renderTex;
+
+        videoPlayer.loopPointReached += OnVideoFinished;
+        videoPlayer.Play();
+    }
+
+    private void OnVideoFinished(VideoPlayer vp)
+    {
+        vp.loopPointReached -= OnVideoFinished;
         GameManagerNew.Instance.LoadSceneWithDelay("Hub", 2f);
-        logo.SetActive(false);
+        videoDisplay.gameObject.SetActive(false);
     }
 }
