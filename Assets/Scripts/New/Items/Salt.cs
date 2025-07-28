@@ -119,6 +119,9 @@ public class Salt : Item
         transform.localEulerAngles = angleHand;
         Inventory.Instance.cantSwitch = false;
 
+        if(_uses <= 0) Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+        yield return new WaitForSeconds(1f);
+        gameObject.layer = 8;
     }
     
     public override void OnUpdate()
@@ -150,8 +153,6 @@ public class Salt : Item
         gameObject.SetActive(true);
         GetComponentInChildren<SkinnedMeshRenderer>().gameObject.layer = 1;
         fill.gameObject.layer = 17;
-        if (!SaltPuzzleTable.Instance) return;
-        SaltPuzzleTable.Instance.playerInTable = false;
         InventoryUI.Instance.fillGO.transform.GetChild(index).GetComponent<SliderUI>().UnSubscribeToSaltEvent();
 
         if (TutorialHub.Instance != null)
@@ -163,7 +164,6 @@ public class Salt : Item
         if (SceneManager.GetActiveScene().name == "Hub") return;
         
         SortInventoryBuyHandler.Instance.SaveCount(itemName, false);
-
     }
 
     public override bool CanInteractWithItem()
@@ -227,6 +227,10 @@ public class Salt : Item
         yield return new WaitUntil(() => saltView.animator.GetCurrentAnimatorStateInfo(0).IsName("SaltCloseIdle"));
         cantUseItem = false;
         Inventory.Instance.cantSwitch = false;
+        
+        if(_uses <= 0) Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
+        yield return new WaitForSeconds(1f);
+        gameObject.layer = 0;
     }
 
     IEnumerator FillSalt()

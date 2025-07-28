@@ -45,7 +45,7 @@ public class BaitMorgue : Item
         {
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             ritual.baitBoxPlaced = true;
-            transform.position = ritual.transform.position + Vector3.up * 0.25f;
+            transform.position = ritual.transform.position + Vector3.up * 0.15f;
             transform.rotation = ritual.transform.rotation;
             transform.parent = ritual.transform;
             GetComponent<BoxCollider>().enabled = false;

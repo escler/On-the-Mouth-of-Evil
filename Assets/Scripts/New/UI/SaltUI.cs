@@ -10,6 +10,7 @@ public class SaltUI : ItemUI
     private void OnEnable()
     {
         _image = GetComponent<Image>();
+        slider.maxValue = 10;
     }
 
     public void SaltUsed(int value)

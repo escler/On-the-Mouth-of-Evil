@@ -8,15 +8,17 @@ using UnityEngine.SceneManagement;
 public class ExitHub : MonoBehaviour, IInteractable
 {
     public string interactDescription;
-    private int _count;
-    private int _itemNeeded = 4;
     private AudioSource audioSource;
     public string soundName;
 
     public void OnInteractItem()
     {
-        _count = 0;
-        if (PlayerHandler.Instance.actualMission == null) return;
+
+        if (PlayerHandler.Instance.actualMission == null)
+        {
+            DialogHandler.Instance.ChangeText("I can’t leave yet… I need to choose a mission first. ");
+            return;
+        }
 
         if (!TutorialHub.Instance.TutorialCompleted) TutorialHub.Instance.exithub = true;
 

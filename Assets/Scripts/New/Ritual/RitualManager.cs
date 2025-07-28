@@ -30,6 +30,7 @@ public class RitualManager : MonoBehaviour
     public GameObject circles;
     public GameObject godRayVFX;
     [SerializeField] private HouseEnemy enemy;
+    [SerializeField] private Door[] doors;
    
     public static RitualManager Instance { get; private set; }
 
@@ -116,7 +117,11 @@ public class RitualManager : MonoBehaviour
 
     IEnumerator CheckCandles()
     {
-        yield return new WaitForSeconds(2f);
+        foreach (var d in doors)
+        {
+            d.SetDoor(false);
+        }
+        yield return new WaitForSeconds(1f);
         if (HouseEnemy.Instance == null) enemy.GetComponent<HouseEnemy>().enabled = true;
         HouseEnemy.Instance.RitualReady(ritualNode);
         circles.SetActive(false);

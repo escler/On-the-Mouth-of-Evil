@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 6230102405542260378}
   - component: {fileID: 5703429397311131211}
   - component: {fileID: 580763976741091378}
-  - component: {fileID: 5166153907376657337}
+  - component: {fileID: 7714581149547254898}
   m_Layer: 5
   m_Name: SaltUI
   m_TagString: Untagged
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5166153907376657337
+--- !u!114 &7714581149547254898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,11 +123,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 461621442566964039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc9dad3733b30845976e396a1612d29, type: 3}
+  m_Script: {fileID: 11500000, guid: b296fcc73254fed4889ce53e917c1629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Salt
-  slider: {fileID: 7867299092881203105}
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  interval: 1
 --- !u!1 &1276183337047107811
 GameObject:
   m_ObjectHideFlags: 0

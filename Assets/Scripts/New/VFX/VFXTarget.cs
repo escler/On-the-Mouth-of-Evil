@@ -19,7 +19,7 @@ public class VFXTarget : MonoBehaviour
         }
         else
         {
-            if(BadRitual.Instance != null) targetPlayer = BadRitual.Instance.transform;
+            if(BadRitual.Instance != null) targetPlayer = BadRitual.Instance.absorbPoint;
         }
         _vfx = GetComponent<VisualEffect>();
     }

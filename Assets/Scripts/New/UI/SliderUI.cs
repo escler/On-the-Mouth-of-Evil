@@ -41,7 +41,8 @@ public class SliderUI : MonoBehaviour
     {
         currentSalt = salt;
         currentSalt.OnSaltChange += UpdateSliderSaltValue;
-        _image.fillAmount = currentSalt._uses / currentSalt.maxUses;
+        float normalized = currentSalt._uses / currentSalt.maxUses;
+        _image.fillAmount = Mathf.Lerp(0.2f, 1f, normalized);
         saltSubscriber = true;
     }
 
@@ -55,7 +56,8 @@ public class SliderUI : MonoBehaviour
 
     void UpdateSliderSaltValue()
     {
-        _image.fillAmount = currentSalt._uses / currentSalt.maxUses;
+        float normalized = currentSalt._uses / currentSalt.maxUses;
+        _image.fillAmount = Mathf.Lerp(0.2f, 1f, normalized);
     }
 
     void UpdateSliderCrossValue()

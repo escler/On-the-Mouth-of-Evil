@@ -14,6 +14,7 @@ public class BadRitual : MonoBehaviour
     private float time;
     public AudioSource musicBG;
     public Door door;
+    public Transform absorbPoint;
     private void Awake()
     {
         if (Instance)

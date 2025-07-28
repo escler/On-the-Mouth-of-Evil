@@ -73,6 +73,7 @@ public class MusicSheet : Item
         var ray = ObjectDetector.Instance._hit;
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         canInteractWithItem = CanInteractWithItem();
+        ChangeCrossHair();
         ObjectDetector.Instance.uiInteractionText.SetActive(CanInteractWithItem());
         if (Input.GetButtonDown("Interact"))
         {
