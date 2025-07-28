@@ -80,5 +80,6 @@ public class Bear : Item
 
         Oven.Instance.BearInOven = true;
         Oven.Instance.bear = gameObject;
+        transform.parent = Oven.Instance.transform;
     }
 }

@@ -50,7 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        if (ritualCinematic || absorbEnd) return;
+        if (ritualCinematic || absorbEnd)
+        {
+            _actualSpeed = walkSpeed;
+            return;
+        }
         _actualSpeed = _run ? runSpeed : walkSpeed;
 
         var inputVector = new Vector2(_inputX, _inputY);

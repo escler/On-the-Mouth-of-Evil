@@ -10,6 +10,7 @@ public class Oven : MonoBehaviour
     [SerializeField] private Knob[] _knobs;
     [SerializeField] private OvenDoor _ovenDoor;
     [SerializeField] private ParticleSystem[] _particles;
+    [SerializeField] private OvenKnob ovenKnob;
     [SerializeField] List<int> numbers = new List<int>();
     [SerializeField] private GameObject key;
     public GameObject bear;
@@ -78,17 +79,20 @@ public class Oven : MonoBehaviour
 
     IEnumerator CompleteOven()
     {
+        foreach (var knob in _knobs)
+        {
+            knob.enabled = false;
+            knob.GetComponent<BoxCollider>().enabled = false;
+        }
+
+        ovenKnob.GetComponent<BoxCollider>().enabled = false;
         ovenSmoke.gameObject.SetActive(true);
         _ovenDoor.gameObject.layer = 1;
         fireLoopAudio.Play();
         StartCoroutine(BearScreaming());
         yield return new WaitForSeconds(4f);
         explosionFireAudio.Play();
-        foreach (var knob in _knobs)
-        {
-            knob.enabled = false;
-            knob.GetComponent<BoxCollider>().enabled = false;
-        }
+
         foreach (var p in _particles)
         {
             var ps = p.emission;

@@ -69,11 +69,13 @@ public class Candle : Item, IInteractable
             if (RitualManager.Instance.firstCandlePlaced == null)
             {
                 candleRitual.GetCandle(this);
-            }else if (RitualManager.Instance.firstCandlePlaced.badCandle ==
+                transform.parent = RitualManager.Instance.transform;
+            }
+            else if (RitualManager.Instance.firstCandlePlaced.badCandle ==
                       badCandle && !candleRitual.isCandlePlaced)
             {
                 candleRitual.GetCandle(this);
-
+                transform.parent = RitualManager.Instance.transform;
             }
         }
     }
