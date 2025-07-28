@@ -101,6 +101,8 @@ public class Rosary : Item
         {
             item.SendEvent("PlayPS");
         }
+        MusicManager.Instance.PlaySound("Broke Rosary", false);
+
 
         _broke = true;
     }
