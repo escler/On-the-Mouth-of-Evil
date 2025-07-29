@@ -55,7 +55,6 @@ public class MusicSheet : Item
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
-        if (!canInteractWithItem) return;
         if (active) return;
         
         if (i.transform.TryGetComponent(out SheetSlot sheetSlot))
@@ -89,10 +88,6 @@ public class MusicSheet : Item
 
         if (!rayConnected) return false;
         if (ObjectDetector.Instance.InteractText()) return true;
-        if (ray.transform.TryGetComponent(out SheetSlot item))
-        {
-            if (item.Sheet == null) return true;
-        }
         return false;
     }
 

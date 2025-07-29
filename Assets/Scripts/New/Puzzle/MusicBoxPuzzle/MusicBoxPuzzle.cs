@@ -71,6 +71,7 @@ public class MusicBoxPuzzle : MonoBehaviour
         {
             s.Sheet.MoveInMusicBox();
             s.Sheet.GetComponent<BoxCollider>().enabled = false;
+            s.gameObject.layer = 1;
         }
 
         var duration = music.length;

@@ -215,6 +215,19 @@ public class ObjectDetector : MonoBehaviour
 
         if (_hit.transform.TryGetComponent(out IInteractObject interactObject) || interact)
         {
+            if (_hit.transform.TryGetComponent(out CubeSlot slot))
+            {
+                if (slot.CubeInSlot != null)
+                {
+                    _crosshairUI.IncreaseUI();
+                }
+                else
+                {
+                    _crosshairUI.DecreaseUI();
+                }
+
+                return;
+            }
             _crosshairUI.IncreaseUI();
         }
         else
@@ -245,6 +258,7 @@ public class ObjectDetector : MonoBehaviour
 
     private bool CheckDoorsRayCast()
     {
+        if (PlayerHandler.Instance.movement.ritualCinematic) return false;
         bool ray = Physics.Raycast(cameraPos.position, cameraPos.forward, out _hitDoors, 1.7f, layerDoors);
         return ray;
     }

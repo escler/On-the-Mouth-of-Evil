@@ -31,10 +31,10 @@ public class Cube : Item
     public override void OnInteract(bool hit, RaycastHit i)
     {
         if (!hit) return;
-        if (!canInteractWithItem) return;
         
         if (i.transform.TryGetComponent(out CubeSlot cubeSlot))
         {
+            if (cubeSlot.CubeInSlot != null) return;
             Inventory.Instance.DropItem(this, Inventory.Instance.countSelected);
             cubeSlot.PlaceCube(this);
         }
@@ -46,6 +46,7 @@ public class Cube : Item
         var rayConnected = ObjectDetector.Instance.CheckRayCast();
         canInteractWithItem = CanInteractWithItem();
         ObjectDetector.Instance.uiInteractionText.SetActive(CanInteractWithItem());
+        ChangeCrossHair();
         if (Input.GetButtonDown("Interact"))
         {
             OnInteract(rayConnected, ray);
@@ -62,7 +63,7 @@ public class Cube : Item
         if (ObjectDetector.Instance.InteractText()) return true;
         if (ray.transform.TryGetComponent(out CubeSlot item))
         {
-            if (item.CubeInSlot == null) return true;
+            if (item.CubeInSlot != null) return true;
         }
         return false;
     }
