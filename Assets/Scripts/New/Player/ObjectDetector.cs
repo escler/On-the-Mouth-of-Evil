@@ -10,7 +10,7 @@ public class ObjectDetector : MonoBehaviour
     
     public LayerMask layer, layerDoors;
     public Transform cameraPos;
-    public int distance;
+    public float distance;
     public GameObject uiInteractionText, ui2;
     private CrosshairUI _crosshairUI;
     public RaycastHit _hit, _hitDoors;
@@ -138,6 +138,7 @@ public class ObjectDetector : MonoBehaviour
         
         if (_hit.transform.TryGetComponent(out CandleRitual candleRitual))
         {
+            if (candleRitual.room != PlayerHandler.Instance.actualRoom) return false;
             if (candleRitual.candle != null) return true;
             if (Inventory.Instance.selectedItem == null) return false;
             if (candleRitual.candle == null && Inventory.Instance.selectedItem.itemName == "Candle")

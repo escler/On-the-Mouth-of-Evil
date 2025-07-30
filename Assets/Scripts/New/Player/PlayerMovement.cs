@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float walkSpeed, runSpeed;
-    private float _actualSpeed, _inputX, _inputY;
+    [SerializeField] public float walkSpeed, runSpeed, _actualSpeed;
+    private float _inputX, _inputY;
     private Rigidbody _rb;
     private bool _run;
     public bool ritualCinematic;
@@ -81,54 +81,67 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveToRitualSpot()
     {
-        if (!ritualCinematic) return;
-        if (absorbEnd) return;
-        if (inSpot)
-        {
-            var ritualPos = CameraCinematicHandler.Instance.ritual.position;
-            ritualPos.y = transform.position.y;
-            transform.LookAt(Vector3.SmoothDamp(transform.position, ritualPos,
-                ref reference, 5f));
-            return;
-        }
-        var target = CameraCinematicHandler.Instance.transform.position;
-        target.y = transform.position.y;
+        if (!ritualCinematic || absorbEnd) return;
 
-        if (Vector3.Distance(transform.position, target) < 0.3f)
+        Vector3 targetPosition = inSpot
+            ? CameraCinematicHandler.Instance.ritual.position
+            : CameraCinematicHandler.Instance.transform.position;
+
+        targetPosition.y = transform.position.y;
+
+        RotateTowards(targetPosition);
+
+        if (inSpot) return;
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.3f)
         {
             inSpot = true;
+            _rb.velocity = Vector3.zero;
             return;
         }
-        
+
         PlayerHandler.Instance.bobbingCamera.DoBobbing();
-        transform.LookAt(Vector3.SmoothDamp(transform.position, target, ref reference, 5f));
-        Vector3 velocity = transform.forward * .5f;
-        velocity.Normalize();
-        _rb.velocity = velocity * (_actualSpeed * Time.fixedDeltaTime);
+        MoveTowards(targetPosition);
+    }
+
+    private void RotateTowards(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        if (direction == Vector3.zero) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.5f);
+    }
+
+    private void MoveTowards(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        _rb.velocity = direction * (_actualSpeed * Time.fixedDeltaTime);
     }
 
     IEnumerator MoveToDoll(Vector3 item)
     {
+        float originalSpeed = walkSpeed;
+        walkSpeed *= 0.5f;
         voodooMovement = true;
+        inVoodooPos = false;
+
         Vector3 target = item;
         target.y = transform.position.y;
-        Vector3 originalEuler = transform.position;
-        float ticks = 0;
+
         while (Vector3.Distance(transform.position, target) > 1f)
         {
             PlayerHandler.Instance.bobbingCamera.DoBobbing();
-            ticks += Time.deltaTime;
-            transform.LookAt(Vector3.Lerp(originalEuler, target, ticks));
-            Vector3 velocity = transform.forward;
-            velocity.Normalize();
-            _rb.velocity = velocity * (_actualSpeed * .5f * Time.fixedDeltaTime);
-            yield return null;
+
+            RotateTowards(target);
+            MoveTowards(target);
+
+            yield return new WaitForFixedUpdate(); // mejor que null si usás Rigidbody
         }
 
+        walkSpeed = originalSpeed;
+        _rb.velocity = Vector3.zero;
         voodooMovement = false;
-        
         inVoodooPos = true;
-        
     }
-
 }

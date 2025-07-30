@@ -113,6 +113,7 @@ public class PlayerHandler : MonoBehaviour
         movement.voodooMovement = false;
         movement.absorbEnd = false;
         movement.inVoodooPos = false;
+        movement.walkSpeed = 100;
         playerCam.ticks = 0;
         StartCoroutine(WaitForLock());
     }

@@ -65,6 +65,7 @@ public class Candle : Item, IInteractable
         if (!hit) return;
         if (i.transform.TryGetComponent(out CandleRitual candleRitual))
         {
+            if(candleRitual.room != PlayerHandler.Instance.actualRoom) return;
             if (candleRitual.isCandlePlaced) return;
             if (RitualManager.Instance.firstCandlePlaced == null)
             {

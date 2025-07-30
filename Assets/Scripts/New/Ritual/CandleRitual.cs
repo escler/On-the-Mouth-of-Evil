@@ -7,6 +7,7 @@ public class CandleRitual : MonoBehaviour, IInteractable
 {
     public bool isCandlePlaced;
     public Candle candle;
+    public Room room;
 
     public void GetCandle(Candle candlePlaced)
     {
@@ -29,6 +30,7 @@ public class CandleRitual : MonoBehaviour, IInteractable
     public void OnInteractItem()
     {
         if (!isCandlePlaced) return;
+        if (room != PlayerHandler.Instance.actualRoom) return;
         isCandlePlaced = false;
         candle.OnGrabItem();
         RemoveCandle();

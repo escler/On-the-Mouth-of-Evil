@@ -38,6 +38,7 @@ public class GoodRitual : MonoBehaviour
     
     public void StartRitual()
     {
+        GameManagerNew.Instance.cantPause = true;
         DecisionsHandler.Instance.badPath = false;
         door.SetDoor(false);
         StartCoroutine(GoodRitualSteps());
