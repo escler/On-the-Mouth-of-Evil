@@ -77,29 +77,32 @@ public class Cross : Item
         if(PlayerHandler.Instance.movingObject) OnUpCross();
         if (_crossCd.cantUse) return;
         _currentTime += Time.deltaTime;
-        if (!holdingPSActive)
+        if (!PlayerHandler.Instance.movingObject)
         {
-            foreach (var holdPS in holdingPS)
+            if (!holdingPSActive)
             {
-                holdPS.Play();
-                _crossSound.Play();
-                CrossLight.SetActive(true);
+                foreach (var holdPS in holdingPS)
+                {
+                    holdPS.Play();
+                    _crossSound.Play();
+                    CrossLight.SetActive(true);
+                }
+                holdingPSActive = true;
             }
-            holdingPSActive = true;
-        }
 
-        if (_currentTime >= neededTime)
-        {
-            CheckRoom();
-            foreach (var holdPS in holdingPS)
+            if (_currentTime >= neededTime)
             {
-                holdPS.Stop();
-                holdPS.Clear();
-                CrossLight.SetActive(false);
-            }
-            holdingPSActive = false;
+                CheckRoom();
+                foreach (var holdPS in holdingPS)
+                {
+                    holdPS.Stop();
+                    holdPS.Clear();
+                    CrossLight.SetActive(false);
+                }
+                holdingPSActive = false;
 
-            _currentTime = 0;
+                _currentTime = 0;
+            }
         }
     }
 
