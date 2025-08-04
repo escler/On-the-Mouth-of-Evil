@@ -142,7 +142,7 @@ public class MorgueEnemy : Enemy
     private void CompareRooms()
     {
         if (_player.actualRoom == null) return;
-        if (_player.actualRoom != actualRoom || _player.incenseProtect)
+        if (_player.actualRoom != actualRoom || _player.incenseProtect || ritualDone)
         {
             if (_objects.Count() > 0)
             {
@@ -158,6 +158,7 @@ public class MorgueEnemy : Enemy
         }
         
         if (_player.incenseProtect) return;
+        if (ritualDone) return;
         if (!_canInteractWithObjectsEnv) return;
         print("Room Igual");
         _canInteractWithObjectsEnv = false;

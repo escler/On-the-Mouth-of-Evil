@@ -61,6 +61,7 @@ public class AbsorbsionShaderHandler : MonoBehaviour
     {
         material.SetFloat("_Lerp", 0f);
         material.SetFloat("_Intensity", 100f);
+        count = 0;
     }
 
     private IEnumerator LerpMaterialProperties()

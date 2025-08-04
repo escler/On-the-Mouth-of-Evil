@@ -31,9 +31,9 @@ public class CurrencyUI : CurrencyUIGained
 
         while (actual < updateAmount)
         {
-            actual += 2;
+            actual += 1;
             current.text = actual.ToString();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
         _currencyHandler.AddCurrency(gainedAmount);
         isDone = true;

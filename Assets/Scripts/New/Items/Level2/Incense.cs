@@ -38,8 +38,8 @@ public class Incense : Item
             yield return null;
         }
 
-        var emit = smokeConstant.emission;
-        emit.rateOverTime = 0;
+        smokeConstant.Clear();
+        smokeConstant.Stop();
         transform.parent = null;
         GetComponent<BoxCollider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
@@ -63,6 +63,7 @@ public class Incense : Item
         GetComponent<Rigidbody>().isKinematic = true;
         transform.SetParent(PlayerHandler.Instance.incensePivot.transform);
         transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
 
     private void DestroyPlayer(Scene scene, LoadSceneMode loadSceneMode)
