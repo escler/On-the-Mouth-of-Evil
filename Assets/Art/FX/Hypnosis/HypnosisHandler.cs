@@ -45,7 +45,7 @@ public class HypnosisHandler : MonoBehaviour
         DontDestroyOnLoad(this);
         Instance = this;
 
-        _initAmbientIntensity = PlayerPrefs.GetFloat("LightExposure");
+        _initAmbientIntensity = PlayerPrefs.HasKey("LightExposure") ? PlayerPrefs.GetFloat("LightExposure") : .3f;
         hypnosisMaterialK.SetFloat("_Blink", startValue);
         SceneManager.sceneLoaded += GetLights;
 
