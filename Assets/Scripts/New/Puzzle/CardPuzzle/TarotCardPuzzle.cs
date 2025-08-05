@@ -75,6 +75,7 @@ public class TarotCardPuzzle : MonoBehaviour
     }
     private void PlaceObject()
     {
+        MusicManager.Instance.PlaySound("WoodGrab", false);
         var actualPiece = heldObj;
         Inventory.Instance.DropItem(Inventory.Instance.selectedItem, Inventory.Instance.countSelected);
         

@@ -122,9 +122,9 @@ public class RitualManager : MonoBehaviour
             d.SetDoor(false);
         }
         GameManagerNew.Instance.cantPause = true;
-        yield return new WaitForSeconds(1f);
         if (HouseEnemy.Instance == null) enemy.GetComponent<HouseEnemy>().enabled = true;
         HouseEnemy.Instance.RitualReady(ritualNode);
+        yield return new WaitForSeconds(1f);
         circles.SetActive(false);
     }
 
