@@ -114,13 +114,13 @@ public class MusicSheet : Item
         if (canInteract) return;
         active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
-        Inventory.Instance.cantSwitch = active;
         StartCoroutine(active ? FocusObjectCor() : UnFocusObject());
         transform.localScale = Vector3.one;
     }
     
     IEnumerator FocusObjectCor()
     {
+        Inventory.Instance.cantSwitch = true;
         cantBobbing = true;
         canInteract = true;
         transform.SetParent(null);
@@ -141,16 +141,15 @@ public class MusicSheet : Item
         canInteract = true;
         Inventory.Instance.cantSwitch = true;
         transform.SetParent(handPos);
-        PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, handPos.position, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
 
+        PlayerHandler.Instance.PossesPlayer();
         transform.position = handPos.position;
         canInteract = false;
-        Inventory.Instance.cantSwitch = false;
         cantBobbing = false;
     }
 

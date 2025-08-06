@@ -57,7 +57,6 @@ public class Skull : Item
         if (canInteract) return;
         _active = !_active;
         CanvasManager.Instance.rotateInfo.SetActive(_active);
-        Inventory.Instance.cantSwitch = _active;
         StartCoroutine(_active ? FocusObject() : UnFocusObject());
         transform.localScale = Vector3.one;
     }
@@ -115,6 +114,7 @@ public class Skull : Item
 
     IEnumerator FocusObject()
     {
+        Inventory.Instance.cantSwitch = true;
         canInteract = true;
         cantBobbing = true;
         PlayerHandler.Instance.UnPossesPlayer();
@@ -132,16 +132,15 @@ public class Skull : Item
     {
         canInteract = true;
         Inventory.Instance.cantSwitch = true;
-        PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, handPos.position, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
 
+        PlayerHandler.Instance.PossesPlayer();
         transform.position = handPos.position;
         cantBobbing = false;
         canInteract = false;
-        Inventory.Instance.cantSwitch = false;
     }
 }

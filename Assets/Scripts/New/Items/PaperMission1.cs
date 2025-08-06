@@ -45,7 +45,6 @@ public class PaperMission1 : Mission
         if (canInteract) return;
         active = !active;
         CanvasManager.Instance.rotateInfo.SetActive(active);
-        Inventory.Instance.cantSwitch = active;
         StartCoroutine(active ? FocusObjectCor() : UnFocusObject());
         transform.localScale = Vector3.one;
     }
@@ -69,6 +68,7 @@ public class PaperMission1 : Mission
 
     IEnumerator FocusObjectCor()
     {
+        Inventory.Instance.cantSwitch = true;
         PlayerHandler.Instance.focusView = true;
         if (TutorialHub.Instance != null) TutorialHub.Instance.missionInspect = true;
         cantBobbing = true;
@@ -88,21 +88,21 @@ public class PaperMission1 : Mission
     IEnumerator UnFocusObject()
     {
         PlayerHandler.Instance.focusView = false;
+        Inventory.Instance.cantSwitch = true;
         cantBobbing = false;
         canInteract = true;
         DisableContent();
-        Inventory.Instance.cantSwitch = true;
         transform.SetParent(handPos);
-        PlayerHandler.Instance.PossesPlayer();
         while (Vector3.Distance(transform.position, handPos.position) > 0.1f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, handPos.position, ref reference, .1f);
             yield return new WaitForSeconds(0.01f);
         }
+        PlayerHandler.Instance.PossesPlayer();
 
         transform.position = handPos.position;
+        print("Me llame");
         canInteract = false;
-        Inventory.Instance.cantSwitch = false;
         cantBobbing = false;
     }
 
