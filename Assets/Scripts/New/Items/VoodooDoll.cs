@@ -155,7 +155,5 @@ public class VoodooDoll : Item
         if (MorgueEnemy.Instance != null) MorgueEnemy.Instance.voodooActivate = false;
         yield return new WaitForSeconds(2f);
         voodooVFXHandler.ClosePrison();
-        collider.enabled = true;
-        rb.isKinematic = false;
     }
 }

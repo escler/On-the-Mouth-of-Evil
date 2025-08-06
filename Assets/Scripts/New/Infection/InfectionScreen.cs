@@ -127,6 +127,7 @@ public class InfectionScreen : MonoBehaviour
 
     private void ResetPrefs(Scene scene, LoadSceneMode loadSceneMode)
     {
+        if (_screenCouroutine != null) StopCoroutine(_screenCouroutine);
         _coroutineActivate = false;
         _screenCouroutine = null;
         _isInfected = false;

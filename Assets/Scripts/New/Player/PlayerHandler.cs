@@ -248,6 +248,7 @@ public class PlayerHandler : MonoBehaviour
     private void StopHeartSound(Scene scene, LoadSceneMode loadSceneMode)
     {
         StopAllCoroutines();
+        particleStun.SetActive(false);
         handLight.enabled = false;
         if (!heartBeat.isPlaying) return;
         heartBeat.Stop();
