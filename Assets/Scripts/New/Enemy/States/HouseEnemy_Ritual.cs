@@ -42,10 +42,14 @@ public class HouseEnemy_Ritual : MonoBaseState
 
     IEnumerator Startcor()
     {
-        while (owner.enemyVisibility > 0)
+        if(owner.enemyVisibility > 0)
         {
-            yield return new WaitForSeconds(0.01f);
+            owner.enemyVisibility = 0;
+            owner.enemyMaterial.SetFloat("_Power", owner.enemyVisibility);
         }
+
+        yield return null;
+
         GoToNodeGoal();
     }
 
