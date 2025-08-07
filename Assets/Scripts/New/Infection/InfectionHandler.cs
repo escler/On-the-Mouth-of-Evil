@@ -10,6 +10,7 @@ public class InfectionHandler : MonoBehaviour
     [SerializeField] private float infectionTickRate, maxInfection, substractInfectionTickRate;
     private bool _coroutineActive;
     private bool _dead;
+    public AudioSource dead;
     public delegate void UpdateInfection();
 
     public event UpdateInfection OnUpdateInfection;
@@ -54,6 +55,7 @@ public class InfectionHandler : MonoBehaviour
         }
         
         _dead = true;
+        dead.Play();
         PlayerLifeHandlerNew.Instance.DamageTaked(1);
         Inventory.Instance.deleteItem = true;
         FadeOutHandler.Instance.FaceOut(1f);
