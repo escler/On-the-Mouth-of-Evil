@@ -79,6 +79,7 @@ public class Salt : Item
 
         if (i.transform.TryGetComponent(out VoodooDoll vodooDoll))
         {
+            if(SceneManager.GetActiveScene().name == "Hub") return;
             if (_uses <= 0) return;
             StartCoroutine(WaitForUseVoodoo(vodooDoll, _hit.point));
         }
@@ -179,6 +180,9 @@ public class Salt : Item
         {
             if (door.saltBlock) return false;
         }
+
+        if (SceneManager.GetActiveScene().name == "Hub") return false;
+        
         if (ray.transform.TryGetComponent(out SaltRecipient saltRecipient) || ray.transform.TryGetComponent(out Door door2) || ray.transform.TryGetComponent(out VoodooDoll vodoo))
         {
             return true;
